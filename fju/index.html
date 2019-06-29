@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>遠距資料收集系統規劃與介面設計/數位調查資料接收與儲存應用</title>
+<link rel='stylesheet' type='text/css' href='style.css'/>
+</head>
+<body>
+<div id="content">
+<section>
+  <article>
+    <h2>Python程式設計與網路爬蟲的遠距資料收集 - 2018</h2>
+    <p>Python語言是Guido Van Rossum開發的一種通用用途（General Purpose）的程式語言，這是擁有優雅語法和高可讀性程式碼的程式語言，可以讓我們開發GUI視窗程式、Web應用程式、系統管理工作、財務分析和大數據資料分析等各種不同的應用程式。</p>
+    <p>網路爬蟲（Web Scraping）或稱為網路資料截取（Web Data Extraction）是一種資料截取技術，可以讓我們直接從Web網站的HTML網頁取出所需的資料，其過程包含與Web資源進行通訊，剖析文件取出所需資料和將資料整理成資訊，即轉換成所需的資料格式。</p>   
+    
+    <a href="https://drive.google.com/file/d/1s7nPDQXwHvQ1GYsEX98hVIOXlZflSca_/view?usp=sharing" target="_blank">fChartPython工具(G)</a> 
+    | <a href="https://mega.nz/#!aB93DYbC!XnMkCsYVMdV6yxNLvH1JfIwnY-1O0zLqrqEWI94yDrs" target="_blank">fChartPython工具(M)</a> 
+    | <a href="https://drive.google.com/file/d/1oa0If3Jaw97vuurw9cROBTPkhn8k-eC8/view?usp=sharing" target="_blank">fChart使用手冊</a>
+    | <a href="https://drive.google.com/file/d/1mB3NwjOOllbEkOhusJLFQSblYlUxiXZ_/view?usp=sharing" target="_blank">CSS選擇器工具</a>    
+    <br/><br/>   
+    
+     <a href="https://drive.google.com/file/d/1-hoAcxCMSLh8sKNoXeXz8SdOrshISq5T/view?usp=sharing" target="_blank">fChartPython 3.66版(G)</a> 
+    | <a href="https://mega.nz/#!SN0QlI4T!eUP8Tgx94PoxtjMn4bA04kwr2bXIAyC97LwVq_cTzNw" target="_blank">fChartPython 3.66版(M)</a> 
+     
+<!--    <a href="https://drive.google.com/file/d/1ThvyPWVlyC7ktqnwyMqwx0mo8q9z8p71/view?usp=sharing" target="_blank">Thonny英文版(G)</a> 
+    | <a href="https://mega.nz/#!adsCWKoC!by9fLvh_TerQFptGEdOYaUHjz8ReL72TrH0etAIasv8" target="_blank">Thonny英文版(M)</a> 
+    | <a href="https://drive.google.com/file/d/1tZ2q_12P3tA6mIVlhWvVbw3rrZAubNMn/view?usp=sharing" target="_blank">Thonny中文版(G)</a> 
+    | <a href="https://mega.nz/#!nFVxzCjC!qOyLgLydA5XH8TkxOX5jDwUKqnm4ENnQfxYTJ8nDbKc" target="_blank">Thonny中文版(M)</a>     -->
+    <br/><br/> 
+  
+    <a href="https://blockly-games.appspot.com/maze" target="_blank">Blockly Game:Maze迷宮程式邏輯訓練</a>
+    | <a href="https://blockly-games.appspot.com/bird?lang=en" target="_blank">Blockly Game:Bird飛鳥程式邏輯訓練</a> 
+    <br/><br/> 
+    <a href="https://medium.com/@hulitw/learn-coding-9c572c2fb2" target="_blank">為什麽學寫程式</a>
+    <br/><br/>
+
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart流程圖與程式邏輯</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1zQqAnMkONGb03U1n6b4qF_NuF2G4CfeX/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!2B1ghCBD!767mvl8tRWwC5mY4XuEPVVpJzxkgCPxTLdVKsqDbqnE" target="_blank">簡報檔(M)</a>
+                </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python變數與運算子(循序)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1fzavfemPjk1G2tC4aaJPYlhkR8kg34Ut/view?usp=sharing" target="_blank">範例檔</a>
+                <a href="https://drive.google.com/file/d/1x7Vt016ywu6t_fQb8XueGfjZ41KKAOFg/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!XdkyAS4Q!TVh1f8Wpiuu2gYFnGofP2x82xQLFEhIADG0D0QhMAM8" target="_blank">簡報檔(M)</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python條件判斷(單選)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1eOqJSoYD-5LqlchmsMebp_QUpq5qbIam/view?usp=sharing" target="_blank">範例檔</a>
+                <a href="https://drive.google.com/file/d/1lSJBVzbgQZTqWQd30nyaLikeIIyuGpdD/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!Tds2WIBT!vjn2t1bO6_5g7YVzBFEjDcUpSadSW6hINCW3vxFx_SM" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python條件判斷(二選一)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1eOqJSoYD-5LqlchmsMebp_QUpq5qbIam/view?usp=sharing" target="_blank">範例檔</a>
+                <a href="https://drive.google.com/file/d/1StAh4_uaXQ7QqaKzJL2kXNuXInZiuH02/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!ydtV2a6I!SJlSgYJPQedOH9IwKPb2ZO31dB-AKV_6OSRJXyYa1dE" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python條件判斷(多選一)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1eOqJSoYD-5LqlchmsMebp_QUpq5qbIam/view?usp=sharing" target="_blank">範例檔</a>
+                <a href="https://drive.google.com/file/d/1jas7jukMh7FSGAUJH2MUZhL0aDVls30h/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!6V1hhaiI!X3TYaw6MWNOZowb85BXyhq2I18NLHuPccPC7YwBBRIc" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python迴圈結構(前測)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1HMDP1F0ROFrdqyCfRO9kJWMEsHJa8PMj/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!eB9XlYYL!rZWz4EH7YIhSpGT9W7bLfX4DQi693wOcAjYIpGyon8s" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python迴圈結構(後測)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1-CxNLli_SPRmTyj0kXHrTraFuoM7xCj9/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!yVs3nKyT!I96YSB-4YVaIes0fOotR_qiedGZG6f8kJf6Z21Zx0Ac" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart+Python函數(模組)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1idkZ6fUZpnp0t53OPzyoCx7Urww_U6wG/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!uRUUQKBQ!Un8bVi-kVKMZpKQ0wUACXHCbJG1qNKWLzvHJ1JqkHlc" target="_blank">簡報檔(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Micro:bit MicroPython程式設計</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1gNIzq8Utd3jppWU5mpEyNEZr3p77zZ7r/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!zJ8RXI5S!HzWL3Rh8V2pCRKkm--yf-p1dJ8wHNU5cxy22vSi6ZuE" target="_blank">簡報檔(M)</a>
+                <a href="https://drive.google.com/file/d/1ZAHEh8rrC_RxRJ5XEUyd2JReV5Zap5C4/view?usp=sharing" target="_blank">PythonEditor(G)</a>
+                <a href="https://mega.nz/#!OVkXRSJQ!EoZ5meMJa6IU1WxkcOAQukQbh_a8sH1hVeegIvdOIgk" target="_blank">PythonEditor(M)</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Python程式語法與容器型態</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1IJCCM4dk0JRVG_e5YEpwV2DVGqGHmc2w/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!eJtiiA5J!a_d5A_clsYgAJHIs1SSNMwj4eYUh5atw5uqjhrxYBjI" target="_blank">簡報檔(M)</a>
+                <a href="https://drive.google.com/file/d/12DNhpp2x7Mf9-dQRQWomk0kIPs4HPHdS/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Python海龜繪圖 Turtle Graphics</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1rm262idMHd9BOAzmYkvNeTyA7OODPrH-/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!3ccliITQ!5yoiW8GS7AbfEnRcQRru9s78sgKueCA9vEXVBov4GJU" target="_blank">簡報檔(M)</a>
+                <a href="https://drive.google.com/file/d/1WxRtngVTEtX6yzVW9ST8OA2QlIPewhFR/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Python程式除蟲大作戰</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1dGjEGqrLIsfDCYFIdUoNCUlfumLLibbt/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!vMs2SCTS!oyHnZ2-ogP_t13Rt5qKUoYWY8ZSqxX8_B1L8nAzuJAQ" target="_blank">簡報檔(M)</a>
+                <a href="https://drive.google.com/file/d/1bPnj3KRW7nP7XssUo6nSX9lCQbz2eYvO/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               HTML5與網路爬蟲的基礎</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1wUoFUG2tCrD7qKUq4lnowA03JPqFNFeQ/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!HBMx3ILY!EtpfMJ0TYewo4K_pmqJPfJjP3gooS-gbdAZdw1GJWcw" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               爬取HTML5標題文字標籤</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/15ojBMVGM3VyqiChBGhT3x7_GYmGqLaa-/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!aYd32I5T!cGldSTH6jNji9n4Ie4HOFddalqfvTijix_hUAgaVnk8" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               爬取HTML5文字編排標籤</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/14se8c286GtVdoaquo2LlJmRfpFWVQ1sg/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!fRd3hKyY!IBwaGXjKA3DjeVV1iRfmlktcXqcvOYEjXHTYPKeMSgo" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               爬取HTML5清單和圖片標籤</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1r7S7Ts_vUZrRaRuIG_EYAfTyw62ld7qk/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!WFVxCQ4T!0X0n_IgFOVELgXwceZQBv_LRH2_-EtqhY6ZZuwmu-6k" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               爬取和走訪HTML5超連結標籤</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1pqxRDrr2qumi0Oq3f8LR8_jliJgz2O62/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!WRUFxIjA!FoKN3L0snc9lOzCYgu7PA9fsXOysXLzF0UzZ19zMvtk" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>       
+        <tr>
+            <td class="style3">
+               爬取HTML5表格標籤</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1UIXbXKHAt-yHumAxqsKg-snXHNNVyl_2/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!GBslVSYJ!bFvCACaw36SOt_bcZVipS5qZ7IB18NJL9Jnb88wpwks" target="_blank">簡報檔(M)</a>  
+                <a href="https://drive.google.com/file/d/12FtPIAX1uL1Ul8JMx2TEeW-9UpQvMTEB/view?usp=sharing" target="_blank">LocalServer(G)</a>
+                <a href="https://mega.nz/#!HVkzySJJ!SySyyGTch28ukI3im4GuO85Myui4grb3kNeO09PE7dU" target="_blank">LocalServer(M)</a> 
+                <a href="https://drive.google.com/file/d/1bSUokV2QdL8JVbktG_Ylc-1eFLBKBh7L/view?usp=sharing" target="_blank">hosts</a> 
+                <a href="https://hostsfileeditor.com/" target="_blank">Hosts File Editor</a>                
+            </td>
+        </tr>  
+        <tr>
+            <td class="style3">
+               爬取HTML5容器標籤和參數分頁</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1UPDcuNOyc3atgEa9ZZnYR41QRasvNOvt/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!CAFxQaiL!A62IkTMWAQjONBXM6iviWLErfJJxO546xtRarScHVYU" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>   
+        <tr>
+            <td class="style3">
+               爬取階層目錄的Web網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1Fq69EbDln2aLnHbA3H3UseaNDNaWm3Q4/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!aJNnzCSK!s1dCTALNG3cWABTrZN792kltxCIAdM_6fYY5xH0uQwk" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>   
+        <tr>
+            <td class="style3">
+               爬取上下頁的Web網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1p4bzXUI1G2UZ87UvcBGZULsfuGWIVA5s/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!PFUVBSyI!3YlMYEWk9l_30Wy43dnKadFiHfLs35Ux8SzOjqI9LFQ" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>   
+        <tr>
+            <td class="style3">
+               爬取頁碼分頁的Web網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1bjPm3hazNZhXLJl3w2Qj19F-jJj4tELC/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!acc3lKAR!crPFwP9DQiIk5ddodhzQNJaeOtlkH46IktPKH1ls3RU" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>   
+        <tr>
+            <td class="style3">
+               更多按鈕和捲動顯示更多的Web網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1xBa3cDXgfDRXOVmA3dC4B6DzgOWBcZCG/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!DZV3xSgK!hO0li64zhxSt1ONjHlY9CVNMMduVJ5LjxdL_y2YyrsY" target="_blank">簡報檔(M)</a>                
+            </td>
+        </tr>  
+        <tr>
+            <td class="style3">
+               爬取和下載網頁的圖片檔案</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1Q0KVF5qqFWfgfizSma3SbqDK8QOpIipO/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!XQsn1a6K!K4Sbacp5-3ukrdEhKO2cgo_9qBTZq5tw4p2UposeySI" target="_blank">簡報檔(M)</a>  
+                <a href="https://drive.google.com/file/d/1Lu2tcvK79XVlHeq7-GD1C1Y6zbyFVNAS/view?usp=sharing" target="_blank">image-downloader</a>              
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               使用正規表達式清理資料</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/12BM3xMCS1r6OnsfqlVPxJOoAtP81qxUu/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!yV8UjSpQ!JlPaBkU91scVAcGsGJyUmeKuPU5uuz2OjECI_U_lAB0" target="_blank">簡報檔(M)</a>  
+            </td>
+        </tr>    
+        <tr>
+            <td class="style3">
+               SelectorGadget的CSS選擇器工具</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1Uqv48D38Klk2dMRXT4Dx1P0n0VbOs2Th/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!uYFF1AzR!f-SIJVn85f-bjjcFe4QBEOen9L1DtBAmdoz9UY_vGnU" target="_blank">簡報檔(M)</a>  
+            </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+               Python清單與字典型態</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/15UtbEPyoLvr07MToxNqWyMVa1gFIDmxb/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!HNN1DS4a!sNN4n91CcDpGokqeTSbtS4EVcSY0mAXzyjuvg-CWAkI" target="_blank">簡報檔(M)</a>  
+            </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+               Python網路爬蟲</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1m0kS5wa_vzEgHNybu9QfG3zeQnuC3LJv/view?usp=sharing" target="_blank">簡報檔(G)</a>
+                <a href="https://mega.nz/#!LN8mTQpD!zZ2Dyyd45kFzuq2TzIQZUuWqNGcKdY9HBNKfHx4uNsw" target="_blank">簡報檔(M)</a>  
+                <a href="https://drive.google.com/file/d/1doviPiqavUy-P0oSjPQb8q0FeA6jiEjI/view?usp=sharing" target="_blank">Python爬蟲範例</a>              
+            </td>
+        </tr>           
+        <tr>
+            <td class="style3"><b style="color:red">***期末作業***</b></td>
+            <td class="style3">
+                <p>使用Web Scraper工具或Python程式爬取自選網站(不含上課爬過的網站)，<br>
+                <ul>
+                   <li>至少需500筆資料</li>
+                   <li>評分標準視網站爬取困難度</li>
+                </ul>   完成後，匯出網站地圖和CSV檔案
+                <b style="color:red">Email至：hueyanchen2018@gmail.com</b><br>，請使用姓名加上學號作為郵件標題, 附檔是網站地圖和CSV檔案,內容簡述為什麼爬取此網站,交作業日期:1/13日晚上24:00前。</p></td>
+        </tr>                        
+    </table> 
+    <br/><br/>
+    <a href="https://mega.nz/#!TQVDhC4S!ri1_Fg8AUd1ifSmMB9ODYq-eVkwteUFvLZsrolfYbqE" target="_blank">OttoDIYDancing2.apk</a> <br/><br/>
+    
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+ <article>
+    <h2>App Inventor 2程式邏輯,介面設計與Android程式設計 - 2017</h2>
+    <p>App Inventor是一套開放原始碼（open-source）Web平台的Android App整合開發工具，
+       原來是Google在2010年7月提供的解決方案，可以讓完全沒有程式設計經驗的使用者輕鬆開發Android App，
+       在2011年下半年轉由美國麻省理工學院（Massachusetts Institute of Technology，MIT）接手繼續開發與維護。</p>
+    <p>App Inventor 2是App Inventor的新版本，MIT在2013年12月正式釋出，
+       新版本將拼塊編輯器整合成完全相同介面的網頁應用程式，而不是舊版的獨立Java程式，
+       App Inventor 2簡稱AI2，新版本AI2是一套雲端開發平台，可以讓使用者更容易安裝，
+       且提供更佳的程式開發使用經驗，原來舊版App Inventor則更名為App Inventor Classic。</p>   
+    
+    <a href="https://drive.google.com/open?id=0B6TockxTwgQUZFkteTNwSkJsYk0" target="_blank">fChart+Blockly工具(Google)</a> 
+    | <a href="https://mega.nz/#!CZ1T0YaS!Htdk9J33pHk4XLoFpSIjIhdEwuo7bGJaZjUuUdv3ieg">fChart+Blockly工具(MEGA)</a> 
+    | <a href="https://app.box.com/s/g4xnckxsfdnkfep4agpc" target="_blank">fChart使用手冊</a> <br/><br/> 
+   
+    <a href="https://blockly-games.appspot.com/maze" target="_blank">Blockly Game:Maze迷宮程式邏輯訓練</a>
+    | <a href="https://blockly-games.appspot.com/bird?lang=en" target="_blank">Blockly Game:Bird飛鳥程式邏輯訓練</a> <br/><br/> 
+
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart流程圖與程式邏輯</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/bdqzmfpnje6ntv84qb63" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart變數與運算子</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/1g5m0rbj0wjxjgd42o22" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/mqyc9sws44w0a30nq2uj" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart條件判斷</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/dvik5jmgjirz5wkl1g71" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/t0rrdzfhjmcm0eiv0a0s" target="_blank">單選簡報檔</a>
+                <a href="https://app.box.com/s/tdryf3qej16j8q7kr7c2" target="_blank">二選一簡報檔</a>
+                <a href="https://app.box.com/s/y99az82ulxt12zy3dmh0" target="_blank">多選一簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart迴圈結構</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/8kf53fjb2ayck5gwh9br" target="_blank">前測式迴圈</a>
+                <a href="https://app.box.com/s/7sn9ksjmmehdghby1wzz" target="_blank">後測式迴圈</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第三章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/95j79cge7c1v44j7swryg6it8clre48w" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第四章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/4iegkbmly7m0s47pfgem61jpn97hns8f" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第六章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/qykmlzl2lxjvmnb1g3msmpihiwjgf3if" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>        
+   <!--     <tr>
+            <td class="style3">
+                <b style="color:red">*** 期中作業 ***</b></td>
+            <td class="style3">
+                <a href="https://app.box.com/s/89po4tajvs5iuptc3mc6bztbojox513i" target="_blank">檢視期中作業內容</a>
+                <a href="https://app.box.com/s/5nysei3ve60g9gx8w74vz22j38681zu4" target="_blank">下載DOC和流程圖專案</a>
+            </td>
+        </tr>    -->
+        <tr>
+            <td class="style3">
+                fChart函數</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/qh4ighyhbty7cbbbxha0" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/440d4zavsyhcugsczthc" target="_blank">簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第五章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/9l8o0k9bj2boc3h87gb187r7n3dmv3jk" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第六章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/qykmlzl2lxjvmnb1g3msmpihiwjgf3if" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第七章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/r93mcotk51v89226bvuqjxnvq7w4wyok" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第八章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/mpien528el13n4wek3npe8hxww299gsw" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第九章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/z6dfevtydbrh259fbyv2k7o1k5wyb7wg" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                AI2 第十章簡報</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/sywv3yjda3pk82pxv9hnrwj4uwxwh1ag" target="_blank">簡報PDF</a>                
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                電腦系統架構</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/uf6f31jw0pgt6ce71glgg5hrbusqt14t" target="_blank">簡報</a>   
+                <a href="https://app.box.com/s/kadpvimq7wkoy7vrd40dt9k4b6o1c0hr" target="_blank">OTTO DIY</a>              
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                程式語言與雲端運算</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/aq4957p19prsj7lj9k29iyuc52zb7y6c" target="_blank">簡報</a>   
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(1): Spinner+List測驗</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/i1eysy3wvc5yccon8tx2" target="_blank">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(2): Button+List測驗</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/wixcev1z1oal9rqtea8b" target="_blank">簡報檔</a>
+                <a href="https://app.box.com/s/xac4u4qqyti73zduzbmr" target="_blank">Quiz.txt</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                使用微型資料庫元件</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/rvswjvccqks9wdla7f3bhwpwqz1qo1ip" target="_blank">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(3): 憤怒問卷</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/o2rjv1x841m8pevux4xt" target="_blank">簡報檔</a>
+                <a href="https://app.box.com/s/pif1jorsbwvzwqfcm55n" target="_blank">問卷內容</a>
+                <a href="https://app.box.com/s/tp3d3auw52k1bfmhfqmlayy3e4uvehzd" target="_blank">AngrySurvey.aia</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                使用File檔案管理元件</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/oejnjg4jop5hxbjc85i27dvwricu2fv9" target="_blank">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                將微型資料庫輸出成CSV檔案</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/f4a77w36f1xqtjtlqvwx8ofe9ztuhmaz" target="_blank">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                CloudDB元件</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/nhp98oy8472o6uplqoy4mu83dc5yb2iw" target="_blank">簡報檔</a>
+                <a href="https://app.box.com/s/slcz1jxkf991zr9cnxr607g3rx13uajk" target="_blank">csvclouddb.aia</a></td>
+        </tr>    
+    <!--    <tr>
+            <td class="style3">
+                <b style="color:red">***期末作業***</b></td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jzk1fvuievl9zpdc51fmsnurztn6uslz" target="_blank">期末作業</a></td>
+        </tr>     -->
+       <!-- <tr>
+            <td class="style3"><b style="color:red">***期末作業***</b></td>
+            <td class="style3">
+                使用AI2 參考問卷與測驗專題或教學專題，自行建立一個問卷或教學App，
+                完成後，下載成.aia檔，Email至：hueyanchen2017@gmail.com</td>    -->
+        </tr> 
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+   <article>
+    <h2>JavsScript程式設計與程式邏輯課程</h2>
+    <p>fChart流程圖直譯工具是一套流程圖直譯程式，我們不只可以編輯繪製流程圖，
+       還可以使用動畫來完整顯示流程圖的執行過程和結果，
+       輕鬆驗證演算法是否可行和訓練讀者的程式邏輯。</p>
+    <p>在4.5版新增源至Min C# Lab的程式碼編輯器，fChart已經轉變成為整合開發環境，
+       可以編輯 C、Java、C#、HTML+JavaScript和Visual Basic程式碼，和編譯執行 C、
+       Java(需自行安裝JDK)、 C#和Visual Basic程式，HTML+JavaScript是啟動瀏覽器來
+       預覽結果。</p>
+    <p>JavaScript原為Netscape Communication Corporation（網景公司）開發的腳本語言，
+       提供該公司瀏覽器產品Netscape Navigator開發互動網頁的功能。
+       JavaScript原名LiveScript，於1995年在Netscape 2.0版正式發表，
+       目前是巿面上各大瀏覽器最普遍支援的腳本語言。</p>
+   <a href="https://drive.google.com/open?id=0B6TockxTwgQUZFkteTNwSkJsYk0" target="_blank">fChart+Blockly工具(Google)</a> 
+    | <a href="https://mega.nz/#!CZ1T0YaS!Htdk9J33pHk4XLoFpSIjIhdEwuo7bGJaZjUuUdv3ieg">fChart+Blockly工具(MEGA)</a> 
+    | <a href="https://app.box.com/s/g4xnckxsfdnkfep4agpc" target="_blank">fChart使用手冊</a> <br/><br/> 
+   
+    <a href="https://blockly-games.appspot.com/maze" target="_blank">Blockly Game:Maze迷宮程式邏輯訓練</a>
+    | <a href="https://blockly-games.appspot.com/bird?lang=en" target="_blank">Blockly Game:Bird飛鳥程式邏輯訓練</a> <br/><br/> 
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart流程圖與程式邏輯</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/bdqzmfpnje6ntv84qb63" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart變數與運算子</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/1g5m0rbj0wjxjgd42o22" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/mqyc9sws44w0a30nq2uj" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart條件判斷</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/dvik5jmgjirz5wkl1g71" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/t0rrdzfhjmcm0eiv0a0s" target="_blank">單選簡報檔</a>
+                <a href="https://app.box.com/s/tdryf3qej16j8q7kr7c2" target="_blank">二選一簡報檔</a>
+                <a href="https://app.box.com/s/y99az82ulxt12zy3dmh0" target="_blank">多選一簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart迴圈結構</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/8kf53fjb2ayck5gwh9br" target="_blank">前測式迴圈</a>
+                <a href="https://app.box.com/s/7sn9ksjmmehdghby1wzz" target="_blank">後測式迴圈</a>
+            </td>
+        </tr>
+     <!--   <tr>
+            <td class="style3">
+                <b style="color:red">*** 期中作業 ***</b></td>
+            <td class="style3">
+                <a href="https://app.box.com/s/rhah1cujvpjsvysslnat4648s4xpq4gv" target="_blank">檢視期中作業內容</a>
+                <a href="https://app.box.com/s/rpreqf4ug84b7upu3zjztzhujl81kgbg" target="_blank">下載DOC和流程圖專案</a>
+            </td>
+        </tr> -->
+        <tr>
+            <td class="style3">
+                fChart函數</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/qh4ighyhbty7cbbbxha0" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/440d4zavsyhcugsczthc" target="_blank">簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart流程圖=>JavaScript程式碼</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/v8bf7i6hmgyevvpr9bgs" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/nle5awup74nar69qm2lc" target="_blank">簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                fChart流程圖=>Blockly積木程式</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/lew2lllz5z184kjnows0" target="_blank">簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                JavaScript與DOM</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/t4apkq9ct4rw9clfcxsf" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/n2211uaaszqbz0r3hd1x" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                JavaScript表單處理</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ydhf6mpwlp3mpk202ryv" target="_blank">範例檔</a>
+                <a href="https://app.box.com/s/1vh5ppp1gsz3izk7ld8n" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                EZoApp表單處理(jQuery)</td>
+            <td class="style3">
+                <a href="https://mega.nz/#!rNcR3AQK!nTOFXzBPBeHILWocLWFt-lx_XRBAluUelS9nLxu0oCs" target="_blank">jQuery測試工具</a>
+                <a href="https://mega.nz/#!eJE1wJgT!OPZUdUA90COBnYIrlDKGKvLiNn_ggjejev3rf2K-Nlg" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                用Blockly寫出EZoApp的JS程式碼</td>
+            <td class="style3">
+                <a href="https://mega.nz/#!TM1wgIKb!OAH6m33UlYh_D0B4RJrcHazLsJ5dK6xa0EzDJzEO2Ug" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                建立獨立的jQuery Mobile程式</td>
+            <td class="style3">
+                <a href="https://mega.nz/#!7RF02BLA!vR2W4hdXdH9HyNGhPnRrMvN46qnDJsj3UvADYu2WYYI" target="_blank">jQM範本檔</a>
+                <a href="https://mega.nz/#!6QF03bTK!kesiG4XjlS9PtxiG9i5mRX9YY-r4Ye67O98Tp7Mcjqg" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                EZoApp+Blockly建立線上問卷</td>
+            <td class="style3">
+                <a href="https://mega.nz/#!7VtnBaoA!QcV96F2f5AEY0aRKgpcnu3palgCWxcuvgfU06Do0jEI" target="_blank">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                EZoApp+mLab雲端資料庫</td>
+            <td class="style3">
+                <a href="https://mega.nz/#!PRMTwTZQ!4z376pvE7e-gGpRj2E1xjiLj7jM516Pzee8TS5K541I" target="_blank">簡報檔</a></td>
+        </tr>
+     <!--   <tr>
+            <td class="style3">
+                <b style="color:red">*** 期末作業 ***</b></td>
+            <td class="style3">
+                <a href="https://app.box.com/s/6235m2ds115zospxaeziwc2skkg38wdl" target="_blank">檢視期末作業內容</a>
+                <a href="https://mega.nz/#!zYUm3b7C!ODig_9ntWCz_oSUf0FF3Hqo4KMBPB9zwyQTO6AXFv6Y" target="_blank">下載期末作業</a>
+            </td>
+        </tr>     -->
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+<article>
+    <h2>Scratch程式邏輯訓練課程</h2>
+    <p>Scratch是MIT（美國麻省理工學院）的Lifelong Kindergarten小組開發的一種免費教育用途的程式語言，
+       強調快樂、教育性和容易學習。就算是初學者，都可以很容易使用Scratch工具，來輕鬆建立各種動畫、
+       互動故事和遊戲等多種類型的程式。</p>
+    <p>我們可以使用Scratch動畫與遊戲來學習電腦的物件和基礎程式設計觀念，和在逐步建立Scratch範例專案的過程中，
+       學習計算機思維的抽象化（abstraction）、演算法（algorithms）、分割問題（decomposition）、
+       樣式識別（pattern recognition）和歸納（generalisation）能力。</p>
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                媒體, 範例與PDF檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                第1章：程式、動畫和Scratch基礎</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/nfscv6y3sn1omdie2mzh">PDF檔</a>
+                <a href="https://app.box.com/s/3bw8wofnctqdisvw8fn2">媒體檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                第2章：基本移動動畫和背景切換</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                第3章：多角色動畫和造型</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                第4章：建立持續執行的動畫 – 無窮迴圈</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                第5章：使用者控制與協調角色行為 - 事件與訊息</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                第6章：重複執行與繪圖 – 有限次數迴圈</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                期中作業 : 4月30日前交</td>
+            <td class="style3">
+                請使用Scratch參考前6章已教的內容，自行建立一個Scratch動畫，題目自由發揮，
+                完成後，下載成.sb2檔，Email至：chenhueyan@gmail.com</td>
+        </tr>   
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+<article>
+    <h2>App Inventor 2 手機Android程式設計</h2>
+    <p>App Inventor是一套開放原始碼（open-source）Web平台的Android App整合開發工具，
+       原來是Google在2010年7月提供的解決方案，可以讓完全沒有程式設計經驗的使用者輕鬆開發Android App，
+       在2011年下半年轉由美國麻省理工學院（Massachusetts Institute of Technology，MIT）接手繼續開發與維護。</p>
+    <p>App Inventor 2是App Inventor的新版本，MIT在2013年12月正式釋出，
+       新版本將拼塊編輯器整合成完全相同介面的網頁應用程式，而不是舊版的獨立Java程式，
+       App Inventor 2簡稱AI2，新版本AI2是一套雲端開發平台，可以讓使用者更容易安裝，
+       且提供更佳的程式開發使用經驗，原來舊版App Inventor則更名為App Inventor Classic。</p>
+   <a href="http://appinventor.mit.edu/explore/front.html">App Inventor官網</a>
+    | <a href="https://app.box.com/s/4eases5fp1srboisom9a">AI2中文手冊(第1章)</a> 
+    | <a href="https://app.box.com/s/yof0c24xhzwg9ui2i3su">AI2中文手冊(第2章)</a> 
+    | <a href="https://app.box.com/s/h9xipmvi454wtsy03233">AI2中文手冊(第3章)</a> 
+    | <a href="https://app.box.com/s/xys0qxeuec5qklcy1onr">AI2中文手冊(第4章)</a> <br/><br/> 
+    <a href="https://app.box.com/s/dveotx1jzbusn99l5rq8">AI2入門手冊(英文)</a> <br/><br/> 
+    <a href="https://app.box.com/s/988021yz2uepeud23el0">AI2 Starter設定工具</a> <br/><br/> 
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                媒體與PDF檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                第1個程式: Hello Purr</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/nfscv6y3sn1omdie2mzh">PDF檔</a>
+                <a href="https://app.box.com/s/3bw8wofnctqdisvw8fn2">媒體檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                繪圖程式(1): PaintPot</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ljvoc12vz2ieykz4eq99">PDF檔</a>
+                <a href="https://app.box.com/s/oiy553yoe8tv2xnl75sv">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                繪圖程式(2): 擦擦板</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/t09azb5whs22bjg16rgp">簡報檔</a>
+                <a href="https://app.box.com/s/tjsk9u2sl6q9jcjgxlsp">媒體檔</a></td>
+        </tr>    
+        <tr>
+            <td class="style3">
+                遊戲專題(1): 乒乓球</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/lz5q8siwgm7hb7adefqq">簡報檔</a>
+                <a href="https://app.box.com/s/tjsk9u2sl6q9jcjgxlsp">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                遊戲專題(2): 打水果遊戲</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/gtcsgu3qoy032qjcfkjd">簡報檔</a>
+                <a href="https://app.box.com/s/tjsk9u2sl6q9jcjgxlsp">媒體檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(1): Spinner+List測驗</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/i1eysy3wvc5yccon8tx2">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(2): Button+List測驗</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/wixcev1z1oal9rqtea8b">簡報檔</a>
+                <a href="https://app.box.com/s/xac4u4qqyti73zduzbmr">Quiz.txt</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                問卷與測驗專題(3): 憤怒問卷</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/o2rjv1x841m8pevux4xt">簡報檔</a>
+                <a href="https://app.box.com/s/pif1jorsbwvzwqfcm55n">問卷內容</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                教學專題(1): 動物學習</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jbktsj8c2vovuv8v4zu4">簡報檔</a>
+                <a href="https://app.box.com/s/972kyqfaoismk1s1tl7i">媒體檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                教學專題(2): 字母學習</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jtljgy6akxvuu1kw7j8r">簡報檔</a>
+                <a href="https://app.box.com/s/972kyqfaoismk1s1tl7i">媒體檔</a></td>
+        </tr> 
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+
+ <article>
+    <h2>jQuery Mobile介面設計課程</h2>
+    <p>jQuery Mobile是基於jQuery建立的框架（Framework），
+       在2010年10月推出1.0a1的初期版本，可以幫助我們建立
+       跨行動裝置的Mobile網頁應用程式（Mobile HTML Applications）。</p>
+    <p>jQuery Mobile是由jQuery專案小組開發，在2011年11月推出1.0正式版，
+       它是一套建立在jQuery之上的使用介面系統（User Interface System，UI），
+       一個觸控最佳化的Web框架，提供眾多最佳化觸控操作的使用介面元素，
+       可以讓我們不用撰寫一行JavaScript程式碼，就輕鬆使用HTML標籤建立
+       Mobile網頁應用程式的使用介面。</p>
+    <a href="http://Appery.io">Appery.io</a> <br/>
+    <a href="https://www.box.com/s/3vallfnbsfrixjnp82im">抓圖工具</a>
+    | <a href="https://app.box.com/s/ohmb8udavivrezfabu8w">NotePad++程式碼編輯器</a> <br/><br/>
+
+    <p><b>jQM範例網站: </b></p>
+
+    <a href="Resume/index.html">線上Resume</a> | <a href="MobileDev/index.html">研討會</a> | <a href="Hippo/index.html">Hippo公司</a><br/><br/>
+
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                jQuery Mobile基礎</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/301buha4q5icirciiot2">範例檔</a>
+                <a href="https://app.box.com/s/saabibqmcgvzoamvlk1s">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                頁面、對話方塊與巡覽</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/emkjs5gktwvcux5ylool">範例檔</a>
+                <a href="https://app.box.com/s/069t81mib7yn3khk9t16">簡報檔</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                頁面元件與清單</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/io6yl1tq0j5dyfs4q33v">範例檔</a>
+                <a href="https://app.box.com/s/5lwuwycmwv311yfsi1fg">簡報檔</a></td>
+        </tr>
+        <tr>
+        <td class="style3">
+                jQuery Mobile表單處理</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jq49k7dnvm2cbgwme7vv">範例檔</a>
+                <a href="https://app.box.com/s/4psqgdbo5y5o256vkult">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(一 - 開發平台的帳戶申請與基本使用)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/tg92xep7ntwqq1a1qpbm">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(一.A - jQuery Mobile網站規劃與頁面結構)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/f27xmerjygoyys31whd6">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(一.B - 基本介面元件與清單)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/83juvewd6b2t0urqudeu">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(一.C - 工具列與更多介面元件)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/vdfa03jx8sqy9t14tivm">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(二 - 文字輸入介面元件)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/tvb4tbpwovyn7576kfii">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(三 - 選擇功能介面元件)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/5tdhdcp954fdjwt28dr4">簡報檔</a></td>
+        </tr>
+        <td class="style3">
+                雲端Mobile開發平台(四 - 線上問卷專案實作)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/2smbq4umv9am0thbnppr">簡報檔</a></td>
+        </tr>
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+  <article>
+    <h2>NoSQL與MongoDB資料庫</h2>
+    <p>隨著大型Web應用程式海量使用者製造出的海量資料，
+       關聯式資料庫在處理龐大資料上的效能和擴充性問題也逐漸浮現，NoSQL資料庫的出現是在解決關聯式資料庫的問題，補足其功能上的不足。</p>
+    <p>MongoDB是同名公司開發，一套支援Windows、Linux、Mac OS X和Solaris作業系統的跨平台資料庫系統，提供高效能、高可用性和高擴充性的Document Stores資料模型的資料庫，所以歸類在NoSQL資料庫。</p>
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                NoSQL</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/cjgc4m6v91a8e6sb5uoe">簡報檔</a></td>
+        </tr>
+         <tr>
+            <td class="style3">
+                MongoDB</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/fewt8gne7r0ia00whwk2">範例檔</a>
+                <a href="https://app.box.com/s/uanv97mu3epw6fhh933b">簡報檔</a></td>
+        </tr> 
+         <tr>
+            <td class="style3">
+                MongoHQ雲端資料庫</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/fewt8gne7r0ia00whwk2">範例檔</a>
+                <a href="https://app.box.com/s/tzkx19ly4l7nmoekjimf">簡報檔</a></td>
+        </tr> 
+    </table> 
+  </article>
+<br/>
+  <hr/>
+  <br/>
+  <article>
+    <h2>REST API,JSON與雲端資料庫處理</h2>
+    <p>REST（REpresentational State Transfer）代表一種分散式軟體系統架構樣式，目前已經取代SOAP的Web服務，成為WWW上最常使用的Web服務模型。</p>
+    <p>「JSON」的全名為（JavaScript Object Notation），它是一種Ajax技術常用的資料交換格式，類似XML，事實上，它就是一個JavaScript物件的文字表示法。</p>
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                電腦系統架構</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/uh2bk4b2hn6ydogtbeqf">簡報檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                REST API與JSON</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/hqip35b76zgos6losxu5">範例檔</a>
+                <a href="https://app.box.com/s/zosxjgtfk5ni3xyrmg6a">簡報檔</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(五):REST+JSON實作一</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ujcfpeg2806kf62db02i">圖檔</a>
+                <a href="https://app.box.com/s/p8pi35wtf5l4fkws1urf">簡報檔</a>
+                <a href="http://fju.app.appery.io/Weather.html">REST範例Mobile網站</a></td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(六):REST+XML實作二</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/gks5jnvvon34uv4r3m47">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(七):REST+自建DB-顯示記錄資料</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/97hof7un3zel77mn95rm">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(八):REST+自建DB-搜尋記錄資料</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/j97pijnbb3yl2klsruep">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                期中作業(4/20前交)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/w1xjygy1deeo9y3w87f5">作業說明</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端運算</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ldtmikdeofansway60z2">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(九):匯入匯出資料庫與搜尋功能</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/rl67m4fo3jtv7is28he0">簡報檔</a>
+                <a href="https://app.box.com/s/3r4jg3au1e0vwff06ywm">JSON檔</a>
+             </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十):資料庫的查詢指令</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/dma6o6uzdsuzc4eds7wu">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                行動裝置</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jbtd6krk3lmpzoasn8v9">PDF簡報檔</a>
+                <a href="https://www.easypdfcloud.com/">PDF<->Word線上轉檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十一):HTML5客戶端儲存體</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/9nokjwfk3kw7nc5ev3jw">簡報檔</a>
+                <a href="http://fju1.app.appery.io">範例Mobile網站</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十二):主要與詳細頁面</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/v9dgdgee7rngtywc61lt">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                行動運算簡介</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ptp3ptwrzgsbo2i5h6tg">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十三.1):分頁顯示記錄資料</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/js3b1mrahzwb6vmq1jsz">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十三.2):分頁顯示記錄資料</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/1yf2fonn61q1t98bfu19">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                PhoneGap的基礎</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/b04yj08clrrfz2u4jw0p">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十四):查詢聯絡人資料</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/yt1hgp7kv5az9dr3jjtn">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十五):二維條碼掃瞄</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/e693kbg24dt1heowi51p">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十六):照相</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/tagm9v60kt8pugfcfc7p">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十七):GPS與Google地圖</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/jtx5kgi3i34jbh7k4j4n">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十八):PhoneGap API</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/5g0uicatrsk1k7sny5t5">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(十九):新增記錄</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/s8wa40c8c8alry6rd9j4">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(二十):刪除記錄</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/ssyntnj7untifkgw02x5">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(二十一):更新記錄</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/g2ksmlzv7iv9lw01i024">簡報檔</a></td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                雲端Mobile開發平台(二十二):將照片存入資料庫(繼續課程十六)</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/tziupws4lclimsc7qgco">簡報檔</a></td>
+        </tr> 
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+  <article>
+    <h2>jQuery函數庫</h2>
+    <p>jQuery是一個全功能的JavaScript函數庫，可以輕鬆存取網頁元素、變更網頁外觀與內容、
+       顯示動畫和回應使用者的輸入，讓網頁設計師使用另一種方式來思考如何設計與建立客戶端的動態網頁。</p>    
+   <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                jQuery基礎</td>
+            <td class="style3">
+                <a href="https://app.box.com/s/tzzosx399l2fh2zrb127">範例檔</a>
+                <a href="https://app.box.com/s/sash97qx7e6wd3kes6mw">簡報檔</a></td>
+        </tr>  
+ 
+    </table> 
+  </article>
+ <br/>
+  <hr/>
+  <br/>
+ 
+  
+  <article>
+    <h2>ASP.NET課程</h2>
+    <p>ASP.NET是繼ASP 3.0後，微軟開發的伺服端網頁技術，
+       以「CLR」（Common Language Runtime）架構的.NET程式設計平台，
+       可以讓我們使用CLR語言在伺服端建立Web應用程式。</p>
+    <a href="Box.aspx">Box申請過程的圖片</a>
+    | <a href="Somee.aspx">Somee申請過程的圖片</a> <br/><br/>
+    <a href="Survey.aspx">線上問卷建立過程的圖片</a>
+    | <a href="VS2012.aspx">VS2012新增網站和網頁過程的圖片</a><br/><br/>
+    <a href="Survey_Slideshow/index.html">線上問卷線上秀圖</a>
+    | <a href="VS2012_Slideshow/index.html">VS2012新增網站和網頁線上秀圖</a>
+    <br/><br/>
+    <h2>課程內容</h2>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容(日期)</td>
+            <td class="style2">
+                範例與簡報檔</td>
+            <td class="style2">
+                資料收集與處理工具</td>
+        </tr>
+        <tr>
+            <td class="style3">
+                ASP.NET開發環境(03/21)</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/dn6ztx9hzp1inh5jjot3">範例檔</a>
+                <a href="https://www.box.com/s/xyjkfo44gq8fzr41wh6r">簡報檔</a></td>
+            <td class="style3">
+                 </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Visual Basic語言(03/28)</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/kg4ulsabmlrgaztufzx9">Ch03範例檔</a>
+                <a href="https://www.box.com/s/4otbuokffbhktn5gnrk6">程式邏輯與流程圖簡報檔</a>
+                <a href="https://www.box.com/s/ij0yv99aivaslto8ujn6">VB語法簡報檔</a></td>
+            <td class="style3">
+                <a href="https://www.box.com/s/0uwwi9a93y6ggjzspz3z">流程圖工具</a>
+                <a href="https://www.box.com/s/3vallfnbsfrixjnp82im">抓圖工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Form表單</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/h5u23ibutoqtollresfs">Ch04範例檔</a>
+                <a href="https://www.box.com/s/5w1evsi90d49twwh5o4w">Ch04簡報檔</a>
+            </td>
+            <td class="style3">
+                <a href="https://www.box.com/s/wvac3trh7hdju4su5w9n">圖檔轉換工具</a>
+                <a href="http://www.newocr.com/">線上OCR工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                ASP.NET控制項</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/hvivvggqhcf97sr6lz2s">Ch05範例檔</a>
+                <a href="https://www.box.com/s/dep6opsil7w0ipqk7t12">Ch05簡報檔</a>
+            </td>
+            <td class="style3">
+                <a href="http://kej.tw/flvretriever/youtube.php?videoUrl=http%3A%2F%2Fwww.youtube.com%2Fwatch%3Ffeature%3Dplayer_detailpage%26amp%3Bv%3DtUH_bYzfHC4">線上YouTube下載</a>
+                <a href="https://www.box.com/s/9huxfxsinx8weappi679">YouTube下載工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                資料驗證與HTTP物件</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/ug16tk0yeass2l0b2snf">Ch06範例檔</a>
+                <a href="https://www.box.com/s/a73gj9txihlrppn0v0kn">Ch06簡報檔</a>
+            </td>
+            <td class="style3">
+                <a href="https://www.box.com/s/9za8jgg6q5qy6we2t2hb">影片檔轉換工具</a>
+                <a href="https://www.box.com/s/dzd9xq59e9wclosbid71">視訊播放工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                狀態管理</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/oljrum7uw05vne1stjdh">Ch07範例檔</a>
+                <a href="https://www.box.com/s/5u15iglknowpkhd0xs7z">Ch07簡報檔</a>
+            </td>
+            <td class="style3">                
+                <a href="https://www.box.com/s/j9ayiwptmr0ihflrf474">OCR工具</a>
+                <a href="https://01.org/rib/online/">jQuery Mobile GUI工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                檔案處理</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/9vuvqae7gsfbs4syvdkv">Ch15範例檔</a>
+                <a href="https://www.box.com/s/ts46fd9573fujijj35kb">Ch15簡報檔</a>
+            </td>
+            <td class="style3">
+                <a href="https://www.box.com/s/1ct5wot5j1df8jgzxr4l">簡繁轉換工具</a></td>
+        </tr>
+        <tr>
+            <td class="style3">
+                網站製作</td>
+            <td class="style3">
+                <a href="https://www.box.com/s/nc17dx6xzrqz5w7p37j1">步驟圖檔</a>
+                <a href="https://www.box.com/s/u6nfgyf2bmr62xxhepvs">簡報檔</a>
+            </td>
+            <td class="style3"><a href="https://www.box.com/s/65jjoebpue4sdtscnjqi">Web簡報秀圖工具</a></td>
+        </tr>
+    </table>
+  </article>
+</section>
+<aside>
+  <h3>教學資源: </h3>
+  <ul id="nav">
+     <li><a data-title="New!" href="https://www.w3schools.com/python/" target="_blank">Python教學</a></li>
+     <li><a data-title="New!" href="http://www.runoob.com/python3/python3-tutorial.html" target="_blank">Python菜鳥教程</a></li>
+     <li><a data-title="New!" href="https://www.w3schools.com/html/default.asp" target="_blank">HTML教學</a></li>
+     <li><a data-title="New!" href="https://www.w3schools.com/css/default.asp" target="_blank">CSS教學</a></li>
+     <li><a data-title="New!" href="https://www.w3schools.com/js/default.asp" target="_blank">JavaScript教學</a></li>
+     <li><a data-title="New!" href="https://www.w3schools.com/jquery/default.asp" target="_blank">jQuery教學</a></li>
+     <li><a data-title="New!" href="http://jquery.com/" target="_blank">jQuery官網</a></li>
+     <li><a data-title="New!" href="http://jquerymobile.com/" target="_blank">jQuery Mobile官網</a></li>
+     <li><a data-title="New!" href="http://www.phonegap.com/" target="_blank">PhoneGap官網</a></li>
+     <li><a data-title="New!" href="https://ezoui.com/app/zh-tw/" target="_blank">EZo App官網</a></li>
+     <li><a data-title="New!" href="http://appinventor.mit.edu/explore/front.html" target="_blank">App Inventor官網</a></li>
+  </ul>
+
+  <h3>AI2教學手冊: </h3>
+  <ul id="nav">
+     <li><a data-title="Hot!" href="https://app.box.com/s/4eases5fp1srboisom9a" target="_blank">AI2中文手冊(第1章)</a></li>
+     <li><a data-title="Hot!" href="https://app.box.com/s/yof0c24xhzwg9ui2i3su" target="_blank">AI2中文手冊(第2章)</a></li>
+     <li><a data-title="Hot!" href="https://app.box.com/s/h9xipmvi454wtsy03233" target="_blank">AI2中文手冊(第3章)</a></li>  
+     <li><a data-title="Hot!" href="https://app.box.com/s/xys0qxeuec5qklcy1onr" target="_blank">AI2中文手冊(第4章)</a></li>     
+  </ul>   
+
+  <h3>範例程式: </h3>
+  <ul id="nav">
+     <li><a data-title="Quiz" href="QuizForm.aspx" target="_blank">線上測驗</a></li>
+     <li><a data-title="Survey" href="SurveyForm.aspx" target="_blank">問卷調查</a></li>
+     <li><a data-title="Quiz_DB" href="QuizForm_DB.aspx" target="_blank">線上測驗(DB)</a></li>
+     <li><a data-title="Result_DB" href="QuizResult_DB.aspx" target="_blank">測驗結果(DB)</a></li>
+  </ul>
+
+  <h3>教學影片: </h3>
+  <ul id="nav">
+     <li><a data-title="Hot!" href="https://www.box.com/s/icnp5u7q78d2idemkobj" target="_blank">建立ASP.NET網站</a></li>
+     <li><a data-title="Hot!" href="https://www.box.com/s/1qsxxiyubiyvgspt75a4" target="_blank">新增ASP.NET網頁</a></li>
+     <li><a data-title="Hot!" href="https://www.box.com/s/jakgp1adchtdj15o40hp" target="_blank">建立Web Form表單</a></li>  
+     <li><a data-title="Hot!" href="https://www.box.com/s/pjca1f0m41w7c42os07x" target="_blank">使用RadioButtonList控制項</a></li>        
+  </ul> 
+
+</aside>
+</div>
+</body>
+</html>
