@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rest04.html</title>
+<style type="text/css">
+.box {
+   width:300px;
+   background-color:#ffffff;
+   border:2px solid blue;
+   padding:10px;
+}
+</style> 
+<script src="jquery-3.1.0.min.js"></script>
+<script>
+$(document).ready(function() {
+      // 送出Ajax請求 
+      $.ajax({
+          type: "GET",
+          url: "http://localhost:1880/books/D0001",
+          dataType: "text",  // 傳回JSON字串
+          success: function (response) {
+              var data = $.parseJSON(response);  // 剖析字串               
+              var html = '<ul>';          
+              $.each(data, function(key, val) {
+                  html += '<li id="' + key + '">' + val.id + ':' + val.title + '</li>';
+              });
+              html += '</ul>';
+              $('#result').html(html);
+          },
+          timeout: 6000,  // Timeout時間6秒鐘
+          error: function() {  // 失敗
+              alert("錯誤: 無法完成Ajax請求..");
+          }
+      });
+});
+</script>
+</head>
+<body>
+<div id="result" class="box"></div>
+</body>
+</html>

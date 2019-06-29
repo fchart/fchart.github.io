@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>rest02.html</title>
+<style type="text/css">
+.box {
+   width:300px;
+   background-color:#ffffff;
+   border:2px solid blue;
+   padding:10px;
+}
+</style> 
+<script src="jquery-3.1.0.min.js"></script>
+<script>
+$(document).ready(function() {
+   $.getJSON('http://localhost:1880/books/D0001', function(data) {
+      var html = '<ul>';          
+      $.each(data, function(key, val) {
+         html += '<li id="' + key + '">' + val.id + ':' + val.title + '</li>';
+      });
+      html += '</ul>';
+      $('#result').html(html);
+   });
+});
+</script>
+</head>
+<body>
+<div id="result" class="box"></div>
+</body>
+</html>
