@@ -54,5 +54,40 @@
     "category": "Mobile",
     "pubdate": "07/2016",
     "id": "M101"
+    },
+    {
+    "title": "PhoneGap程式設計", 
+    "author": "陳會安",
+    "category": "Mobile",
+    "pubdate": "07/2016",
+    "id": "M112"
+    },
+    {
+    "title": "C#程式設計", 
+    "author": "陳會安",
+    "category": "Programming",
+    "pubdate": "06/2018",
+    "id": "P111"
+    },
+    {
+    "title": "JSP網頁設計", 
+    "author": "陳會安",
+    "category": "Web",
+    "pubdate": "09/2019",
+    "id": "W113"
+    },
+    {
+    "title": "Visual Basic程式設計", 
+    "author": "陳會安",
+    "category": "Programming",
+    "pubdate": "11/2018",
+    "id": "P113"
+    },
+    {
+    "title": "C 程式設計", 
+    "author": "陳會安",
+    "category": "Programming",
+    "pubdate": "07/2017",
+    "id": "P115"
     }
 ]
