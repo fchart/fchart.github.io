@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>table_paging.html</title>
+  <style type="text/css">
+  body {
+     padding: 5px;
+  }
+  .table_box {
+     margin: 1cm;
+     padding: 5px;
+     border: 1px solid black;
+  }
+  table {
+     border-collapse: collapse;
+     width: 100%;
+  }
+  td, th {
+     border: 1px solid black;
+  }
+  .color_page {
+     background: #ccf;
+  }
+  .box div, .box ul {
+     float: right;
+  }
+  </style>
+  <script type="text/javascript" src="paginator.js"></script>
+  <script src="jquery-3.1.0.min.js"></script>
+  <script>
+  $(document).ready(function() {
+   $.getJSON('books_all.json', function(data) {
+      var html = '<table>';
+      html += '<tr><th>書號</th><th>書名</th><th>作者</th><th>分類</th></tr>'
+      $.each(data, function(key, val) {
+         html += '<tr><td>' + val.id + '</td><td>' + val.title + '</td><td>' + val.author + '</td><td>' + val.category + '</td></tr>';
+      });
+      html += '</table>';
+      $('#table_box_native').html(html);
+   });
+  });
+</script>
+</head>
+<body>
+   <h2>HTML 表格分頁</h2>
+   <div id="table_box_native"></div>
+   <div id="index_native" class="box"></div>
+<script>
+window.addEventListener("load", function () {
+    paginator({
+        table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
+        box: document.getElementById("index_native"),
+        active_class: "color_page"
+    });
+}, false);
+</script>
+</body>
+</html>
