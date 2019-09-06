@@ -30,26 +30,26 @@
   <script src="jquery-3.1.0.min.js"></script>
   <script>
   $(document).ready(function() {
-   $.getJSON('books_all.json', function(data) {
-      var html = '<table>';
-      html += '<tr><th>書號</th><th>書名</th><th>作者</th><th>分類</th></tr>'
-      $.each(data, function(key, val) {
-         html += '<tr><td>' + val.id + '</td><td>' + val.title + '</td><td>' + val.author + '</td><td>' + val.category + '</td></tr>';
-      });
-      html += '</table>';
-      $('#table_box_native').html(html);
-      paginator({
+   paginator({
         table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
         box: document.getElementById("index_native"),
         active_class: "color_page"
-    });
+   }); 
+   $.getJSON('books_all.json', function(data) {
+      var html = '<tr><th>書號</th><th>書名</th><th>作者</th><th>分類</th></tr>'
+      $.each(data, function(key, val) {
+         html += '<tr><td>' + val.id + '</td><td>' + val.title + '</td><td>' + val.author + '</td><td>' + val.category + '</td></tr>';
+      });
+      $('#result').html(html);
    });  
   });
 </script>
 </head>
 <body>
    <h2>HTML 表格分頁</h2>
-   <div id="table_box_native"></div>
+   <div id="table_box_native">
+      <table id="result"></table>
+   </div>
    <div id="index_native" class="box"></div>
 </body>
 </html>
