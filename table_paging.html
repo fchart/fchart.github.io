@@ -30,18 +30,18 @@
   <script src="jquery-3.1.0.min.js"></script>
   <script>
   $(document).ready(function() {
-   paginator({
-        table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
-        box: document.getElementById("index_native"), 
-        pageSize: 5,
-        active_class: "color_page"
-   }); 
    $.getJSON('books_all.json', function(data) {
       var html = '<tr><th>書號</th><th>書名</th><th>作者</th><th>分類</th></tr>'
       $.each(data, function(key, val) {
          html += '<tr><td>' + val.id + '</td><td>' + val.title + '</td><td>' + val.author + '</td><td>' + val.category + '</td></tr>';
       });
       $('#result').html(html);
+      paginator({
+        table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
+        box: document.getElementById("index_native"), 
+        pageSize: 5,
+        active_class: "color_page"
+      }); 
    });  
   });
 </script>
