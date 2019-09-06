@@ -36,13 +36,13 @@
          html += '<tr><td>' + val.id + '</td><td>' + val.title + '</td><td>' + val.author + '</td><td>' + val.category + '</td></tr>';
       });
       $('#result').html(html);
-      paginator({
-        table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
-        box: document.getElementById("index_native"), 
-        pageSize: 5,
-        active_class: "color_page"
-      }); 
-   });  
+   });
+   paginator({
+      table: document.getElementById("table_box_native").getElementsByTagName("table")[0],
+      box: document.getElementById("index_native"), 
+      pageSize: 5,
+      active_class: "color_page"
+   }); 
   });
 </script>
 </head>
