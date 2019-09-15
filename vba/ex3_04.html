@@ -4,14 +4,16 @@
   <meta charset="utf-8"/>
   <title>HTML 表格標籤</title>
   <style>
-  table { 
+  table {      
      border:1px solid #000; 
      font-family: 微軟正黑體; 
      font-size:16px; 
      border:1px solid #000;
      text-align:center;
      border-collapse:collapse;
-  } 
+     margin: 20px;
+     padding:10px;
+  }
   th { 
      background-color: #009FCC;
      padding:10px;
@@ -23,11 +25,19 @@
      padding:5px;
   } 
   tfoot { background-color: yellow }
+  #container {
+     height: 100%;
+     width: 100%;
+     display: flex;
+  }  
+  #tb1 { width: 25%; }
+  #tb2 { width: 25%; }
   </style>
  </head>
  <body>
  <h2>HTML 表格標籤</h2>
-  <table class="deposit" border="">
+ <div id="container">
+  <table class="deposit" border="" id="tb1">
    <caption>第一季的每月存款金額</caption>
    <thead>
    <tr>
@@ -59,8 +69,8 @@
         <td>NT$ 10,000</td>
    </tr>
    </tfoot>
-  </table>  <br>
-  <table class="deposit" border="">
+  </table> 
+  <table class="deposit" border="" id="tb2">
    <caption>第二季的每月存款金額</caption>
    <thead>
    <tr>
@@ -93,5 +103,6 @@
    </tr>
    </tfoot>
   </table> 
+ </div>
  </body>
 </html>
