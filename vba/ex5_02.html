@@ -1,0 +1,93 @@
+<!DOCTYPE HTML">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<title>HTML 版面配置</title>
+<style>
+.header {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+li {
+  display: inline;
+}
+.article {
+  float: left;
+  width: 33.33%;
+  padding: 15px;
+}
+.content:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.aside {
+  float: left;
+  width: 15%;
+  padding: 15px;
+}
+.aside li {
+  background-color: #eee;
+  color: black;
+  display: block;
+  text-decoration: none;
+}
+.footer {
+  background-color: #F1F1F1;
+  text-align: center;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>程式設計之家</h1>
+  <div class="nav">
+    <ul>
+      <li><a  href="/News/">最新消息</a></li>
+      <li><a  href="/Services/">公司服務</a></li>
+      <li><a  href="/Resources/">相關資源</a></li>
+      <li><a  href="/About/">關於網站</a></li>
+    </ul>
+  </div>
+</div>
+<div class="content">
+<div class="section">
+  <div class="article">
+    <h2>歡迎光臨程式設計之家</h2>
+    <p>程式設計之家是一個JavaScript+HTML5技術網站，
+       除了JavaScript和HTML5的技術服務外，也提供網站架設服務。</p> 
+  </div>
+  <div class="article">
+    <h2>服務說明</h2>
+    <p>程式設計之家提供專業的公司或個人架站服務，
+       包含公司網站、銷售平台、部落格、臉書等，
+       提供全方位網站資源架設和網路行銷。</p>
+    <p>程式設計之家也提供相關技術的顧問服務，
+       不論是客戶端或伺服端網頁設計技術、資料庫
+       或行動平台的網站或應用程式開發，
+       都提供全方位的技術服務。</p>
+    <p><a href="/Services/">更多服務</a></p>
+  </div>
+  </div>
+  <div class="aside">
+  <h2>相關資源網站</h2>
+  <ul>
+   <li><a href="">HTML5教學網站</a></li>
+   <li><a href="">JavaScript教學網站</a></li>
+   <li><a href="">CSS教學網站</a></li>
+  </ul>
+  <p><a  href="/Resources/">更多資源</a></p>
+  </div>
+</div>
+<div class="footer">
+  <small>Copyright &copy; 2019 陳會安 版權所有</small>
+</div>
+</body>
+</html>
