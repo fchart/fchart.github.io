@@ -1,4 +1,4 @@
-body { background: #5882FA; }
+body { background: #FFE333; }
 header, section, article, aside, footer {
    display: block;
 }
@@ -12,7 +12,7 @@ p { margin: 0 0 20px 0; }
    width: 90%; 
    margin: 30px auto;
    padding: 25px;
-   background: #EFFBF8;
+   background: #DAFF33;
    overflow: hidden;
 }
 section {
