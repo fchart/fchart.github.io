@@ -3,12 +3,199 @@
 <html>
 <head>
 <meta charset="utf-8"/>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <title>遠距資料收集系統規劃與介面設計/數位調查資料接收與儲存應用</title>
 <link rel='stylesheet' type='text/css' href='style.css'/>
 </head>
 <body>
 <div id="content">
 <section>
+  <article>
+    <h2>遠距資料收集: Web Scraper擴充功能的網路爬蟲 - 2019</h2>
+     <p>在人工智慧/機器學習和大數據的時代，資料已經成為一種珍貴的資源，資料收集也是這個新時代的一項必備技能，我們可以直接從網路的 Web 網頁來擷取資料，這就是網路爬蟲(Web Scraping) 。</p> 
+     <p>網路爬蟲（Web Scraping）或稱為網路資料擷取（Web Data Extraction）是一種資料擷取技術，可以讓我們直接從Web網站的HTML網頁取出所需的資料，其過程包含與Web資源進行通訊，剖析文件取出所需資料和將資料整理成資訊，即轉換成所需的資料格式。</p>   
+
+    
+    <a href="https://drive.google.com/file/d/1L-DR5N8sI4RtvutFWJiuO0IoFOA3NIlY/view?usp=sharing" target="_blank">CSS選擇器測試工具</a>  
+    | <a href="https://drive.google.com/file/d/1Fv0P2u45ABYAgcqKODc44qML3mAVrYKz/view?usp=sharing" target="_blank">Web Scraper擴充功能</a>
+    | <a href="https://drive.google.com/file/d/1UF5BbavQzC3JZOV7xkvTvYcL5WJAsZWq/view?usp=sharing" target="_blank">fChart6工具(Google)</a> 
+    | <a href="https://mega.nz/#!jNNxxCLT!QWwmUyOXTlS_0OQm_7QVNOwZaScvsi3wIxsIvkB1Fe8" target="_blank">fChart6工具(MEGA)</a> 
+    | <a href="https://fchart.github.io/fChart6%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf" target="_blank">fChart6手冊</a> 
+   <br/><br/> 
+   
+   <h3>課程內容(一): fChart程式邏輯訓練</h3>
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+        <tr>
+            <td class="style3">
+                運算思維</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1PrlxneM9ZAm_VPcw-S93YZBbMtaP1kds/view?usp=sharing" target="_blank">簡報檔</a>
+                </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                1_fChart_變數與運算子(循序結構)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1cI4F1oujEFa3fHD52-erBvTa6v1BP2ih/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                2_fChart_是否選(選擇結構)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1LhrSD9MtsnriAAMBCC9zF9LC_peoa13I/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                3_fChart_二選一(選擇結構)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1oweAOype2Use7E5xHGwSLEIFaTSMfwVp/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>  
+        <tr>
+            <td class="style3">
+                4_fChart_多選一(選擇結構)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1qxt9urn1LqNwMqNDImDc8IPQkpqdyzZD/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                5_fChart_迴圈(重複結構)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1ShXuKUKWocd_CwRj4_d0zGg4zxhdJQH_/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                6_fChart_函數(模組)</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1xDVtlDJvEStqUvhVPSv-dkRBRdeo_ZX-/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1rRhlg4utuvvbrRGzQKAmHXQBIViQ0wY7/view?usp=sharing" target="_blank">範例檔</a>
+            </td>
+        </tr>
+    </table>
+    
+    <br><br>
+    
+    <h3>課程內容(二): Web Scraper 網路爬蟲</h3>
+   
+    <table class="style1">
+        <tr>
+            <td class="style2">
+                課程內容</td>
+            <td class="style2">
+                範例與簡報檔</td>            
+        </tr>
+       <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(一):基礎</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/12TS-a1H0dsaum6xjINIUCJiDpbGIN5XO/view?usp=sharing" target="_blank">簡報檔</a>
+             </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(二):清單/詳細</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1OyHAlWRZw9fCryX3XJ9VO-p9WXf5aszI/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/17dHo5SPfTWIE0t5W2y1co7_HF_oeLes_/view?usp=sharing" target="_blank">yahoo_movies.txt</a>
+             </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(三):表格</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/13TmpSuPDTnR4E9FVFQfoRUWl1xjntwMy/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1-4FWlOdQbrR400_YRCBUfMigmMajB-92/view?usp=sharing" target="_blank">Example.html</a>
+             </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(四):容器和參數分頁</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1rH3wJmpq6G_LOq-wjT1eoi608EYsGcYY/view?usp=sharing" target="_blank">簡報檔</a>
+             </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲任務: 更多的爬蟲實戰</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1OuTD6s-D6wwmOp5IW4J8FS8jt6g9hoar/view?usp=sharing" target="_blank">簡報檔</a>
+             </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(五):階層目錄</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1yjdBkI9vM4rt4wuMhfqagRGUTMhn8TUx/view?usp=sharing" target="_blank">簡報檔</a>
+             </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(六):上下頁網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/10vUTzKMa8Ci2A6623jbK9jHGZ-dZKn4n/view?usp=sharing" target="_blank">簡報檔</a>
+            </td>
+        </tr>             
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(七):頁碼分頁網站</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1DLajs_ES5pl68rG8NC6XejFudEEMalem/view?usp=sharing" target="_blank">簡報檔</a>
+            </td>
+        </tr>   
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲(八):更多按鈕和捲動顯示</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1k0UiMe1dUqC2jLbUocujUDKOQgZfQ3rC/view?usp=sharing" target="_blank">簡報檔</a>
+            </td>
+        </tr> 
+        <tr>
+            <td class="style3">
+               Web Scraper網路爬蟲(九):爬取和下載網頁的圖片檔案</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1CkhU-plKkHoNn-enpx4mOUmZJpQoEkM5/view?usp=sharing" target="_blank">簡報檔</a>
+                <a href="https://drive.google.com/file/d/1jOPoQSmlGwksQxJPEcPh0umnzFHlhzH-/view?usp=sharing" target="_blank">下載的Python程式</a>            
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+               Web Scraper網路爬蟲(十):使用正規表達式清理資料</td>
+            <td class="style3">
+                 <a href="https://drive.google.com/file/d/1Mb6uWWckZUyFM8M5gvwajlPKhcmpk0_b/view?usp=sharing" target="_blank">簡報檔</a>
+            </td>
+        </tr>
+        <tr>
+            <td class="style3">
+                Web Scraper網路爬蟲 : 使用CSS選擇器</td>
+            <td class="style3">
+                <a href="https://drive.google.com/file/d/1mceRo-P4u9nz1XeP_iJzt7jjr1ejlGIP/view?usp=sharing" target="_blank">簡報檔</a>
+            </td>
+        </tr>  
+            
+    </table> 
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>
+    <br/><br/>   
+  </article>
+ <br/>
+  <hr/>
+  <br/>
   <article>
     <h2>Python程式設計與網路爬蟲的遠距資料收集 - 2018</h2>
     <p>Python語言是Guido Van Rossum開發的一種通用用途（General Purpose）的程式語言，這是擁有優雅語法和高可讀性程式碼的程式語言，可以讓我們開發GUI視窗程式、Web應用程式、系統管理工作、財務分析和大數據資料分析等各種不同的應用程式。</p>
@@ -281,7 +468,7 @@
                 <a href="https://drive.google.com/file/d/1doviPiqavUy-P0oSjPQb8q0FeA6jiEjI/view?usp=sharing" target="_blank">Python爬蟲範例</a>              
             </td>
         </tr>           
-        <tr>
+ <!--       <tr>
             <td class="style3"><b style="color:red">***期末作業***</b></td>
             <td class="style3">
                 <p>使用Web Scraper工具或Python程式爬取自選網站(不含上課爬過的網站)，<br>
@@ -290,7 +477,7 @@
                    <li>評分標準視網站爬取困難度</li>
                 </ul>   完成後，匯出網站地圖和CSV檔案
                 <b style="color:red">Email至：hueyanchen2018@gmail.com</b><br>，請使用姓名加上學號作為郵件標題, 附檔是網站地圖和CSV檔案,內容簡述為什麼爬取此網站,交作業日期:1/13日晚上24:00前。</p></td>
-        </tr>                        
+        </tr> -->                       
     </table> 
     <br/><br/>
     <a href="https://mega.nz/#!TQVDhC4S!ri1_Fg8AUd1ifSmMB9ODYq-eVkwteUFvLZsrolfYbqE" target="_blank">OttoDIYDancing2.apk</a> <br/><br/>
@@ -1278,7 +1465,10 @@
 </section>
 <aside>
   <h3>教學資源: </h3>
+  <small>
   <ul id="nav">
+     <li><a data-title="New!" href="https://webscraper.io/documentation" target="_blank">Web Scraper官方文件</a></li>
+     <li><a data-title="New!" href="https://www.jianshu.com/p/e4c1561a3ea7" target="_blank">Web Scraper中文文件</a></li>
      <li><a data-title="New!" href="https://www.w3schools.com/python/" target="_blank">Python教學</a></li>
      <li><a data-title="New!" href="http://www.runoob.com/python3/python3-tutorial.html" target="_blank">Python菜鳥教程</a></li>
      <li><a data-title="New!" href="https://www.w3schools.com/html/default.asp" target="_blank">HTML教學</a></li>
@@ -1315,7 +1505,7 @@
      <li><a data-title="Hot!" href="https://www.box.com/s/jakgp1adchtdj15o40hp" target="_blank">建立Web Form表單</a></li>  
      <li><a data-title="Hot!" href="https://www.box.com/s/pjca1f0m41w7c42os07x" target="_blank">使用RadioButtonList控制項</a></li>        
   </ul> 
-
+  </small>
 </aside>
 </div>
 </body>
