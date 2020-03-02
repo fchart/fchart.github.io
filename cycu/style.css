@@ -4,7 +4,7 @@ header, section, article, aside, footer {
 }
 h1 {
    font-size: 32px; 
-   color: brown;
+   color: darkred;
    margin: 0 0 10px 0; }
 h2 {
    font-size: 24px; 
