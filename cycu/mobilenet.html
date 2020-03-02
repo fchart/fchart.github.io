@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>mobilenet</title>
+    <!-- TensorFlow.js Core -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.5.2/dist/tf.min.js">
+    </script>
+    <!-- TensorFlow.js mobilenet model -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet">
+    </script>
+</head>
+<body>
+    <img id="img" crossOrigin src="https://static.boredpanda.com/blog/wp-content/uploads/2020/01/fluffy-new-grumpy-cat-5e2e9496e8352__700.jpg" 
+    width=400 height=400 />
+    <p id="result"></p>
+    <script>
+        async function app() {
+            const mobilenet_model = await mobilenet.load();
+            const img = document.getElementById('img');
+            const result = await mobilenet_model.classify(img);
+            document.getElementById('result').innerHTML = result[0].className;
+            console.table(result);
+        }
+        app();
+    </script>
+</body>
+</html>
+
