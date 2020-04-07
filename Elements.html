@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="big5">
+ <head>
+  <meta charset="utf-8"/>
+  <title>HTML清單標籤</title>
+  <style>
+  .question { color: brown }
+  .answer { font-size: 12pt; color: green }
+  </style>  
+ </head>
+ <body>
+   <h2 id="main">問卷調查</h2>
+   <ol id="survey" class="survey">
+    <li id="q1" class="question"><b>請問你的性別?</b>
+      <ul class="answer">
+        <li class="response">男</li>
+        <li class="response selected">女</li>
+      </ul>
+    </li>
+    <li id="q2" class="question"><b>請問你是否喜歡偵探小說?</b>
+      <ul class="answer">
+        <li class="response">喜歡</li>
+        <li class="response selected">不喜歡</li>
+      </ul>
+    </li>
+    <li id="q3" class="question"><b>請問你是否會 HTML 網頁設計?</b>
+      <ul class="answer">
+        <li class="response selected">會</li>
+        <li class="response">不會</li>
+      </ul>
+    </li>
+  </ol>  
+ </body>
+</html>
