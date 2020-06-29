@@ -927,7 +927,7 @@ MM.Item.prototype._findLinks = function(node) {
 }
 MM.Map = function(options) {
 	var o = {
-		root: "我的心智图",
+		root: "我的思维导图",
 		layout: MM.Layout.Map
 	}
 	for (var p in options) { o[p] = options[p]; }
@@ -1758,7 +1758,7 @@ MM.Command.Swap.execute = function(e) {
 }
 
 MM.Command.Side = Object.create(MM.Command, {
-	label: {value: "变更侧面"},
+	label: {value: "变更至另一侧面"},
 	keys: {value: [
 		{keyCode: 37, ctrlKey:true},
 		{keyCode: 39, ctrlKey:true},
@@ -1774,7 +1774,7 @@ MM.Command.Side.execute = function(e) {
 }
 
 MM.Command.Save = Object.create(MM.Command, {
-	label: {value: "保存心智图"},
+	label: {value: "保存思维导图"},
 	keys: {value: [{keyCode: "S".charCodeAt(0), ctrlKey:true, shiftKey:false}]}
 });
 MM.Command.Save.execute = function() {
@@ -1790,7 +1790,7 @@ MM.Command.SaveAs.execute = function() {
 }
 
 MM.Command.Load = Object.create(MM.Command, {
-	label: {value: "加载心智图"},
+	label: {value: "加载思维导图"},
 	keys: {value: [{keyCode: "O".charCodeAt(0), ctrlKey:true}]}
 });
 MM.Command.Load.execute = function() {
@@ -1798,7 +1798,7 @@ MM.Command.Load.execute = function() {
 }
 
 MM.Command.Center = Object.create(MM.Command, {
-	label: {value: "心智图置中"},
+	label: {value: "思维导图置中"},
 	keys: {value: [{keyCode: 35}]}
 });
 MM.Command.Center.execute = function() {
@@ -1806,11 +1806,11 @@ MM.Command.Center.execute = function() {
 }
 
 MM.Command.New = Object.create(MM.Command, {
-	label: {value: "添加心智图"},
+	label: {value: "添加思维导图"},
 	keys: {value: [{keyCode: "N".charCodeAt(0), ctrlKey:true}]}
 });
 MM.Command.New.execute = function() {
-	if (!confirm("确认舍弃目前的心智图和添加一个新的 ?")) { return; }
+	if (!confirm("确认舍弃目前的思维导图和添加一个新的 ?")) { return; }
 	var map = new MM.Map();
 	MM.App.setMap(map);
 	MM.publish("map-new", this);
@@ -1849,7 +1849,7 @@ MM.Command.UI.execute = function() {
 }
 
 MM.Command.Pan = Object.create(MM.Command, {
-	label: {value: "平移心智图"},
+	label: {value: "平移思维导图"},
 	keys: {value: [
 		{keyCode: "W".charCodeAt(0), ctrlKey:false, altKey:false, metaKey:false},
 		{keyCode: "A".charCodeAt(0), ctrlKey:false, altKey:false, metaKey:false},
@@ -3012,7 +3012,7 @@ MM.Format.FreeMind._parseAttributes = function(node, parent) {
 }
 MM.Format.MMA = Object.create(MM.Format.FreeMind, {
 	id: {value: "mma"},
-	label: {value: "心智图架构"},
+	label: {value: "思维导图架构"},
 	extension: {value: "mma"}
 });
 
@@ -4189,7 +4189,7 @@ MM.UI.IO.prototype.show = function(mode) {
 	this._mode = mode;
 	this._node.classList.add("visible");
     // this._heading.innerHTML = mode;
-    this._heading.innerHTML = (mode == "load" ? "加载心智图" : "保存心智图");
+    this._heading.innerHTML = (mode == "load" ? "加载思维导图" : "保存思维导图");
     
     this._syncBackend();
 	window.addEventListener("keydown", this);
@@ -4553,7 +4553,7 @@ MM.UI.Backend.Local.show = function(mode) {
 			this._go.disabled = true;
 			this._remove.disabled = true;
 			var o = document.createElement("option");
-			o.innerHTML = "(无心智图已保存)";
+			o.innerHTML = "(无思维导图已保存)";
 			this._list.appendChild(o);
 		}
 	}
@@ -4666,7 +4666,7 @@ MM.UI.Backend.Firebase.handleMessage = function(message, publisher, data) {
 				this._buildList(data, this._list);
 			} else {
 				var o = document.createElement("option");
-		        o.innerHTML = "(无心智图已保存)";
+		        o.innerHTML = "(无思维导图已保存)";
 				this._list.appendChild(o);
 			}
 			this._sync();

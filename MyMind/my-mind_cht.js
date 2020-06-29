@@ -1758,7 +1758,7 @@ MM.Command.Swap.execute = function(e) {
 }
 
 MM.Command.Side = Object.create(MM.Command, {
-	label: {value: "變更側面"},
+	label: {value: "變更至另一側面"},
 	keys: {value: [
 		{keyCode: 37, ctrlKey:true},
 		{keyCode: 39, ctrlKey:true},
