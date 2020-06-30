@@ -28,9 +28,10 @@ $(document).ready(function() {
   context.strokeStyle = "#0000FF";
   context.lineJoin = "round";
   context.lineWidth = 20;
-  
+  $("#number").html("載入MNIST模型中...");
   tf.loadLayersModel('model/model.json').then(function(model) {
     window.model = model;
+    $("#number").html("請使用滑鼠輸入數字...");
     $("#canvas").mousedown(function(mouseEvent) {
       let position = getPosition(mouseEvent, sigCanvas);
       context.moveTo(position.X, position.Y);
