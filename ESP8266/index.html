@@ -1360,6 +1360,9 @@ List of files will be shown here.
 <block type=net_get_request>
 <field name=BLOCK_NET_GET>Make HTTP GET Request URL</field>
 </block>
+<block type=net_get_request_headers>
+<field name=BLOCK_NET_GET>Make HTTP GET Request URL</field>
+</block>
 <block type=net_response_statuscode>
 <field name=BLOCK_NET_STATUSCODE>Get status code</field>
 </block>
@@ -1382,7 +1385,7 @@ List of files will be shown here.
 <field name=NET_POST_REQUEST_URL3>Make xrequests GET Request URL</field>
 <field name=NET_POST_REQUEST_PARAMS>params</field>
 </block>
-<block type=net_post_request_header>
+<block type=net_post_request_headers>
 <field name=NET_POST_REQUEST_URL2>Make xrequests POST Request URL</field>
 </block>
 <block type=net_post_request_json>
@@ -1418,16 +1421,6 @@ List of files will be shown here.
 <value name=port>
 <shadow type=math_number>
 <field name=NUM>1883</field>
-</shadow>
-</value>
-<value name=user>
-<shadow type=text>
-<field name=TEXT></field>
-</shadow>
-</value>
-<value name=password>
-<shadow type=text>
-<field name=TEXT></field>
 </shadow>
 </value>
 </block>
