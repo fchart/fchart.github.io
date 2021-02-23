@@ -927,13 +927,13 @@ List of files will be shown here.
 </value>
 </block>
 <block type=dht_measure>
-<field name=MSG_MEASURE_DHT>Measure DHT11/22 Sensor</field>
+<field name=MSG_MEASURE_DHT>Measure DHT11/22 sensor</field>
 </block>
 <block type=dht_read_temp>
-<field name=MSG_READ_DHT_TEMP>Read DHT11/22 Temperature</field>
+<field name=MSG_READ_DHT_TEMP>Read DHT11/22 temperature</field>
 </block>
 <block type=dht_read_humidity>
-<field name=MSG_READ_DHT_HUMI>Read DHT11/22 Humidity</field>
+<field name=MSG_READ_DHT_HUMI>Read DHT11/22 humidity</field>
 </block>
 </category>
 <category name="HC-SR04 Ultrasound">
@@ -964,7 +964,18 @@ List of files will be shown here.
 <category name="MPU6050 InvenSense">
 <label text="MPU6050 IMU"></label>
 <label text="Library: imu.py"></label>
-<block type=init_mpu6050></block>
+<block type=init_mpu6050>
+<value name=scl>
+<shadow type=pinout>
+<field name=PIN>5</field>
+</shadow>
+</value>
+<value name=sda>
+<shadow type=pinout>
+<field name=PIN>4</field>
+</shadow>
+</value>
+</block>
 <block type=mpu6050_read_acc_x> </block>
 <block type=mpu6050_read_acc_y> </block>
 <block type=mpu6050_read_acc_z> </block>
