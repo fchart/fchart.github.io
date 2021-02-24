@@ -534,6 +534,7 @@ List of files will be shown here.
 </block>
 <block type=dicts_create_with></block>
 <block type=dict_get></block>
+<block type=dict_set></block>
 <block type=python_try_catch></block>
 </category>
 <category name=Timing>
@@ -694,6 +695,7 @@ List of files will be shown here.
 </shadow>
 </value>
 </block>
+<block type=gpio_get_pinobj></block>
 <block type=gpio_create_pwmobj>
 <value name=pin>
 <shadow type=pinout>
@@ -1505,26 +1507,79 @@ List of files will be shown here.
 </category>
 <category name="HTTP Server">
 <label text="HTTP Web Server"></label>
-<block type=net_http_server_start>
+<label text="Library: ESP8266WebServer.py"></label>
+<block type=net_http_server_begin>
 <value name=port>
 <shadow type=math_number>
 <field name=NUM>80</field>
 </shadow>
 </value>
 </block>
-<block type=net_http_server_accept>
+<block type=net_http_on_path>
+<value name=path>
+<shadow type=text>
+<field name=TEXT>/cmd</field>
+</shadow>
+</value>
+<value name=callback>
+<shadow type=text>
+<field name=TEXT>handleCmd</field>
+</shadow>
+</value>
 </block>
-<block type=net_http_server_requested_page>
+<block type=net_http_server_in_args>
+<value name=key>
+<shadow type=text>
+<field name=TEXT>led</field>
+</shadow>
+</value>
 </block>
-<block type=net_http_server_send_response>
-<value name=html>
+<block type=net_http_server_get_args_value>
+<value name=key>
+<shadow type=text>
+<field name=TEXT>led</field>
+</shadow>
+</value>
+</block>
+<block type=net_http_server_send_response_ok>
+<value name=status>
+<shadow type=math_number>
+<field name=NUM>200</field>
+</shadow>
+</value>
+<value name=content>
 <shadow type=text>
 <field name=TEXT>You reached MicroPython WebServer!</field>
 </shadow>
 </value>
+<value name=mime>
+<shadow type=text>
+<field name=TEXT>text/html</field>
+</shadow>
+</value>
 </block>
-<block type=net_http_server_close>
+<block type=net_http_server_send_response_error>
+<value name=status>
+<shadow type=math_number>
+<field name=NUM>400</field>
+</shadow>
+</value>
+<value name=content>
+<shadow type=text>
+<field name=TEXT>Bad Request</field>
+</shadow>
+</value>
 </block>
+<block type=net_http_server_start></block>
+<block type=net_http_server_setdocpath>
+<value name=path>
+<shadow type=text>
+<field name=TEXT>/www2</field>
+</shadow>
+</value>
+</block>
+<block type=net_http_server_settpldata></block>
+<label text=https://github.com/codemee/ESP8266WebServer></label>
 </category>
 </category>
 <category name=Modules>
