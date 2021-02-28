@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+<head>
+<title>MicroPython WebPAD</title>
+<style>
+  pre.out { color: darkgreen; }
+  pre.err { color: darkred; }
+  #foot { border-top: 1px solid black; }
+</style>
+</head>
+<body>
+
+<label>Address: <input id="addr" value="192.168.4.1"/></label>
+<label>Password: <input id="pass" type="password" value=""/></label>
+<button id="connect">Connect</button>
+<pre id="stat"></pre>
+<div id="foot">
+ <h1>MicroPython WebPad</h1>
+ <ul>
+  <li>See <a href="https://github.com/nickzoic/mpy-webpad/">https://github.com/nickzoic/mpy-webpad/</a></li>
+  <li>Use serial terminal to set up device on network, record IP address, import webrepl_setup and set password</li> 
+  <li>Enter device IP address and WebREPL password at top</li>
+  <li>Click 'Connect'</li>
+  <li>MicroPython version info should be displayed.</li>
+  <li>Type some Python in the box (sorry no syntax highlighting or autotabs yet!)</li>
+  <li>Hit Return three times to split into blocks for execution</li>
+  <li>Expressions are evaluated but not printed -- print(expr) to display a value</li>
+  <li>It's asynchronous, so loops and sleeps are fine.</li>
+ </ul>
+</div>
+<script type="text/javascript">
+// This is written to be small, fast and not need any external libraries.  It is not very
+// classy or cross-compatible with everything.  Pull requests welcome.
+
+(function() { 
+  var ws = null;
+  var pads = [];
+
+  function connect() {
+    if (ws) ws.close();
+    var addr = window.addr.value;
+    var m = addr.match(/(\d+\.\d+\.\d+\.\d+)(:(\d+))?/);
+    if (m) addr = "ws://" + m[1] + ":" + (m[3] || 8266) + "/"; 
+    window.stat.innerText = "Connecting to " + addr + " ...\n";
+    ws = new WebSocket(addr);
+    ws.binaryType = 'arraybuffer';
+    ws.onclose = function(ev) {
+      window.stat.innerText += "Closed with status " + ev.code;
+    }
+    ws.onopen = function() {
+      ws.onmessage = function(ev) {
+        if (ev.data.endsWith('Password: ')) {
+          console.log("sending password");
+          ws.send(window.pass.value + "\r"); 
+        } else if (ev.data.endsWith('>>> ')) {
+          console.log("connected to REPL");
+          status();
+        } else if (ev.data.match(/Access denied/)) {
+          window.stat.innerText += "Access denied\n";
+        } else {
+          console.log(ev.data);
+        }
+      }
+    }
+  }  
+
+  function status() {
+    ws.send("\x01\x02");
+    var buf = "";
+    ws.onmessage = function(ev) {
+      buf += ev.data;
+      var m = buf.match(/>[\n\r\s]+([^]*?)[\n\r]>>> /);
+      if (m) {
+        window.stat.innerText = m[1];
+        if (document.getElementsByTagName('textarea').length > 0) execute();
+        else newpad();
+      }
+    }
+  }
+
+  function clear() {
+    var outs = document.getElementsByClassName('out');
+    for (var i=0; i<outs.length; i++) {
+      outs[i].innerText = "";
+    }
+    var errs = document.getElementsByClassName('err');
+    for (var i=0; i<errs.length; i++) {
+      errs[i].innerText = "...";
+    }
+  }
+
+  function execute() {
+    clear();
+    var status = 0;
+    var num = 0;
+    var pads = document.getElementsByTagName('textarea');
+    var outs = document.getElementsByClassName('out');
+    var errs = document.getElementsByClassName('err');
+
+    console.log('executing');
+    ws.onmessage = function (ev) {
+      for (var i=0; i<ev.data.length; i++) {
+        var c = ev.data[i];
+        if (status == 0 && c == 'O') { status = 1 }
+        if (status == 1 && c == 'K') { status = 2 }
+        else if (status == 2 && c == '\x04') { status = 3; errs[num].innerText = '' }
+        else if (status == 2 && c != '\r') { outs[num].innerText += c }
+        else if (status == 3 && c == '\x04') { status = 4 }
+        else if (status == 3 && c != '\r') { errs[num].innerText += c }
+        else if (status == 4 && num < pads.length - 1) { status = 0; num++ };
+      }
+    }
+
+    ws.send('\x01_g=globals().copy();_g.pop("_g", None);');
+
+    var pad_num = 0;
+    function sendpads() {
+      var code = pads[pad_num].value.replace('"""','\\"\\"\\"');
+      var wrap = 'exec("""' + code + '\n""", _g)\x04';
+      function sendcode() {
+          ws.send(wrap.substr(0, 20));
+          wrap = wrap.substr(20);
+          if (wrap) setTimeout(sendcode, 50);
+          else { pad_num++; if (pad_num < pads.length) setTimeout(sendpads, 50); }
+      }
+      sendcode();
+    }
+    sendpads();
+  }
+
+  function newpad(value, insertBefore) {
+      var div = document.createElement('div');
+      div.className = "pad";
+      var pad = document.createElement('textarea');
+      div.appendChild(pad);
+      var out = document.createElement('pre');
+      out.className = "out";
+      div.appendChild(out);
+      var err = document.createElement('pre');
+      err.className = "err";
+      div.appendChild(err);
+      document.body.insertBefore(div, insertBefore || window.foot);
+      pad.focus();
+
+      pad.value = value || '';
+      pad.style.width = "100%";
+      pad.style.overflow_y = "hidden";
+      pad.onkeyup = function(ev) {
+          if (ev.code == 'Enter') {
+              console.log('pad.onkeyup ' + pad.value);
+              var x = pad.value.split(/\n\n\n/);
+              if (x.length > 1) {
+                  var nextSib = div.nextSibiing;
+                  for (var i=1; i<x.length; i++) newpad(x[i], nextSib);
+                  pad.value = x[0];
+              }
+              pad.style.height = "10px";
+              pad.style.height = pad.scrollHeight + 10 + "px";
+          }
+      }
+      pad.onblur = function () {
+        if (pad.value.match(/^\s*$/) && document.getElementsByTagName('textarea').length > 1) {
+          div.remove();
+        }
+      }
+      pad.onchange = function () {
+        setTimeout(execute, 100);
+      }
+      
+      return div;
+  }
+
+  window.onload = function() {
+    window.connect.onclick = connect;
+  }
+
+})();
+
+
+</script>
+</html>
