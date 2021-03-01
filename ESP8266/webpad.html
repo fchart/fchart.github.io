@@ -20,7 +20,7 @@
 <div id="foot">
  <h1>MicroPython WebPad</h1>
  <ul>
-  <li>See <a href="https://github.com/nickzoic/mpy-webpad/">https://github.com/nickzoic/mpy-webpad/</a></li>
+  <li>See <a href="https://github.com/nickzoic/mpy-webpad/" target="_blank">https://github.com/nickzoic/mpy-webpad/</a></li>
   <li>Use serial terminal to set up device on network, record IP address, import webrepl_setup and set password</li> 
   <li>Enter device IP address and WebREPL password at top</li>
   <li>Click 'Connect'</li>
@@ -41,7 +41,6 @@
   var pads = [];
 
   function connect() {
-   // if (ws) ws.close();
    if (connected) {
         ws.onclose = function(ev) {
             window.stat.innerText += "Closed with status " + ev.code + "\n";
@@ -54,7 +53,6 @@
         document.getElementById('connect').value = "Connect";
         connected = false;   
     } else { 
-        //---------------------------------------------------
         var addr = window.addr.value;
         var m = addr.match(/(\d+\.\d+\.\d+\.\d+)(:(\d+))?/);
         if (m) addr = "ws://" + m[1] + ":" + (m[3] || 8266) + "/"; 
@@ -63,6 +61,12 @@
         ws.binaryType = 'arraybuffer';
         ws.onclose = function(ev) {
             window.stat.innerText += "Closed with status " + ev.code + "\n";
+            document.getElementById('addr').disabled = false;
+            document.getElementById('pass').disabled = false;
+            document.getElementById('execute').disabled = true;
+            document.getElementById('ctrl_c').disabled = true;
+            document.getElementById('connect').value = "Connect";
+            connected = false;  
         }
         ws.onopen = function() {
             ws.onmessage = function(ev) {
