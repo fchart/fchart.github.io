@@ -26,7 +26,7 @@
   <li>Click 'Connect'</li>
   <li>MicroPython version info should be displayed.</li>
   <li>Type some Python in the box (sorry no syntax highlighting or autotabs yet!)</li>
-  <li>Hit Return 4 times(or Click 'Execute') to split into blocks for execution</li>
+  <li>Click 'Execute' to run MicroPython code</li>
   <li>Expressions are evaluated but not printed -- print(expr) to display a value</li>
   <li>It's asynchronous, so loops and sleeps are fine.</li>
  </ul>
@@ -101,7 +101,7 @@
   function execute_code() {
      if (ws != null && connected){
         status();
-        newpad();
+      //  newpad();
      }
   }
   
@@ -114,7 +114,7 @@
       if (m) {
         window.stat.innerText = m[1];
         if (document.getElementsByTagName('textarea').length > 0) execute();
-        else newpad();
+        else newpad();  
       }
     }
   }
@@ -190,12 +190,12 @@
       pad.onkeyup = function(ev) {
           if (ev.code == 'Enter') {
               console.log('pad.onkeyup ' + pad.value);
-              var x = pad.value.split(/\n\n\n\n/);
-              if (x.length > 1) {
-                  var nextSib = div.nextSibiing;
-                  for (var i=1; i<x.length; i++) newpad(x[i], nextSib);
-                  pad.value = x[0];
-              }
+          //    var x = pad.value.split(/\n\n\n\n/);
+          //    if (x.length > 1) {
+          //        var nextSib = div.nextSibiing;
+          //        for (var i=1; i<x.length; i++) newpad(x[i], nextSib);
+          //        pad.value = x[0];
+          //    }
               pad.style.height = "50px";
               pad.style.height = pad.scrollHeight + 10 + "px";
           }
@@ -205,9 +205,9 @@
           div.remove();
         }
       }
-      pad.onchange = function () {
-        setTimeout(execute, 100);
-      }
+   //   pad.onchange = function () {
+   //     setTimeout(execute, 100);
+   //   }
       
       return div;
   }
