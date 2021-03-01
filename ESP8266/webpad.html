@@ -12,7 +12,10 @@
 
 <label>Address: <input id="addr" value="192.168.4.1"/></label>
 <label>Password: <input id="pass" type="password" value=""/></label>
-<button id="connect">Connect</button>
+<input type="submit" id="connect" value="Connect"/>
+<!--<button id="connect">Connect</button>-->  |
+<button id="execute" disabled="disabled">Execute</button>
+<button id="ctrl_c" disabled="disabled">Ctrl+c</button> |
 <pre id="stat"></pre>
 <div id="foot">
  <h1>MicroPython WebPad</h1>
@@ -23,7 +26,7 @@
   <li>Click 'Connect'</li>
   <li>MicroPython version info should be displayed.</li>
   <li>Type some Python in the box (sorry no syntax highlighting or autotabs yet!)</li>
-  <li>Hit Return three times to split into blocks for execution</li>
+  <li>Hit Return 4 times(or Click 'Execute') to split into blocks for execution</li>
   <li>Expressions are evaluated but not printed -- print(expr) to display a value</li>
   <li>It's asynchronous, so loops and sleeps are fine.</li>
  </ul>
@@ -34,36 +37,74 @@
 
 (function() { 
   var ws = null;
+  var connected = false;
   var pads = [];
 
   function connect() {
-    if (ws) ws.close();
-    var addr = window.addr.value;
-    var m = addr.match(/(\d+\.\d+\.\d+\.\d+)(:(\d+))?/);
-    if (m) addr = "ws://" + m[1] + ":" + (m[3] || 8266) + "/"; 
-    window.stat.innerText = "Connecting to " + addr + " ...\n";
-    ws = new WebSocket(addr);
-    ws.binaryType = 'arraybuffer';
-    ws.onclose = function(ev) {
-      window.stat.innerText += "Closed with status " + ev.code;
-    }
-    ws.onopen = function() {
-      ws.onmessage = function(ev) {
-        if (ev.data.endsWith('Password: ')) {
-          console.log("sending password");
-          ws.send(window.pass.value + "\r"); 
-        } else if (ev.data.endsWith('>>> ')) {
-          console.log("connected to REPL");
-          status();
-        } else if (ev.data.match(/Access denied/)) {
-          window.stat.innerText += "Access denied\n";
-        } else {
-          console.log(ev.data);
+   // if (ws) ws.close();
+   if (connected) {
+        ws.onclose = function(ev) {
+            window.stat.innerText += "Closed with status " + ev.code + "\n";
+        }   
+        ws.close();
+        document.getElementById('addr').disabled = false;
+        document.getElementById('pass').disabled = false;
+        document.getElementById('execute').disabled = true;
+        document.getElementById('ctrl_c').disabled = true;
+        document.getElementById('connect').value = "Connect";
+        connected = false;   
+    } else { 
+        //---------------------------------------------------
+        var addr = window.addr.value;
+        var m = addr.match(/(\d+\.\d+\.\d+\.\d+)(:(\d+))?/);
+        if (m) addr = "ws://" + m[1] + ":" + (m[3] || 8266) + "/"; 
+        window.stat.innerText = "Connecting to " + addr + " ...\n";
+        ws = new WebSocket(addr);
+        ws.binaryType = 'arraybuffer';
+        ws.onclose = function(ev) {
+            window.stat.innerText += "Closed with status " + ev.code + "\n";
         }
-      }
+        ws.onopen = function() {
+            ws.onmessage = function(ev) {
+               if (ev.data.endsWith('Password: ')) {
+                    console.log("sending password");
+                    ws.send(window.pass.value + "\r"); 
+               } else if (ev.data.endsWith('>>> ')) {
+                    console.log("connected to REPL");
+                    document.getElementById('addr').disabled = true;
+                    document.getElementById('pass').disabled = true;
+                    document.getElementById('execute').disabled = false;
+                    document.getElementById('ctrl_c').disabled = false;
+                    document.getElementById('connect').value = "Disconnect";
+                    connected = true;
+                    status();
+               } else if (ev.data.match(/Access denied/)) {
+                    window.stat.innerText += "Access denied\n";
+               } else {
+                    console.log(ev.data);
+               }
+           }
+       }
     }
   }  
 
+  function abort() {
+     if (ws != null && connected){
+         var outs = document.getElementsByClassName('out');
+         ws.send("\x03");
+         ws.onmessage = function(ev) {
+            outs[outs.length-1].innerText += ev.data;
+         }                 
+     }    
+  }
+  
+  function execute_code() {
+     if (ws != null && connected){
+        status();
+        newpad();
+     }
+  }
+  
   function status() {
     ws.send("\x01\x02");
     var buf = "";
@@ -144,17 +185,18 @@
 
       pad.value = value || '';
       pad.style.width = "100%";
+      pad.style.height = "150px";
       pad.style.overflow_y = "hidden";
       pad.onkeyup = function(ev) {
           if (ev.code == 'Enter') {
               console.log('pad.onkeyup ' + pad.value);
-              var x = pad.value.split(/\n\n\n/);
+              var x = pad.value.split(/\n\n\n\n/);
               if (x.length > 1) {
                   var nextSib = div.nextSibiing;
                   for (var i=1; i<x.length; i++) newpad(x[i], nextSib);
                   pad.value = x[0];
               }
-              pad.style.height = "10px";
+              pad.style.height = "50px";
               pad.style.height = pad.scrollHeight + 10 + "px";
           }
       }
@@ -172,6 +214,8 @@
 
   window.onload = function() {
     window.connect.onclick = connect;
+    window.ctrl_c.onclick = abort;
+    window.execute.onclick = execute_code;
   }
 
 })();
