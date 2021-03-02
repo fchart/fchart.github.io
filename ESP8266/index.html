@@ -4,17 +4,8 @@
 <meta charset=utf-8>
 <meta name=google value=notranslate>
 <title>ESP8266 Blockly for MicroPython</title>
-<script>function setCookie(cname,cvalue,cpassword_value,exdays){var d=new Date();d.setTime(d.getTime()+(exdays*24*60*60*1000));var expires="expires="+d.toUTCString();document.cookie=cname+"="+cvalue+"&"+"last_pass="+cpassword_value+";"+expires+";path=/";}
-function getCookie(cname){var name=cname+"=";var ca=document.cookie.split(';');console.log(ca)
-for(var i=0;i<ca.length;i++){var c=ca[i];while(c.charAt(0)==' '){c=c.substring(1);}
-if(c.indexOf(name)==0){return c.substring(name.length,c.length);}}
-return"";}
-function checkCookie(){var cookies=getCookie("last_ip");if(cookies!=""){var cookies_=cookies.split('&')
-document.getElementById('url').value=cookies_[0]
-document.getElementById('password').value=cookies_[1].substring("last_pass=".length,cookies_[0].length)}}
-window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-162001686-1');</script>
-<style>html{background:#555}h1{margin-bottom:20px;font:20px/1.5 sans-serif}.file-box{margin:4px;padding:4px;background:#888}</style>
+<script>function setCookie(b,f,g,c){var e=new Date();e.setTime(e.getTime()+(c*24*60*60*1000));var a="expires="+e.toUTCString();document.cookie=b+"="+f+"&last_pass="+g+";"+a+";path=/"}function getCookie(d){var b=d+"=";var a=document.cookie.split(";");console.log(a);for(var e=0;e<a.length;e++){var f=a[e];while(f.charAt(0)==" "){f=f.substring(1)}if(f.indexOf(b)==0){return f.substring(b.length,f.length)}}return""}function checkCookie(){var b=getCookie("last_ip");if(b!=""){var a=b.split("&");document.getElementById("url").value=a[0];document.getElementById("password").value=a[1].substring("last_pass=".length,a[0].length)}}window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","UA-162001686-1");</script>
+<style>html{background:#555}h1{margin-bottom:20px;font:20px/1.5 sans-serif}pre#webrepl_out{color:darkgreen}pre#webrepl_err{color:darkred}#webrepl_foot{border-top:1px solid black}.webrepl_border{border:1px solid black}</style>
 <link rel=stylesheet href=style.css>
 <script src=storage.js></script>
 <script src=blockly_compressed.js></script>
@@ -25,19 +16,9 @@ gtag('js',new Date());gtag('config','UA-162001686-1');</script>
 <script src=block_definitions.js></script>
 <script src=generator_stubs.js></script>
 <script src=FileSaver.js></script>
-<script type=module>
-  // This is the "Offline copy of pages" service worker
-
-/*
- This code uses the pwa-update web component https://github.com/pwa-builder/pwa-update to register your service worker, tell the user when there is an update available and let the user know when your PWA is ready to use offline.
-
-*/
-
-//import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
-//const el = document.createElement('pwa-update');
-//document.body.appendChild(el);
-
-</script>
+<link rel=stylesheet href=codemirror/codemirror.css>
+<script src=codemirror/codemirror.js></script>
+<script src=codemirror/mode/python/python.js></script>
 </head>
 <body>
 <table width=100% height=100%>
@@ -75,25 +56,7 @@ ESP8266 Blockly for MicroPython <span style=font-size:small>(<a href=https://fch
 <td style=visibility:hidden id=tab_mqtt class=taboff onclick='document.getElementById("easymqtt_iframe").contentWindow.startEasyMQTT(window.easyMQTT_session)'>EasyMQTT</td>
 <td style=visibility:hidden class=tabmin>&nbsp;</td>
 <td class=tabmax>
-<script>function loadFileToElement(filename,elementId)
-{var xmlHTTP=new XMLHttpRequest();try
-{xmlHTTP.open("GET",filename,false);xmlHTTP.send(null);}
-catch(e){window.alert("Unable to load the requested file.");return;}
-document.getElementById(elementId).innerHTML=xmlHTTP.responseText;}
-var pinout={'ESP8266':[['D0-GPIO16',"16"],['D1-GPIO5',"5"],['D2-GPIO4',"4"],['D3-GPIO0',"0"],['D4-GPIO2/LED',"2"],['D5-GPIO14',"14"],['D6-GPIO12',"12"],['D7-GPIO13',"13"],['D8-GPIO15',"15"],['RX-GPIO3',"3"],['TX-GPIO1',"1"],['SD3-GPIO10',"10"],['SD2-GPIO9',"9"],['SD1-GPIO8',"8"],['CMD-GPIO11',"11"],['SD0-GPIO7',"7"],['CLK-GPIO6',"6"]]};function changeDevice(dev){if(dev=='ESP8266'){document.getElementById('device_title').innerHTML='<b>ESP8266</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/Node-MCU-ESP-12E-Pin-Out-Diagram2.jpg";document.getElementById("device_desc").innerHTML="<BR><BR><input type='button' onclick='loadDoc(\"\");' value='Open Documentation' /> <BR><BR>To use ESP8266, simply connecto to MicroPython board using Wifi. Micropython must be previously installed.";loadFileToElement('toolbox_esp8266.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));}
-else if(dev=='wemos_d1_mini'){document.getElementById('device_title').innerHTML='<b>ESP8266 - Wemos D1 Mini</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/Wemos-D1-Mini.png";document.getElementById("device_desc").innerHTML="<BR><BR><input type='button' onclick='loadDoc(\"\");' value='Open Documentation' /> <BR><BR>To use ESP8266, simply connecto to MicroPython board using Wifi. Micropython must be previously installed. Figure source: https://devonhubner.org/Using_MicroPython_with_a_WeMos_D1_Mini/";loadFileToElement('toolbox_esp8266.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));}
-else if(dev=='ESP32-oled'){document.getElementById('device_title').innerHTML='<b>ESP32 board with OLED LCD and Battery</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/esp32-oled.png";loadFileToElement('toolbox_esp32.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));document.getElementById("device_desc").innerHTML="Yet another ESP32 board";}
-else if(dev=='ESP32'){document.getElementById('device_title').innerHTML='<b>ESP32</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/ESP32-Pinout.jpg";loadFileToElement('toolbox_esp32.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));}
-else if(dev=='M5STICK'){document.getElementById('device_title').innerHTML='<b>ESP32</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/m5stickc.png";loadFileToElement('toolbox_esp32.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));document.getElementById("device_desc").innerHTML="M5STICK-C is based on ESP32 processor. More info at:";}
-else if(dev=='Nucleo'){document.getElementById('device_title').innerHTML='<b>mBed: NUCLEO-F446RE</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/NUCLEO-F446RE-3-500x500.png";}
-else if(dev=='RPI4'){document.getElementById('device_title').innerHTML='<b>Raspberry Pi 4 </b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/rpi4.png";loadFileToElement('toolbox_linux.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));document.getElementById("device_desc").innerHTML="Use Raspberry Pi 4 with WebSocketServerREPL. For OpenCV features, please install opencv with apt install python-opencv";}
-else if(dev=='EV3'){document.getElementById('device_title').innerHTML='<b>Lego EV3 </b><br>';document.getElementById("device_img").src="";document.getElementById("device_desc").innerHTML="Help needed! We need a Lego EV3 to build the blocks to the intelligent brick, or help us designing the blocks, if you have an EV3 Inteligent Brick!";}
-else if(dev=='BBBlack'){document.getElementById('device_title').innerHTML='<b>Beagle Bone Black</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/cape-headers.png";loadFileToElement('toolbox_bbblack.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));}
-else if(dev=='BBC'){document.getElementById('device_title').innerHTML='<b>BBC MicroBit</b><br>';document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/microbit.png";loadFileToElement('toolbox_esp32.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));document.getElementById("device_desc").innerHTML="Image source and more info: <a href=https://microbit.org/get-started/user-guide/features-in-depth/>https://microbit.org/get-started/user-guide/features-in-depth/</a>";}
-else if(dev=='RPI'){}
-else if(dev=='UNO'){document.getElementById('device_title').innerHTML='<b>Arduino UNO. Image source: https://content.arduino.cc/assets/Pinout-UNOrev3_latest.png</b><br>';document.getElementById("device_img").src="https://content.arduino.cc/assets/Pinout-UNOrev3_latest.png";loadFileToElement('toolbox_arduino.xml','toolbox');Code.workspace.updateToolbox(document.getElementById('toolbox'));}
-else{alert("Invalid Device");}}
-function installLib(){alert('This will download and install the library. Your board must be connected to the Internet');}</script>
+<script>function loadFileToElement(b,a){var d=new XMLHttpRequest();try{d.open("GET",b,false);d.send(null)}catch(c){window.alert("Unable to load the requested file.");return}document.getElementById(a).innerHTML=d.responseText}var pinout={ESP8266:[["D0-GPIO16","16"],["D1-GPIO5","5"],["D2-GPIO4","4"],["D3-GPIO0","0"],["D4-GPIO2/LED","2"],["D5-GPIO14","14"],["D6-GPIO12","12"],["D7-GPIO13","13"],["D8-GPIO15","15"],["RX-GPIO3","3"],["TX-GPIO1","1"],["SD3-GPIO10","10"],["SD2-GPIO9","9"],["SD1-GPIO8","8"],["CMD-GPIO11","11"],["SD0-GPIO7","7"],["CLK-GPIO6","6"]]};function changeDevice(a){if(a=="ESP8266"){document.getElementById("device_title").innerHTML="<b>ESP8266</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/Node-MCU-ESP-12E-Pin-Out-Diagram2.jpg";document.getElementById("device_desc").innerHTML="<BR><BR><input type='button' onclick='loadDoc(\"\");' value='Open Documentation' /> <BR><BR>To use ESP8266, simply connecto to MicroPython board using Wifi. Micropython must be previously installed.";loadFileToElement("toolbox_esp8266.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"))}else{if(a=="wemos_d1_mini"){document.getElementById("device_title").innerHTML="<b>ESP8266 - Wemos D1 Mini</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/Wemos-D1-Mini.png";document.getElementById("device_desc").innerHTML="<BR><BR><input type='button' onclick='loadDoc(\"\");' value='Open Documentation' /> <BR><BR>To use ESP8266, simply connecto to MicroPython board using Wifi. Micropython must be previously installed. Figure source: https://devonhubner.org/Using_MicroPython_with_a_WeMos_D1_Mini/";loadFileToElement("toolbox_esp8266.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"))}else{if(a=="ESP32-oled"){document.getElementById("device_title").innerHTML="<b>ESP32 board with OLED LCD and Battery</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/esp32-oled.png";loadFileToElement("toolbox_esp32.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"));document.getElementById("device_desc").innerHTML="Yet another ESP32 board"}else{if(a=="ESP32"){document.getElementById("device_title").innerHTML="<b>ESP32</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/ESP32-Pinout.jpg";loadFileToElement("toolbox_esp32.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"))}else{if(a=="M5STICK"){document.getElementById("device_title").innerHTML="<b>ESP32</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/m5stickc.png";loadFileToElement("toolbox_esp32.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"));document.getElementById("device_desc").innerHTML="M5STICK-C is based on ESP32 processor. More info at:"}else{if(a=="Nucleo"){document.getElementById("device_title").innerHTML="<b>mBed: NUCLEO-F446RE</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/NUCLEO-F446RE-3-500x500.png"}else{if(a=="RPI4"){document.getElementById("device_title").innerHTML="<b>Raspberry Pi 4 </b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/rpi4.png";loadFileToElement("toolbox_linux.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"));document.getElementById("device_desc").innerHTML="Use Raspberry Pi 4 with WebSocketServerREPL. For OpenCV features, please install opencv with apt install python-opencv"}else{if(a=="EV3"){document.getElementById("device_title").innerHTML="<b>Lego EV3 </b><br>";document.getElementById("device_img").src="";document.getElementById("device_desc").innerHTML="Help needed! We need a Lego EV3 to build the blocks to the intelligent brick, or help us designing the blocks, if you have an EV3 Inteligent Brick!"}else{if(a=="BBBlack"){document.getElementById("device_title").innerHTML="<b>Beagle Bone Black</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/cape-headers.png";loadFileToElement("toolbox_bbblack.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"))}else{if(a=="BBC"){document.getElementById("device_title").innerHTML="<b>BBC MicroBit</b><br>";document.getElementById("device_img").src="http://bipes.net.br/beta2/ui/devinfo/microbit.png";loadFileToElement("toolbox_esp32.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"));document.getElementById("device_desc").innerHTML="Image source and more info: <a href=https://microbit.org/get-started/user-guide/features-in-depth/>https://microbit.org/get-started/user-guide/features-in-depth/</a>"}else{if(a=="RPI"){}else{if(a=="UNO"){document.getElementById("device_title").innerHTML="<b>Arduino UNO. Image source: https://content.arduino.cc/assets/Pinout-UNOrev3_latest.png</b><br>";document.getElementById("device_img").src="https://content.arduino.cc/assets/Pinout-UNOrev3_latest.png";loadFileToElement("toolbox_arduino.xml","toolbox");Code.workspace.updateToolbox(document.getElementById("toolbox"))}else{alert("Invalid Device")}}}}}}}}}}}}}function installLib(){alert("This will download and install the library. Your board must be connected to the Internet")}</script>
 Device:
 <select id=device_selector onchange=changeDevice(this.value)>
 <option value=ESP8266>Wemos D1 mini</option>
@@ -125,16 +88,45 @@ Device:
 </tr>
 </table>
 <div id=content_blocks class=content></div>
-<div id=content_console class=content style="border-top: 1px solid lightgray;" >
-<iframe src=webpad.html width=100% height=100% frameBorder=0></iframe>
+<div id=content_console class=content style="border-top:1px solid lightgray">
+<label>Address: <input id=webrepl_addr value="192.168.4.1"/></label>
+<label>Password: <input id=webrepl_pass type=password value=""/></label>
+<input type=submit id=webrepl_connect value="Connect"/>&nbsp;&nbsp;&nbsp;&nbsp; |
+<input type=submit id=webrepl_paste_code value="Paste mpy code"/>
+<input type=submit id=webrepl_clear_code value="Clear"/>
+<input type=submit id=webrepl_save_code value="Save file"/> |
+<pre id=webrepl_stat></pre>
+<input type=submit id=webrepl_execute disabled=disabled value="Execute"/>
+<input type=submit id=webrepl_ctrl_c disabled=disabled value="Ctrl+c"/> <br/><br/>
+<div>
+<div class=webrepl_border>
+<textarea id=webrepl_editor></textarea>
+</div>
+<pre id=webrepl_out></pre>
+<pre id=webrepl_err></pre>
+</div>
+<div id=webrepl_foot>
+<h3>MicroPython WebPad</h3>
+<small>
+<ul>
+<li>See <a href=https://github.com/nickzoic/mpy-webpad/ target=_blank>https://github.com/nickzoic/mpy-webpad/</a></li>
+<li>Use serial terminal to set up device on network, record IP address, import webrepl_setup and set password</li>
+<li>Enter device IP address and WebREPL password at top</li>
+<li>Click 'Connect' to connect ES8266 by Wifi</li>
+<li>MicroPython version info should be displayed.</li>
+<li>Type some Python in the box (CodeMirror)</li>
+<li>Click 'Execute' to run MicroPython code</li>
+<li>Expressions are evaluated but not printed -- print(expr) to display a value</li>
+<li>It's asynchronous, so loops and sleeps are fine.</li>
+</ul>
+</small>
+</div>
+<script>(function(){var l=null;var g=false;var c=document.getElementById("webrepl_editor");var h=document.getElementById("webrepl_out");var e=document.getElementById("webrepl_err");c.focus();c.value="";c.style.width="100%";c.style.height="150px";c.style.overflow_y="hidden";var k=CodeMirror.fromTextArea(c,{lineNumbers:true});function a(){if(Code.checkAllGeneratorFunctionsDefined(Blockly.Python)){var p=document.createTextNode(Blockly.Python.workspaceToCode(Code.workspace));k.getDoc().setValue(p.data)}}function m(){var p=confirm("Are you sure you want to delete?");if(p){k.getDoc().setValue("")}}function d(){var q;q=prompt("Please enter the filename","Blockly");if(q==null){return}var r=".py";var s=k.getDoc().getValue("\n");var p=new Blob([s],{type:"text/plain;charset=utf-8"});if(p.size!=0){saveAs(p,q+r)}}function o(){if(g){l.close();document.getElementById("webrepl_addr").disabled=false;document.getElementById("webrepl_pass").disabled=false;document.getElementById("webrepl_execute").disabled=true;document.getElementById("webrepl_ctrl_c").disabled=true;document.getElementById("webrepl_connect").value="Connect";g=false;window.webrepl_stat.innerText="Disconnected by user\n"}else{if(l){l.close()}var q=window.webrepl_addr.value;var p=q.match(/(\d+\.\d+\.\d+\.\d+)(:(\d+))?/);if(p){q="ws://"+p[1]+":"+(p[3]||8266)+"/"}window.webrepl_stat.innerText="Connecting to "+q+" ...\n";l=new WebSocket(q);l.binaryType="arraybuffer";l.onclose=function(r){window.webrepl_stat.innerText+="Closed with status "+r.code+"\n";document.getElementById("webrepl_addr").disabled=false;document.getElementById("webrepl_pass").disabled=false;document.getElementById("webrepl_execute").disabled=true;document.getElementById("webrepl_ctrl_c").disabled=true;document.getElementById("webrepl_connect").value="Connect";g=false};l.onopen=function(){l.onmessage=function(r){if(r.data.endsWith("Password: ")){console.log("sending password");l.send(window.webrepl_pass.value+"\r")}else{if(r.data.endsWith(">>> ")){console.log("connected to REPL");document.getElementById("webrepl_addr").disabled=true;document.getElementById("webrepl_pass").disabled=true;document.getElementById("webrepl_execute").disabled=false;document.getElementById("webrepl_ctrl_c").disabled=false;document.getElementById("webrepl_connect").value="Disconnect";g=true;f()}else{if(r.data.match(/Access denied/)){window.webrepl_stat.innerText+="Access denied\n"}else{console.log(r.data)}}}}}}}function i(){if(l!=null&&g){l.send("\x03");l.onmessage=function(p){h.innerText+=p.data}}}function b(){if(l!=null&&g){n()}}function f(){l.send("\x01\x02");var p="";l.onmessage=function(r){p+=r.data;var q=p.match(/>[\n\r\s]+([^]*?)[\n\r]>>> /);if(q){window.webrepl_stat.innerText=q[1]}}}function j(){h.innerText="";e.innerText="..."}function n(){j();var p=0;console.log("executing");l.onmessage=function(s){for(var r=0;r<s.data.length;r++){var t=s.data[r];if(p==0&&t=="O"){p=1}if(p==1&&t=="K"){p=2}else{if(p==2&&t=="\x04"){p=3;e.innerText=""}else{if(p==2&&t!="\r"){h.innerText+=t}else{if(p==3&&t=="\x04"){p=4}else{if(p==3&&t!="\r"){e.innerText+=t}else{if(p==4){p=0}}}}}}}};l.send('\x01_g=globals().copy();_g.pop("_g", None);');function q(){var t=k.getDoc().getValue("\n");var s='exec("""'+t+'\n""", _g)\x04';function r(){l.send(s.substr(0,20));s=s.substr(20);if(s){setTimeout(r,50)}}r()}q()}window.onload=function(){window.webrepl_connect.onclick=o;window.webrepl_ctrl_c.onclick=i;window.webrepl_execute.onclick=b;window.webrepl_paste_code.onclick=a;window.webrepl_save_code.onclick=d;window.webrepl_clear_code.onclick=m}})();</script>
 </div>
 <pre id=content_python class=content></pre>
 <textarea id=content_xml class=content wrap=off readonly></textarea>
-<div id=content_programs class=content>
-<center>
-</center>
-</div>
-<div id=content_device class=content style="border-top: 1px solid lightgray;" >
+<div id=content_programs class=content></div>
+<div id=content_device class=content style="border-top:1px solid lightgray">
 <center>
 <label id=device_title><b>Wemos D1 Mini - Witty Cloud</b><br></label>
 <hr>
@@ -145,63 +137,9 @@ Device:
 </label>
 </center>
 </div>
-<div id=content_files class=content>
-<div style=width:50%;float:left>
-<center>
-Text editor for files in device's filesystem:
-</center>
-<br>
-<textarea id=content_file_code cols=90 rows=20 wrap=off></textarea>
-<br>
-Save as:
-<input type=text id=content_file_name>
-<input type=button value=Save onclick="files_save_as();return false" />
-<input type=button value=Run onclick="files_run(document.getElementById('content_file_name').value);return false" />
-<input type=button value=Stop onclick="stopPython();return false" />
-<script>function getText(pName){var request=new XMLHttpRequest();request.open('GET','http://bipes.net.br/beta2/ui/pylibs/'+pName,true);request.send(null);request.onreadystatechange=function(){if(request.readyState===4&&request.status===200){var type=request.getResponseHeader('Content-Type');if(type.indexOf("text")!==1){var Textarea=document.getElementById('content_file_code');editor.getDoc().setValue(request.responseText);var TextareaF=document.getElementById('content_file_name');TextareaF.value=pName;return request.responseText;}}}}</script>
-<br>
-<br>
-Python code templates and libraries:
-<br>
-(libraries and startup codes to load and send to your board)
-<br>
-<input type=button value=main.py onclick="getText('main.py');return false" />
-<input type=button value=SSD1306.py onclick="getText('SSD1306.py');return false" />
-</div>
-<div style=width:50%;float:right>
-<center>
-Device file manager
-<br>
-<div id=file-boxes style=display:inline-block;vertical-align:top;width:230px>
-<input type=button value="Run Blocks" onclick="runPython();return false" />
-<input type=button value="List Files" onclick="listFiles();return false" />
-<br>
-<input type=button value="Blocks to editable Python (here)" onclick="blocksToPython();return false" />
-<div class=file-box>
-<strong>Send a file</strong>
-<input type=file id=put-file-select />
-<div id=put-file-list></div>
-<input type=button value="Send to device" id=put-file-button onclick="put_file();return false" />
-</div>
-<div class=file-box id=file-status><span style=color:#707070>(file operation status)</span></div>
-</div>
-</td>
-</div>
-<center>
-<br>
-<br>
-<div id=fileList>
-List of files will be shown here.
-</div>
-</div>
-<div id=content_iot class=content>
-<center>
-<iframe></iframe>
-<center>
-</div>
-<div id=content_mqtt class=content style=padding:0>
-<iframe></iframe>
-</div>
+<div id=content_files class=content></div>
+<div id=content_iot class=content></div>
+<div id=content_mqtt class=content style=padding:0></div>
 <xml id=toolbox style=display:none>
 <category name=%{BKY_CATLOGIC} colour=%{BKY_LOGIC_HUE}>
 <block type=controls_if></block>
@@ -1665,59 +1603,5 @@ List of files will be shown here.
 </category>
 </xml>
 </body>
-<script>;var term;var ws;var connected=false;var binary_state=0;var put_file_name=null;var put_file_data=null;var get_file_name=null;var get_file_data=null;var received_string="";var viewOnly=false;function calculate_size(win){var cols=120;var rows=25;return[cols,rows];}
-(function(){window.onload=function(){checkCookie()};window.addEventListener('resize',function(){});}).call(this);function show_https_warning(){if(window.location.protocol=='https:'){var warningDiv=document.createElement('div');warningDiv.style.cssText='background:#f99;padding:5px;margin-bottom:10px;line-height:1.5em;text-align:center';warningDiv.innerHTML=['At this time, the WebREPL client cannot be accessed over HTTPS connections.','Use a HTTP connection, eg. <a href="http://micropython.org/webrepl/">http://micropython.org/webrepl/</a>.','Alternatively, download the files from <a href="https://github.com/micropython/webrepl">GitHub</a> and run them locally.'].join('<br>');document.body.insertBefore(warningDiv,document.body.childNodes[0]);term.resize(term.cols,term.rows-7);}}
-function button_click(){if(connected){ws.close();}else{setCookie("last_ip",document.getElementById('url').value,document.getElementById('password').value,365);document.getElementById('url').disabled=true;document.getElementById('button').value="Disconnect";connected=true;connect(document.getElementById('url').value,document.getElementById('password').value);}}
-function prepare_for_connect(){document.getElementById('url').disabled=false;document.getElementById('button').value="Connect";}
-function update_file_status(s){document.getElementById('file-status').innerHTML=s;}
-function connect(url,password){ws=new WebSocket(url);ws.binaryType='arraybuffer';ws.onopen=function(){term.removeAllListeners('data');term.on('data',function(data){data=data.replace(/\n/g,"\r");ws.send(data);});term.on('title',function(title){document.title=title;});term.focus();term.element.focus();term.write('\x1b[31mWelcome to BIPES Project using MicroPython!\x1b[m\r\n');term.write('\x1b[31mSending password...\x1b[m\r\n');ws.send(password+'\n\n');ws.onmessage=function(event){if(event.data instanceof ArrayBuffer){var data=new Uint8Array(event.data);console.log('binary state = '+binary_state);switch(binary_state){case 11:if(decode_resp(data)==0){for(var offset=0;offset<put_file_data.length;offset+=1024){ws.send(put_file_data.slice(offset,offset+1024));}
-binary_state=12;}
-break;case 12:if(decode_resp(data)==0){update_file_status('Sent '+put_file_name+', '+put_file_data.length+' bytes');}else{update_file_status('Failed sending '+put_file_name);}
-binary_state=0;break;case 21:console.log('get 1');if(decode_resp(data)==0){console.log('get 2');binary_state=22;var rec=new Uint8Array(1);rec[0]=0;ws.send(rec);}
-break;case 22:{var sz=data[0]|(data[1]<<8);if(data.length==2+sz){if(sz==0){binary_state=23;}else{var new_buf=new Uint8Array(get_file_data.length+sz);new_buf.set(get_file_data);new_buf.set(data.slice(2),get_file_data.length);get_file_data=new_buf;update_file_status('Getting '+get_file_name+', '+get_file_data.length+' bytes');var rec=new Uint8Array(1);rec[0]=0;ws.send(rec);}}else{binary_state=0;}
-break;}
-case 23:if(decode_resp(data)==0){update_file_status('Got '+get_file_name+', '+get_file_data.length+' bytes');if(!viewOnly)
-saveAs(new Blob([get_file_data],{type:"application/octet-stream"}),get_file_name);else
-updateSourceCode(new Blob([get_file_data],{type:"text/plain"}),get_file_name);}else{update_file_status('Failed getting '+get_file_name);}
-binary_state=0;break;case 31:console.log('GET_VER',data);binary_state=0;break;}}
-term.write(event.data);received_string=received_string.concat(event.data);};};ws.onclose=function(){connected=false;if(term){term.write('\x1b[31mDisconnected\x1b[m\r\n');}
-term.off('data');prepare_for_connect();}}
-function decode_resp(data){if(data[0]=='W'.charCodeAt(0)&&data[1]=='B'.charCodeAt(0)){var code=data[2]|(data[3]<<8);return code;}else{return-1;}}
-function put_file(){var dest_fname=put_file_name;var dest_fsize=put_file_data.length;var rec=new Uint8Array(2+1+1+8+4+2+64);rec[0]='W'.charCodeAt(0);rec[1]='A'.charCodeAt(0);rec[2]=1;rec[3]=0;rec[4]=0;rec[5]=0;rec[6]=0;rec[7]=0;rec[8]=0;rec[9]=0;rec[10]=0;rec[11]=0;rec[12]=dest_fsize&0xff;rec[13]=(dest_fsize>>8)&0xff;rec[14]=(dest_fsize>>16)&0xff;rec[15]=(dest_fsize>>24)&0xff;rec[16]=dest_fname.length&0xff;rec[17]=(dest_fname.length>>8)&0xff;for(var i=0;i<64;++i){if(i<dest_fname.length){rec[18+i]=dest_fname.charCodeAt(i);}else{rec[18+i]=0;}}
-binary_state=11;update_file_status('Sending '+put_file_name+'...');ws.send(rec);}
-function get_file2(src_fname){var rec=new Uint8Array(2+1+1+8+4+2+64);rec[0]='W'.charCodeAt(0);rec[1]='A'.charCodeAt(0);rec[2]=2;rec[3]=0;rec[4]=0;rec[5]=0;rec[6]=0;rec[7]=0;rec[8]=0;rec[9]=0;rec[10]=0;rec[11]=0;rec[12]=0;rec[13]=0;rec[14]=0;rec[15]=0;rec[16]=src_fname.length&0xff;rec[17]=(src_fname.length>>8)&0xff;for(var i=0;i<64;++i){if(i<src_fname.length){rec[18+i]=src_fname.charCodeAt(i);}else{rec[18+i]=0;}}
-binary_state=21;get_file_name=src_fname;get_file_data=new Uint8Array(0);update_file_status('Getting '+get_file_name+'...');ws.send(rec);}
-function get_file(){var src_fname=document.getElementById('get_filename').value;var rec=new Uint8Array(2+1+1+8+4+2+64);rec[0]='W'.charCodeAt(0);rec[1]='A'.charCodeAt(0);rec[2]=2;rec[3]=0;rec[4]=0;rec[5]=0;rec[6]=0;rec[7]=0;rec[8]=0;rec[9]=0;rec[10]=0;rec[11]=0;rec[12]=0;rec[13]=0;rec[14]=0;rec[15]=0;rec[16]=src_fname.length&0xff;rec[17]=(src_fname.length>>8)&0xff;for(var i=0;i<64;++i){if(i<src_fname.length){rec[18+i]=src_fname.charCodeAt(i);}else{rec[18+i]=0;}}
-binary_state=21;get_file_name=src_fname;get_file_data=new Uint8Array(0);update_file_status('Getting '+get_file_name+'...');ws.send(rec);}
-function get_ver(){var rec=new Uint8Array(2+1+1+8+4+2+64);rec[0]='W'.charCodeAt(0);rec[1]='A'.charCodeAt(0);rec[2]=3;binary_state=31;ws.send(rec);}
-function handle_put_file_select(evt){var files=evt.target.files;var f=files[0];put_file_name=f.name;var reader=new FileReader();reader.onload=function(e){put_file_data=new Uint8Array(e.target.result);document.getElementById('put-file-list').innerHTML=''+escape(put_file_name)+' - '+put_file_data.length+' bytes';document.getElementById('put-file-button').disabled=false;};reader.readAsArrayBuffer(f);}
-document.getElementById('put-file-select').addEventListener('click',function(){this.value=null;},false);document.getElementById('put-file-select').addEventListener('change',handle_put_file_select,false);document.getElementById('put-file-button').disabled=true;function sleep(milliseconds){const date=Date.now();let currentDate=null;do{currentDate=Date.now();}while(currentDate-date<milliseconds);}
-function stopPython(evt){ws.send('\x03');}
-function saveXml(){Code.tabClick('xml');var xmlTextarea=document.getElementById('content_xml');var xmlText=xmlTextarea.value;filename="mpy_blocks";fileExt=".xml";var blob=new Blob([xmlText],{type:"text/plain;charset=utf-8"});if(blob.size!=0)
-saveAs(blob,filename+fileExt);}
-function loadXmlDom(event){var files=event.target.files;if(files.length!=1){return;}
-var reader=new FileReader();reader.onloadend=function(event){var target=event.target;if(target.readyState==2){try{var xml=Blockly.Xml.textToDom(target.result);}catch(e){alert('Parsed XML Error:\n'+e);return;}
-Code.discard();Blockly.Xml.domToWorkspace(xml,Code.workspace);}
-document.getElementById('load').value='';};reader.readAsText(files[0]);}
-function loadXml(){var loadInput=document.getElementById('load');loadInput.addEventListener('change',loadXmlDom,false);loadInput.click();}
-function runPythonCode(pCodeIn){if(!connected){alert('Must be connected to run code');return;}
-var code=pCodeIn;var textArray=code.split(/\r\n|\r|\n/);console.log(code);ws.send('\x05');sleep(10);textArray.forEach(function(line,index,array){ws.send(line+'\r');sleep(100);});ws.send('\x04');}
-function runPython(evt){var devSel=document.getElementById("device_selector").value;if(devSel=="UNO"){alert("Generating code for Arduino Uno");var code=Blockly.Arduino.workspaceToCode(Code.workspace);return;}
-if(!connected){alert('Must be connected to run code');return;}
-var code=Blockly.Python.workspaceToCode(Code.workspace);var textArray=code.split(/\r\n|\r|\n/);Code.tabClick('console');console.log(code);ws.send('\x05');sleep(50);textArray.forEach(function(line,index,array){ws.send(line+'\r');sleep(100);});ws.send('\x04');}
-function files_run(file){update_file_status('Executing  '+file);fileS=file.split('.')[0];ws.send('exec(open(\'./'+file+'\').read(),globals())'+'\r');}
-function files_delete(file){msg="Are you sure you want to delete "+file+"?";if(confirm(msg)){txt="Will delete file "+file;ws.send('os.remove(\''+file+'\')\r');setTimeout(updateTable,350);update_file_status('Deleted  '+file);}else{txt="Delete aborted";update_file_status('Delete aborted for '+file);}}
-function blocksToPython(){var code=Blockly.Python.workspaceToCode(Code.workspace);editor.getDoc().setValue(code);}
-function files_save_as(){var file=document.getElementById('content_file_name');var codeStr=editor.getDoc().getValue("\n")
-var bufCode=new Uint8Array(codeStr.length);for(var i=0,strLen=codeStr.length;i<strLen;i++){bufCode[i]=codeStr.charCodeAt(i);}
-put_file_name=file.value;put_file_data=bufCode;put_file();}
-function updateSourceCode(code,file_name){blb=code;const reader=new FileReader();text="";reader.addEventListener('loadend',(e)=>{text=e.srcElement.result;console.log(text);var Textarea=document.getElementById('content_file_code');editor.getDoc().setValue(text);var TextareaF=document.getElementById('content_file_name');TextareaF.value=file_name;});reader.readAsText(blb);}
-function files_view(file){str="Loading "+file;viewOnly=true;get_file2(file);update_file_status('Downloading '+file);str="Loaded "+file;}
-function files_download(file){str="Download "+file;viewOnly=false;get_file2(file);update_file_status('Downloading '+file);}
-function updateTable(evt){filesA=received_string.split('[')[1];filesB=filesA.split(']')[0];filesC=filesB.split('"'[0]);filesD=eval("["+filesC+"]");fileTable="Device File List: <br> <br> <table border=2> ";fileTable+="<tr><td><center>File</center></td><td><center>Actions</center></td><td>Run at boot?</td></tr>";for(var i=0,len=filesD.length;i<len;i++){file=filesD[i];fileTable+="<tr><td>"+file+"</td><td>";fileTable+='<input type=button value=Run onclick="files_run(\''+file+'\'); return false;" />';fileTable+='<input type=button value=Open onclick="files_view(\''+file+'\'); return false;" />';fileTable+='<input type=button value=Download onclick="files_download(\''+file+'\'); return false;" />';fileTable+='<input type=button value=Delete onclick="files_delete(\''+file+'\'); return false;" />';if((file=="boot.py")||(file=="main.py"))
-fileTable+="</td><td><center>Yes</center></td></tr>";else
-fileTable+="</td><td><center>No</center></td></tr>";}
-fileTable+="</table>";dom=document.getElementById("fileList");dom.innerHTML=fileTable;}
-function listFiles(evt){if(!connected){alert('Must be connected to list files');return;}
-received_string="";ws.send('import os\r');sleep(25);ws.send('os.listdir()\r');setTimeout(updateTable,250);}</script>
+<script>function saveXml(){Code.tabClick("xml");var c=document.getElementById("content_xml");var b=c.value;filename="mpy_blocks";fileExt=".xml";var a=new Blob([b],{type:"text/plain;charset=utf-8"});if(a.size!=0){saveAs(a,filename+fileExt)}}function loadXmlDom(c){var b=c.target.files;if(b.length!=1){return}var a=new FileReader();a.onloadend=function(f){var h=f.target;if(h.readyState==2){try{var d=Blockly.Xml.textToDom(h.result)}catch(g){alert("Parsed XML Error:\n"+g);return}Code.discard();Blockly.Xml.domToWorkspace(d,Code.workspace)}document.getElementById("load").value=""};a.readAsText(b[0])}function loadXml(){var a=document.getElementById("load");a.addEventListener("change",loadXmlDom,false);a.click()}function runPython(){};</script>
 </html>
