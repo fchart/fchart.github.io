@@ -88,7 +88,7 @@ Device:
 </tr>
 </table>
 <div id=content_blocks class=content></div>
-<div id=content_console class=content style="border-top:1px solid lightgray">
+<div id=content_console class=content style="border-top:1px solid lightgray;width:100%;height:100%;overflow:auto">
 <label>Address: <input id=webrepl_addr value="192.168.4.1"/></label>
 <label>Password: <input id=webrepl_pass type=password value=""/></label>
 <input type=submit id=webrepl_connect value="Connect"/>&nbsp;&nbsp;&nbsp;&nbsp; |
@@ -126,15 +126,12 @@ Device:
 <pre id=content_python class=content></pre>
 <textarea id=content_xml class=content wrap=off readonly></textarea>
 <div id=content_programs class=content></div>
-<div id=content_device class=content style="border-top:1px solid lightgray">
+<div id=content_device class=content style="border-top:1px solid lightgray;width:100%;height:100%;overflow:auto">
 <center>
 <label id=device_title><b>Wemos D1 Mini - Witty Cloud</b><br></label>
 <hr>
 <img id=device_img src=devinfo/Wemos-D1-Mini-big-Witty.png width=85%>
 <br>
-<label id=device_desc>
-<BR><BR><input type=button onclick=loadDoc() value='Open Documentation' /> <BR><BR>To use ESP8266, simply connecto to MicroPython board using Wifi. Micropython must be previously installed on the board. Follow these instructions to install it.
-</label>
 </center>
 </div>
 <div id=content_files class=content></div>
