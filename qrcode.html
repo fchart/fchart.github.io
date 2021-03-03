@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<title>QR code generator</title>
+<style>
+html, body {
+  height: 100%;
+}
+.full-width {
+  width: 100%;
+}
+.full-output { width:100%; 
+          height:100% }
+</style>
+</head>
+<body>
+<button id="generate">產生QR Code</button>
+<table class="full-output">
+   <tr>
+   <td>大學生: <input class="full-width" id="college_student" value="College student"/></td>
+   <td>研究生: <input class="full-width" id="master" value="Master"/></td>
+   </tr>
+   <tr class="full-output">
+   <td><iframe id="left" class="full-output"></iframe></td>
+   <td><iframe id="right" class="full-output"></iframe></td>
+   </tr>
+</table>
+
+<script>
+(function() { 
+  function qrcode() {
+      var element = document.getElementById('left');
+      var positionInfo = element.getBoundingClientRect();
+      var height = positionInfo.height;
+      var width = positionInfo.width;
+      var size = 200;
+      if (height > width) size = width;
+      else size = height;
+  
+      window.left.src = 'https://quickchart.io/qr?text=' + window.college_student.value + '&size=' + size;
+      window.right.src =  'https://quickchart.io/qr?text=' + window.master.value + '&size=' + size;
+  }  
+  window.onload = function() {
+    window.generate.onclick = qrcode;
+  }
+})();
+
+</script>
+</html>
