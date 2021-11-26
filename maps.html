@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>maps.html</title>
+</head>
+<body>
+<h3>yahoo_movies</h3>
+<textarea id="yahoo" name="yahoo" rows="8" cols="150">
+{"_id":"yahoo_movies","startUrl":["https://movies.yahoo.com.tw/movie_thisweek.html"],"selectors":[{"id":"movies","parentSelectors":["_root"],"type":"SelectorElement","selector":"div.release_info","multiple":true,"delay":0},{"id":"title_cht","parentSelectors":["movies"],"type":"SelectorText","selector":".release_movie_name > a","multiple":false,"delay":0,"regex":""},{"id":"title_eng","parentSelectors":["movies"],"type":"SelectorText","selector":".en a","multiple":false,"delay":0,"regex":""},{"id":"date","parentSelectors":["movies"],"type":"SelectorText","selector":"div.release_movie_time","multiple":false,"delay":0,"regex":""},{"id":"expect","parentSelectors":["movies"],"type":"SelectorText","selector":"dt span","multiple":false,"delay":0,"regex":""},{"id":"sati","parentSelectors":["movies"],"type":"SelectorText","selector":"span.count","multiple":false,"delay":0,"regex":""}]}
+</textarea>
+<h3>momoshop</h3>
+<textarea id="momo" name="momo" rows="6" cols="150">
+{"_id":"momoshop","startUrl":["https://www.momoshop.com.tw/search/searchShop.jsp?keyword=iphone13&searchType=1&curPage=1&_isFuzzy=0&showType=chessboardType"],"selectors":[{"delay":0,"id":"items","multiple":true,"parentSelectors":["_root"],"selector":"a.goodsUrl","type":"SelectorElement"},{"delay":0,"id":"name","multiple":false,"parentSelectors":["items"],"regex":"","selector":"h3","type":"SelectorText"},{"delay":0,"id":"price","multiple":false,"parentSelectors":["items"],"regex":"","selector":"b","type":"SelectorText"}]}
+</textarea>
+<h3>pchome_stock</h3>
+<textarea id="pchome" name="pchome" rows="7" cols="150">
+{"_id":"pchome_stock","startUrl":["https://stock.pchome.com.tw/stock/sid2330.html"],"selectors":[{"id":"name","parentSelectors":["_root"],"type":"SelectorText","selector":"em.corp-name","multiple":false,"delay":0,"regex":""},{"id":"close","parentSelectors":["_root"],"type":"SelectorText","selector":"span.data_close","multiple":false,"delay":0,"regex":""},{"id":"volume","parentSelectors":["_root"],"type":"SelectorText","selector":"span.data_total","multiple":false,"delay":0,"regex":""},{"id":"high","parentSelectors":["_root"],"type":"SelectorText","selector":"span.s-up","multiple":false,"delay":0,"regex":""},{"id":"low","parentSelectors":["_root"],"type":"SelectorText","selector":"td:nth-of-type(9)","multiple":false,"delay":0,"regex":""}]}
+</textarea>
+</body>
+</html>
