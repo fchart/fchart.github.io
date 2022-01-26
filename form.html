@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>費用試算HTML表單</title>
+<script src="jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+   $('#quantity').val(1);
+   $('#price').val(200);
+   $('#discount').attr('checked', true);
+   $('a.cal').click(function() {
+      var price = $('#price').val();
+      var quantity = $('#quantity').val();
+      var tip = $("#tip").val();
+      var amount = 0;
+      if ($('#discount').is(":checked")) {
+         amount = (price * quantity) * 0.9;
+         amount = amount.toFixed(2); 
+      }
+      else {
+         amount = price * quantity;
+         amount = amount.toFixed(2);
+      }               
+      amount = parseFloat(amount) + parseInt(tip)
+      $('#amount').val(amount);    
+      return false;
+   });
+});
+</script>
+</head>
+<body>
+<div class="content">
+  <form method="post" id="calculate">
+     <div>
+       <label for="quantity" class="label">數量:</label>
+       <input type="text" id="quantity" size="20">
+     </div>
+     <div>
+       <label for="price" class="label">單價: </label>
+       <input type="text" id="price" size="20">
+     </div>
+     <input type="checkbox" id="discount">
+     <label for="discount">打9折</label><br/>
+     <label for="tip">小費:</label>
+     <select id="tip">
+         <option value="10" selected>10元</option>
+         <option value="20">20元</option>
+         <option value="30">30元</option>
+     </select>  <hr/>
+     <a href="#" class="cal" id="cal">計算總價</a> = 
+     <input type="text" id="amount" size="14">
+  </form>   
+</div>
+</body>
+</html>
