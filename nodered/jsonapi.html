@@ -1,0 +1,41 @@
+<script>
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max-min))+min;
+}
+const sumStringNum = str => {
+   const strArr = str.split("");
+   let res = 0;
+   for(let i = 0; i < strArr.length; i++){
+      if(+strArr[i]){
+         res += +strArr[i];
+      };
+   };
+   return res;
+};
+let temp = ["多雲","小雨","大雨","晴天","陰天"];
+var dataObj;
+const queryString = window.location.search;
+// document.write(queryString+"<br>");
+const urlParams = new URLSearchParams(queryString);
+const id = urlParams.get('id')
+if (id && id.length==8) {
+   result = id.trim();
+   no = result.substr(result.length-3)+sumStringNum(result);
+   dataObj = {
+      id: no,
+      description: temp[getRandomInt(0, 5)],
+      temp: getRandomInt(15, 35),
+      humi: getRandomInt(78, 90),
+      light: getRandomInt(100, 200)
+   };
+   
+   
+}
+else{
+   dataObj = {
+      error: "Error!",
+   };
+}
+let dataStr = JSON.stringify(dataObj);
+document.write(dataStr);
+</script>
