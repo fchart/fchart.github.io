@@ -2,6 +2,10 @@ body { background: #8A2813; }
 header, section, article, aside, footer {
    display: block;
 }
+h1 {
+   font-size: 36px; 
+   color: brown;
+   margin: 0 0 10px 0; }
 h2 {
    font-size: 24px; 
    color: brown;
