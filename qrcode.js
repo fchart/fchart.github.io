@@ -1,3 +1,3 @@
 // JavaScript Document
-college_student = "This is a book";
-master_student = "This is a test";
+college_student = "cycu college students";
+master_student = "cysu master students";
