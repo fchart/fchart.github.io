@@ -2,9 +2,14 @@
 <html>
 <head>
 <title>QR code generator</title>
+<meta charset="UTF-8">
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <META HTTP-EQUIV="EXPIRES" CONTENT="Mon, 22 Jul 2002 11:12:01 GMT">
+<script>
+var college_student = "context";
+var master_student = "flow global";
+</script>
 <style>
 html, body {
   height: 100%;
@@ -30,9 +35,6 @@ html, body {
 
 <script>
 function qrcode() {
-    college_student = "College";
-    master_student = "Master";
-  
     var element = document.getElementById('left');
     var positionInfo = element.getBoundingClientRect();
     var height = positionInfo.height;
