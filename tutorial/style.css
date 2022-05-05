@@ -1,0 +1,90 @@
+body { background: #008B8B; }
+header, section, article, aside, footer {
+   display: block;
+}
+h1 {
+   font-size: 36px; 
+   color: brown;
+   margin: 0 0 10px 0; }
+h2 {
+   font-size: 24px; 
+   color: brown;
+   margin: 0 0 10px 0; }
+h3 { font-size: 20px; color: brown; margin: 0 0 15px 0; padding:5px 5px 5px 10px; }
+p { margin: 0 0 20px 0; }
+#content {
+   width: 90%; 
+   margin: 30px auto;
+   padding: 25px;
+   background: #F7F8E0;
+   overflow: hidden;
+}
+section {
+   width: 70%;
+   float: left;
+}
+aside {
+   width: 30%;
+   float: right;
+}
+aside ul li a {
+   text-decoration: none;
+   padding: 3px 0; 
+   display: block;
+}
+.style1
+{
+   width: 100%;
+   border: 1px solid #DDD3BF;
+}
+.style2
+{
+   width: 250;
+   color: #0000FF;
+   font-weight: bold;
+   border-style: solid;
+   border-width: 1px;
+   padding: 1px 4px;
+}
+.style3
+{
+   width: 200;
+   border-style: solid;
+   border-width: 1px;
+   padding: 1px 4px;
+}
+.style4
+{
+   width: 422px;
+   height: 143px;
+   margin-right: 0px;
+}
+/* Phone Styles */
+@media screen and (max-width: 520px) {
+   aside ul {
+      list-style: none;
+   }  
+   aside ul li a {
+      padding-left: 30px;
+      background: url(email.jpg) left center no-repeat;
+   }
+}
+/* Table Styles */
+@media screen and (max-width: 768px) and (min-width: 519px) {
+   aside ul li a:before {
+      content: "Hot!";
+      font-size: 12px;
+      font-style: bold;
+      color: red;
+   }
+}
+/* PC Styles */
+@media screen and (min-width: 769px) {
+   aside ul li a:after {
+      content: " ("attr(data-title)")";
+      font-size: 14px;
+      font-style: bold;
+      color: brown;
+   }
+}
+
