@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Google Chart Example</title>
+<meta charset="utf-8">                                                                                                           
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.0, maximum-scale=100.0, user-scalable=yes"> 
+<script src="loader.js"></script>
+<script>            
+var webString = 1;
+google.charts.load('current', {'packages':['gauge']});
+google.charts.setOnLoadCallback(drawChart);
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['溫度', webString]     // 指定顯示名稱
+               ]);
+   
+    var options = { width: 1025, height: 308,    // 調整量表尺寸
+                    min: 0, max:50,              // 調整數值範圍
+                    redFrom: 40, redTo: 50,      // 調整色彩範圍
+                    yellowFrom:30, yellowTo: 40,
+                    greenFrom:20, greenTo: 30,
+                    minorTicks: 2,               // 最小和主要刻度
+                    majorTicks: ['0', '10', '20', '30', '40', '50']
+                  };
+                                
+    var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+    chart.draw(data, options);
+    setInterval(function() {      // 讀取 App Inventor 傳入的資料
+        webString = window.AppInventor.getWebViewString();        
+        data.setValue(0, 1, webString ); 	    
+        chart.draw(data, options);
+    }, 1000);                     // 1000是間隔1秒鐘更新資料                       
+}
+</script>
+</head>
+<body>       
+</html>                                    
+<div id="chart_div" style="width: 1025px; height: 308px;"></div>
+<script>
+$('document').ready(function(){
+   var webString = 35;                // 第1次載入的初始值
+   data.setValue(0, 1, webString);
+   chart.draw(data, options); 
+});
+</script>
+</body>
