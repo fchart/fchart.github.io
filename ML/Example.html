@@ -1,0 +1,32 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Example.html</title>
+<style type="text/css">
+.blue { color: blue; }
+.red { color: red; }
+.green { color: green; }
+.line { border: 1px solid #333; }
+</style>
+<script src="jquery-3.1.0.min.js"></script>
+<script>
+$(document).ready(function() {
+   $('*').addClass('line');
+   $('p').addClass('blue');
+   $('#list').addClass('red');
+   $('.item').addClass('green');
+});
+</script>
+</head>
+<body>
+<p>Python網路爬蟲工具</p>
+<p>建立網路爬蟲程式</p>
+<ol id="list">
+  <li class='item'>BeautifulSoup方法</li> 
+  <li>CSS選擇器</li>
+  <li>正規表達式</li>  
+  <li class='item'>XPath表達式</li>
+</ol>
+</body>
+</html>
