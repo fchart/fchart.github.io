@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="big5">
+ <head>
+  <meta charset="utf-8"/>
+  <title>HTML 表格標籤</title>
+  <style>
+  table {      
+     border:1px solid #000; 
+     font-family: 微軟正黑體; 
+     font-size:16px; 
+     border:1px solid #000;
+     text-align:center;
+     border-collapse:collapse;
+     margin: 20px;
+     padding:10px;
+  }
+  th { 
+     background-color: #009FCC;
+     padding:10px;
+     border:1px solid #000;
+     color:#fff;
+  } 
+  td { 
+     border:1px solid #000;
+     padding:5px;
+  } 
+  tfoot { background-color: yellow }
+  #container {
+     height: 100%;
+     width: 100%;
+     display: flex;
+  }  
+  #tb1 { width: 25%; }
+  #tb2 { width: 25%; }
+  </style>
+ </head>
+ <body>
+ <h2>HTML 表格標籤</h2>
+ <div id="container">
+  <table class="deposit" border="" id="tb1">
+   <caption>第一季的每月存款金額</caption>
+   <thead>
+   <tr>
+        <th>月份</th>
+        <th>存款金額</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr>
+        <td>一月</td>
+        <td>NT$ 5,000</td>
+   </tr>
+   <tr>
+        <td>二月</td>
+        <td>NT$ 1,000</td>
+   </tr>
+   <tr>
+        <td>三月</td>
+        <td>NT$ 3,000</td>
+   </tr>
+   <tr>
+        <td>四月</td>
+        <td>NT$ 1,000</td>
+   </tr>
+   </tbody>
+   <tfoot>
+   <tr>
+        <td>存款總額</td>
+        <td>NT$ 10,000</td>
+   </tr>
+   </tfoot>
+  </table> 
+  <table class="deposit" border="" id="tb2">
+   <caption>第二季的每月存款金額</caption>
+   <thead>
+   <tr>
+        <th>月份</th>
+        <th>存款金額</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr>
+        <td>五月</td>
+        <td>NT$ 5,500</td>
+   </tr>
+   <tr>
+        <td>六月</td>
+        <td>NT$ 1,500</td>
+   </tr>
+   <tr>
+        <td>七月</td>
+        <td>NT$ 3,500</td>
+   </tr>
+   <tr>
+        <td>八月</td>
+        <td>NT$ 1,500</td>
+   </tr>
+   </tbody>
+   <tfoot>
+   <tr>
+        <td>存款總額</td>
+        <td>NT$ 12,000</td>
+   </tr>
+   </tfoot>
+  </table> 
+ </div>
+ </body>
+</html>
