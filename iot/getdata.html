@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Example.html</title>
+<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+<h1>即時溫溼度資料</h1>
+<hr/>
+<div id="content">
+<p>
+<script>
+function getRandomInt(a,b){return Math.floor(Math.random()*(b-a))+a}var sumStringNum=function(a){a=a.split("");for(var b=0,c=0;c<a.length;c++)+a[c]&&(b+=+a[c]);return b},dt=new Date;result="12345678";no=result.substr(result.length-3)+sumStringNum(result);document.write("<span class='style1 s"+no+"'>\u73fe\u5728\u6642\u9593: <b class='d"+no+"'>"+dt.toLocaleTimeString()+"<br/><hr/>");document.write("<span class='style2 t"+no+"'>\u6eab\u5ea6: <b class='t"+no+"'>"+getRandomInt(15,35)+"</b></span><br/><br/>");
+document.write("<span class='style2 h"+no+"'>\u6ebc\u5ea6: <b class='h"+no+"'>"+getRandomInt(78,90)+"</b></span><br/>");
+</script>
+</p>
+</div>
+</body>
+</html>
