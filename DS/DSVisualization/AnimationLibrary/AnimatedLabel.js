@@ -1,4 +1,4 @@
-﻿// Copyright 2011 David Galles, University of San Francisco. All rights reserved.
+// Copyright 2011 David Galles, University of San Francisco. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
@@ -56,7 +56,7 @@ AnimatedLabel.prototype.draw = function(ctx)
 
 	
 	
-	ctx.font = '10px sans-serif';
+	ctx.font = '14px sans-serif';        // 10px sans-serif
 	if (this.centering)
 	{
 		ctx.textAlign = 'center';

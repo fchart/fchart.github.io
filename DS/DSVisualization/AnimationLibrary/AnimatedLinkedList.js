@@ -370,7 +370,7 @@ AnimatedLinkedList.prototype.draw = function(context)
 	
 	
 	context.textAlign = 'center';
-	context.font         = '10px sans-serif';
+	context.font         = '14px sans-serif';         // 10px
 	context.textBaseline   = 'middle'; 
 	context.lineWidth = 1;
 	

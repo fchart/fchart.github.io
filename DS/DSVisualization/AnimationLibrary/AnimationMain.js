@@ -193,7 +193,7 @@ function doPlayPause()
 	paused = !paused;
 	if (paused)
 	{
-		playPauseBackButton.setAttribute("value", "¼½©ñ");
+		playPauseBackButton.setAttribute("value", "æ’­æ”¾");
 		if (skipBackButton.disabled == false)
 		{
 			stepBackButton.disabled = false;		
@@ -202,7 +202,7 @@ function doPlayPause()
 	}
 	else
 	{
-		playPauseBackButton.setAttribute("value", "¼È°±");	
+		playPauseBackButton.setAttribute("value", "æš«åœ");	
 	}
 	animationManager.SetPaused(paused);
 }
@@ -259,15 +259,15 @@ function initCanvas()
 	objectManager = new ObjectManager();
 	animationManager = new AnimationManager(objectManager);
 	
-	skipBackButton = addControlToAnimationBar("Button", "©¹¦^¸õ¹L");
+	skipBackButton = addControlToAnimationBar("Button", "å¾€å›è·³é");
 	skipBackButton.onclick = animationManager.skipBack.bind(animationManager);
-	stepBackButton = addControlToAnimationBar("Button", "©¹¦^¤@¨B");
+	stepBackButton = addControlToAnimationBar("Button", "å¾€å›ä¸€æ­¥");
 	stepBackButton.onclick = animationManager.stepBack.bind(animationManager);
-	playPauseBackButton = addControlToAnimationBar("Button", "¼È°±");
+	playPauseBackButton = addControlToAnimationBar("Button", "æš«åœ");
 	playPauseBackButton.onclick = doPlayPause ;
-	stepForwardButton = addControlToAnimationBar("Button", "©¹«e¤@¨B");
+	stepForwardButton = addControlToAnimationBar("Button", "å¾€å‰ä¸€æ­¥");
 	stepForwardButton.onclick = animationManager.step.bind(animationManager) ;
-	skipForwardButton = addControlToAnimationBar("Button", "©¹«e¸õ¹L");
+	skipForwardButton = addControlToAnimationBar("Button", "å¾€å‰è·³é");
 	skipForwardButton.onclick = animationManager.skipForward.bind(animationManager);
 	
 	
@@ -296,7 +296,7 @@ function initCanvas()
 	midLevel = document.createElement("tr");
 	bottomLevel = document.createElement("td");
 	bottomLevel.align = "center";
-	var txtNode = document.createTextNode("½Õ¾ã°Êµe³t«×"); 
+	var txtNode = document.createTextNode("èª¿æ•´å‹•ç•«é€Ÿåº¦"); 
 	midLevel.appendChild(bottomLevel);
 	bottomLevel.appendChild(txtNode);
 	newTable.appendChild(midLevel);	
@@ -385,7 +385,7 @@ function initCanvas()
 	heightEntry.onkeydown = this.returnSubmit(heightEntry, animationManager.changeSize.bind(animationManager), 4, true);
 
 	heightEntry.size = 4;
-	sizeButton = addControlToAnimationBar("Button", "§ó§ï°Êµe¤Ø¤o");
+	sizeButton = addControlToAnimationBar("Button", "æ›´æ”¹å‹•ç•«å°ºå¯¸");
 	
 	sizeButton.onclick = animationManager.changeSize.bind(animationManager) ;
 	
