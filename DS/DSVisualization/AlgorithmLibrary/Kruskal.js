@@ -67,7 +67,7 @@ Kruskal.superclass = Graph.prototype;
 Kruskal.prototype.addControls =  function()
 {		
 	
-	this.startButton = addControlToAlgorithmBar("Button", "³Ì§C¦¨¥»ÂX±i¾ğ");
+	this.startButton = addControlToAlgorithmBar("Button", "æœ€ä½æˆæœ¬æ“´å¼µæ¨¹");
 	this.startButton.onclick = this.startCallback.bind(this);
 
 	Kruskal.superclass.addControls.call(this, false);
@@ -101,7 +101,7 @@ Kruskal.prototype.setup = function()
 		this.cmd("CreateLabel", this.setIndexID[i], i, Kruskal.SET_ARRAY_START_X - Kruskal.SET_ARRAY_ELEM_WIDTH ,Kruskal.SET_ARRAY_START_Y + i*Kruskal.SET_ARRAY_ELEM_HEIGHT);
 		this.cmd("SetForegroundColor",  this.setIndexID[i], VERTEX_INDEX_COLOR);				
 	}
-	this.cmd("CreateLabel", this.nextIndex++, "«D³s±µ¶°¦X", Kruskal.SET_ARRAY_START_X - 1 * Kruskal.SET_ARRAY_ELEM_WIDTH, Kruskal.SET_ARRAY_START_Y - Kruskal.SET_ARRAY_ELEM_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "éé€£æ¥é›†åˆ", Kruskal.SET_ARRAY_START_X - 1 * Kruskal.SET_ARRAY_ELEM_WIDTH, Kruskal.SET_ARRAY_START_Y - Kruskal.SET_ARRAY_ELEM_HEIGHT * 1.5, 0);
 	this.animationManager.setAllLayers([0, this.currentLayer]);
 	this.animationManager.StartNewAnimation(this.commands);
 	this.animationManager.skipForward();
@@ -262,7 +262,7 @@ Kruskal.prototype.doKruskal = function(ignored)
 		
 		if (left != right)
 		{
-			this.cmd("CreateLabel", messageLabelID, "³»ÂI¦b¤£¦P¶°¦X.  ±NÃä½u¥[¤J¶°¦X: Union(" + String(left) + "," + String(right) + ")",  Kruskal.MESSAGE_LABEL_X, Kruskal.MESSAGE_LABEL_Y, 0);
+			this.cmd("CreateLabel", messageLabelID, "é ‚é»åœ¨ä¸åŒé›†åˆ.  å°‡é‚Šç·šåŠ å…¥é›†åˆ: Union(" + String(left) + "," + String(right) + ")",  Kruskal.MESSAGE_LABEL_X, Kruskal.MESSAGE_LABEL_Y, 0);
 			this.cmd("Step");
 			this.highlightEdge(this.edgesListLeft[nextListIndex], this.edgesListRight[nextListIndex], 1)
 			this.highlightEdge(this.edgesListRight[nextListIndex], this.edgesListLeft[nextListIndex], 1)
@@ -294,7 +294,7 @@ Kruskal.prototype.doKruskal = function(ignored)
 		}
 		else
 		{
-			this.cmd("CreateLabel", messageLabelID, "³»ÂI¦b¦P¤@¶°¦X·|²£¥Í°j°é, ¸õ¹L¦¹Ãä½u",  Kruskal.MESSAGE_LABEL_X, Kruskal.MESSAGE_LABEL_Y, 0);
+			this.cmd("CreateLabel", messageLabelID, "é ‚é»åœ¨åŒä¸€é›†åˆæœƒç”¢ç”Ÿè¿´åœˆ, è·³éæ­¤é‚Šç·š",  Kruskal.MESSAGE_LABEL_X, Kruskal.MESSAGE_LABEL_Y, 0);
 			this.cmd("Step");
 			
 		}

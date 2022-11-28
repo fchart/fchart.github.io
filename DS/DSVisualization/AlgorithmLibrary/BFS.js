@@ -53,11 +53,11 @@ BFS.superclass = Graph.prototype;
 
 BFS.prototype.addControls =  function()
 {		
-	addLabelToAlgorithmBar("¶}©l³»ÂI: ");
+	addLabelToAlgorithmBar("é–‹å§‹é ‚é»ž: ");
 	this.startField = addControlToAlgorithmBar("Text", "");
 	this.startField.onkeydown = this.returnSubmit(this.startField,  this.startCallback.bind(this), 2, true);
 	this.startField.size = 2;
-	this.startButton = addControlToAlgorithmBar("Button", "°õ¦æ¼e«×Àu¥ýBFS");
+	this.startButton = addControlToAlgorithmBar("Button", "åŸ·è¡Œå¯¬åº¦å„ªå…ˆBFS");
 	this.startButton.onclick = this.startCallback.bind(this);
 	BFS.superclass.addControls.call(this);
 }	
@@ -95,9 +95,9 @@ BFS.prototype.setup = function()
 		this.cmd("SetForegroundColor",  this.parentIndexID[i], VERTEX_INDEX_COLOR);
 		
 	}
-	this.cmd("CreateLabel", this.nextIndex++, "¤÷Parent", PARENT_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
-	this.cmd("CreateLabel", this.nextIndex++, "¤w³y³XVisited", VISITED_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
-	this.cmd("CreateLabel", this.nextIndex++, "BFS ¦î¦C", QUEUE_START_X, QUEUE_START_Y - 30, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "çˆ¶Parent", PARENT_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "å·²é€ è¨ªVisited", VISITED_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "BFS ä½‡åˆ—", QUEUE_START_X, QUEUE_START_Y - 30, 0);
 	animationManager.setAllLayers([0, this.currentLayer]);
 	animationManager.StartNewAnimation(this.commands);
 	animationManager.skipForward();

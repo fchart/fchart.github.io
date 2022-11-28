@@ -64,7 +64,7 @@ TopoSortIndegree.superclass = Graph.prototype;
 
 TopoSortIndegree.prototype.addControls =  function()
 {		
-	this.startButton = addControlToAlgorithmBar("Button", "¹Ï§Îªº©İ¾ë±Æ§Ç");
+	this.startButton = addControlToAlgorithmBar("Button", "åœ–å½¢çš„æ‹“æ¨¸æ’åº");
 	this.startButton.onclick = this.startCallback.bind(this);
 	TopoSortIndegree.superclass.addControls.call(this, false);
 }	
@@ -104,7 +104,7 @@ TopoSortIndegree.prototype.setup = function()
 		this.cmd("CreateLabel", this.setIndexID[i], i, TopoSortIndegree.INDEGREE_ARRAY_START_X - TopoSortIndegree.INDEGREE_ARRAY_ELEM_WIDTH ,TopoSortIndegree.INDEGREE_ARRAY_START_Y + i*TopoSortIndegree.INDEGREE_ARRAY_ELEM_HEIGHT);
 		this.cmd("SetForegroundColor",  this.setIndexID[i], VERTEX_INDEX_COLOR);				
 	}
-	this.cmd("CreateLabel", this.nextIndex++, "¤º¤À¤ä«×", TopoSortIndegree.INDEGREE_ARRAY_START_X - 1 * TopoSortIndegree.INDEGREE_ARRAY_ELEM_WIDTH, TopoSortIndegree.INDEGREE_ARRAY_START_Y - TopoSortIndegree.INDEGREE_ARRAY_ELEM_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "å…§åˆ†æ”¯åº¦", TopoSortIndegree.INDEGREE_ARRAY_START_X - 1 * TopoSortIndegree.INDEGREE_ARRAY_ELEM_WIDTH, TopoSortIndegree.INDEGREE_ARRAY_START_Y - TopoSortIndegree.INDEGREE_ARRAY_ELEM_HEIGHT * 1.5, 0);
 	
 	
 	this.message1ID = this.nextIndex++;
@@ -154,7 +154,7 @@ TopoSortIndegree.prototype.doTopoSort = function(ignored)
 		this.cmd("Delete", this.orderID[vertex]);
 	}
 	
-	this.cmd("SetText", this.message1ID, "¨«³X¹Ï§Î©Ò¦³Ãä½u, ­pºâ©Ò¦³³»ÂIªº¤º¤À¤ä«× ");
+	this.cmd("SetText", this.message1ID, "èµ°è¨ªåœ–å½¢æ‰€æœ‰é‚Šç·š, è¨ˆç®—æ‰€æœ‰é ‚é»çš„å…§åˆ†æ”¯åº¦ ");
 	this.cmd("SetText", this.topoLabelID, "");
 	this.cmd("SetText", this.stackLabelID, "");
 	for (vertex = 0; vertex < this.size; vertex++)
@@ -193,8 +193,8 @@ TopoSortIndegree.prototype.doTopoSort = function(ignored)
 			}
 		
 	}
-	this.cmd("SetText", this.message1ID, "±N©Ò¦³¤º¤À¤ä«× 0 ªº³»ÂI¦s¤J°ïÅ|");
-	this.cmd("SetText", this.stackLabelID, "¤º¤À¤ä«× 0 ªº³»ÂI");
+	this.cmd("SetText", this.message1ID, "å°‡æ‰€æœ‰å…§åˆ†æ”¯åº¦ 0 çš„é ‚é»å­˜å…¥å †ç–Š");
+	this.cmd("SetText", this.stackLabelID, "å…§åˆ†æ”¯åº¦ 0 çš„é ‚é»");
 	
 	for (vertex = 0; vertex < this.size; vertex++)
 	{
@@ -212,7 +212,7 @@ TopoSortIndegree.prototype.doTopoSort = function(ignored)
 		
 	}
 	
-	this.cmd("SetText", this.topoLabelID, "©İ¾ë±Æ§Ç¶¶§Ç");
+	this.cmd("SetText", this.topoLabelID, "æ‹“æ¨¸æ’åºé †åº");
 	
 	
 	var nextInOrder = 0;
@@ -220,13 +220,13 @@ TopoSortIndegree.prototype.doTopoSort = function(ignored)
 	{
 		stackTop--;
 		var nextElem = stack[stackTop];
-		this.cmd("SetText", this.message1ID, "¨ú¥X¤À¤ä«× 0 ªº³»ÂI, ±N¥¦¥[¤J©İ¾ë±Æ§Ç");
+		this.cmd("SetText", this.message1ID, "å–å‡ºåˆ†æ”¯åº¦ 0 çš„é ‚é», å°‡å®ƒåŠ å…¥æ‹“æ¨¸æ’åº");
 		this.cmd("CreateLabel", this.orderID[nextInOrder], nextElem, TopoSortIndegree.STACK_START_X, TopoSortIndegree.STACK_START_Y + stackTop * TopoSortIndegree.STACK_HEIGHT);
 		this.cmd("Delete", stackID[stackTop]);
 		this.cmd("Step");
 		this.cmd("Move", this.orderID[nextInOrder], TopoSortIndegree.TOPO_ARRAY_START_X, TopoSortIndegree.TOPO_ARRAY_START_Y + nextInOrder * TopoSortIndegree.TOPO_HEIGHT);
 		this.cmd("Step");
-		this.cmd("SetText", this.message1ID, "§ä¥X©Ò¦³ªº¾F±µ³»ÂI " + String(nextElem) + ", ±N¤º¤À¤ä«× - 1.  ¦p¬° 0 , ¦s¤J°ïÅ|");
+		this.cmd("SetText", this.message1ID, "æ‰¾å‡ºæ‰€æœ‰çš„é„°æ¥é ‚é» " + String(nextElem) + ", å°‡å…§åˆ†æ”¯åº¦ - 1.  å¦‚ç‚º 0 , å­˜å…¥å †ç–Š");
 		this.cmd("SetHighlight", this.circleID[nextElem], 1);
 		this.cmd("Step")
 		

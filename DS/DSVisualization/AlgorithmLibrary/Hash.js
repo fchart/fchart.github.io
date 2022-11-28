@@ -76,24 +76,24 @@ Hash.prototype.addControls = function()
 	this.insertField = addControlToAlgorithmBar("Text", "");
 	this.insertField.size = MAX_HASH_LENGTH;
 	this.insertField.onkeydown = this.returnSubmit(this.insertField,  this.insertCallback.bind(this), MAX_HASH_LENGTH, true);
-	this.insertButton = addControlToAlgorithmBar("Button", "´¡¤J");
+	this.insertButton = addControlToAlgorithmBar("Button", "æ’å…¥");
 	this.insertButton.onclick =  this.insertCallback.bind(this);
 	
 	this.deleteField = addControlToAlgorithmBar("Text", "");
 	this.deleteField.size = MAX_HASH_LENGTH;
 	this.deleteField.onkeydown = this.returnSubmit(this.insertField,  this.deleteCallback.bind(this), MAX_HASH_LENGTH, true);
-	this.deleteButton = addControlToAlgorithmBar("Button", "§R°£");
+	this.deleteButton = addControlToAlgorithmBar("Button", "åˆªé™¤");
 	this.deleteButton.onclick =  this.deleteCallback.bind(this);
 
 	
 	this.findField = addControlToAlgorithmBar("Text", "");
 	this.findField.size = MAX_HASH_LENGTH;
 	this.findField.onkeydown = this.returnSubmit(this.insertField,  this.findCallback.bind(this), MAX_HASH_LENGTH, true);
-	this.findButton = addControlToAlgorithmBar("Button", "·j´M");
+	this.findButton = addControlToAlgorithmBar("Button", "æœå°‹");
 	this.findButton.onclick =  this.findCallback.bind(this);
 	
 	
-	var radioButtonList = addRadioButtonGroupToAlgorithmBar(["Âø´ê¾ã¼Æ", "Âø´ê¦r¦ê"], "HashType");
+	var radioButtonList = addRadioButtonGroupToAlgorithmBar(["é›œæ¹Šæ•´æ•¸", "é›œæ¹Šå­—ä¸²"], "HashType");
 	this.hashIntegerButton = radioButtonList[0];
 	this.hashIntegerButton.onclick = this.changeHashTypeCallback.bind(this, true);
 //  this.hashIntegerButton.onclick = this.hashIntegerCallback.bind(this);
@@ -166,7 +166,7 @@ Hash.prototype.doHash = function(input)
 	{
 		var oldnextIndex = this.nextIndex;
 		var label1= this.nextIndex++;
-		this.cmd("CreateLabel", label1, "Âø´ê¤¤:" , 10, 45, 0);
+		this.cmd("CreateLabel", label1, "é›œæ¹Šä¸­:" , 10, 45, 0);
 		var wordToHashID = new Array(input.length);
 		var wordToHash = new Array(input.length);
 		for (var i = 0; i < input.length; i++)

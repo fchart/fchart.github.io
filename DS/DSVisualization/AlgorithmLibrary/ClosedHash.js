@@ -82,9 +82,9 @@ ClosedHash.prototype.addControls = function()
 	ClosedHash.superclass.addControls.call(this);
 
 
-	var radioButtonList = addRadioButtonGroupToAlgorithmBar(["½u©Ê±´´úªk: f(i) = i ",
-															 "¥­¤è±´´úªk: f(i) = i * i",
-															"ÂùÂø´ê: f(i) = i * hash2(elem)"], 
+	var radioButtonList = addRadioButtonGroupToAlgorithmBar(["ç·šæ€§æ¢æ¸¬æ³•: f(i) = i ",
+															 "å¹³æ–¹æ¢æ¸¬æ³•: f(i) = i * i",
+															"é›™é›œæ¹Š: f(i) = i * hash2(elem)"], 
 															"CollisionStrategy");
 	this.linearProblingButton = radioButtonList[0];
 	this.linearProblingButton.onclick = this.linearProbeCallback.bind(this);
@@ -169,7 +169,7 @@ ClosedHash.prototype.linearProbeCallback = function(event)
 ClosedHash.prototype.insertElement = function(elem)
 {
 	this.commands = new Array();
-	this.cmd("SetText", this.ExplainLabel, "´¡¤J¤¸¯À: " + String(elem));
+	this.cmd("SetText", this.ExplainLabel, "æ’å…¥å…ƒç´ : " + String(elem));
 	var index = this.doHash(elem);
 	
 	index = this.getEmptyIndex(index, elem);
@@ -262,21 +262,21 @@ ClosedHash.prototype.getElemIndex = function(index, elem)
 ClosedHash.prototype.deleteElement = function(elem)
 {
 	this.commands = new Array();
-	this.cmd("SetText", this.ExplainLabel, "§R°£¤¸¯À: " + elem);
+	this.cmd("SetText", this.ExplainLabel, "åˆªé™¤å…ƒç´ : " + elem);
 	var index = this.doHash(elem);
 	
 	index = this.getElemIndex(index, elem);
 	
 	if (index > 0)
 	{
-		this.cmd("SetText", this.ExplainLabel, "§R°£¤¸¯À: " + elem + "  Element deleted");
+		this.cmd("SetText", this.ExplainLabel, "åˆªé™¤å…ƒç´ : " + elem + "  Element deleted");
 		this.empty[index] = true;
 		this.deleted[index] = true;
-		this.cmd("SetText", this.hashTableVisual[index], "<§R°£>");
+		this.cmd("SetText", this.hashTableVisual[index], "<åˆªé™¤>");
 	}
 	else 
 	{
-		this.cmd("SetText", this.ExplainLabel, "§R°£¤¸¯À: " + elem + "  ¤¸¯À¤£¦bÂø´êªí");
+		this.cmd("SetText", this.ExplainLabel, "åˆªé™¤å…ƒç´ : " + elem + "  å…ƒç´ ä¸åœ¨é›œæ¹Šè¡¨");
 	}
 	return this.commands;
 	
@@ -285,17 +285,17 @@ ClosedHash.prototype.findElement = function(elem)
 {
 	this.commands = new Array();
 	
-	this.cmd("SetText", this.ExplainLabel, "·j´M¤¸¯À: " + elem);
+	this.cmd("SetText", this.ExplainLabel, "æœå°‹å…ƒç´ : " + elem);
 	var index = this.doHash(elem);
 	
 	var found = this.getElemIndex(index, elem) != -1;
 	if (found)
 	{
-		this.cmd("SetText", this.ExplainLabel, "·j´M¤¸¯À: " + elem+ "  §ä¨ì!")				
+		this.cmd("SetText", this.ExplainLabel, "æœå°‹å…ƒç´ : " + elem+ "  æ‰¾åˆ°!")				
 	}
 	else
 	{
-		this.cmd("SetText", this.ExplainLabel, "·j´M¤¸¯À: " + elem+ "  ¨S¦³§ä¨ì!")
+		this.cmd("SetText", this.ExplainLabel, "æœå°‹å…ƒç´ : " + elem+ "  æ²’æœ‰æ‰¾åˆ°!")
 		
 	}
 	return this.commands;

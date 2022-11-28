@@ -77,17 +77,17 @@ BST.prototype.addControls =  function()
 {
 	this.insertField = addControlToAlgorithmBar("Text", "");
 	this.insertField.onkeydown = this.returnSubmit(this.insertField,  this.insertCallback.bind(this), 4);
-	this.insertButton = addControlToAlgorithmBar("Button", "´¡¤J(Insert)");
+	this.insertButton = addControlToAlgorithmBar("Button", "æ’å…¥(Insert)");
 	this.insertButton.onclick = this.insertCallback.bind(this);
 	this.deleteField = addControlToAlgorithmBar("Text", "");
 	this.deleteField.onkeydown = this.returnSubmit(this.deleteField,  this.deleteCallback.bind(this), 4);
-	this.deleteButton = addControlToAlgorithmBar("Button", "§R°£(Delete)");
+	this.deleteButton = addControlToAlgorithmBar("Button", "åˆªé™¤(Delete)");
 	this.deleteButton.onclick = this.deleteCallback.bind(this);
 	this.findField = addControlToAlgorithmBar("Text", "");
 	this.findField.onkeydown = this.returnSubmit(this.findField,  this.findCallback.bind(this), 4);
-	this.findButton = addControlToAlgorithmBar("Button", "·j´M(Find)");
+	this.findButton = addControlToAlgorithmBar("Button", "æœå°‹(Find)");
 	this.findButton.onclick = this.findCallback.bind(this);
-	this.printButton = addControlToAlgorithmBar("Button", "¤¤§Ç¨«³XÅã¥Ü¸`ÂI(Print)");
+	this.printButton = addControlToAlgorithmBar("Button", "ä¸­åºèµ°è¨ªé¡¯ç¤ºç¯€é»(Print)");
 	this.printButton.onclick = this.printCallback.bind(this);
 }
 
@@ -213,16 +213,16 @@ BST.prototype.doFind = function(tree, value)
 		this.cmd("SetHighlight", tree.graphicID, 1);
 		if (tree.data == value)
 		{
-			this.cmd("SetText", 0, "·j´M "+value+" : " + value + " = " + value + " (¤¸¯À§ä¨ì!)");
+			this.cmd("SetText", 0, "æœå°‹ "+value+" : " + value + " = " + value + " (å…ƒç´ æ‰¾åˆ°!)");
 			this.cmd("Step");					
-			this.cmd("SetText", 0, "·j´M:"+value);
+			this.cmd("SetText", 0, "æœå°‹:"+value);
 			this.cmd("SetHighlight", tree.graphicID, 0);
 		}
 		else
 		{
 			if (tree.data > value)
 			{
-				this.cmd("SetText", 0, "·j´M "+value+" : " + value + " < " + tree.data + " (l·j´M¥ª¤l¾ğ)");
+				this.cmd("SetText", 0, "æœå°‹ "+value+" : " + value + " < " + tree.data + " (læœå°‹å·¦å­æ¨¹)");
 				this.cmd("Step");
 				this.cmd("SetHighlight", tree.graphicID, 0);
 				if (tree.left!= null)
@@ -236,7 +236,7 @@ BST.prototype.doFind = function(tree, value)
 			}
 			else
 			{
-				this.cmd("SetText", 0, "·j´M "+value+" : " + value + " > " + tree.data + " (·j´M¥k¤l¾ğ)");					
+				this.cmd("SetText", 0, "æœå°‹ "+value+" : " + value + " > " + tree.data + " (æœå°‹å³å­æ¨¹)");					
 				this.cmd("Step");
 				this.cmd("SetHighlight", tree.graphicID, 0);
 				if (tree.right!= null)
@@ -254,16 +254,16 @@ BST.prototype.doFind = function(tree, value)
 	}
 	else
 	{
-		this.cmd("SetText", 0, "·j´M "+value+" : " + "< ªÅ¤G¤¸¾ğ > (¤¸¯À¨S¦³§ä¨ì)");				
+		this.cmd("SetText", 0, "æœå°‹ "+value+" : " + "< ç©ºäºŒå…ƒæ¨¹ > (å…ƒç´ æ²’æœ‰æ‰¾åˆ°)");				
 		this.cmd("Step");					
-		this.cmd("SetText", 0, "·j´M "+value+" : " + " (¤¸¯À¨S¦³§ä¨ì)");					
+		this.cmd("SetText", 0, "æœå°‹ "+value+" : " + " (å…ƒç´ æ²’æœ‰æ‰¾åˆ°)");					
 	}
 }
 
 BST.prototype.insertElement = function(insertedValue)
 {
 	this.commands = new Array();	
-	this.cmd("SetText", 0, "´¡¤J "+insertedValue);
+	this.cmd("SetText", 0, "æ’å…¥ "+insertedValue);
 	this.highlightID = this.nextIndex++;
 	
 	if (this.treeRoot == null)
@@ -301,11 +301,11 @@ BST.prototype.insert = function(elem, tree)
 	
 	if (elem.data < tree.data)
 	{
-		this.cmd("SetText", 0,  elem.data + " < " + tree.data + ".  ·j´M¥ª¤l¾ğ");				
+		this.cmd("SetText", 0,  elem.data + " < " + tree.data + ".  æœå°‹å·¦å­æ¨¹");				
 	}
 	else
 	{
-		this.cmd("SetText",  0, elem.data + " >= " + tree.data + ".  ·j´M¥k¤l¾ğ");				
+		this.cmd("SetText",  0, elem.data + " >= " + tree.data + ".  æœå°‹å³å­æ¨¹");				
 	}
 	this.cmd("Step");
 	this.cmd("SetHighlight", tree.graphicID, 0);
@@ -315,7 +315,7 @@ BST.prototype.insert = function(elem, tree)
 	{
 		if (tree.left == null)
 		{
-			this.cmd("SetText", 0,"·j´Mnull¾ğ, ½Ğ´¡¤J¤¸¯À");				
+			this.cmd("SetText", 0,"æœå°‹nullæ¨¹, è«‹æ’å…¥å…ƒç´ ");				
 			
 			this.cmd("SetHighlight", elem.graphicID, 0);
 			tree.left=elem;
@@ -335,7 +335,7 @@ BST.prototype.insert = function(elem, tree)
 	{
 		if (tree.right == null)
 		{
-			this.cmd("SetText",  0, "·j´Mnull¾ğ, ½Ğ´¡¤J¤¸¯À");				
+			this.cmd("SetText",  0, "æœå°‹nullæ¨¹, è«‹æ’å…¥å…ƒç´ ");				
 			this.cmd("SetHighlight", elem.graphicID, 0);
 			tree.right=elem;
 			elem.parent = tree;
@@ -382,15 +382,15 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 		this.cmd("SetHighlight", tree.graphicID, 1);
 		if (valueToDelete < tree.data)
 		{	
-			this.cmd("SetText", 0, valueToDelete + " < " + tree.data + ".  ·j´M¥ª¤l¾ğ");				
+			this.cmd("SetText", 0, valueToDelete + " < " + tree.data + ".  æœå°‹å·¦å­æ¨¹");				
 		}
 		else if (valueToDelete > tree.data)
 		{
-			this.cmd("SetText",  0, valueToDelete + " > " + tree.data + ".  ·j´M¥k¤l¾ğ");				
+			this.cmd("SetText",  0, valueToDelete + " > " + tree.data + ".  æœå°‹å³å­æ¨¹");				
 		}
 		else
 		{
-			this.cmd("SetText",  0, valueToDelete + " == " + tree.data + ".  §ä¨ì§R°£¸`ÂI");									
+			this.cmd("SetText",  0, valueToDelete + " == " + tree.data + ".  æ‰¾åˆ°åˆªé™¤ç¯€é»");									
 		}
 		this.cmd("Step");
 		this.cmd("SetHighlight",  tree.graphicID, 0);
@@ -399,7 +399,7 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 		{
 			if (tree.left == null && tree.right == null)
 			{
-				this.cmd("SetText", 0, "§R°£¸`ÂI¬O¸­¸`ÂI.  §R°£¥¦.");									
+				this.cmd("SetText", 0, "åˆªé™¤ç¯€é»æ˜¯è‘‰ç¯€é».  åˆªé™¤å®ƒ.");									
 				this.cmd("Delete", tree.graphicID);
 				if (leftchild && tree.parent != null)
 				{
@@ -419,7 +419,7 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 			}
 			else if (tree.left == null)
 			{
-				this.cmd("SetText", 0, "§R°£¸`ÂI¨S¦³¥ª¤l¸`ÂI.  \n«ü©w§R°£¸`ÂIªº¤÷¸`ÂI¬°§R°£¸`ÂIªº¥k¤l¸`ÂI.");									
+				this.cmd("SetText", 0, "åˆªé™¤ç¯€é»æ²’æœ‰å·¦å­ç¯€é».  \næŒ‡å®šåˆªé™¤ç¯€é»çš„çˆ¶ç¯€é»ç‚ºåˆªé™¤ç¯€é»çš„å³å­ç¯€é».");									
 				if (tree.parent != null)
 				{
 					this.cmd("Disconnect",  tree.parent.graphicID, tree.graphicID);
@@ -446,7 +446,7 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 			}
 			else if (tree.right == null)
 			{
-				this.cmd("SetText", 0, "§R°£¸`ÂI¨S¦³¥k¤l¸`ÂI.  \n«ü©w§R°£¸`ÂIªº¤÷¸`ÂI¬°§R°£¸`ÂIªº¥ª¤l¸`ÂI.");									
+				this.cmd("SetText", 0, "åˆªé™¤ç¯€é»æ²’æœ‰å³å­ç¯€é».  \næŒ‡å®šåˆªé™¤ç¯€é»çš„çˆ¶ç¯€é»ç‚ºåˆªé™¤ç¯€é»çš„å·¦å­ç¯€é».");									
 				if (tree.parent != null)
 				{
 					this.cmd("Disconnect", tree.parent.graphicID, tree.graphicID);
@@ -473,7 +473,7 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 			}
 			else // tree.left != null && tree.right != null
 			{
-				this.cmd("SetText", 0, "§R°£¸`ÂI¦³¥ª¥k2­Ó¤l¸`ÂI.  \n¦b¥ª¤l¾ğ·j´M³Ì¤j¸`ÂI.");									
+				this.cmd("SetText", 0, "åˆªé™¤ç¯€é»æœ‰å·¦å³2å€‹å­ç¯€é».  \nåœ¨å·¦å­æ¨¹æœå°‹æœ€å¤§ç¯€é».");									
 				
 				this.highlightID = this.nextIndex;
 				this.nextIndex += 1;
@@ -494,14 +494,14 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 				this.cmd("CreateLabel", labelID, tmp.data, tmp.x, tmp.y);
 				tree.data = tmp.data;
 				this.cmd("Move", labelID, tree.x, tree.y);
-				this.cmd("SetText", 0, "½Æ»s¥ª¤l¾ğªº³Ì¤j­È¦Ü§R°£¸`ÂI.");									
+				this.cmd("SetText", 0, "è¤‡è£½å·¦å­æ¨¹çš„æœ€å¤§å€¼è‡³åˆªé™¤ç¯€é».");									
 				
 				this.cmd("Step");
 				this.cmd("SetHighlight", tree.graphicID, 0);
 				this.cmd("Delete", labelID);
 				this.cmd("SetText", tree.graphicID, tree.data);
 				this.cmd("Delete", this.highlightID);							
-				this.cmd("SetText", 0,"§R°£¤w¸g½Æ»s­Èªº¸`ÂI.");									
+				this.cmd("SetText", 0,"åˆªé™¤å·²ç¶“è¤‡è£½å€¼çš„ç¯€é».");									
 				
 				if (tmp.left == null)
 				{
@@ -562,7 +562,7 @@ BST.prototype.treeDelete = function(tree, valueToDelete)
 	}
 	else
 	{
-		this.cmd("SetText", 0, "¤¸¯À "+valueToDelete+" ¨S¦³§ä¨ì, µLªk§R°£");
+		this.cmd("SetText", 0, "å…ƒç´  "+valueToDelete+" æ²’æœ‰æ‰¾åˆ°, ç„¡æ³•åˆªé™¤");
 	}
 	
 }

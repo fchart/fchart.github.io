@@ -54,10 +54,10 @@ DFS.superclass = Graph.prototype;
 
 DFS.prototype.addControls =  function()
 {		
-	addLabelToAlgorithmBar("∂}©l≥ª¬I: ");
+	addLabelToAlgorithmBar("ÈñãÂßãÈ†ÇÈªû: ");
 	this.startField = addControlToAlgorithmBar("Text", "");
 	this.startField.onkeydown = this.returnSubmit(this.startField,  this.startCallback.bind(this), 2, true);
-	this.startButton = addControlToAlgorithmBar("Button", "∞ı¶Ê≤`´◊¿u•˝DFS");
+	this.startButton = addControlToAlgorithmBar("Button", "Âü∑Ë°åÊ∑±Â∫¶ÂÑ™ÂÖàDFS");
 	this.startButton.onclick = this.startCallback.bind(this);
 	DFS.superclass.addControls.call(this);
 }	
@@ -94,8 +94,8 @@ DFS.prototype.setup = function()
 		this.cmd("SetForegroundColor",  this.parentIndexID[i], VERTEX_INDEX_COLOR);
 		
 	}
-	this.cmd("CreateLabel", this.nextIndex++, "§˜Parent", PARENT_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
-	this.cmd("CreateLabel", this.nextIndex++, "§w≥y≥XVisited", VISITED_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "Áà∂Parent", PARENT_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
+	this.cmd("CreateLabel", this.nextIndex++, "Â∑≤ÈÄ†Ë®™Visited", VISITED_START_X - AUX_ARRAY_WIDTH, AUX_ARRAY_START_Y - AUX_ARRAY_HEIGHT * 1.5, 0);
 	this.animationManager.setAllLayers([0, this.currentLayer]);
 	this.animationManager.StartNewAnimation(this.commands);
 	this.animationManager.skipForward();
@@ -179,7 +179,7 @@ DFS.prototype.dfsVisit = function(startVertex, messageX)
 				if (this.visited[neighbor])
 				{
 					nextMessage = this.nextIndex;
-					this.cmd("CreateLabel", nextMessage, "≥ª¬I " + String(neighbor) + " §w∏g®´≥X.", messageX, this.messageY, 0);
+					this.cmd("CreateLabel", nextMessage, "È†ÇÈªû " + String(neighbor) + " Â∑≤Á∂ìËµ∞Ë®™.", messageX, this.messageY, 0);
 				}
 				this.cmd("Step");
 				this.highlightEdge(startVertex, neighbor, 0);
@@ -201,7 +201,7 @@ DFS.prototype.dfsVisit = function(startVertex, messageX)
 					this.cmd("Step");
 					this.dfsVisit(neighbor, messageX + 20);							
 					nextMessage = this.nextIndex;
-					this.cmd("CreateLabel", nextMessage, "±qªº∞j©I•s∂«¶^: DFS(" + String(neighbor) + ")", messageX + 20, this.messageY, 0);
+					this.cmd("CreateLabel", nextMessage, "ÂæûÈÅûËø¥ÂëºÂè´ÂÇ≥Âõû: DFS(" + String(neighbor) + ")", messageX + 20, this.messageY, 0);
 					
 					this.cmd("Move", this.highlightCircleAL, this.adj_list_x_start - this.adj_list_width, this.adj_list_y_start + startVertex*this.adj_list_height);
 					this.cmd("Move", this.highlightCircleL, this.x_pos_logical[startVertex], this.y_pos_logical[startVertex]);

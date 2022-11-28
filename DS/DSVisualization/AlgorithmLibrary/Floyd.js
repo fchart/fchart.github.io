@@ -80,7 +80,7 @@ Floyd.superclass = Graph.prototype;
 Floyd.prototype.addControls =  function()
 {		
 	
-	this.startButton = addControlToAlgorithmBar("Button", "°õ¦æFloyd³Ìµu¸ô®|");
+	this.startButton = addControlToAlgorithmBar("Button", "åŸ·è¡ŒFloydæœ€çŸ­è·¯å¾‘");
 	this.startButton.onclick = this.startCallback.bind(this);
 
 	Floyd.superclass.addControls.call(this);
@@ -157,7 +157,7 @@ Floyd.prototype.getCostLabel = function(value, alwaysUseINF)
 	}
 	else if (this.size == SMALL_SIZE || alwaysUseINF)
 	{
-		return "¡Û";
+		return "âˆ";
 	}
 	else
 	{
@@ -246,8 +246,8 @@ Floyd.prototype.setup = function()
 	var costTableHeader = this.nextIndex++;
 	var pathTableHeader = this.nextIndex++;
 	
-	this.cmd("CreateLabel", costTableHeader, "¦¨¥»ªí®æ", this.cost_table_start_x, this.cost_table_start_y - 2*this.cost_table_height, 0);
-	this.cmd("CreateLabel", pathTableHeader, "¸ô®|ªí®æ", this.path_table_start_x, this.path_table_start_y - 2*this.path_table_height, 0);
+	this.cmd("CreateLabel", costTableHeader, "æˆæœ¬è¡¨æ ¼", this.cost_table_start_x, this.cost_table_start_y - 2*this.cost_table_height, 0);
+	this.cmd("CreateLabel", pathTableHeader, "è·¯å¾‘è¡¨æ ¼", this.path_table_start_x, this.path_table_start_y - 2*this.path_table_height, 0);
 	
 	for (i= 0; i < this.size; i++)
 	{

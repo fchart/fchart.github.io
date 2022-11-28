@@ -76,9 +76,9 @@ HeapSort.prototype.init = function(am)
 
 HeapSort.prototype.addControls =  function()
 {
-	this.randomizeArrayButton = addControlToAlgorithmBar("Button", "ÀH¾÷²£¥Í°}¦C­È");
+	this.randomizeArrayButton = addControlToAlgorithmBar("Button", "éš¨æ©Ÿç”¢ç”Ÿé™£åˆ—å€¼");
 	this.randomizeArrayButton.onclick = this.randomizeCallback.bind(this);
-	this.heapsortButton = addControlToAlgorithmBar("Button", "°ï¿n±Æ§Çªk");
+	this.heapsortButton = addControlToAlgorithmBar("Button", "å †ç©æ’åºæ³•");
 	this.heapsortButton.onclick = this.heapsortCallback.bind(this);
 }
 

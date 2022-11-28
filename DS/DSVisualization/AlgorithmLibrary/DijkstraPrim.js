@@ -47,13 +47,13 @@ DijkstraPrim.superclass = Graph.prototype;
 
 DijkstraPrim.prototype.addControls =  function()
 {		
-	addLabelToAlgorithmBar("∂}©l≥ª¬I: ");
+	addLabelToAlgorithmBar("ÈñãÂßãÈ†ÇÈªû: ");
 	this.startField = addControlToAlgorithmBar("Text", "");
 	this.startField.onkeydown = this.returnSubmit(this.startField,  this.startCallback.bind(this), 2, true);
 	this.startField.size = 2
 	if (this.runningDijkstra)
 	{
-		this.startButton = addControlToAlgorithmBar("Button", "∞ı¶ÊDijkstra≥Ãµu∏ÙÆ|");
+		this.startButton = addControlToAlgorithmBar("Button", "Âü∑Ë°åDijkstraÊúÄÁü≠Ë∑ØÂæë");
 		
 	}
 	else
@@ -104,11 +104,11 @@ DijkstraPrim.prototype.setup = function()
 		this.cmd("SetTextColor",  this.vertexID[i], VERTEX_INDEX_COLOR);
 		
 	}
-	this.cmd("CreateLabel", this.nextIndex++, "•ÿ¶a≥ª¬I", TABLE_START_X, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
-	this.cmd("CreateLabel", this.nextIndex++, "§w™æ", TABLE_START_X + TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
-	this.cmd("CreateLabel", this.nextIndex++, "¶®•ª", TABLE_START_X + 2 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
-	this.cmd("CreateLabel", this.nextIndex++, "∏ÙÆ|", TABLE_START_X + 3 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
-	this.cmd("CreateLabel", this.nextIndex++, "∏gπL≥ª¬I", TABLE_START_X + 5 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
+	this.cmd("CreateLabel", this.nextIndex++, "ÁõÆÂú∞È†ÇÈªû", TABLE_START_X, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
+	this.cmd("CreateLabel", this.nextIndex++, "Â∑≤Áü•", TABLE_START_X + TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
+	this.cmd("CreateLabel", this.nextIndex++, "ÊàêÊú¨", TABLE_START_X + 2 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
+	this.cmd("CreateLabel", this.nextIndex++, "Ë∑ØÂæë", TABLE_START_X + 3 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
+	this.cmd("CreateLabel", this.nextIndex++, "Á∂ìÈÅéÈ†ÇÈªû", TABLE_START_X + 5 * TABLE_ENTRY_WIDTH, TABLE_START_Y  - TABLE_ENTRY_HEIGHT);
 	
 	
 	this.animationManager.setAllLayers([0, this.currentLayer]);
@@ -158,7 +158,7 @@ DijkstraPrim.prototype.doDijkstraPrim = function(startVertex)
 		this.distance[i] = -1;
 		this.path[i] = -1;
 		this.cmd("SetText", this.knownID[i], "F");
-		this.cmd("SetText", this.distanceID[i], "°€");
+		this.cmd("SetText", this.distanceID[i], "‚àû");
 		this.cmd("SetText", this.pathID[i], "-1");
 		this.cmd("SetTextColor", this.knownID[i], "#000000");
 		
@@ -194,7 +194,7 @@ DijkstraPrim.prototype.doDijkstraPrim = function(startVertex)
 				if (this.known[neighbor])
 				{
 					
-					this.cmd("CreateLabel",  this.comparisonMessageID,"≥ª¬I " + String(neighbor) + " §w™æ", 
+					this.cmd("CreateLabel",  this.comparisonMessageID,"È†ÇÈªû " + String(neighbor) + " Â∑≤Áü•", 
 						TABLE_START_X + 5 * TABLE_ENTRY_WIDTH,TABLE_START_Y + neighbor*TABLE_ENTRY_HEIGHT);
 					this.cmd("SetHighlight", this.knownID[neighbor], 1);
 				}
@@ -204,7 +204,7 @@ DijkstraPrim.prototype.doDijkstraPrim = function(startVertex)
 					var distString = String(this.distance[neighbor]);
 					if (this.distance[neighbor] < 0)
 					{
-						distString = "°€";
+						distString = "‚àû";
 					}
 					
 					if (this.runningDijkstra)
@@ -297,7 +297,7 @@ DijkstraPrim.prototype.createPaths = function()
 		var nextLabelID = this.nextIndex++;
 		if (this.distance[vertex] < 0)
 		{
-			this.cmd("CreateLabel", nextLabelID, "®S¶≥∏ÙÆ|",  TABLE_START_X + 4.3 * TABLE_ENTRY_WIDTH,TABLE_START_Y + vertex*TABLE_ENTRY_HEIGHT);
+			this.cmd("CreateLabel", nextLabelID, "Ê≤íÊúâË∑ØÂæë",  TABLE_START_X + 4.3 * TABLE_ENTRY_WIDTH,TABLE_START_Y + vertex*TABLE_ENTRY_HEIGHT);
 			this.messageID.push(nextLabelID);
 		}
 		else

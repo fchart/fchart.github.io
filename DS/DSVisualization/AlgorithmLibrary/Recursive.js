@@ -1,4 +1,4 @@
-﻿// Copyright 2011 David Galles, University of San Francisco. All rights reserved.
+// Copyright 2011 David Galles, University of San Francisco. All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without modification, are
 // permitted provided that the following conditions are met:
@@ -40,7 +40,7 @@ Recursive.superclass = Algorithm.prototype;
 
 Recursive.CODE_START_X = 10;
 Recursive.CODE_START_Y = 10;
-Recursive.CODE_LINE_HEIGHT = 14;
+Recursive.CODE_LINE_HEIGHT = 18;     // 14
 
 Recursive.RECURSIVE_START_X = 20;
 Recursive.RECURSIVE_START_Y = 120;

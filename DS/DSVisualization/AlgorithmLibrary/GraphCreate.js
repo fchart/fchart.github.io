@@ -24,7 +24,7 @@
 // authors and should not be interpreted as representing official policies, either expressed
 // or implied, of the University of San Francisco
 // 
-// Copyright 2013 by ³¯·|¦w. All rights reserved.
+// Copyright 2013 by é™³æœƒå®‰. All rights reserved.
 
 
 var HIGHLIGHT_CIRCLE_COLOR = "#000000";

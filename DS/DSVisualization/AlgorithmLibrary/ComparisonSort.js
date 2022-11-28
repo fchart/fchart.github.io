@@ -85,28 +85,28 @@ ComparisonSort.prototype.init = function(am, w, h)
 
 ComparisonSort.prototype.addControls =  function()
 {
-	this.resetButton = addControlToAlgorithmBar("Button", "�H�����Ͱ}�C��");
+	this.resetButton = addControlToAlgorithmBar("Button", "隨機產生陣列值");
 	this.resetButton.onclick = this.resetCallback.bind(this);
 
-	this.insertSortButton = addControlToAlgorithmBar("Button", "���J�ƧǪk");
+	this.insertSortButton = addControlToAlgorithmBar("Button", "插入排序法");
 	this.insertSortButton.onclick = this.insertSortCallback.bind(this);
 
-	this.selectSortButton = addControlToAlgorithmBar("Button", "��ܱƧǪk");
+	this.selectSortButton = addControlToAlgorithmBar("Button", "選擇排序法");
 	this.selectSortButton.onclick = this.selectSortCallback.bind(this);
 
-	this.bubbleSortButton = addControlToAlgorithmBar("Button", "�w�z�ƧǪk");
+	this.bubbleSortButton = addControlToAlgorithmBar("Button", "泡沬排序法");
 	this.bubbleSortButton.onclick = this.bubbleSortCallback.bind(this);
 
-	this.quickSortButton = addControlToAlgorithmBar("Button", "�ֳt�ƧǪk");
+	this.quickSortButton = addControlToAlgorithmBar("Button", "快速排序法");
 	this.quickSortButton.onclick = this.quickSortCallback.bind(this);
 
-	this.mergeSortButton = addControlToAlgorithmBar("Button", "�X�ֱƧǪk");
+	this.mergeSortButton = addControlToAlgorithmBar("Button", "合併排序法");
 	this.mergeSortButton.onclick = this.mergeSortCallback.bind(this);
 
-	this.shellSortButton = addControlToAlgorithmBar("Button", "�¦ձƧǪk");
+	this.shellSortButton = addControlToAlgorithmBar("Button", "謝耳排序法");
 	this.shellSortButton.onclick = this.shellSortCallback.bind(this);
 
-	this.sizeButton = addControlToAlgorithmBar("Button", "���ؤo");
+	this.sizeButton = addControlToAlgorithmBar("Button", "更改尺寸");
 	this.sizeButton.onclick = this.changeSizeCallback.bind(this);
 }
 
