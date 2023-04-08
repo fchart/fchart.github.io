@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="utf8">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login System</title>
+  <link rel="stylesheet" href="./css/login.css">
+  <script defer src="./js/login.js"></script>
+</head>
+
+<body>
+  <main id="main-holder">
+    <h1 id="login-header">會員管理</h1>
+    
+    <div id="login-error-msg-holder">
+      <p id="login-error-msg">不合法的使用者名稱<span id="error-msg-second-line">或密碼</span></p>
+    </div>     
+    <form id="login-form">
+      <label for="username-field">使用者名稱</label>
+      <input type="text" name="username" id="username-field" class="login-form-field">
+      <label for="password-field">使用者密碼</label>
+      <input type="password" name="password" id="password-field" class="login-form-field">
+      <input type="submit" value="登入" id="login-form-submit">
+    </form>
+  
+  </main>
+</body>
+
+</html>
