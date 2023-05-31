@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,14 +10,24 @@
    border:2px solid blue;
    padding:10px;
 }
+.list {
+  max-height: var(--container-height);
+  border: 2px solid #37392e;
+  border-radius: 5px;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-timeline: listTimeline vertical;
+}
 </style> 
 <script src="jquery-3.1.0.min.js"></script>
 <script>
 $(document).ready(function() {
    $.getJSON('books.json', function(data) {
-      var html = '<ul>';
+      var html = '<ul class="list">';
       $.each(data, function(key, val) {
-         html += '<li id="' + key + '">' + val.id + ':' + val.title + '</li>';
+         html += '<li id="' + key + '"><b>' + val.id + '</b><br><p>' + val.title + '</p></li>';
       });
       html += '</ul>';
       $('#result').html(html);
