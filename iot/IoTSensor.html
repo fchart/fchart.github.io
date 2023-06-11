@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MQTT IoT模擬裝置</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"></script> 
+</head>
+<body>
+  <h1>MQTT IoT模擬裝置</h1>
+  
+  <label for="topic">主題：</label>
+  <input type="text" id="topic" placeholder="輸入MQTT主題" value="sensors/livingroom/temp">
+  
+  <br><br>
+  
+  <label for="minValue">最小值：</label>
+  <input type="number" id="minValue" placeholder="輸入最小值" value="25">
+  
+  <br><br>
+  
+  <label for="maxValue">最大值：</label>
+  <input type="number" id="maxValue" placeholder="輸入最大值" value="55">
+  
+  <br><br>
+  
+  <label for="interval">周期時間（毫秒）：</label>
+  <input type="number" id="interval" placeholder="輸入周期時間" value="3000">
+  
+  <br><br>
+  
+  <button onclick="startSimulation()">開始模擬</button>
+  <button onclick="stopSimulation()">停止模擬</button>
+  
+  <br><br>
+  
+  <div id="output"></div>
+  
+  <script>
+    var client;
+    var timer;
+  
+    function startSimulation() {
+      var topic = document.getElementById("topic").value;
+      var minValue = document.getElementById("minValue").value;
+      var maxValue = document.getElementById("maxValue").value;
+      var interval = document.getElementById("interval").value;
+  
+      if (topic && minValue && maxValue && interval) {
+        client = new Paho.MQTT.Client(
+            "broker.hivemq.com", 
+            Number(8000),
+            "clientId-" + Math.floor(Math.random() * 99999).toString()
+        );
+  
+        client.onConnectionLost = onConnectionLost;
+        client.onMessageArrived = onMessageArrived;
+  
+        var options = {
+          onSuccess: onConnect,
+          onFailure: onFailure,
+          useSSL: true,
+        };
+  
+        client.connect(options);
+  
+        timer = setInterval(function() {
+          var randomValue = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+          var message = new Paho.MQTT.Message(randomValue.toString());
+          message.destinationName = topic;
+          client.send(message);
+  
+          document.getElementById("output").innerHTML += "已發布訊息：" + randomValue + "<br>";
+        }, interval);
+      } else {
+        alert("請填寫所有欄位。");
+      }
+    }
+  
+    function stopSimulation() {
+      clearInterval(timer);
+      client.disconnect();
+  
+      document.getElementById("output").innerHTML += "模擬已停止。<br>";
+    }
+  
+    function onConnect() {
+      document.getElementById("output").innerHTML = "已連接到MQTT代理伺服器。<br>";
+    }
+  
+    function onFailure() {
+      document.getElementById("output").innerHTML = "無法連接到MQTT代理伺服器。<br>";
+    }
+  
+    function onConnectionLost(responseObject) {
+      if (responseObject.errorCode !== 0) {
+        document.getElementById("output").innerHTML += "連接已中斷：" + responseObject.errorMessage + "<br>";
+      }
+    }
+  
+    function onMessageArrived(message) {
+      document.getElementById("output").innerHTML += "已接收訊息：" + message.payloadString + "<br>";
+    }
+  </script>
+</body>
+</html>
