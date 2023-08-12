@@ -11,6 +11,11 @@
       margin: 0;
       padding: 0;
     }
+    #contentFrame {
+      width: 100%;
+      height: calc(100% - 56px); /* Subtracting the navbar height */
+      border: none;
+    }
   </style>
 </head>
 <body>
@@ -22,28 +27,28 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/test/profile.html">個人簡歷</a>
+      <li class="nav-item active">
+        <a class="nav-link" href="https://fchart.github.io/test/profile.html" target="contentFrame">個人簡歷</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/ML/nba_items.html">NBA商品資料</a>
+        <a class="nav-link" href="https://fchart.github.io/ML/nba_items.html" target="contentFrame">NBA商品資料</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/test/album.html">贊助相片集</a>
+        <a class="nav-link" href="https://fchart.github.io/test/album.html" target="contentFrame">贊助相片集</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/test/pricing.html">線上收費方案</a>
+        <a class="nav-link" href="https://fchart.github.io/test/pricing.html" target="contentFrame">線上收費方案</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/Ashion/">Ashion商務網站</a>
+        <a class="nav-link" href="https://fchart.github.io/Ashion/" target="contentFrame">Ashion商務網站</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="https://fchart.github.io/test/login.html">會員登入</a>
+        <a class="nav-link" href="https://fchart.github.io/test/login.html" target="contentFrame">會員登入</a>
       </li>
     </ul>
   </div>
 </nav>
-<img src="Butterfly.png" width="100%" height="100%">
+<iframe id="contentFrame" name="contentFrame" src="https://fchart.github.io/test/profile.html" frameborder="0"></iframe>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
