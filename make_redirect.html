@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Execute Webhook</title>
+</head>
+<body>
+    <script>
+        // Function to execute webhook
+        function executeWebhook() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const makeUrl = urlParams.has('url') ? urlParams.get('url') : 'https://hook.eu2.make.com'; // 取得 URL 網址
+            const token = urlParams.has('token') ? urlParams.get('token') : ''; // 取得 token
+            const value = urlParams.has('value') ? urlParams.get('value') : ''; // 取得 value 值，格式是 key1,value1,key2,value2
+
+            // 將 CSV 格式的 value 解析為 key-value 對
+            const valuePairs = value.split(",");
+            let valueParameters = "";
+            for (let i = 0; i < valuePairs.length; i += 2) {
+                const key = valuePairs[i];
+                const val = valuePairs[i + 1] || '';
+                valueParameters += `&${key}=${val}`;
+            }
+
+            // 建立 URL 網址來執行 Webhook
+            const urlWithParameters = `${makeUrl}/${token}?${valueParameters}`;
+
+            fetch(urlWithParameters, {
+                method: 'GET',
+                mode: 'no-cors', // 無需關心回應的 CORS
+                redirect: 'follow', // 如果有重新導向，跟隨重新導向
+                timeout: 10000 // 設定超時時間為 10 秒
+            })
+            .then(response => {
+                // Handle response if needed
+                console.log('Webhook executed successfully');
+            })
+            .catch(error => {
+                // Handle errors if any
+                console.error('Error executing webhook:', error);
+            });
+        }
+
+        // Call executeWebhook function when page loads
+        window.onload = executeWebhook;
+    </script>
+</body>
+</html>
