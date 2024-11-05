@@ -1,1 +1,1 @@
-{"id":715,"lab":{"type":"實習工廠3"},"sensor":[{"temperature":25,"data":[{"humidity":81}],"brightness":192}]}
+{"main":[{"id":717,"type":"實習工廠3"}],"sensor":{"temperature":35,"data":[{"humidity":88,"brightness":129}]}}
