@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 風格下拉式選單 - Selenium 測試</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Lucida Grande", Arial, sans-serif;
+            background-color: #f8f8f8;
+        }
+
+        .header {
+            background-color: #306998;
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo-section {
+            background-color: #3776ab;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .main-nav {
+            display: flex;
+            list-style: none;
+            background-color: #306998;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background-color: #245582;
+        }
+
+        .nav-item.has-dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ddd;
+            z-index: 1000;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-header {
+            padding: 10px 16px;
+            font-weight: bold;
+            color: #666;
+            background-color: #f8f8f8;
+            border-bottom: 1px solid #ddd;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .test-info {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-info h2 {
+            color: #306998;
+            margin-bottom: 20px;
+        }
+
+        .test-info p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            margin-left: 5px;
+        }
+
+        /* 動態內容樣式 */
+        .dynamic-content {
+            margin-top: 30px;
+        }
+
+        .content-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .content-section h3 {
+            color: #306998;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #306998;
+            padding-bottom: 10px;
+        }
+
+        .content-section h4 {
+            color: #245582;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .content-section h5 {
+            color: #306998;
+            margin-bottom: 10px;
+        }
+
+        .application-category {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #306998;
+        }
+
+        .quote-item {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #306998;
+        }
+
+        .quote-item blockquote {
+            font-style: italic;
+            margin: 15px 0;
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .quote-item cite {
+            display: block;
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .getting-started-section {
+            margin-bottom: 25px;
+        }
+
+        .help-section {
+            margin-bottom: 25px;
+        }
+
+        .brochure-section {
+            margin-bottom: 30px;
+        }
+
+        .feature-grid, .application-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-item, .app-item {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #306998;
+        }
+
+        .steps-container {
+            margin-top: 20px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .step-number {
+            background-color: #306998;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .step-content h5 {
+            margin: 0 0 5px 0;
+        }
+
+        .step-content p {
+            margin: 0;
+            color: #666;
+        }
+
+        .active-content {
+            display: block !important;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .main-nav {
+                flex-direction: column;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                display: none;
+                box-shadow: none;
+                border: none;
+                background-color: #245582;
+            }
+            
+            .dropdown-item {
+                color: white;
+                border-bottom: 1px solid #306998;
+            }
+            
+            .dropdown-item:hover {
+                background-color: #1e4a73;
+            }
+
+            .feature-grid, .application-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-section">
+            <a href="#" class="logo">Python.org</a>
+        </div>
+        
+        <nav class="nav-container">
+            <ul class="main-nav">
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="about-link">About <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="about-dropdown">
+                        <div class="dropdown-header">About Python</div>
+                        <a href="#" class="dropdown-item">Applications</a>
+                        <a href="#" class="dropdown-item">Quotes</a>
+                        <a href="#" class="dropdown-item">Getting Started</a>
+                        <a href="#" class="dropdown-item">Help</a>
+                        <a href="#" class="dropdown-item">Python Brochure</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="downloads-link">Downloads <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="downloads-dropdown">
+                        <div class="dropdown-header">Download Python</div>
+                        <a href="#" class="dropdown-item">All releases</a>
+                        <a href="#" class="dropdown-item">Source code</a>
+                        <a href="#" class="dropdown-item">Windows</a>
+                        <a href="#" class="dropdown-item">macOS</a>
+                        <a href="#" class="dropdown-item">Other Platforms</a>
+                        <a href="#" class="dropdown-item">License</a>
+                        <a href="#" class="dropdown-item">Alternative Implementations</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="documentation-link">Documentation <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="documentation-dropdown">
+                        <div class="dropdown-header">Documentation</div>
+                        <a href="#" class="dropdown-item">Docs</a>
+                        <a href="#" class="dropdown-item">Audio/Visual Talks</a>
+                        <a href="#" class="dropdown-item">Beginner's Guide</a>
+                        <a href="#" class="dropdown-item">Developer's Guide</a>
+                        <a href="#" class="dropdown-item">FAQ</a>
+                        <a href="#" class="dropdown-item">Non-English Docs</a>
+                        <a href="#" class="dropdown-item">PEP Index</a>
+                        <a href="#" class="dropdown-item">Python Books</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="community-link">Community <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="community-dropdown">
+                        <div class="dropdown-header">Community</div>
+                        <a href="#" class="dropdown-item">Community Survey</a>
+                        <a href="#" class="dropdown-item">Diversity</a>
+                        <a href="#" class="dropdown-item">Mailing Lists</a>
+                        <a href="#" class="dropdown-item">IRC</a>
+                        <a href="#" class="dropdown-item">Forums</a>
+                        <a href="#" class="dropdown-item">PSF Annual Impact Report</a>
+                        <a href="#" class="dropdown-item">Python Conferences</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="success-stories-link">Success Stories <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="success-stories-dropdown">
+                        <div class="dropdown-header">Success Stories</div>
+                        <a href="#" class="dropdown-item">Arts</a>
+                        <a href="#" class="dropdown-item">Business</a>
+                        <a href="#" class="dropdown-item">Education</a>
+                        <a href="#" class="dropdown-item">Engineering</a>
+                        <a href="#" class="dropdown-item">Government</a>
+                        <a href="#" class="dropdown-item">Scientific</a>
+                        <a href="#" class="dropdown-item">Software Development</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="news-link">News <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="news-dropdown">
+                        <div class="dropdown-header">News</div>
+                        <a href="#" class="dropdown-item">Python News</a>
+                        <a href="#" class="dropdown-item">PSF Newsletter</a>
+                        <a href="#" class="dropdown-item">PSF News</a>
+                        <a href="#" class="dropdown-item">PyCon US 2024</a>
+                        <a href="#" class="dropdown-item">News from the Community</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item has-dropdown">
+                    <a href="#" class="nav-link" id="events-link">Events <span class="dropdown-arrow">▼</span></a>
+                    <div class="dropdown-menu" id="events-dropdown">
+                        <div class="dropdown-header">Events</div>
+                        <a href="#" class="dropdown-item">Python Events</a>
+                        <a href="#" class="dropdown-item">User Group Events</a>
+                        <a href="#" class="dropdown-item">Python Conferences</a>
+                        <a href="#" class="dropdown-item">Submit an Event</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content">
+        <div class="test-info">
+            <h2>Selenium 動作鏈測試頁面</h2>
+            <p>這個頁面模擬了 Python 官方網站的下拉式選單功能，專門用於測試 Selenium 動作鏈（Action Chains）。</p>
+            <p>點擊 About 選單中的任意項目，下方將顯示相應的內容。</p>
+        </div>
+        
+        <div class="dynamic-content" id="dynamic-content">
+            <div class="content-section" id="default-content">
+                <h3>歡迎來到 Python 測試頁面</h3>
+                <p>請點擊上方 About 選單中的任一項目來查看相應的內容。</p>
+            </div>
+            
+            <div class="content-section" id="applications-content" style="display: none;">
+                <h3>Python 的應用領域</h3>
+                <p>Python 被廣泛應用於各種領域，以下是一些主要的應用範例：</p>
+                
+                <div class="application-category">
+                    <h4>網頁與網路開發</h4>
+                    <ul>
+                        <li>Django 和 Pyramid 等框架</li>
+                        <li>Flask 和 Bottle 等微型框架</li>
+                        <li>Plone 和 django CMS 等內容管理系統</li>
+                        <li>支援 HTML、XML、JSON、電子郵件處理等標準庫</li>
+                        <li>第三方庫：Requests、Beautiful Soup、Feedparser 等</li>
+                    </ul>
+                </div>
+                
+                <div class="application-category">
+                    <h4>科學與數值計算</h4>
+                    <ul>
+                        <li>SciPy - 數學、科學和工程計算包集合</li>
+                        <li>Pandas - 資料分析和建模庫</li>
+                        <li>IPython - 強大的互動式 shell</li>
+                        <li>支援視覺化和並行計算</li>
+                    </ul>
+                </div>
+                
+                <div class="application-category">
+                    <h4>教育</h4>
+                    <ul>
+                        <li>優秀的程式教學語言</li>
+                        <li>適合初學者和進階課程</li>
+                        <li>豐富的教學資源和書籍</li>
+                    </ul>
+                </div>
+                
+                <div class="application-category">
+                    <h4>桌面 GUI 應用</h4>
+                    <ul>
+                        <li>Tkinter - 內建的 GUI 工具包</li>
+                        <li>跨平台工具包：PyQt、wxPython 等</li>
+                        <li>平台特定工具包：GTK+、Win32 extensions</li>
+                    </ul>
+                </div>
+                
+                <div class="application-category">
+                    <h4>軟體開發</h4>
+                    <ul>
+                        <li>SCons - 建置控制</li>
+                        <li>Buildbot - 自動化編譯和測試</li>
+                        <li>Roundup、Trac - 錯誤追蹤和專案管理</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section" id="quotes-content" style="display: none;">
+                <h3>關於 Python 的評價</h3>
+                <p>Python 在全球數千個真實商業應用中成功運作，包括許多大型和關鍵任務系統。以下是一些滿意 Python 使用者的評價：</p>
+                
+                <div class="quote-item">
+                    <h4>YouTube.com</h4>
+                    <blockquote>
+                        "Python is fast enough for our site and allows us to produce maintainable features in record times, with a minimum of developers,"
+                        <cite>— Cuong Do, Software Architect, YouTube.com</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-item">
+                    <h4>Industrial Light & Magic</h4>
+                    <blockquote>
+                        "Python plays a key role in our production pipeline. Without it a project the size of Star Wars: Episode II would have been very difficult to pull off."
+                        <cite>— Tommy Burnette, Senior Technical Director</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-item">
+                    <h4>Google</h4>
+                    <blockquote>
+                        "Python has been an important part of Google since the beginning, and remains so as the system grows and evolves."
+                        <cite>— Peter Norvig, Director of Search Quality</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-item">
+                    <h4>Journyx</h4>
+                    <blockquote>
+                        "I estimate that Python makes our coders 10 times more productive than Java programmers, and 100 times more than C programmers."
+                        <cite>— Curt Finch, CEO, Journyx</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-item">
+                    <h4>EVE Online</h4>
+                    <blockquote>
+                        "Python enabled us to create EVE Online, a massive multiplayer game, in record time. The EVE Online server cluster runs over 50,000 simultaneous players."
+                        <cite>— Hilmar Veigar Petursson, CCP Games</cite>
+                    </blockquote>
+                </div>
+                
+                <div class="quote-item">
+                    <h4>Firaxis Games (Civilization IV)</h4>
+                    <blockquote>
+                        "Python begins to feel like a big hammer and coding tasks look like nails."
+                        <cite>— Mustafa Thamer, Firaxis Games</cite>
+                    </blockquote>
+                </div>
+            </div>
+            
+            <div class="content-section" id="getting-started-content" style="display: none;">
+                <h3>Python 入門指南</h3>
+                <p>歡迎來到 Python 的世界！Python 是一種易於學習且功能強大的程式語言。</p>
+                
+                <div class="getting-started-section">
+                    <h4>為什麼選擇 Python？</h4>
+                    <ul>
+                        <li><strong>易於學習：</strong>Python 具有清晰、簡潔的語法，適合初學者</li>
+                        <li><strong>功能強大：</strong>擁有豐富的標準庫和第三方模組</li>
+                        <li><strong>跨平台：</strong>可在 Windows、macOS、Linux 等系統上運行</li>
+                        <li><strong>開源免費：</strong>完全免費使用，擁有龐大的社群支援</li>
+                        <li><strong>應用廣泛：</strong>從網頁開發到人工智慧，無所不包</li>
+                    </ul>
+                </div>
+                
+                <div class="getting-started-section">
+                    <h4>開始學習的步驟</h4>
+                    <ol>
+                        <li><strong>安裝 Python：</strong>從 python.org 下載並安裝最新版本</li>
+                        <li><strong>選擇編輯器：</strong>推薦使用 IDLE、VS Code 或 PyCharm</li>
+                        <li><strong>學習基礎：</strong>變數、資料型態、控制結構</li>
+                        <li><strong>練習寫程式：</strong>從簡單的 "Hello, World!" 開始</li>
+                        <li><strong>探索庫和模組：</strong>學習使用標準庫和第三方套件</li>
+                    </ol>
+                </div>
+                
+                <div class="getting-started-section">
+                    <h4>推薦學習資源</h4>
+                    <ul>
+                        <li>官方教學文件：docs.python.org</li>
+                        <li>互動式學習：Python.org 初學者指南</li>
+                        <li>線上課程：Coursera、edX、Udemy</li>
+                        <li>書籍：《Python 程式設計入門》、《流暢的 Python》</li>
+                        <li>社群：Python Taiwan、Stack Overflow</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section" id="help-content" style="display: none;">
+                <h3>Python 幫助資源</h3>
+                <p>需要 Python 相關的幫助嗎？以下是一些實用的資源和管道：</p>
+                
+                <div class="help-section">
+                    <h4>官方文件與指南</h4>
+                    <ul>
+                        <li><strong>Python 官方文件：</strong>docs.python.org - 最完整的語言參考</li>
+                        <li><strong>Python 教學：</strong>官方入門教學，循序漸進</li>
+                        <li><strong>標準庫參考：</strong>完整的內建模組說明</li>
+                        <li><strong>語言參考：</strong>詳細的語法和語義說明</li>
+                    </ul>
+                </div>
+                
+                <div class="help-section">
+                    <h4>社群支援</h4>
+                    <ul>
+                        <li><strong>Python.org 論壇：</strong>官方討論區，各種問題討論</li>
+                        <li><strong>Stack Overflow：</strong>程式設計問答社群</li>
+                        <li><strong>Reddit r/Python：</strong>Python 相關新聞和討論</li>
+                        <li><strong>Discord/Slack：</strong>即時交流的社群平台</li>
+                    </ul>
+                </div>
+                
+                <div class="help-section">
+                    <h4>學習與教學</h4>
+                    <ul>
+                        <li><strong>初學者指南：</strong>wiki.python.org/moin/BeginnersGuide</li>
+                        <li><strong>常見問題集：</strong>Python FAQ 解答常見疑問</li>
+                        <li><strong>程式碼範例：</strong>Python Module of the Week</li>
+                        <li><strong>視頻教學：</strong>YouTube 上的 Python 教學頻道</li>
+                    </ul>
+                </div>
+                
+                <div class="help-section">
+                    <h4>除錯與問題解決</h4>
+                    <ul>
+                        <li><strong>Python Debugger (pdb)：</strong>內建的除錯工具</li>
+                        <li><strong>錯誤訊息查詢：</strong>學會閱讀和理解錯誤訊息</li>
+                        <li><strong>程式碼檢查：</strong>使用 pylint、flake8 等工具</li>
+                        <li><strong>測試框架：</strong>unittest、pytest 等測試工具</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="content-section" id="python-brochure-content" style="display: none;">
+                <h3>Python 簡介手冊</h3>
+                <p>Python 是一種高階、通用的程式語言，以其簡潔的語法和強大的功能而聞名。</p>
+                
+                <div class="brochure-section">
+                    <h4>Python 的特色</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <h5>簡潔易讀</h5>
+                            <p>Python 的語法接近自然語言，易於理解和維護</p>
+                        </div>
+                        <div class="feature-item">
+                            <h5>豐富的標準庫</h5>
+                            <p>內建大量模組，涵蓋網路、檔案處理、資料結構等</p>
+                        </div>
+                        <div class="feature-item">
+                            <h5>跨平台支援</h5>
+                            <p>可在 Windows、macOS、Linux 等多種系統上運行</p>
+                        </div>
+                        <div class="feature-item">
+                            <h5>活躍的社群</h5>
+                            <p>龐大的開發者社群，提供豐富的第三方套件</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="brochure-section">
+                    <h4>主要應用領域</h4>
+                    <div class="application-grid">
+                        <div class="app-item">
+                            <h5>網頁開發</h5>
+                            <p>Django、Flask 等框架讓網頁開發更加簡單</p>
+                        </div>
+                        <div class="app-item">
+                            <h5>資料科學</h5>
+                            <p>NumPy、Pandas、Matplotlib 等工具支援資料分析</p>
+                        </div>
+                        <div class="app-item">
+                            <h5>人工智慧</h5>
+                            <p>TensorFlow、PyTorch 等機器學習框架</p>
+                        </div>
+                        <div class="app-item">
+                            <h5>自動化</h5>
+                            <p>系統管理、測試自動化、網頁爬蟲等</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="brochure-section">
+                    <h4>開始使用 Python</h4>
+                    <div class="steps-container">
+                        <div class="step-item">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h5>下載安裝</h5>
+                                <p>從 python.org 下載適合您系統的 Python 版本</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h5>選擇編輯器</h5>
+                                <p>推薦使用 IDLE、VS Code 或 PyCharm</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h5>學習基礎</h5>
+                                <p>從官方教學開始，逐步學習語法和概念</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h5>實作練習</h5>
+                                <p>透過實際專案來加強程式設計技能</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // JavaScript 來增強互動性和動態內容切換
+        document.addEventListener('DOMContentLoaded', function() {
+            // 內容對應表
+            const contentMap = {
+                'Applications': 'applications-content',
+                'Quotes': 'quotes-content',
+                'Getting Started': 'getting-started-content',
+                'Help': 'help-content',
+                'Python Brochure': 'python-brochure-content'
+            };
+
+            // 獲取 About 選單中的所有項目
+            const aboutDropdownItems = document.querySelectorAll('#about-dropdown .dropdown-item');
+            
+            // 為每個 About 選單項目添加點擊事件
+            aboutDropdownItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const itemText = this.textContent;
+                    const contentId = contentMap[itemText];
+                    
+                    // 隱藏所有內容區塊
+                    document.querySelectorAll('.content-section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // 顯示對應的內容
+                    if (contentId) {
+                        const targetContent = document.getElementById(contentId);
+                        if (targetContent) {
+                            targetContent.style.display = 'block';
+                            
+                            // 滑順滾動到內容區域
+                            targetContent.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // 為其他選單項目添加提示
+            const otherDropdownItems = document.querySelectorAll('.dropdown-item');
+            otherDropdownItems.forEach(item => {
+                // 跳過 About 選單項目
+                if (!item.closest('#about-dropdown')) {
+                    item.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        alert('此項目用於測試 Selenium 動作鏈，實際內容請點擊 About 選單項目。\n點擊項目：' + this.textContent);
+                    });
+                }
+            });
+
+            // 為主選單項目添加 hover 效果和點擊測試
+            const mainNavItems = document.querySelectorAll('.nav-link');
+            mainNavItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (this.id !== 'about-link') {
+                        e.preventDefault();
+                        alert('此選單項目用於測試 Selenium 動作鏈。\n點擊項目：' + this.textContent.replace(' ▼', ''));
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
