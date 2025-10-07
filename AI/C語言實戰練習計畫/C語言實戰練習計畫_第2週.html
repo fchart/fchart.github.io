@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 2：控制流程與函數</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 2：控制流程與函數</h1>
+  <p>重點:理解程式執行路徑、函數呼叫、參數傳遞<br>練習:畫流程圖,區分傳值與傳址</p>
+
+  <!-- Day 8 -->
+<h2>Day 1：if-else 條件判斷</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int score;
+  printf("請輸入成績：");
+  scanf("%d", &score);
+
+  if (score >= 60) {
+    printf("及格\n");
+  } else {
+    printf("不及格\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int number;
+  printf("請輸入一個整數：");
+  scanf("%d", &number);
+
+  if (number % 2 == 0) {
+    printf("偶數\n");
+  } else {
+    printf("奇數\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int age;
+  printf("請輸入年齡：");
+  scanf("%d", &age);
+
+  if (age < 18) {
+    printf("未成年\n");
+  } else if (age <= 65) {
+    printf("成年\n");
+  } else {
+    printf("高齡者\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float temp;
+  printf("請輸入溫度（°C）：");
+  scanf("%f", &temp);
+
+  if (temp >= 37.5) {
+    printf("可能發燒\n");
+  } else {
+    printf("體溫正常\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 9 -->
+<h2>Day 2：switch 條件選擇</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int day;
+  printf("請輸入星期（1~7）：");
+  scanf("%d", &day);
+
+  switch (day) {
+    case 1: printf("星期一\n"); break;
+    case 2: printf("星期二\n"); break;
+    case 3: printf("星期三\n"); break;
+    case 4: printf("星期四\n"); break;
+    case 5: printf("星期五\n"); break;
+    case 6: printf("星期六\n"); break;
+    case 7: printf("星期日\n"); break;
+    default: printf("輸入錯誤\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char grade;
+  printf("請輸入成績等級（A~F）：");
+  scanf(" %c", &grade);
+
+  switch (grade) {
+    case 'A': printf("優秀\n"); break;
+    case 'B': printf("良好\n"); break;
+    case 'C': printf("普通\n"); break;
+    case 'D': printf("需加強\n"); break;
+    case 'F': printf("不及格\n"); break;
+    default: printf("未知等級\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int option;
+  printf("選擇功能（1:加法, 2:減法）：");
+  scanf("%d", &option);
+
+  switch (option) {
+    case 1: printf("執行加法\n"); break;
+    case 2: printf("執行減法\n"); break;
+    default: printf("無此選項\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int month;
+  printf("請輸入月份（1~12）：");
+  scanf("%d", &month);
+
+  switch (month) {
+    case 12:
+    case 1:
+    case 2: printf("冬季\n"); break;
+    case 3:
+    case 4:
+    case 5: printf("春季\n"); break;
+    case 6:
+    case 7:
+    case 8: printf("夏季\n"); break;
+    case 9:
+    case 10:
+    case 11: printf("秋季\n"); break;
+    default: printf("錯誤月份\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 10 -->
+<h2>Day 3：for 迴圈練習</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  for (int i = 1; i <= 5; i++) {
+    printf("第 %d 次迴圈\n", i);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int sum = 0;
+  for (int i = 1; i <= 10; i++) {
+    sum += i;
+  }
+  printf("1 到 10 的總和是 %d\n", sum);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  for (int i = 2; i <= 10; i += 2) {
+    printf("%d 是偶數\n", i);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  for (int i = 1; i <= 5; i++) {
+    printf("★ ");
+  }
+  printf("\n");
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 11 -->
+ <h2>Day 4：while 與 do/while 迴圈練習</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int count = 1;
+  while (count <= 3) {
+    printf("執行第 %d 次\n", count);
+    count++;
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int num;
+  printf("請輸入一個正整數：");
+  scanf("%d", &num);
+
+  while (num > 0) {
+    printf("目前數值：%d\n", num);
+    num--;
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int i = 1;
+  int sum = 0;
+
+  while (i <= 5) {
+    sum += i;
+    i++;
+  }
+  printf("1 到 5 的總和是 %d\n", sum);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int password;
+  do {
+    printf("請輸入密碼（正確為 1234）：");
+    scanf("%d", &password);
+  } while (password != 1234);
+
+  printf("密碼正確，登入成功！\n");
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 12 -->
+<h2>Day 5：傳值函數呼叫</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void greet(int times) {
+  for (int i = 0; i < times; i++) {
+    printf("你好！\n");
+  }
+}
+
+int main() {
+  greet(3);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int square(int x) {
+  return x * x;
+}
+
+int main() {
+  int num = 5;
+  int result = square(num);
+  printf("%d 的平方是 %d\n", num, result);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+float add(float a, float b) {
+  return a + b;
+}
+
+int main() {
+  float x = 2.5, y = 3.7;
+  float sum = add(x, y);
+  printf("總和為 %.2f\n", sum);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void printStars(int count) {
+  for (int i = 0; i < count; i++) {
+    printf("★ ");
+  }
+  printf("\n");
+}
+
+int main() {
+  printStars(5);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 13 -->
+<h2>Day 6：傳址函數呼叫（使用指標）</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void doubleValue(int *x) {
+  *x = *x * 2;
+}
+
+int main() {
+  int num = 10;
+  doubleValue(&num);
+  printf("加倍後的值為 %d\n", num);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void swap(int *a, int *b) {
+  int temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+int main() {
+  int x = 3, y = 7;
+  swap(&x, &y);
+  printf("交換後 x=%d, y=%d\n", x, y);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void updateScore(int *score) {
+  *score += 10;
+}
+
+int main() {
+  int myScore = 80;
+  updateScore(&myScore);
+  printf("更新後分數為 %d\n", myScore);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void setZero(int *x) {
+  *x = 0;
+}
+
+int main() {
+  int value = 99;
+  setZero(&value);
+  printf("重設後的值為 %d\n", value);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 14 -->
+<h2>Day 7：綜合流程與函數應用</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int factorial(int n) {
+  int result = 1;
+  for (int i = 1; i <= n; i++) {
+    result *= i;
+  }
+  return result;
+}
+
+int main() {
+  int num;
+  printf("請輸入整數：");
+  scanf("%d", &num);
+  printf("%d 的階乘是 %d\n", num, factorial(num));
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int isEven(int x) {
+  return x % 2 == 0;
+}
+
+int main() {
+  int num;
+  printf("請輸入整數：");
+  scanf("%d", &num);
+
+  if (isEven(num)) {
+    printf("是偶數\n");
+  } else {
+    printf("是奇數\n");
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void printTable(int n) {
+  for (int i = 1; i <= 10; i++) {
+    printf("%d x %d = %d\n", n, i, n * i);
+  }
+}
+
+int main() {
+  int num;
+  printf("請輸入乘法表的數字：");
+  scanf("%d", &num);
+  printTable(num);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void classify(int score) {
+  if (score >= 90) {
+    printf("優等\n");
+  } else if (score >= 75) {
+    printf("良好\n");
+  } else if (score >= 60) {
+    printf("普通\n");
+  } else {
+    printf("不及格\n");
+  }
+}
+
+int main() {
+  int s;
+  printf("請輸入分數：");
+  scanf("%d", &s);
+  classify(s);
+  return 0;
+}</code></pre>
+</div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>    

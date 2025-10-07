@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 6：綜合應用與偵錯</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 6：綜合應用與偵錯</h1>
+  <p>重點：整體架構理解、錯誤偵測<br>練習:找出並修正各種bug</p>
+
+  <!-- Day 36 -->
+  <h2>Day 1：學生成績管理系統</h2>
+<p>功能：輸入學生資料，儲存至檔案，並計算平均分數</p>
+<p>Bug 數量：3（陣列越界、檔案未關閉、平均計算錯誤）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student {
+  char name[20];
+  int score;
+};
+
+int main() {
+  int n;
+  printf("請輸入學生人數：");
+  scanf("%d", &n);
+
+  struct Student list[100];
+  for (int i = 0; i &lt;= n; i++) { // Bug 1: 應為 i &lt; n
+    printf("輸入姓名與分數：");
+    scanf("%s %d", list[i].name, &list[i].score);
+  }
+
+  FILE *fp = fopen("grades.txt", "w");
+  int total = 0;
+  for (int i = 0; i &lt; n; i++) {
+    fprintf(fp, "%s %d\n", list[i].name, list[i].score);
+    total += list[i].score;
+  }
+  
+  float avg = total / n; // Bug 3: 整數除法，應轉型
+  printf("平均分數：%.2f\n", avg);
+  // Bug 2: 檔案未關閉, 應為 fclose(fp);
+
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 37 -->
+  <h2>Day 2：商品庫存查詢系統</h2>
+<p>功能：讀取商品資料，查詢指定商品</p>
+<p>Bug 數量：3（未初始化、字串比較錯誤、檔案開啟失敗未處理）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Product {
+  char name[20];
+  int stock;
+};
+
+int main() {
+  struct Product items[50];
+  int count = 0;
+
+  FILE *fp = fopen("inventory.txt", "r");
+  // Bug 1: 未檢查 fp 是否為 NULL
+  while (fscanf(fp, "%s %d", items[count].name, &items[count].stock) == 2) {
+    count++;
+  }
+  fclose(fp);
+
+  char query[20];
+  printf("請輸入要查詢的商品名稱：");
+  scanf("%s", query);
+
+  for (int i = 0; i &lt; count; i++) {
+    if (items[i].name == query) { // Bug 2: 字串比較錯誤
+      printf("庫存：%d\n", items[i].stock);
+    }
+  }
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 38 -->
+  <h2>Day 3：成績排序系統</h2>
+<p>功能：輸入分數並由高至低排序</p>
+<p>Bug 數量：3（指標錯誤、交換邏輯錯誤、未釋放記憶體）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void sort(int *arr, int n) {
+  for (int i = 0; i &lt; n - 1; i++) {
+    for (int j = i + 1; j &lt; n; j++) {
+      if (arr[i] &lt; arr[j]) {
+        int *temp = arr[i]; // Bug 1: 應為 int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp; // Bug 2: temp 是指標
+      }
+    }
+  }
+}
+
+int main() {
+  int n;
+  printf("請輸入分數數量：");
+  scanf("%d", &n);
+
+  int *scores = malloc(n * sizeof(int));
+  for (int i = 0; i &lt; n; i++) {
+    scanf("%d", &scores[i]);
+  }
+
+  sort(scores, n);
+
+  for (int i = 0; i &lt; n; i++) {
+    printf("%d ", scores[i]);
+  }
+  printf("\n");
+  // Bug 3: 未釋放記憶體, 應為 free(scores);
+
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 39 -->
+  <h2>Day 4：成績動態儲存系統</h2>
+<p>功能：使用 malloc 儲存分數並計算平均</p>
+<p>Bug 數量：3（未檢查 malloc、越界存取、未釋放記憶體）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int n;
+  printf("請輸入分數數量：");
+  scanf("%d", &n);
+
+  int *scores = malloc(n * sizeof(int));
+  // Bug 1: 未檢查 scores 是否為 NULL
+
+  for (int i = 0; i &lt;= n; i++) { // Bug 2: 應為 i &lt; n
+    printf("請輸入第 %d 筆分數：", i + 1);
+    scanf("%d", &scores[i]);
+  }
+
+  int total = 0;
+  for (int i = 0; i &lt; n; i++) {
+    total += scores[i];
+  }
+
+  float avg = (float)total / n;
+  printf("平均分數：%.2f\n", avg);
+
+  // Bug 3: 未釋放記憶體, 應為 free(scores);
+
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 40 -->
+ <h2>Day 5：員工薪資計算系統</h2>
+<p>功能：根據工時與時薪計算薪資</p>
+<p>Bug 數量：3（條件判斷錯誤、未處理負值、未使用函數）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+float computeSalary(int hours, float rate) {
+  return hours * rate;
+}
+
+int main() {
+  int hours;
+  float rate;
+
+  printf("請輸入工時與時薪：");
+  scanf("%d %f", &hours, &rate);
+
+  if (hours &gt;= 0 || rate &gt;= 0) { // Bug 1: 應為 && 判斷
+    float salary = hours * rate; // Bug 2: 未使用函數
+    printf("薪資為 %.2f 元\n", salary);
+  } else {
+    printf("輸入錯誤\n");
+  }
+
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 41 -->
+ <h2>Day 6：圖書資料儲存系統</h2>
+<p>功能：儲存多本書籍資料並輸出</p>
+<p>Bug 數量：3（陣列未初始化、結構欄位錯誤、資料遺失）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Book {
+  char title[30];
+  int pages;
+};
+
+int main() {
+  struct Book books[3];
+  for (int i = 0; i &lt; 3; i++) {
+    printf("請輸入書名與頁數：");
+    scanf("%s %d", books[i].title, &books[i].pages);
+  }
+
+  for (int i = 0; i &lt;= 3; i++) { // Bug 1: 應為 i &lt; 3
+    printf("書名：%s，頁數：%d\n", books[i].name, books[i].pages); // Bug 2: 欄位錯誤
+  }
+
+  // Bug 3: 無法儲存空格書名，應使用 fgets
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 42 -->
+  <h2>Day 7：綜合會員管理系統</h2>
+<p>功能：新增會員、查詢會員、儲存檔案</p>
+<p>Bug 數量：4（陣列越界、查詢失敗、檔案未關閉、記憶體洩漏）</p>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+struct Member {
+  char name[20];
+  int age;
+};
+
+int main() {
+  struct Member *list = malloc(5 * sizeof(struct Member));
+  int count = 0;
+
+  for (int i = 0; i &lt; 6; i++) { // Bug 1: 應為 i &lt; 5
+    printf("請輸入姓名與年齡：");
+    scanf("%s %d", list[i].name, &list[i].age);
+    count++;
+  }
+
+  char query[20];
+  printf("查詢姓名：");
+  scanf("%s", query);
+
+  int found = 0;
+  for (int i = 0; i &lt; count; i++) {
+    if (strcmp(list[i].name, query) == 0) {
+      printf("年齡：%d\n", list[i].age);
+      found = 1;
+    }
+  }
+  if (found = 0) { // Bug 2: 應為 ==，非賦值
+    printf("查無此人\n");
+  }
+
+  FILE *fp = fopen("members.txt", "w");
+  for (int i = 0; i &lt; count; i++) {
+    fprintf(fp, "%s %d\n", list[i].name, list[i].age);
+  }
+  // Bug 3: 檔案未關閉, 應為 fclose(fp);
+
+  // Bug 4: 未釋放記憶體, 應為 free(list);
+
+  return 0;
+}</code></pre>
+</div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>     

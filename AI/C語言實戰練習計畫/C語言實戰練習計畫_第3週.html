@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 3：陣列與指標</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📘 Week 3：陣列與指標</h1>
+<p>重點：陣列與指標的關係、指標運算<br>
+練習:畫記憶體圖,追蹤指標變化</p>
+
+<!-- Day 15 -->
+<h2>Day 1：陣列基本操作</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int scores[5] = {80, 85, 90, 75, 88};
+
+  for (int i = 0; i < 5; i++) {
+    printf("第 %d 位分數：%d\n", i + 1, scores[i]);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int nums[3];
+  nums[0] = 10;
+  nums[1] = 20;
+  nums[2] = nums[0] + nums[1];
+
+  printf("陣列第三項為 %d\n", nums[2]);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char vowels[5] = {'a', 'e', 'i', 'o', 'u'};
+
+  for (int i = 0; i < 5; i++) {
+    printf("母音 %d：%c\n", i, vowels[i]);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int data[4] = {1, 2, 3, 4};
+  int sum = 0;
+
+  for (int i = 0; i < 4; i++) {
+    sum += data[i];
+  }
+  printf("總和為 %d\n", sum);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 16 -->
+<h2>Day 2：指標基本操作</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 10;
+  int *ptr = &x;
+
+  printf("x 的值為 %d\n", x);
+  printf("ptr 指向的值為 %d\n", *ptr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int a = 5;
+  int b = 7;
+  int *p1 = &a;
+  int *p2 = &b;
+
+  printf("p1 指向的值：%d\n", *p1);
+  printf("p2 指向的值：%d\n", *p2);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int value = 42;
+  int *ptr = &value;
+
+  *ptr = *ptr + 1;
+  printf("更新後的值為 %d\n", value);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int num = 100;
+  int *p = &num;
+
+  printf("變數位址：%p\n", p);
+  printf("內容值：%d\n", *p);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 17 -->
+<h2>Day 3：陣列與指標的關係</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int arr[3] = {10, 20, 30};
+  int *p = arr;
+
+  printf("第一項：%d\n", *p);
+  printf("第二項：%d\n", *(p + 1));
+  printf("第三項：%d\n", *(p + 2));
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void printArray(int *ptr, int size) {
+  for (int i = 0; i < size; i++) {
+    printf("第 %d 項：%d\n", i, *(ptr + i));
+  }
+}
+
+int main() {
+  int data[4] = {5, 10, 15, 20};
+  printArray(data, 4);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int nums[] = {1, 2, 3, 4, 5};
+  int *ptr = nums;
+
+  for (int i = 0; i < 5; i++) {
+    printf("位址：%p，值：%d\n", ptr + i, *(ptr + i));
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void showFirst(int *arr) {
+  printf("第一項是 %d\n", arr[0]);
+}
+
+int main() {
+  int values[3] = {100, 200, 300};
+  showFirst(values);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 18 -->
+<h2>Day 4：指標運算與位址偏移</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 50;
+  int *p = &x;
+
+  printf("原始值：%d\n", *p);
+  *p += 25;
+  printf("更新後：%d\n", *p);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void increment(int *ptr) {
+  *ptr = *ptr + 1;
+}
+
+int main() {
+  int value = 99;
+  increment(&value);
+  printf("加一後的值：%d\n", value);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int arr[] = {3, 6, 9};
+  int *p = arr;
+
+  for (int i = 0; i < 3; i++) {
+    *(p + i) *= 2;
+    printf("第 %d 項加倍後：%d\n", i, *(p + i));
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void reset(int *p) {
+  for (int i = 0; i < 4; i++) {
+    *(p + i) = 0;
+  }
+}
+
+int main() {
+  int data[4] = {1, 2, 3, 4};
+  reset(data);
+
+  for (int i = 0; i < 4; i++) {
+    printf("第 %d 項：%d\n", i, data[i]);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 19 -->
+<h2>Day 5：陣列指標作為函數參數</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void printSum(int *arr, int size) {
+  int sum = 0;
+  for (int i = 0; i < size; i++) {
+    sum += arr[i];
+  }
+  printf("總和為 %d\n", sum);
+}
+
+int main() {
+  int data[4] = {10, 20, 30, 40};
+  printSum(data, 4);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void doubleArray(int *arr, int size) {
+  for (int i = 0; i < size; i++) {
+    arr[i] *= 2;
+  }
+}
+
+int main() {
+  int nums[3] = {1, 2, 3};
+  doubleArray(nums, 3);
+
+  for (int i = 0; i < 3; i++) {
+    printf("%d ", nums[i]);
+  }
+  printf("\n");
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void resetArray(int *arr, int size) {
+  for (int i = 0; i < size; i++) {
+    arr[i] = 0;
+  }
+}
+
+int main() {
+  int values[5] = {5, 10, 15, 20, 25};
+  resetArray(values, 5);
+
+  for (int i = 0; i < 5; i++) {
+    printf("%d ", values[i]);
+  }
+  printf("\n");
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void showLast(int *arr, int size) {
+  printf("最後一項是 %d\n", arr[size - 1]);
+}
+
+int main() {
+  int data[4] = {11, 22, 33, 44};
+  showLast(data, 4);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 20 -->
+<h2>Day 6：字元陣列與字串指標</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char name[] = "會安";
+  printf("你好，%s！\n", name);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char word[] = "C語言";
+  for (int i = 0; word[i] != '\0'; i++) {
+    printf("字元 %d：%c\n", i, word[i]);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void printChars(char *str) {
+  while (*str != '\0') {
+    printf("%c ", *str);
+    str++;
+  }
+  printf("\n");
+}
+
+int main() {
+  char text[] = "指標";
+  printChars(text);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char *msg = "Hello, C!";
+  printf("訊息：%s\n", msg);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 21 -->
+<h2>Day 7：指標進階運算與記憶體追蹤</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void showAddresses(int *arr, int size) {
+  for (int i = 0; i < size; i++) {
+    printf("第 %d 項位址：%p，值：%d\n", i, arr + i, *(arr + i));
+  }
+}
+
+int main() {
+  int data[3] = {100, 200, 300};
+  showAddresses(data, 3);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void reverse(int *arr, int size) {
+  for (int i = size - 1; i >= 0; i--) {
+    printf("%d ", *(arr + i));
+  }
+  printf("\n");
+}
+
+int main() {
+  int nums[4] = {1, 2, 3, 4};
+  reverse(nums, 4);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void trace(int *p) {
+  printf("初始位址：%p\n", p);
+  p++;
+  printf("偏移後位址：%p\n", p);
+}
+
+int main() {
+  int x = 10, y = 20;
+  int *ptr = &x;
+  trace(ptr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void modify(int *p) {
+  *p = *p + 100;
+}
+
+int main() {
+  int value = 50;
+  printf("原始值：%d\n", value);
+  modify(&value);
+  printf("修改後：%d\n", value);
+  return 0;
+}</code></pre>
+</div>
+
+<script>
+  function copyCode(button) {
+    const code = button.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      button.innerText = "已複製！";
+      setTimeout(() => button.innerText = "複製程式碼", 1500);
+    });
+  }
+</script>
+
+</body>
+</html>

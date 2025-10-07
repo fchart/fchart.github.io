@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>透過生成式AI提升Python程式閱讀力</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Arial, sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .author {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        blockquote {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            position: relative;
+            margin: 20px 0;
+            background: #282c34;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #21252b;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-lang {
+            color: #61dafb;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #abb2bf;
+        }
+
+        .keyword { color: #c678dd; }
+        .function { color: #61dafb; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .comment { color: #5c6370; font-style: italic; }
+
+        hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .week-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>透過生成式AI提升Python程式閱讀力</h1>
+            <div class="author">教學指南 — 陳會安</div>
+        </div>
+
+        <div class="content">
+            <h2>前言:為什麼程式閱讀能力更重要?</h2>
+            <p>在AI輔助開發的時代,程式設計的核心能力已經轉變:</p>
+            <ul>
+                <li><strong>過去</strong>:從零開始寫出正確的程式</li>
+                <li><strong>現在</strong>:看懂AI生成的程式,判斷是否符合需求,並準確描述修改方向</li>
+            </ul>
+            <blockquote>
+                <strong>關鍵概念</strong>:只有看懂程式,才能發現問題、驗證邏輯、提出精確的修改需求。
+            </blockquote>
+
+            <h2>因為你懂需求, AI會寫程式, 如何指揮AI寫程式, 取決於你的程式閱讀力。</h2>
+
+            <h2>學習路徑:從閱讀到精通</h2>
+
+            <h3>第一階段:建立閱讀框架(1-2週)</h3>
+
+            <h4>1. 先問「這段程式在做什麼?」</h4>
+            <p>拿到任何Python程式時,先用AI幫助你建立整體理解:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="keyword">def</span> <span class="function">calculate_average</span>(numbers):
+    total = <span class="function">sum</span>(numbers)
+    count = <span class="function">len</span>(numbers)
+    <span class="keyword">return</span> total / count
+
+scores = [<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">90</span>, <span class="number">88</span>]
+result = <span class="function">calculate_average</span>(scores)
+<span class="function">print</span>(<span class="string">f"平均分數: {result}"</span>)</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請用一句話說明這段程式的目的」</li>
+                <li>「這段程式的輸入和輸出分別是什麼?」</li>
+                <li>「請列出程式執行的步驟流程」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:建立「功能→資料→流程」的閱讀思維。
+            </div>
+
+            <h4>2. 逐行拆解理解</h4>
+            <p>選擇3-5行的小片段,深入理解每一行:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code>data = [x ** <span class="number">2</span> <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">10</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請把這行程式拆解成多個步驟解釋」</li>
+                <li>「<code>x ** 2</code> 是什麼意思?」</li>
+                <li>「<code>if x % 2 == 0</code> 在這裡的作用是什麼?」</li>
+                <li>「請用for迴圈改寫這段list comprehension」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:從簡化版本理解複雜語法,掌握語法糖的本質。
+            </div>
+
+            <h4>3. 識別程式結構</h4>
+            <p>學習辨認常見的程式模式:</p>
+            <p><strong>常見結構清單</strong>:</p>
+            <ul>
+                <li>循序結構(一行行執行)</li>
+                <li>條件判斷(if-else)</li>
+                <li>迴圈(for, while)</li>
+                <li>函數定義與呼叫</li>
+                <li>資料結構(list, dict, tuple)</li>
+            </ul>
+
+            <p><strong>實戰練習</strong>:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="keyword">def</span> <span class="function">find_max</span>(numbers):
+    <span class="keyword">if not</span> numbers:
+        <span class="keyword">return</span> <span class="keyword">None</span>
+    
+    max_value = numbers[<span class="number">0</span>]
+    <span class="keyword">for</span> num <span class="keyword">in</span> numbers[<span class="number">1</span>:]:
+        <span class="keyword">if</span> num > max_value:
+            max_value = num
+    
+    <span class="keyword">return</span> max_value</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這個函數使用了哪些程式結構?」</li>
+                <li>「為什麼要先檢查<code>if not numbers</code>?」</li>
+                <li>「可以畫出這個函數的執行流程圖嗎?」</li>
+            </ul>
+
+            <hr>
+
+            <h3>第二階段:深化理解能力(2-4週)</h3>
+
+            <h4>4. 追蹤變數變化</h4>
+            <p>理解程式就是理解資料如何變化:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code>nums = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>]
+<span class="keyword">for</span> i <span class="keyword">in</span> <span class="function">range</span>(<span class="function">len</span>(nums)):
+    nums[i] = nums[i] * <span class="number">2</span>
+<span class="function">print</span>(nums)</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請列出每次迴圈後<code>nums</code>和<code>i</code>的值」</li>
+                <li>「請用表格顯示變數在每步的變化」</li>
+                <li>「如果初始值是<code>[2, 7]</code>,結果會是什麼?」</li>
+            </ul>
+            <div class="info-box">
+                <strong>學習技巧</strong>:養成「腦內執行」的習慣,預測結果後再驗證。
+            </div>
+
+            <h4>5. 理解函數互動</h4>
+            <p>現實程式常包含多個函數協作:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="keyword">def</span> <span class="function">clean_text</span>(text):
+    <span class="keyword">return</span> text.strip().lower()
+
+<span class="keyword">def</span> <span class="function">count_words</span>(text):
+    cleaned = <span class="function">clean_text</span>(text)
+    words = cleaned.split()
+    <span class="keyword">return</span> <span class="function">len</span>(words)
+
+sentence = <span class="string">"  Hello World  "</span>
+result = <span class="function">count_words</span>(sentence)</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請追蹤<code>sentence</code>變數經過每個函數的變化」</li>
+                <li>「<code>clean_text</code>的回傳值如何被<code>count_words</code>使用?」</li>
+                <li>「請畫出函數呼叫關係圖」</li>
+            </ul>
+
+            <h4>6. 識別常見陷阱</h4>
+            <p>學習發現程式中的潛在問題:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="keyword">def</span> <span class="function">divide_numbers</span>(a, b):
+    <span class="keyword">return</span> a / b
+
+result = <span class="function">divide_numbers</span>(<span class="number">10</span>, <span class="number">0</span>)</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這段程式有什麼潛在問題?」</li>
+                <li>「在什麼情況下會出錯?」</li>
+                <li>「應該如何改進這段程式?」</li>
+                <li>「請展示加入錯誤處理的版本」</li>
+            </ul>
+
+            <p><strong>常見陷阱類型</strong>:</p>
+            <ul>
+                <li>除以零</li>
+                <li>空串列/字典存取</li>
+                <li>索引超出範圍</li>
+                <li>類型不匹配</li>
+                <li>邏輯錯誤(邊界條件)</li>
+            </ul>
+
+            <hr>
+
+            <h3>第三階段:實戰應用(持續進行)</h3>
+
+            <h4>7. 閱讀完整專案</h4>
+            <p>從簡單專案開始,建立系統性閱讀能力:</p>
+            <p><strong>專案範例:簡易待辦事項管理</strong></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code>tasks = []
+
+<span class="keyword">def</span> <span class="function">add_task</span>(task):
+    tasks.append({<span class="string">"name"</span>: task, <span class="string">"done"</span>: <span class="keyword">False</span>})
+    <span class="function">print</span>(<span class="string">f"已新增: {task}"</span>)
+
+<span class="keyword">def</span> <span class="function">complete_task</span>(index):
+    <span class="keyword">if</span> <span class="number">0</span> <= index < <span class="function">len</span>(tasks):
+        tasks[index][<span class="string">"done"</span>] = <span class="keyword">True</span>
+        <span class="function">print</span>(<span class="string">f"已完成: {tasks[index]['name']}"</span>)
+
+<span class="keyword">def</span> <span class="function">show_tasks</span>():
+    <span class="keyword">for</span> i, task <span class="keyword">in</span> <span class="function">enumerate</span>(tasks):
+        status = <span class="string">"✓"</span> <span class="keyword">if</span> task[<span class="string">"done"</span>] <span class="keyword">else</span> <span class="string">"○"</span>
+        <span class="function">print</span>(<span class="string">f"{i}. [{status}] {task['name']}"</span>)</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這個程式的整體架構是什麼?」</li>
+                <li>「資料是如何組織的?為什麼用dict而不是string?」</li>
+                <li>「如果我要新增『刪除任務』功能,應該怎麼設計?」</li>
+                <li>「這個設計有什麼優缺點?」</li>
+            </ul>
+
+            <h4>8. 對比不同實作方式</h4>
+            <p>理解同一功能的多種寫法:</p>
+            <p><strong>任務</strong>:找出串列中的偶數</p>
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請提供3種不同方法找出串列中的偶數」</li>
+                <li>「請比較這些方法的優缺點」</li>
+                <li>「在什麼情況下應該選擇哪種方法?」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:沒有絕對最好的寫法,要看具體情境(效能、可讀性、簡潔性)。
+            </div>
+
+            <h4>9. 偵錯練習</h4>
+            <p>故意引入錯誤,練習發現問題:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">Python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="keyword">def</span> <span class="function">calculate_discount</span>(price, discount):
+    final_price = price - price * discount
+    <span class="keyword">return</span> final_price
+
+<span class="comment"># 想要打8折(20% off),但結果不對</span>
+result = <span class="function">calculate_discount</span>(<span class="number">100</span>, <span class="number">20</span>)
+<span class="function">print</span>(result)  <span class="comment"># 期望80,實際得到-1900</span></code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請幫我找出這段程式的問題」</li>
+                <li>「為什麼結果是-1900而不是80?」</li>
+                <li>「請逐行說明<code>discount</code>變數的影響」</li>
+                <li>「正確的<code>discount</code>應該傳入什麼值?」</li>
+            </ul>
+<hr>
+<h2 id="%E8%88%87ai%E5%8D%94%E4%BD%9C%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AF%A6%E8%B8%90">與AI協作的最佳實踐</h2>
+<h3 id="%E6%8F%90%E5%95%8F%E6%8A%80%E5%B7%A7%E9%80%B2%E9%9A%8E">提問技巧進階</h3>
+<h4 id="%E5%B1%A4%E6%AC%A1%E6%80%A7%E6%8F%90%E5%95%8F%E6%B3%95">層次性提問法</h4>
+<ol>
+<li><strong>概觀層</strong>:「這段程式的主要功能是什麼?」</li>
+<li><strong>結構層</strong>:「這段程式用了哪些控制結構?」</li>
+<li><strong>細節層</strong>:「第5行的<code>enumerate</code>是做什麼的?」</li>
+<li><strong>變化層</strong>:「如果輸入是空串列會怎樣?」</li>
+</ol>
+<h4 id="%E5%85%B7%E8%B1%A1%E5%8C%96%E8%AB%8B%E6%B1%82">具象化請求</h4>
+<ul>
+<li>❌ 不好:「解釋這段程式」</li>
+<li>✅ 好:「請用比喻說明這段程式在做什麼」</li>
+<li>✅ 好:「請舉3個實際輸入輸出的例子」</li>
+<li>✅ 好:「請把這段程式改寫成更容易理解的版本」</li>
+</ul>
+<hr>
+<h3 id="%E9%A9%97%E8%AD%89%E7%90%86%E8%A7%A3%E7%9A%84%E6%96%B9%E6%B3%95">驗證理解的方法</h3>
+<h4 id="1-%E8%87%AA%E6%88%91%E6%B8%AC%E8%A9%A6%E6%B8%85%E5%96%AE">1. 自我測試清單</h4>
+<p>看完程式後,問自己:</p>
+<ul>
+<li><input type="checkbox" id="checkbox0"><label for="checkbox0">我能用自己的話說明這段程式在做什麼嗎?</label></li>
+<li><input type="checkbox" id="checkbox1"><label for="checkbox1">我能預測給定輸入的輸出結果嗎?</label></li>
+<li><input type="checkbox" id="checkbox2"><label for="checkbox2">我能指出哪部分是關鍵邏輯嗎?</label></li>
+<li><input type="checkbox" id="checkbox3"><label for="checkbox3">我能發現潛在的問題或改進空間嗎?</label></li>
+</ul>
+<h4 id="2-%E6%95%99%E5%AD%B8%E6%B3%95%E9%A9%97%E8%AD%89">2. 教學法驗證</h4>
+<p>嘗試向AI說明:</p>
+<ul>
+<li>「我認為這段程式是這樣運作的...[你的理解],請確認是否正確」</li>
+<li>「我覺得可以這樣改進...[你的想法],這樣做可行嗎?」</li>
+</ul>
+<h4 id="3-%E8%AE%8A%E5%BD%A2%E7%B7%B4%E7%BF%92">3. 變形練習</h4>
+<ul>
+<li>「如果把這個list改成dict,程式需要怎麼調整?」</li>
+<li>「如果要處理100萬筆資料,這個寫法會有問題嗎?」</li>
+</ul>
+            <hr>
+
+            <h2>實戰練習計畫(6週)</h2>
+
+            <div class="week-section">
+                <h3>Week 1: 基礎語法閱讀</h3>
+                <ul>
+                    <li>每天閱讀5-10行的簡單程式</li>
+                    <li>重點:變數、運算、print、基本資料型態</li>
+                    <li>練習:用AI解釋每個語法元素</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 2: 控制流程</h3>
+                <ul>
+                    <li>閱讀包含if-else、for、while的程式</li>
+                    <li>重點:理解程式執行路徑</li>
+                    <li>練習:畫流程圖,預測執行結果</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 3: 函數與模組化</h3>
+                <ul>
+                    <li>閱讀多函數協作的程式</li>
+                    <li>重點:參數傳遞、回傳值、作用域</li>
+                    <li>練習:追蹤函數呼叫鏈</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 4: 資料結構</h3>
+                <ul>
+                    <li>閱讀使用list、dict、set的程式</li>
+                    <li>重點:資料組織方式與存取</li>
+                    <li>練習:畫出資料結構示意圖</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 5: 綜合應用</h3>
+                <ul>
+                    <li>閱讀50-100行的完整小專案</li>
+                    <li>重點:整體架構理解</li>
+                    <li>練習:寫功能說明文件</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 6: 偵錯與改進</h3>
+                <ul>
+                    <li>閱讀有問題的程式並找出bug</li>
+                    <li>重點:批判性思維</li>
+                    <li>練習:提出改進建議並與AI討論</li>
+                </ul>
+            </div>
+<hr>
+<h2 id="%E5%B8%B8%E8%A6%8B%E5%95%8F%E9%A1%8C%E8%88%87%E8%A7%A3%E7%AD%94">常見問題與解答</h2>
+<h3 id="q1-%E7%9C%8B%E4%B8%8D%E6%87%82%E7%A8%8B%E5%BC%8F%E6%99%82%E7%AC%AC%E4%B8%80%E6%AD%A5%E8%A9%B2%E5%81%9A%E4%BB%80%E9%BA%BC">Q1: 看不懂程式時,第一步該做什麼?</h3>
+<p><strong>A</strong>: 不要逐字理解,先問AI:「請用日常語言說明這段程式在做什麼」,建立概念框架後再深入細節。</p>
+<h3 id="q2-%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E8%87%AA%E5%B7%B1%E7%9C%9F%E7%9A%84%E7%9C%8B%E6%87%82%E4%BA%86">Q2: 如何知道自己真的看懂了?</h3>
+<p><strong>A</strong>: 試著用自己的話重新實作類似功能,或向AI描述你的理解請它驗證。</p>
+<h3 id="q3-%E9%81%87%E5%88%B0%E4%B8%8D%E8%AA%8D%E8%AD%98%E7%9A%84%E5%87%BD%E6%95%B8%E6%88%96%E8%AA%9E%E6%B3%95%E6%80%8E%E9%BA%BC%E8%BE%A6">Q3: 遇到不認識的函數或語法怎麼辦?</h3>
+<p><strong>A</strong>: 直接問AI:「<code>enumerate</code>是什麼?請舉例說明」,並要求AI展示2-3個使用範例。</p>
+<h3 id="q4-%E6%87%89%E8%A9%B2%E8%8A%B1%E5%A4%9A%E5%B0%91%E6%99%82%E9%96%93%E5%9C%A8%E9%96%B1%E8%AE%80%E7%A8%8B%E5%BC%8F%E4%B8%8A">Q4: 應該花多少時間在閱讀程式上?</h3>
+<p><strong>A</strong>: 初期建議每天30-60分鐘,重質不重量。深入理解一段程式比匆匆看過十段程式更有效。</p>
+<h3 id="q5-%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%96%B1%E8%AE%80%E7%A8%8B%E5%BC%8F%E7%9A%84%E7%9B%B4%E8%A6%BA">Q5: 如何建立閱讀程式的直覺?</h3>
+<p><strong>A</strong>: 持續練習+反思。每次閱讀後問:「這段程式用了什麼模式?我以前見過嗎?」</p>
+<hr>
+<h2 id="%E9%80%B2%E9%9A%8E%E6%8A%80%E8%83%BD%E8%88%87ai%E9%AB%98%E6%95%88%E5%8D%94%E4%BD%9C">進階技能:與AI高效協作</h2>
+<h3 id="%E5%A0%B4%E6%99%AF1%E9%9C%80%E6%B1%82%E6%BE%84%E6%B8%85">場景1:需求澄清</h3>
+<p>當你看懂AI寫的程式,發現不符需求時:</p>
+<p><strong>低效對話</strong>:</p>
+<ul>
+<li>你:「這個不對,改一下」</li>
+<li>AI:「請問哪裡需要修改?」(浪費一輪對話)</li>
+</ul>
+<p><strong>高效對話</strong>:</p>
+<ul>
+<li>你:「我看懂了第15-20行是在做資料排序,但我的需求是要『由大到小』排序,現在是『由小到大』。請把第17行的<code>sort()</code>改成<code>sort(reverse=True)</code>」</li>
+</ul>
+<p><strong>關鍵</strong>:精準指出程式邏輯與需求的差異。</p>
+<hr>
+<h3 id="%E5%A0%B4%E6%99%AF2%E6%95%88%E8%83%BD%E5%84%AA%E5%8C%96">場景2:效能優化</h3>
+<p>當你理解程式邏輯,想改進效能時:</p>
+<p><strong>低效對話</strong>:</p>
+<ul>
+<li>你:「程式太慢了」</li>
+</ul>
+<p><strong>高效對話</strong>:</p>
+<ul>
+<li>你:「我注意到第10-15行用了雙層迴圈,當資料量大時會有O(n²)的時間複雜度。我想改用dictionary來實作,讓時間複雜度降到O(n),可以幫我重構這段嗎?」</li>
+</ul>
+<p><strong>關鍵</strong>:指出瓶頸位置並提出優化方向。</p>
+<hr>
+<h3 id="%E5%A0%B4%E6%99%AF3%E6%93%B4%E5%85%85%E5%8A%9F%E8%83%BD">場景3:擴充功能</h3>
+<p>當你理解現有架構,要新增功能時:</p>
+<p><strong>低效對話</strong>:</p>
+<ul>
+<li>你:「我要加一個搜尋功能」</li>
+</ul>
+<p><strong>高效對話</strong>:</p>
+<ul>
+<li>你:「目前程式在第30行的<code>tasks</code>串列中儲存所有任務。我想新增一個<code>search_task(keyword)</code>函數,傳入關鍵字後,回傳所有<code>name</code>欄位包含該關鍵字的任務。請參考現有的<code>show_tasks()</code>函數風格來實作」</li>
+</ul>
+<p><strong>關鍵</strong>:說明如何整合進現有架構。</p>
+            <hr>
+
+            <h2>總結:閱讀力就是你的超能力</h2>
+            <p>在AI輔助開發的時代:</p>
+            <div class="success-box">
+                ✅ 會看程式 → 能理解AI的產出 → 能指出問題 → 能獲得正確結果
+            </div>
+            <div class="info-box">
+                ❌ 不會看程式 → 只能盲目接受 → 發現錯誤但無法描述 → 陷入無效溝通
+            </div>
+
+            <blockquote>
+                <strong>記住</strong>:你不需要成為比AI更強的程式寫手,但你需要成為程式的「品質檢查員」和「需求翻譯者」。
+            </blockquote>
+
+            <div class="success-box">
+                <strong>立即行動</strong>:找一段5-10行的Python程式,用本指南的方法向AI提問,開始你的閱讀力訓練!
+            </div>
+            <hr>
+<h2 id="%E9%99%84%E9%8C%84%E5%BF%AB%E9%80%9F%E5%8F%83%E8%80%83">附錄:快速參考</h2>
+<h3 id="%E9%96%B1%E8%AE%80%E7%A8%8B%E5%BC%8F%E7%9A%84%E9%BB%83%E9%87%91%E5%95%8F%E9%A1%8C%E6%B8%85%E5%96%AE">閱讀程式的黃金問題清單</h3>
+<ol>
+<li>這段程式的輸入和輸出是什麼?</li>
+<li>程式分成幾個主要步驟?</li>
+<li>哪一行是關鍵邏輯?</li>
+<li>有沒有特殊情況需要處理?</li>
+<li>如果輸入改變,程式會如何反應?</li>
+<li>有沒有可能出錯的地方?</li>
+<li>這樣寫有什麼優點和缺點?</li>
+<li>能用更簡單的方式達成同樣效果嗎?</li>
+</ol>
+<h3 id="%E5%90%91ai%E6%8F%90%E5%95%8F%E7%9A%84%E5%8F%A5%E5%9E%8B%E6%A8%A1%E6%9D%BF">向AI提問的句型模板</h3>
+<ul>
+<li>「請解釋第X行的[程式碼片段]是什麼意思」</li>
+<li>「這段程式如果輸入是[具體例子],會輸出什麼?」</li>
+<li>「請用[比喻/圖表/表格]說明這個邏輯」</li>
+<li>「請把這段程式改寫成更容易理解的版本」</li>
+<li>「這段程式有什麼潛在問題?」</li>
+<li>「請列出[變數名]在每步的值變化」</li>
+<li>「請比較這兩種寫法的差異」</li>
+<li>「如果要實現[新需求],應該修改哪裡?」</li>
+</ul>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').innerText;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerText;
+                button.innerText = '已複製!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.innerText = '複製失敗';
+                setTimeout(() => {
+                    button.innerText = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

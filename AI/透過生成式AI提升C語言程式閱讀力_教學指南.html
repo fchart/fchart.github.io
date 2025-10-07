@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>透過生成式AI提升C語言程式閱讀力</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Arial, sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header .author {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.4em;
+            margin: 30px 0 15px 0;
+        }
+
+        h4 {
+            color: #555;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        blockquote {
+            background: #f8f9ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .code-block {
+            position: relative;
+            margin: 20px 0;
+            background: #282c34;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .code-header {
+            background: #21252b;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .code-lang {
+            color: #61dafb;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+
+        pre {
+            margin: 0;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            color: #abb2bf;
+            line-height: 1.5;
+        }
+
+        .keyword { color: #c678dd; }
+        .function { color: #61dafb; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .comment { color: #5c6370; font-style: italic; }
+        .type { color: #e5c07b; }
+        .preprocessor { color: #c678dd; }
+
+        hr {
+            border: none;
+            border-top: 2px solid #e0e0e0;
+            margin: 40px 0;
+        }
+
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .danger-box {
+            background: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .week-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .memory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: #f8f9fa;
+        }
+
+        .memory-table th,
+        .memory-table td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .memory-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>透過生成式AI提升C語言程式閱讀力</h1>
+            <div class="author">教學指南 — 陳會安</div>
+        </div>
+
+        <div class="content">
+            <h2>前言:為什麼程式閱讀能力更重要?</h2>
+            <p>在AI輔助開發的時代,程式設計的核心能力已經轉變:</p>
+            <ul>
+                <li><strong>過去</strong>:從零開始寫出正確的程式</li>
+                <li><strong>現在</strong>:看懂AI生成的程式,判斷是否符合需求,並準確描述修改方向</li>
+            </ul>
+            <blockquote>
+                <strong>關鍵概念</strong>:只有看懂程式,才能發現問題、驗證邏輯、提出精確的修改需求。特別是C語言涉及記憶體管理和指標,更需要仔細閱讀理解。
+            </blockquote>
+
+            <h2>因為你懂需求, AI會寫程式, 如何指揮AI寫程式, 取決於你的程式閱讀力。</h2>
+
+            <h2>學習路徑:從閱讀到精通</h2>
+
+            <h3>第一階段:建立閱讀框架(1-2週)</h3>
+
+            <h4>1. 先問「這段程式在做什麼?」</h4>
+            <p>拿到任何C程式時,先用AI幫助你建立整體理解:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="preprocessor">#include &lt;stdio.h&gt;</span>
+
+<span class="type">float</span> <span class="function">calculate_average</span>(<span class="type">int</span> numbers[], <span class="type">int</span> size) {
+    <span class="type">int</span> total = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) {
+        total += numbers[i];
+    }
+    <span class="keyword">return</span> (<span class="type">float</span>)total / size;
+}
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">int</span> scores[] = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">90</span>, <span class="number">88</span>};
+    <span class="type">int</span> size = <span class="number">5</span>;
+    <span class="type">float</span> result = <span class="function">calculate_average</span>(scores, size);
+    <span class="function">printf</span>(<span class="string">"平均分數: %.2f\n"</span>, result);
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請用一句話說明這段程式的目的」</li>
+                <li>「這段程式的輸入和輸出分別是什麼?」</li>
+                <li>「為什麼需要傳入<code>size</code>參數?」</li>
+                <li>「<code>(float)</code> 在這裡的作用是什麼?」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:建立「功能→資料→記憶體→流程」的閱讀思維。
+            </div>
+
+            <h4>2. 逐行拆解理解</h4>
+            <p>選擇5-10行的小片段,深入理解每一行:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="type">int</span> *ptr = <span class="function">malloc</span>(<span class="number">10</span> * <span class="keyword">sizeof</span>(<span class="type">int</span>));
+<span class="keyword">if</span> (ptr == <span class="keyword">NULL</span>) {
+    <span class="function">fprintf</span>(stderr, <span class="string">"記憶體配置失敗\n"</span>);
+    <span class="keyword">return</span> <span class="number">1</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請拆解第一行的每個部分:int*、malloc、sizeof」</li>
+                <li>「為什麼要檢查<code>ptr == NULL</code>?」</li>
+                <li>「如果不寫<code>sizeof(int)</code>直接寫數字會怎樣?」</li>
+                <li>「<code>fprintf(stderr, ...)</code>和<code>printf</code>有什麼不同?」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:理解記憶體配置、錯誤處理、型態轉換等C語言特有概念。
+            </div>
+
+            <h4>3. 識別程式結構</h4>
+            <p>學習辨認常見的程式模式:</p>
+            <p><strong>常見結構清單</strong>:</p>
+            <ul>
+                <li>循序結構(一行行執行)</li>
+                <li>條件判斷(if-else, switch)</li>
+                <li>迴圈(for, while, do-while)</li>
+                <li>函數定義與呼叫</li>
+                <li>指標與陣列操作</li>
+                <li>結構體(struct)</li>
+                <li>記憶體管理(malloc/free)</li>
+            </ul>
+
+            <p><strong>實戰練習</strong>:</p>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="type">int</span> <span class="function">find_max</span>(<span class="type">int</span> numbers[], <span class="type">int</span> size) {
+    <span class="keyword">if</span> (size &lt;= <span class="number">0</span>) {
+        <span class="keyword">return</span> <span class="number">-1</span>;  <span class="comment">// 錯誤代碼</span>
+    }
+    
+    <span class="type">int</span> max_value = numbers[<span class="number">0</span>];
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; size; i++) {
+        <span class="keyword">if</span> (numbers[i] &gt; max_value) {
+            max_value = numbers[i];
+        }
+    }
+    
+    <span class="keyword">return</span> max_value;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這個函數使用了哪些程式結構?」</li>
+                <li>「為什麼要先檢查<code>size &lt;= 0</code>?」</li>
+                <li>「回傳-1作為錯誤代碼好嗎?有什麼替代方案?」</li>
+                <li>「可以畫出這個函數的執行流程圖嗎?」</li>
+            </ul>
+
+            <hr>
+
+            <h3>第二階段:深化理解能力(2-4週)</h3>
+
+            <h4>4. 追蹤變數與記憶體變化</h4>
+            <p>理解C程式就是理解記憶體如何變化:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="type">int</span> nums[] = {<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>};
+<span class="type">int</span> size = <span class="number">5</span>;
+<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; size; i++) {
+    nums[i] = nums[i] * <span class="number">2</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請列出每次迴圈後<code>nums</code>陣列的內容和<code>i</code>的值」</li>
+                <li>「請用記憶體位址的角度解釋<code>nums[i]</code>如何運作」</li>
+                <li>「如果初始值是<code>{2, 7}</code>,結果會是什麼?」</li>
+                <li>「這個陣列在記憶體中是如何配置的?」</li>
+            </ul>
+            <div class="info-box">
+                <strong>學習技巧</strong>:養成「腦內執行」和「記憶體視覺化」的習慣。
+            </div>
+
+            <h4>5. 理解指標與參數傳遞</h4>
+            <p>C語言最關鍵的概念:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="type">void</span> <span class="function">swap_wrong</span>(<span class="type">int</span> a, <span class="type">int</span> b) {
+    <span class="type">int</span> temp = a;
+    a = b;
+    b = temp;
+}
+
+<span class="type">void</span> <span class="function">swap_correct</span>(<span class="type">int</span> *a, <span class="type">int</span> *b) {
+    <span class="type">int</span> temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">int</span> x = <span class="number">10</span>, y = <span class="number">20</span>;
+    <span class="function">swap_wrong</span>(x, y);
+    <span class="function">printf</span>(<span class="string">"x=%d, y=%d\n"</span>, x, y);  <span class="comment">// 還是10, 20</span>
+    
+    <span class="function">swap_correct</span>(&amp;x, &amp;y);
+    <span class="function">printf</span>(<span class="string">"x=%d, y=%d\n"</span>, x, y);  <span class="comment">// 變成20, 10</span>
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「為什麼<code>swap_wrong</code>無法交換值?」</li>
+                <li>「請畫圖說明<code>swap_correct</code>中記憶體和指標的關係」</li>
+                <li>「<code>*a</code>和<code>&amp;x</code>分別代表什麼?」</li>
+                <li>「傳值(pass by value)和傳址(pass by reference)有什麼差別?」</li>
+            </ul>
+
+            <h4>6. 識別常見陷阱</h4>
+            <p>學習發現C程式中的潛在問題:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="type">char</span>* <span class="function">get_message</span>() {
+    <span class="type">char</span> msg[] = <span class="string">"Hello"</span>;
+    <span class="keyword">return</span> msg;  <span class="comment">// 危險!</span>
+}
+
+<span class="type">int</span>* <span class="function">create_array</span>() {
+    <span class="type">int</span> arr[<span class="number">10</span>];
+    <span class="keyword">return</span> arr;  <span class="comment">// 危險!</span>
+}
+
+<span class="type">void</span> <span class="function">process_string</span>(<span class="type">char</span> *str) {
+    str[<span class="number">100</span>] = <span class="string">'X'</span>;  <span class="comment">// 可能越界!</span>
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這三個函數各有什麼問題?」</li>
+                <li>「為什麼回傳區域變數的位址是危險的?」</li>
+                <li>「應該如何改進這些函數?」</li>
+                <li>「請展示正確的版本」</li>
+            </ul>
+
+            <div class="danger-box">
+                <strong>常見陷阱類型</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>除以零</li>
+                    <li>空指標解參考(NULL pointer dereference)</li>
+                    <li>記憶體洩漏(memory leak)</li>
+                    <li>陣列越界(buffer overflow)</li>
+                    <li>使用未初始化的變數</li>
+                    <li>回傳區域變數位址</li>
+                    <li>忘記釋放記憶體(free)</li>
+                    <li>釋放後使用(use after free)</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <h3>第三階段:實戰應用(持續進行)</h3>
+
+            <h4>7. 閱讀完整專案</h4>
+            <p>從簡單專案開始,建立系統性閱讀能力:</p>
+            <p><strong>專案範例:簡易待辦事項管理</strong></p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<span class="preprocessor">#include &lt;string.h&gt;</span>
+
+<span class="preprocessor">#define MAX_TASKS 100</span>
+<span class="preprocessor">#define MAX_NAME_LEN 100</span>
+
+<span class="keyword">typedef struct</span> {
+    <span class="type">char</span> name[MAX_NAME_LEN];
+    <span class="type">int</span> done;
+} Task;
+
+Task tasks[MAX_TASKS];
+<span class="type">int</span> task_count = <span class="number">0</span>;
+
+<span class="type">void</span> <span class="function">add_task</span>(<span class="keyword">const</span> <span class="type">char</span> *task_name) {
+    <span class="keyword">if</span> (task_count &gt;= MAX_TASKS) {
+        <span class="function">printf</span>(<span class="string">"任務清單已滿!\n"</span>);
+        <span class="keyword">return</span>;
+    }
+    
+    <span class="function">strncpy</span>(tasks[task_count].name, task_name, MAX_NAME_LEN - <span class="number">1</span>);
+    tasks[task_count].name[MAX_NAME_LEN - <span class="number">1</span>] = <span class="string">'\0'</span>;
+    tasks[task_count].done = <span class="number">0</span>;
+    task_count++;
+    
+    <span class="function">printf</span>(<span class="string">"已新增: %s\n"</span>, task_name);
+}
+
+<span class="type">void</span> <span class="function">complete_task</span>(<span class="type">int</span> index) {
+    <span class="keyword">if</span> (index &gt;= <span class="number">0</span> &amp;&amp; index &lt; task_count) {
+        tasks[index].done = <span class="number">1</span>;
+        <span class="function">printf</span>(<span class="string">"已完成: %s\n"</span>, tasks[index].name);
+    } <span class="keyword">else</span> {
+        <span class="function">printf</span>(<span class="string">"無效的任務編號!\n"</span>);
+    }
+}
+
+<span class="type">void</span> <span class="function">show_tasks</span>() {
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; task_count; i++) {
+        <span class="type">char</span> status = tasks[i].done ? <span class="string">'V'</span> : <span class="string">'O'</span>;
+        <span class="function">printf</span>(<span class="string">"%d. [%c] %s\n"</span>, i, status, tasks[i].name);
+    }
+}
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="function">add_task</span>(<span class="string">"學習C語言"</span>);
+    <span class="function">add_task</span>(<span class="string">"寫作業"</span>);
+    <span class="function">show_tasks</span>();
+    <span class="function">complete_task</span>(<span class="number">0</span>);
+    <span class="function">show_tasks</span>();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「這個程式的整體架構是什麼?」</li>
+                <li>「為什麼使用<code>typedef struct</code>?」</li>
+                <li>「<code>MAX_TASKS</code>和<code>MAX_NAME_LEN</code>的作用是什麼?」</li>
+                <li>「<code>strncpy</code>為什麼要設定最後一個字元為'\0'?」</li>
+                <li>「如果我要新增『刪除任務』功能,應該怎麼設計?」</li>
+                <li>「這個設計有什麼優缺點?(提示:動態記憶體配置)」</li>
+            </ul>
+
+            <h4>8. 對比不同實作方式</h4>
+            <p>理解同一功能的多種寫法:</p>
+            <p><strong>任務</strong>:找出陣列中的偶數</p>
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請提供3種不同方法找出陣列中的偶數(陣列、指標、動態記憶體)」</li>
+                <li>「請比較這些方法的優缺點」</li>
+                <li>「在什麼情況下應該選擇哪種方法?」</li>
+                <li>「記憶體使用量有什麼差異?」</li>
+            </ul>
+            <div class="highlight-box">
+                <strong>學習重點</strong>:理解效能、記憶體使用、可讀性之間的權衡。
+            </div>
+
+            <h4>9. 偵錯練習</h4>
+            <p>故意引入錯誤,練習發現問題:</p>
+            <p><strong>實戰練習</strong>:</p>
+
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-lang">C</span>
+                    <button class="copy-btn" onclick="copyCode(this)">複製</button>
+                </div>
+                <pre><code><span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+
+<span class="type">int</span>* <span class="function">create_sequence</span>(<span class="type">int</span> n) {
+    <span class="type">int</span> arr[n];
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; i++) {
+        arr[i] = i * <span class="number">2</span>;
+    }
+    <span class="keyword">return</span> arr;  <span class="comment">// 問題在這裡!</span>
+}
+
+<span class="type">int</span> <span class="function">main</span>() {
+    <span class="type">int</span> *seq = <span class="function">create_sequence</span>(<span class="number">5</span>);
+    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) {
+        <span class="function">printf</span>(<span class="string">"%d "</span>, seq[i]);  <span class="comment">// 未定義行為</span>
+    }
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</code></pre>
+            </div>
+
+            <p><strong>向AI提問的方式</strong>:</p>
+            <ul>
+                <li>「請幫我找出這段程式的問題」</li>
+                <li>「為什麼執行結果不可預測?」</li>
+                <li>「<code>arr</code>在函數結束後發生了什麼?」</li>
+                <li>「請提供正確的版本(使用malloc)」</li>
+            </ul>
+
+            <hr>
+
+            <h2>與AI協作的最佳實踐</h2>
+
+            <h3>提問技巧進階</h3>
+
+            <h4>層次性提問法</h4>
+            <ol>
+                <li><strong>概觀層</strong>:「這段程式的主要功能是什麼?」</li>
+                <li><strong>結構層</strong>:「這段程式用了哪些控制結構和資料結構?」</li>
+                <li><strong>記憶體層</strong>:「記憶體是如何配置和釋放的?」</li>
+                <li><strong>細節層</strong>:「第5行的<code>*ptr++</code>是做什麼的?」</li>
+                <li><strong>邊界層</strong>:「如果輸入是NULL或負數會怎樣?」</li>
+            </ol>
+
+            <h4>具象化請求</h4>
+            <ul>
+                <li>❌ 不好:「解釋這段程式」</li>
+                <li>✅ 好:「請畫出這段程式的記憶體配置圖」</li>
+                <li>✅ 好:「請用圖示說明指標如何指向陣列」</li>
+                <li>✅ 好:「請列出每一步的變數值和記憶體狀態」</li>
+                <li>✅ 好:「請把這段程式改寫成更安全的版本」</li>
+            </ul>
+
+            <hr>
+
+            <h3>驗證理解的方法</h3>
+
+            <h4>1. 自我測試清單</h4>
+            <p>看完程式後,問自己:</p>
+            <ul style="list-style: none; padding-left: 0;">
+                <li><input type="checkbox"> 我能用自己的話說明這段程式在做什麼嗎?</li>
+                <li><input type="checkbox"> 我能畫出記憶體配置圖嗎?</li>
+                <li><input type="checkbox"> 我能預測給定輸入的輸出結果嗎?</li>
+                <li><input type="checkbox"> 我能找出所有需要釋放記憶體的地方嗎?</li>
+                <li><input type="checkbox"> 我能發現潛在的記憶體問題或越界存取嗎?</li>
+                <li><input type="checkbox"> 我理解所有指標操作的意義嗎?</li>
+            </ul>
+
+            <h4>2. 教學法驗證</h4>
+            <p>嘗試向AI說明:</p>
+            <ul>
+                <li>「我認為這段程式的記憶體配置是這樣...[你的理解],請確認是否正確」</li>
+                <li>「我覺得這裡可能有記憶體洩漏...[你的想法],請幫我檢查」</li>
+            </ul>
+
+            <h4>3. 變形練習</h4>
+            <ul>
+                <li>「如果把這個固定大小陣列改成動態配置,程式需要怎麼調整?」</li>
+                <li>「如果要處理100萬筆資料,這個寫法會有問題嗎?」</li>
+                <li>「如何改寫成使用指標而非陣列索引?」</li>
+            </ul>
+
+            <hr>
+
+            <h2>實戰練習計畫(6週)</h2>
+
+            <div class="week-section">
+                <h3>Week 1: 基礎語法閱讀</h3>
+                <ul>
+                    <li>每天閱讀10-20行的簡單程式</li>
+                    <li>重點:變數、運算、printf/scanf、基本資料型態</li>
+                    <li>練習:用AI解釋每個語法元素、編譯過程</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 2: 控制流程與函數</h3>
+                <ul>
+                    <li>閱讀包含if-else、switch、for、while的程式</li>
+                    <li>重點:理解程式執行路徑、函數呼叫、參數傳遞</li>
+                    <li>練習:畫流程圖,區分傳值與傳址</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 3: 陣列與指標</h3>
+                <ul>
+                    <li>閱讀使用陣列和指標的程式</li>
+                    <li>重點:陣列與指標的關係、指標運算</li>
+                    <li>練習:畫記憶體圖,追蹤指標變化</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 4: 動態記憶體管理</h3>
+                <ul>
+                    <li>閱讀使用malloc/calloc/free的程式</li>
+                    <li>重點:記憶體配置與釋放、記憶體洩漏</li>
+                    <li>練習:檢查記憶體管理是否正確</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 5: 結構與檔案操作</h3>
+                <ul>
+                    <li>閱讀使用struct和檔案I/O的程式</li>
+                    <li>重點:資料組織、檔案讀寫</li>
+                    <li>練習:設計資料結構</li>
+                </ul>
+            </div>
+
+            <div class="week-section">
+                <h3>Week 6: 綜合應用與偵錯</h3>
+                <ul>
+                    <li>閱讀100-200行的完整程式</li>
+                    <li>重點:整體架構理解、錯誤偵測</li>
+                    <li>練習:找出並修正各種bug</li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <h2>C語言特有的閱讀技巧</h2>
+
+            <h3>1. 記憶體視覺化</h3>
+            <p>養成畫記憶體圖的習慣:</p>
+            
+            <table class="memory-table">
+                <thead>
+                    <tr>
+                        <th>變數名</th>
+                        <th>位址</th>
+                        <th>內容</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>x</td>
+                        <td>0x1000</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>ptr</td>
+                        <td>0x1004</td>
+                        <td>0x1000 (指向x)</td>
+                    </tr>
+                    <tr>
+                        <td>*ptr</td>
+                        <td>-</td>
+                        <td>10 (透過ptr存取x)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2. 指標解讀公式</h3>
+            <p>遇到複雜宣告時,由內而外讀:</p>
+            <ul>
+                <li><code>int *p</code>:p是指向int的指標</li>
+                <li><code>int *p[10]</code>:p是10個元素的陣列,每個元素都是指向int的指標</li>
+                <li><code>int (*p)[10]</code>:p是指向含有10個int的陣列的指標</li>
+            </ul>
+
+            <h3>3. 編譯與執行分離思考</h3>
+            <ul>
+                <li><strong>編譯期</strong>:型態檢查、語法錯誤</li>
+                <li><strong>執行期</strong>:記憶體配置、邏輯錯誤</li>
+            </ul>
+
+            <hr>
+
+            <h2>進階技能:與AI高效協作</h2>
+
+            <h3>場景1:需求澄清</h3>
+            <p>當你看懂AI寫的程式,發現不符需求時:</p>
+
+            <div class="info-box">
+                <strong>低效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「這個不對,改一下」</li>
+                    <li>AI:「請問哪裡需要修改?」(浪費一輪對話)</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>高效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「我看懂了第15-20行使用了bubble sort做排序,時間複雜度是O(n²)。但我的需求是要快速排序大量資料,請改用qsort函數並提供比較函數的實作」</li>
+                </ul>
+            </div>
+
+            <p><strong>關鍵</strong>:精準指出程式邏輯、效能特性與需求的差異。</p>
+
+            <h3>場景2:記憶體問題修正</h3>
+            <p>當你發現記憶體管理問題時:</p>
+
+            <div class="info-box">
+                <strong>低效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「程式會crash」</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>高效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「我注意到第25行用malloc配置了記憶體給<code>data</code>指標,但在第40行return之前沒有對應的free。這會造成記憶體洩漏。另外第32行的陣列存取<code>data[i]</code>沒有先檢查i是否超過配置大小,可能造成buffer overflow。請修正這兩個問題」</li>
+                </ul>
+            </div>
+
+            <p><strong>關鍵</strong>:指出具體的記憶體問題和發生位置。</p>
+
+            <h3>場景3:擴充功能</h3>
+            <p>當你理解現有架構,要新增功能時:</p>
+
+            <div class="info-box">
+                <strong>低效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「我要加一個搜尋功能」</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <strong>高效對話</strong>:
+                <ul style="margin-top: 10px;">
+                    <li>你:「目前程式使用<code>Task tasks[MAX_TASKS]</code>陣列儲存任務,並用<code>task_count</code>追蹤數量。我想新增一個<code>Task* search_task(const char *keyword)</code>函數,回傳第一個name欄位包含關鍵字的任務指標,找不到則回傳NULL。請參考現有的<code>complete_task</code>風格實作,並記得使用strstr做字串搜尋」</li>
+                </ul>
+            </div>
+
+            <p><strong>關鍵</strong>:說明資料結構、回傳型態、如何整合進現有架構。</p>
+
+            <hr>
+
+            <h2>常見問題與解答</h2>
+
+            <h3>Q1: 看不懂C程式時,第一步該做什麼?</h3>
+            <p><strong>A</strong>: 先問AI:「請用日常語言說明這段程式在做什麼,並指出關鍵的記憶體操作」,建立概念框架後再深入細節。</p>
+
+            <h3>Q2: 如何理解複雜的指標操作?</h3>
+            <p><strong>A</strong>: 請AI畫記憶體圖:「請畫出這段程式中各個變數和指標在記憶體中的配置,並標示出每次操作後的變化」。</p>
+
+            <h3>Q3: 遇到不認識的函數或語法怎麼辦?</h3>
+            <p><strong>A</strong>: 直接問AI:「<code>strncpy</code>和<code>strcpy</code>有什麼差別?為什麼要用<code>strncpy</code>?」並要求展示範例。</p>
+
+            <h3>Q4: 如何發現記憶體相關的bug?</h3>
+            <p><strong>A</strong>: 養成檢查清單:每個malloc有對應的free嗎?指標使用前檢查NULL了嗎?陣列索引有越界嗎?</p>
+
+            <h3>Q5: 應該花多少時間在閱讀程式上?</h3>
+            <p><strong>A</strong>: 初期建議每天30-60分鐘。C語言需要更仔細理解記憶體細節,寧可慢慢理解一段程式,也不要走馬看花。</p>
+
+            <hr>
+
+            <h2>總結:閱讀力就是你的超能力</h2>
+            <p>在AI輔助開發C語言的時代:</p>
+            <div class="success-box">
+                ✅ 會看程式 → 能理解AI的產出 → 能發現記憶體問題 → 能獲得安全正確的程式
+            </div>
+            <div class="danger-box">
+                ❌ 不會看程式 → 只能盲目接受 → 埋下記憶體炸彈 → 程式不穩定
+            </div>
+
+            <blockquote>
+                <strong>記住</strong>:C語言的程式閱讀不只是理解邏輯,更要理解記憶體。你需要成為程式的「安全檢查員」和「記憶體守門人」。
+            </blockquote>
+
+            <div class="success-box">
+                <strong>立即行動</strong>:找一段10-20行包含指標的C程式,用本指南的方法向AI提問,開始你的閱讀力訓練!
+            </div>
+
+            <hr>
+
+            <h2>附錄:快速參考</h2>
+
+            <h3>閱讀C程式的黃金問題清單</h3>
+            <ol>
+                <li>這段程式的輸入和輸出是什麼?</li>
+                <li>有使用到動態記憶體配置嗎?每個malloc都有對應的free嗎?</li>
+                <li>指標操作前有檢查NULL嗎?</li>
+                <li>陣列存取有可能越界嗎?</li>
+                <li>函數參數是傳值還是傳址?為什麼?</li>
+                <li>有沒有回傳區域變數位址的情況?</li>
+                <li>字串操作有確保null-terminated嗎?</li>
+                <li>這樣寫的時間和空間複雜度如何?</li>
+            </ol>
+
+            <h3>向AI提問的句型模板(C語言版)</h3>
+            <ul>
+                <li>「請解釋第X行的<code>*ptr++</code>運算順序」</li>
+                <li>「請畫出這段程式的記憶體配置圖」</li>
+                <li>「這個指標操作有什麼風險?」</li>
+                <li>「請檢查是否有記憶體洩漏」</li>
+                <li>「為什麼要用<code>sizeof(int)</code>而不是直接寫4?」</li>
+                <li>「請說明傳值和傳址在這裡的差異」</li>
+                <li>「這段程式如果輸入是NULL會怎樣?」</li>
+                <li>「請改寫成使用動態記憶體配置的版本」</li>
+                <li>「如果要在多執行緒環境使用,需要注意什麼?」</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const code = codeBlock.querySelector('code').innerText;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.innerText;
+                button.innerText = '已複製!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.innerText = '複製失敗';
+                setTimeout(() => {
+                    button.innerText = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 1：基礎語法閱讀</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 1：基礎語法閱讀</h1>
+  <p>重點：變數、運算、print、基本資料型態<br>練習：用 AI 解釋每個語法元素</p>
+
+  <!-- Day 1 to Day 7 -->
+  <!-- 每天 4 個程式碼區塊 -->
+  <!-- 以下為範例，Day 1 -->
+  <h2>Day 1：變數與運算</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>num1 = 10
+num2 = 5
+result = num1 + num2
+print("加總結果:", result)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>price = 100
+discount = 0.2
+final_price = price * (1 - discount)
+print("折扣後價格:", final_price)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>length = 5
+width = 3
+area = length * width
+print("面積是:", area)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>a = 7
+b = 2
+print("除法結果:", a / b)</code></pre>
+  </div>
+
+  <!-- Day 2 -->
+  <h2>Day 2：字串操作</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>name = "會安"
+greeting = "你好，" + name
+print(greeting)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>city = "台北"
+weather = "晴天"
+print(f"{city} 今天是 {weather}")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>text = "Python"
+print("字串長度:", len(text))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>word = "Hello"
+print(word.upper())</code></pre>
+  </div>
+
+  <!-- Day 3 -->
+  <h2>Day 3：資料型態轉換</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>age = "25"
+age_num = int(age)
+print("你明年將會是", age_num + 1, "歲")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>height = 170
+height_str = str(height)
+print("身高：" + height_str + " 公分")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>flag = True
+print("布林值轉整數:", int(flag))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>value = 3.14
+print("轉成字串:", str(value))</code></pre>
+  </div>
+
+  <!-- Day 4 -->
+  <h2>Day 4：print 格式化</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>name = "會安"
+score = 95
+print(f"{name} 的分數是 {score} 分")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>item = "蘋果"
+price = 30
+print("{} 的價格是 {} 元".format(item, price))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>pi = 3.14159
+print("圓周率約為 %.2f" % pi)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>name = "會安"
+age = 30
+print(f"{name} 明年將是 {age + 1} 歲")</code></pre>
+  </div>
+
+  <!-- Day 5 -->
+  <h2>Day 5：基本運算練習</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>x = 8
+y = 3
+print("整除:", x // y)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>num = 7
+print("平方:", num ** 2)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>a = 10
+b = 3
+print("餘數:", a % b)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>total = 100
+people = 4
+print("平均分配:", total / people)</code></pre>
+  </div>
+
+  <!-- Day 6 -->
+  <h2>Day 6：布林邏輯</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>a = 5
+b = 10
+print("a 小於 b:", a < b)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>is_raining = False
+print("是否需要帶傘:", not is_raining)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>x = 3
+y = 3
+print("x 等於 y:", x == y)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = 80
+passed = score >= 60
+print("是否及格:", passed)</code></pre>
+  </div>
+
+  <!-- Day 7 -->
+  <h2>Day 7：綜合練習</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>name = "會安"
+age = 30
+print(f"{name} 明年將是 {age + 1} 歲")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>length = 10
+width = 4
+area = length * width
+print("長方形面積:", area)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = 92
+print("分數等級:", "優" if score >= 90 else "普通")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>price = 250
+discount = 0.15
+final = price * (1 - discount)
+print("折扣後價格:", round(final, 2))</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

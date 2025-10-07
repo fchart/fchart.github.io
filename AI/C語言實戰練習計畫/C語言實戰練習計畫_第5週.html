@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 5：結構與檔案操作</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 5：結構與檔案操作</h1>
+  <p>重點：資料組織、檔案讀寫<br>練習:設計資料結構</p>
+
+  <!-- Day 29 -->
+<h2>Day 1：結構定義與使用</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Student {
+  char name[20];
+  int score;
+};
+
+int main() {
+  struct Student s = {"會安", 95};
+  printf("姓名：%s，分數：%d\n", s.name, s.score);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Point {
+  int x;
+  int y;
+};
+
+int main() {
+  struct Point p;
+  p.x = 3;
+  p.y = 4;
+  printf("座標：( %d, %d )\n", p.x, p.y);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Book {
+  char title[30];
+  int pages;
+};
+
+int main() {
+  struct Book b = {"C語言入門", 256};
+  printf("書名：%s，頁數：%d\n", b.title, b.pages);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Product {
+  char name[20];
+  float price;
+};
+
+int main() {
+  struct Product p = {"滑鼠", 499.0};
+  printf("商品：%s，價格：%.1f 元\n", p.name, p.price);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 30 -->
+<h2>Day 2：結構陣列與迴圈</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Student {
+  char name[20];
+  int score;
+};
+
+int main() {
+  struct Student list[2] = {
+    {"小明", 80},
+    {"小華", 90}
+  };
+
+  for (int i = 0; i < 2; i++) {
+    printf("%s 的分數是 %d\n", list[i].name, list[i].score);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Point {
+  int x, y;
+};
+
+int main() {
+  struct Point points[3] = {{1,2}, {3,4}, {5,6}};
+  for (int i = 0; i < 3; i++) {
+    printf("點 %d：(%d,%d)\n", i, points[i].x, points[i].y);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Product {
+  char name[20];
+  float price;
+};
+
+int main() {
+  struct Product items[2] = {
+    {"鍵盤", 799.0},
+    {"耳機", 1299.0}
+  };
+
+  for (int i = 0; i < 2; i++) {
+    printf("%s：%.1f 元\n", items[i].name, items[i].price);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Book {
+  char title[30];
+  int pages;
+};
+
+int main() {
+  struct Book books[2];
+  for (int i = 0; i < 2; i++) {
+    printf("請輸入書名與頁數：");
+    scanf("%s %d", books[i].title, &books[i].pages);
+  }
+
+  for (int i = 0; i < 2; i++) {
+    printf("書名：%s，頁數：%d\n", books[i].title, books[i].pages);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 31 -->
+<h2>Day 3：檔案寫入（fprintf）</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("output.txt", "w");
+  fprintf(fp, "Hello, C 語言！\n");
+  fprintf(fp, "這是檔案寫入範例。\n");
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("scores.txt", "w");
+  int score = 95;
+  fprintf(fp, "分數：%d\n", score);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("data.txt", "w");
+  for (int i = 1; i <= 3; i++) {
+    fprintf(fp, "第 %d 筆資料\n", i);
+  }
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("info.txt", "w");
+  char name[] = "會安";
+  int age = 30;
+  fprintf(fp, "姓名：%s\n年齡：%d\n", name, age);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 32 -->
+<h2>Day 4：檔案讀取（fscanf）</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("output.txt", "r");
+  char line[50];
+  fgets(line, sizeof(line), fp);
+  printf("讀到：%s", line);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("scores.txt", "r");
+  int score;
+  fscanf(fp, "分數：%d", &score);
+  printf("讀取分數：%d\n", score);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("info.txt", "r");
+  char name[20];
+  int age;
+  fscanf(fp, "姓名：%s\n年齡：%d", name, &age);
+  printf("姓名：%s，年齡：%d\n", name, age);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("data.txt", "r");
+  char line[30];
+  while (fgets(line, sizeof(line), fp)) {
+    printf("讀取：%s", line);
+  }
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 33 -->
+<h2>Day 5：結構與檔案整合</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Student {
+  char name[20];
+  int score;
+};
+
+int main() {
+  struct Student s = {"會安", 100};
+  FILE *fp = fopen("student.txt", "w");
+  fprintf(fp, "%s %d\n", s.name, s.score);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Student {
+  char name[20];
+  int score;
+};
+
+int main() {
+  struct Student s;
+  FILE *fp = fopen("student.txt", "r");
+  fscanf(fp, "%s %d", s.name, &s.score);
+  printf("姓名：%s，分數：%d\n", s.name, s.score);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Product {
+  char name[20];
+  float price;
+};
+
+int main() {
+  struct Product p = {"滑鼠", 499.0};
+  FILE *fp = fopen("product.txt", "w");
+  fprintf(fp, "%s %.2f\n", p.name, p.price);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Product {
+  char name[20];
+  float price;
+};
+
+int main() {
+  struct Product p;
+  FILE *fp = fopen("product.txt", "r");
+  fscanf(fp, "%s %f", p.name, &p.price);
+  printf("商品：%s，價格：%.2f\n", p.name, p.price);
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 34 -->
+<h2>Day 6：檔案開啟檢查與錯誤處理</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("missing.txt", "r");
+  if (fp == NULL) {
+    printf("檔案開啟失敗！\n");
+    return 1;
+  }
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  FILE *fp = fopen("readonly.txt", "w");
+  if (!fp) {
+    printf("無法寫入檔案。\n");
+    return 1;
+  }
+  fprintf(fp, "測試寫入\n");
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+void writeLog(const char *msg) {
+  FILE *fp = fopen("log.txt", "a");
+  if (fp == NULL) {
+    printf("無法開啟 log.txt\n");
+    return;
+  }
+  fprintf(fp, "%s\n", msg);
+  fclose(fp);
+}
+
+int main() {
+  writeLog("程式啟動成功");
+  return 0;
+}</code></pre>
+</div>
+
+  <!-- Day 35 -->
+<h2>Day 7：綜合資料結構設計與檔案儲存</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Student {
+  char name[20];
+  int math;
+  int english;
+};
+
+int main() {
+  struct Student s = {"會安", 90, 85};
+  FILE *fp = fopen("report.txt", "w");
+  if (fp != NULL) {
+    fprintf(fp, "%s %d %d\n", s.name, s.math, s.english);
+    fclose(fp);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Product {
+  char name[20];
+  float price;
+  int stock;
+};
+
+int main() {
+  struct Product p = {"滑鼠", 499.0, 20};
+  FILE *fp = fopen("inventory.txt", "w");
+  if (fp) {
+    fprintf(fp, "%s %.2f %d\n", p.name, p.price, p.stock);
+    fclose(fp);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Book {
+  char title[30];
+  int pages;
+};
+
+int main() {
+  struct Book books[2] = {
+    {"C語言入門", 256},
+    {"資料結構", 320}
+  };
+
+  FILE *fp = fopen("books.txt", "w");
+  for (int i = 0; i < 2; i++) {
+    fprintf(fp, "%s %d\n", books[i].title, books[i].pages);
+  }
+  fclose(fp);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+struct Record {
+  int id;
+  char status[10];
+};
+
+int main() {
+  struct Record r = {101, "完成"};
+  FILE *fp = fopen("status.txt", "w");
+  if (fp != NULL) {
+    fprintf(fp, "ID:%d 狀態:%s\n", r.id, r.status);
+    fclose(fp);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html> 

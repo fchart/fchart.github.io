@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 2：控制流程</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 2：控制流程</h1>
+  <p>重點：if-else、for、while<br>練習：畫流程圖，預測執行結果</p>
+
+  <!-- Day 8 -->
+  <h2>Day 8：if 判斷</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = 75
+if score >= 60:
+    print("及格")
+else:
+    print("不及格")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>temperature = 30
+if temperature > 35:
+    print("太熱了")
+elif temperature < 15:
+    print("太冷了")
+else:
+    print("天氣剛好")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>age = 18
+if age >= 18:
+    print("成年")
+else:
+    print("未成年")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>password = "abc123"
+if password == "abc123":
+    print("登入成功")
+else:
+    print("密碼錯誤")</code></pre>
+  </div>
+
+  <!-- Day 9 -->
+  <h2>Day 9：for 迴圈</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(3):
+    print("第", i + 1, "次問候")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for char in "Python":
+    print(char)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>fruits = ["蘋果", "香蕉", "芒果"]
+for fruit in fruits:
+    print("我喜歡", fruit)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for num in range(1, 6):
+    print(num ** 2)</code></pre>
+  </div>
+
+  <!-- Day 10 -->
+  <h2>Day 10：while 迴圈</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>count = 0
+while count < 3:
+    print("倒數中:", 3 - count)
+    count += 1</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>i = 1
+while i <= 5:
+    print(i)
+    i += 1</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>password = ""
+while password != "1234":
+    password = input("請輸入密碼: ")
+print("密碼正確")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>n = 10
+while n > 0:
+    print(n)
+    n -= 2</code></pre>
+  </div>
+
+  <!-- Day 11 -->
+  <h2>Day 11：巢狀結構</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(2):
+    for j in range(3):
+        print(f"i={i}, j={j}")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = 85
+if score >= 60:
+    print("及格")
+    if score >= 90:
+        print("成績優異")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for x in range(1, 4):
+    for y in range(1, 4):
+        print(x * y, end=" ")
+    print()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(1, 6):
+    if i % 2 == 0:
+        print(i, "是偶數")
+    else:
+        print(i, "是奇數")</code></pre>
+  </div>
+
+  <!-- Day 12 -->
+  <h2>Day 12：break 與 continue</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(5):
+    if i == 3:
+        break
+    print(i)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(5):
+    if i == 2:
+        continue
+    print(i)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>i = 0
+while i < 5:
+    if i == 4:
+        break
+    print(i)
+    i += 1</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for char in "Python":
+    if char == "h":
+        continue
+    print(char)</code></pre>
+  </div>
+
+  <!-- Day 13 -->
+  <h2>Day 13：條件邏輯練習</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>x = 10
+y = 20
+if x < y and y < 30:
+    print("條件成立")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>flag = True
+if not flag:
+    print("旗標為 False")
+else:
+    print("旗標為 True")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = 88
+if score >= 90 or score == 88:
+    print("成績不錯")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>temperature = 22
+comfortable = 18 <= temperature <= 28
+print("舒適天氣:", comfortable)</code></pre>
+  </div>
+
+  <!-- Day 14 -->
+  <h2>Day 14：綜合練習</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for i in range(1, 6):
+    if i % 2 == 0:
+        print(f"{i} 是偶數")
+    else:
+        print(f"{i} 是奇數")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>score = int(input("請輸入分數: "))
+if score >= 90:
+    print("優等")
+elif score >= 75:
+    print("甲等")
+elif score >= 60:
+    print("乙等")
+else:
+    print("丙等")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>i = 1
+while i <= 5:
+    print("第", i, "次執行")
+    i += 1</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>for x in range(1, 4):
+    for y in range(1, 4):
+        print(f"{x} × {y} = {x * y}")</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>    

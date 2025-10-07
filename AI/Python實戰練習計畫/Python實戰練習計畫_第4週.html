@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 4：資料結構</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 4：資料結構</h1>
+  <p>重點：list、dict、set 的使用與資料組織方式<br>練習：畫出資料結構示意圖</p>
+
+  <!-- Day 22 -->
+  <h2>Day 22：建立與操作 list</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>fruits = ["蘋果", "香蕉", "芒果"]
+print(fruits)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>numbers = [1, 2, 3, 4]
+print("第一個數字:", numbers[0])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>colors = ["紅", "綠", "藍"]
+colors.append("黃")
+print(colors)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>scores = [80, 90, 100]
+print("平均分:", sum(scores) / len(scores))</code></pre>
+  </div>
+
+  <!-- Day 23 -->
+  <h2>Day 23：list 的迴圈與切片</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>animals = ["貓", "狗", "鳥"]
+for animal in animals:
+    print("我喜歡", animal)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>nums = [10, 20, 30, 40, 50]
+print(nums[1:4])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>letters = ["a", "b", "c", "d"]
+for i in range(len(letters)):
+    print(i, letters[i])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>names = ["會安", "小明", "小美"]
+print(names[-1])</code></pre>
+  </div>
+
+  <!-- Day 24 -->
+  <h2>Day 24：建立與操作 dict</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>person = {"姓名": "會安", "年齡": 30}
+print(person["姓名"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>scores = {"國文": 90, "英文": 85}
+scores["數學"] = 95
+print(scores)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>info = {"name": "會安", "city": "台北"}
+for key in info:
+    print(key, ":", info[key])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>student = {"姓名": "小美", "分數": 88}
+print("是否有分數欄位:", "分數" in student)</code></pre>
+  </div>
+
+  <!-- Day 25 -->
+  <h2>Day 25：dict 的進階操作</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>grades = {"甲": 90, "乙": 80, "丙": 70}
+print(grades.get("丁", "查無成績"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>data = {"a": 1, "b": 2}
+data.update({"c": 3})
+print(data)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>info = {"name": "會安", "age": 30}
+info.pop("age")
+print(info)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>scores = {"國文": 90, "英文": 85}
+for subject, score in scores.items():
+    print(subject, "成績:", score)</code></pre>
+  </div>
+
+  <!-- Day 26 -->
+  <h2>Day 26：建立與操作 set</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>colors = {"紅", "綠", "藍"}
+print("紅" in colors)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>nums = {1, 2, 3}
+nums.add(4)
+print(nums)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>fruits = {"蘋果", "香蕉", "蘋果"}
+print(fruits)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+print(set1 & set2)</code></pre>
+  </div>
+
+  <!-- Day 27 -->
+  <h2>Day 27：資料結構綜合練習</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>students = [
+    {"name": "會安", "score": 90},
+    {"name": "小明", "score": 80}
+]
+for s in students:
+    print(s["name"], ":", s["score"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>inventory = {"蘋果": 5, "香蕉": 3}
+inventory["芒果"] = 7
+for fruit, qty in inventory.items():
+    print(fruit, "數量:", qty)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>data = {
+    "姓名": "會安",
+    "興趣": ["閱讀", "程式", "旅行"]
+}
+print(data["興趣"][1])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>scores = [
+    {"科目": "國文", "分數": 90},
+    {"科目": "英文", "分數": 85}
+]
+total = sum([s["分數"] for s in scores])
+print("總分:", total)</code></pre>
+  </div>
+
+  <!-- Day 28 -->
+  <h2>Day 28：資料結構綜合應用</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>students = {
+    "會安": {"國文": 90, "英文": 85},
+    "小明": {"國文": 80, "英文": 88}
+}
+for name, subjects in students.items():
+    print(name, "英文成績:", subjects["英文"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>tags = {"Python", "AI", "教育"}
+tags.add("學習")
+tags.remove("AI")
+print(tags)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>shopping_list = ["蘋果", "香蕉", "蘋果", "芒果"]
+unique_items = set(shopping_list)
+print("不重複項目:", unique_items)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>data = {
+    "姓名": "會安",
+    "技能": {"Python", "HTML", "JS"}
+}
+print("是否會 JS:", "JS" in data["技能"])</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>

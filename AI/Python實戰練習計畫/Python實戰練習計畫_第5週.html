@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 5：綜合應用</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 5：綜合應用</h1>
+  <p>重點：整體架構理解<br>練習：撰寫功能說明文件</p>
+
+  <!-- Day 29 -->
+  <h2>Day 29：會員系統 - 註冊功能</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>users = {}
+
+def register(username, password):
+    if username in users:
+        return "使用者已存在"
+    users[username] = password
+    return "註冊成功"
+
+print(register("會安", "1234"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_users():
+    for user in users:
+        print("帳號:", user)
+
+show_users()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def is_registered(username):
+    return username in users
+
+print(is_registered("會安"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_user_count():
+    return len(users)
+
+print("目前使用者數:", get_user_count())</code></pre>
+  </div>
+
+  <!-- Day 30 -->
+  <h2>Day 30：會員系統 - 登入功能</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def login(username, password):
+    if username in users and users[username] == password:
+        return "登入成功"
+    return "帳號或密碼錯誤"
+
+print(login("會安", "1234"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def change_password(username, new_password):
+    if username in users:
+        users[username] = new_password
+        return "密碼已更新"
+    return "使用者不存在"
+
+print(change_password("會安", "5678"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def delete_user(username):
+    if username in users:
+        del users[username]
+        return "帳號已刪除"
+    return "使用者不存在"
+
+print(delete_user("會安"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>print(register("小明", "abcd"))
+print(login("小明", "abcd"))</code></pre>
+  </div>
+
+  <!-- Day 31 -->
+  <h2>Day 31：商品系統 - 商品管理</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>products = {}
+
+def add_product(name, price):
+    products[name] = price
+
+add_product("蘋果", 30)
+add_product("香蕉", 20)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_products():
+    for name, price in products.items():
+        print(name, "價格:", price)
+
+show_products()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def update_price(name, new_price):
+    if name in products:
+        products[name] = new_price
+
+update_price("蘋果", 35)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def delete_product(name):
+    if name in products:
+        del products[name]
+
+delete_product("香蕉")</code></pre>
+  </div>
+
+  <!-- Day 32 -->
+  <h2>Day 32：購物車系統 - 加入與計算</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>cart = []
+
+def add_to_cart(item):
+    cart.append(item)
+
+add_to_cart("蘋果")
+add_to_cart("芒果")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_cart():
+    for item in cart:
+        print("購物車項目:", item)
+
+show_cart()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_total():
+    total = 0
+    for item in cart:
+        if item in products:
+            total += products[item]
+    return total
+
+print("總金額:", get_total())</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def clear_cart():
+    cart.clear()
+
+clear_cart()</code></pre>
+  </div>
+
+  <!-- Day 33 -->
+  <h2>Day 33：訂單系統 - 建立與查詢</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>orders = []
+
+def create_order(user, items):
+    orders.append({"user": user, "items": items})
+
+create_order("小明", ["蘋果", "芒果"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_orders():
+    for order in orders:
+        print(order["user"], "訂購了", order["items"])
+
+show_orders()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_order_count():
+    return len(orders)
+
+print("訂單數:", get_order_count())</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def find_orders_by_user(user):
+    return [o for o in orders if o["user"] == user]
+
+print(find_orders_by_user("小明"))</code></pre>
+  </div>
+
+  <!-- Day 34 -->
+  <h2>Day 34：報表系統 - 統計分析</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_sales_summary():
+    summary = {}
+    for order in orders:
+        for item in order["items"]:
+            summary[item] = summary.get(item, 0) + 1
+    return summary
+
+print(get_sales_summary())</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_top_item():
+    summary = get_sales_summary()
+    return max(summary, key=summary.get)
+
+print("最熱門商品:", get_top_item())</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_user_order_count(user):
+    return len(find_orders_by_user(user))
+
+print("小明的訂單數:", get_user_order_count("小明"))</code></pre>
+  </div>
+
+  <!-- Day 35 -->
+  <h2>Day 35：功能說明文件撰寫</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def register(username, password):
+    """
+    註冊新使用者。
+    如果使用者已存在，回傳錯誤訊息。
+    """
+    if username in users:
+        return "使用者已存在"
+    users[username] = password
+    return "註冊成功"</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def login(username, password):
+    """
+    登入功能。
+    檢查帳號與密碼是否正確。
+    """
+    if username in users and users[username] == password:
+        return "登入成功"
+    return "帳號或密碼錯誤"</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def add_product(name, price):
+    """
+    新增商品至商品清單。
+    name: 商品名稱
+    price: 商品價格
+    """
+    products[name] = price</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def create_order(user, items):
+    """
+    建立新訂單。
+    user: 使用者名稱
+    items: 購買商品列表
+    """
+    orders.append({"user": user, "items": items})</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html> 

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 3：函數與模組化</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 3：函數與模組化</h1>
+  <p>重點：參數傳遞、回傳值、作用域<br>練習：追蹤函數呼叫鏈</p>
+
+  <!-- Day 15 -->
+  <h2>Day 15：定義與呼叫函數</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def greet():
+    print("早安！")
+
+greet()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def say_hello(name):
+    print("你好，" + name)
+
+say_hello("會安")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def add(a, b):
+    print("總和是:", a + b)
+
+add(3, 5)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def square(x):
+    print("平方是:", x ** 2)
+
+square(4)</code></pre>
+  </div>
+
+  <!-- Day 16 -->
+  <h2>Day 16：回傳值與運算</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_area(length, width):
+    return length * width
+
+print(get_area(5, 3))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def double(n):
+    return n * 2
+
+result = double(6)
+print("結果:", result)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_discount(price, rate):
+    return price * (1 - rate)
+
+print(get_discount(100, 0.2))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def is_even(n):
+    return n % 2 == 0
+
+print(is_even(4))</code></pre>
+  </div>
+
+  <!-- Day 17 -->
+  <h2>Day 17：函數中的條件判斷</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def check_score(score):
+    if score >= 60:
+        return "及格"
+    else:
+        return "不及格"
+
+print(check_score(75))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def grade(score):
+    if score >= 90:
+        return "優"
+    elif score >= 75:
+        return "甲"
+    else:
+        return "乙"
+
+print(grade(88))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def is_adult(age):
+    return age >= 18
+
+print(is_adult(20))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def classify_temp(temp):
+    if temp > 30:
+        return "炎熱"
+    elif temp < 15:
+        return "寒冷"
+    else:
+        return "舒適"
+
+print(classify_temp(22))</code></pre>
+  </div>
+
+  <!-- Day 18 -->
+  <h2>Day 18：函數中的迴圈</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def repeat_message(msg, times):
+    for i in range(times):
+        print(msg)
+
+repeat_message("早安", 3)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def print_squares(n):
+    for i in range(1, n+1):
+        print(i ** 2)
+
+print_squares(5)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def list_items(items):
+    for item in items:
+        print("項目:", item)
+
+list_items(["蘋果", "香蕉", "芒果"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def countdown(n):
+    while n > 0:
+        print(n)
+        n -= 1
+
+countdown(3)</code></pre>
+  </div>
+
+  <!-- Day 19 -->
+  <h2>Day 19：函數作用域</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_name():
+    name = "會安"
+    print(name)
+
+show_name()
+# print(name)  # 這行會錯誤，因為 name 是區域變數</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>total = 0
+
+def add_to_total(x):
+    global total
+    total += x
+
+add_to_total(5)
+print("總和:", total)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def outer():
+    x = "外層"
+    def inner():
+        print("內層:", x)
+    inner()
+
+outer()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def multiply(a, b):
+    result = a * b
+    return result
+
+print(multiply(3, 4))</code></pre>
+  </div>
+
+  <!-- Day 20 -->
+  <h2>Day 20：函數鏈呼叫</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def add(a, b):
+    return a + b
+
+def square(x):
+    return x ** 2
+
+print(square(add(2, 3)))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def greet(name):
+    return f"你好，{name}"
+
+def welcome(name):
+    message = greet(name)
+    print(message)
+
+welcome("會安")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_tax(price):
+    return price * 0.05
+
+def get_total(price):
+    return price + get_tax(price)
+
+print(get_total(100))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def square(x):
+    return x * x
+
+def cube(x):
+    return x * square(x)
+
+print(cube(3))</code></pre>
+  </div>
+
+  <!-- Day 21 -->
+  <h2>Day 21：模組與導入</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>import math
+print("平方根:", math.sqrt(16))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>import random
+print("隨機數:", random.randint(1, 10))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>from datetime import datetime
+now = datetime.now()
+print("現在時間:", now)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>import statistics
+scores = [80, 90, 100]
+print("平均分:", statistics.mean(scores))</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>    

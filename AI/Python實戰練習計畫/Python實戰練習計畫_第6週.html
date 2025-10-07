@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 6：綜合應用（進階）</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 6：綜合應用（進階）</h1>
+  <p>重點：模組化設計、功能拆解、資料流追蹤<br>練習：分析資料流與模組間互動</p>
+
+  <!-- Day 36 -->
+  <h2>Day 36：模組初始化與資料結構設計</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>users = {}
+products = {}
+cart = []
+orders = []</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def init_system():
+    global users, products, cart, orders
+    users = {}
+    products = {}
+    cart = []
+    orders = []
+
+init_system()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def reset_cart():
+    global cart
+    cart = []
+
+reset_cart()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def reset_orders():
+    global orders
+    orders = []
+
+reset_orders()</code></pre>
+  </div>
+
+  <!-- Day 37 -->
+  <h2>Day 37：模組間資料流追蹤</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def register(username, password):
+    users[username] = password
+
+def add_product(name, price):
+    products[name] = price
+
+def add_to_cart(item):
+    cart.append(item)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def create_order(user):
+    orders.append({"user": user, "items": list(cart)})
+    reset_cart()
+
+register("會安", "1234")
+add_product("蘋果", 30)
+add_to_cart("蘋果")
+create_order("會安")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_order_flow():
+    print("使用者:", orders[-1]["user"])
+    print("商品:", orders[-1]["items"])
+
+show_order_flow()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_order_total(order):
+    return sum([products[item] for item in order["items"]])
+
+print("訂單金額:", get_order_total(orders[-1]))</code></pre>
+  </div>
+
+  <!-- Day 38 -->
+  <h2>Day 38：模組封裝與重構</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def user_module():
+    def register(username, password):
+        users[username] = password
+    def login(username, password):
+        return users.get(username) == password
+    return register, login
+
+register, login = user_module()
+register("小明", "abcd")
+print(login("小明", "abcd"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def product_module():
+    def add(name, price):
+        products[name] = price
+    def list_all():
+        return products
+    return add, list_all
+
+add_product, list_products = product_module()
+add_product("芒果", 40)
+print(list_products())</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def cart_module():
+    def add(item):
+        cart.append(item)
+    def clear():
+        cart.clear()
+    return add, clear
+
+add_to_cart, clear_cart = cart_module()
+add_to_cart("芒果")
+print(cart)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def order_module():
+    def create(user):
+        orders.append({"user": user, "items": list(cart)})
+        cart.clear()
+    return create
+
+create_order = order_module()
+create_order("小明")
+print(orders)</code></pre>
+  </div>
+
+  <!-- Day 39 -->
+  <h2>Day 39：模組測試與驗證</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def test_register():
+    register("測試者", "test")
+    assert users["測試者"] == "test"
+    print("註冊測試通過")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def test_add_product():
+    add_product("測試品", 99)
+    assert products["測試品"] == 99
+    print("商品新增測試通過")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def test_cart_flow():
+    add_to_cart("測試品")
+    assert "測試品" in cart
+    print("購物車流程測試通過")</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def test_order_creation():
+    create_order("測試者")
+    assert orders[-1]["user"] == "測試者"
+    print("訂單建立測試通過")</code></pre>
+  </div>
+
+  <!-- Day 40 -->
+  <h2>Day 40：模組整合與主程式入口</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def main():
+    register("會安", "1234")
+    add_product("蘋果", 30)
+    add_to_cart("蘋果")
+    create_order("會安")
+    show_orders()
+
+main()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def show_orders():
+    for order in orders:
+        print(order["user"], "訂購了", order["items"])</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>if __name__ == "__main__":
+    main()</code></pre>
+  </div>
+
+  <!-- Day 41 -->
+  <h2>Day 41：錯誤處理與例外機制</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def safe_divide(a, b):
+    try:
+        return a / b
+    except ZeroDivisionError:
+        return "除以零錯誤"
+
+print(safe_divide(10, 0))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def get_price(product):
+    try:
+        return products[product]
+    except KeyError:
+        return "查無商品"
+
+print(get_price("鳳梨"))</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def read_file(filename):
+    try:
+        with open(filename, "r") as f:
+            return f.read()
+    except FileNotFoundError:
+        return "檔案不存在"</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code>def convert_to_int(value):
+    try:
+        return int(value)
+    except ValueError:
+        return "轉換失敗"
+
+print(convert_to_int("abc"))</code></pre>
+  </div>
+
+  <!-- Day 42 -->
+  <h2>Day 42：模組化專案結構設計</h2>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code># user_module.py
+users = {}
+
+def register(username, password):
+    users[username] = password
+
+def login(username, password):
+    return users.get(username) == password</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code># product_module.py
+products = {}
+
+def add_product(name, price):
+    products[name] = price
+
+def get_price(name):
+    return products.get(name, 0)</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code># cart_module.py
+cart = []
+
+def add_to_cart(item):
+    cart.append(item)
+
+def clear_cart():
+    cart.clear()</code></pre>
+  </div>
+  <div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+    <pre><code># main.py
+from user_module import register, login
+from product_module import add_product
+from cart_module import add_to_cart
+
+register("會安", "1234")
+add_product("蘋果", 30)
+add_to_cart("蘋果")</code></pre>
+  </div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>     

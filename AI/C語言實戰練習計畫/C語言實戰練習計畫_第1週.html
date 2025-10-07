@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 1：C 語言基礎語法教學</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📘 Week 1：C 語言基礎語法教學</h1>
+<p>重點：變數、運算、printf、資料型態、邏輯判斷<br>練習：每日 4 段程式碼，可獨立編譯</p>
+
+<h2>Day 1：變數、運算與輸出</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int a = 12;
+  int b = 8;
+  int sum = a + b;
+  int diff = a - b;
+  int prod = a * b;
+  int quot = a / b;
+
+  printf("加法: %d\n", sum);
+  printf("減法: %d\n", diff);
+  printf("乘法: %d\n", prod);
+  printf("除法: %d\n", quot);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 15;
+  int y = 4;
+  int remainder = x % y;
+
+  printf("15 除以 4 的餘數是 %d\n", remainder);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int score = 90;
+  int bonus = 5;
+  int total = score + bonus;
+
+  printf("原始分數: %d\n", score);
+  printf("加分後: %d\n", total);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int length = 7;
+  int width = 3;
+  int area = length * width;
+
+  printf("長方形面積為 %d\n", area);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 2：資料型態與輸入</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int age;
+  printf("請輸入你的年齡：");
+  scanf("%d", &age);
+  printf("你輸入的年齡是 %d 歲。\n", age);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float height;
+  printf("請輸入身高（公分）：");
+  scanf("%f", &height);
+  printf("你的身高是 %.1f 公分。\n", height);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char grade;
+  printf("請輸入成績等級（A~F）：");
+  scanf(" %c", &grade);
+  printf("你輸入的等級是 %c。\n", grade);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x;
+  float y;
+  printf("請輸入整數與小數：");
+  scanf("%d %f", &x, &y);
+  printf("整數: %d，小數: %.2f\n", x, y);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 3：混合運算與格式化輸出</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int apples = 3;
+  float price = 12.5;
+  float total = apples * price;
+
+  printf("蘋果數量: %d\n", apples);
+  printf("單價: %.2f\n", price);
+  printf("總價: %.2f 元\n", total);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int a = 5;
+  int b = 2;
+  float result = (float)a / b;
+
+  printf("5 除以 2 的結果是 %.2f\n", result);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 10;
+  x += 5;
+  x *= 2;
+
+  printf("最終結果是 %d\n", x);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float pi = 3.14159;
+  int r = 3;
+  float area = pi * r * r;
+
+  printf("半徑為 %d 的圓面積是 %.2f\n", r, area);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 4：綜合語法閱讀</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int apples, bananas;
+  printf("請輸入蘋果數量：");
+  scanf("%d", &apples);
+  printf("請輸入香蕉數量：");
+  scanf("%d", &bananas);
+
+  int total = apples + bananas;
+  printf("水果總數為：%d\n", total);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float price = 12.5;
+  int quantity = 4;
+  float total = price * quantity;
+
+  printf("單價：%.2f\n", price);
+  printf("數量：%d\n", quantity);
+  printf("總價：%.2f\n", total);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 7;
+  float y = 3.0;
+  float result = x / y;
+
+  printf("整數除以浮點數的結果：%.2f\n", result);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char name[20];
+  int age;
+
+  printf("請輸入姓名：");
+  scanf("%s", name);
+  printf("請輸入年齡：");
+  scanf("%d", &age);
+
+  printf("你好 %s，你今年 %d 歲。\n", name, age);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 5：資料輸入與運算組合</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int base, height;
+  printf("請輸入底與高：");
+  scanf("%d %d", &base, &height);
+
+  float area = 0.5 * base * height;
+  printf("三角形面積為 %.2f\n", area);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int hours;
+  float rate;
+  printf("請輸入工時與時薪：");
+  scanf("%d %f", &hours, &rate);
+
+  float salary = hours * rate;
+  printf("本週薪資為 %.2f 元\n", salary);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x;
+  printf("請輸入一個整數：");
+  scanf("%d", &x);
+
+  int square = x * x;
+  printf("%d 的平方是 %d\n", x, square);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float celsius;
+  printf("請輸入攝氏溫度：");
+  scanf("%f", &celsius);
+
+  float fahrenheit = celsius * 9 / 5 + 32;
+  printf("華氏溫度為 %.1f°F\n", fahrenheit);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 6：資料型態混合與運算優先</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int a = 5;
+  float b = 2.0;
+  float result = a + b * 3;
+
+  printf("運算結果為 %.2f\n", result);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 10;
+  int y = 3;
+  float z = (float)(x + y) / 2;
+
+  printf("平均值為 %.2f\n", z);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int a = 2, b = 3, c = 4;
+  int result = a + b * c;
+
+  printf("a + b * c = %d\n", result);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float x = 5.0;
+  float y = 2.0;
+  float result = (x + y) / (x - y);
+
+  printf("運算結果為 %.2f\n", result);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 7：綜合語法閱讀與輸出格式</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  char name[20];
+  int birthYear;
+  printf("請輸入姓名與出生年份：");
+  scanf("%s %d", name, &birthYear);
+
+  int age = 2025 - birthYear;
+  printf("%s，你今年 %d 歲。\n", name, age);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int quantity;
+  float unitPrice;
+  printf("請輸入數量與單價：");
+  scanf("%d %f", &quantity, &unitPrice);
+
+  float total = quantity * unitPrice;
+  printf("總價為 $%.2f\n", total);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  int x = 7;
+  int y = 4;
+  printf("x = %d, y = %d\n", x, y);
+  printf("x + y = %d\n", x + y);
+  printf("x * y = %d\n", x * y);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  float score1, score2, score3;
+  printf("請輸入三科成績：");
+  scanf("%f %f %f", &score1, &score2, &score3);
+
+  float avg = (score1 + score2 + score3) / 3;
+  printf("平均成績為 %.2f 分\n", avg);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- JavaScript 複製功能 -->
+<script>
+  function copyCode(button) {
+    const code = button.nextElementSibling.innerText;
+    navigator.clipboard.writeText(code).then(() => {
+      button.innerText = "已複製！";
+      setTimeout(() => button.innerText = "複製程式碼", 1500);
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>Week 4：動態記憶體管理</title>
+  <style>
+    body { font-family: "Segoe UI", sans-serif; background: #f9f9f9; padding: 2em; }
+    h1, h2 { color: #2c3e50; }
+    .code-block { background: #eef; padding: 1em; border-radius: 8px; position: relative; margin-bottom: 2em; }
+    .copy-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: #3498db; color: white; border: none;
+      padding: 5px 10px; border-radius: 5px; cursor: pointer;
+    }
+    .copy-btn:hover { background: #2980b9; }
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow-x: auto;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 Week 4：動態記憶體管理</h1>
+  <p>重點：記憶體配置與釋放、記憶體洩漏<br>練習:檢查記憶體管理是否正確</p>
+
+  <!-- Day 22 -->
+<h2>Day 1：malloc 配置與使用</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *ptr = (int *)malloc(sizeof(int));
+  if (ptr == NULL) {
+    printf("記憶體配置失敗\n");
+    return 1;
+  }
+
+  *ptr = 100;
+  printf("儲存的值為 %d\n", *ptr);
+  free(ptr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int n = 5;
+  int *arr = (int *)malloc(n * sizeof(int));
+
+  for (int i = 0; i < n; i++) {
+    arr[i] = i * 10;
+    printf("arr[%d] = %d\n", i, arr[i]);
+  }
+
+  free(arr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *data = (int *)malloc(sizeof(int) * 3);
+  if (data != NULL) {
+    data[0] = 7;
+    data[1] = 14;
+    data[2] = 21;
+    printf("資料：%d, %d, %d\n", data[0], data[1], data[2]);
+    free(data);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *ptr = malloc(sizeof(int));
+  if (ptr) {
+    *ptr = 42;
+    printf("值為 %d\n", *ptr);
+    free(ptr);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 23 -->
+<h2>Day 2：calloc 配置與初始化</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *arr = (int *)calloc(4, sizeof(int));
+  for (int i = 0; i < 4; i++) {
+    printf("arr[%d] = %d\n", i, arr[i]);
+  }
+  free(arr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  float *data = (float *)calloc(3, sizeof(float));
+  for (int i = 0; i < 3; i++) {
+    data[i] = i * 1.5;
+    printf("data[%d] = %.2f\n", i, data[i]);
+  }
+  free(data);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  char *letters = (char *)calloc(5, sizeof(char));
+  letters[0] = 'A';
+  letters[1] = 'B';
+  printf("字元：%c %c\n", letters[0], letters[1]);
+  free(letters);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *ptr = calloc(2, sizeof(int));
+  if (ptr) {
+    ptr[0] = 11;
+    ptr[1] = 22;
+    printf("值：%d, %d\n", ptr[0], ptr[1]);
+    free(ptr);
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 24 -->
+<h2>Day 3：realloc 記憶體擴充</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *arr = malloc(2 * sizeof(int));
+  arr[0] = 1;
+  arr[1] = 2;
+
+  arr = realloc(arr, 4 * sizeof(int));
+  arr[2] = 3;
+  arr[3] = 4;
+
+  for (int i = 0; i < 4; i++) {
+    printf("%d ", arr[i]);
+  }
+  printf("\n");
+  free(arr);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  char *text = malloc(5);
+  sprintf(text, "Hi");
+
+  text = realloc(text, 10);
+  sprintf(text + 2, " there");
+
+  printf("訊息：%s\n", text);
+  free(text);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  int *data = malloc(3 * sizeof(int));
+  for (int i = 0; i < 3; i++) data[i] = i;
+
+  data = realloc(data, 6 * sizeof(int));
+  for (int i = 3; i < 6; i++) data[i] = i;
+
+  for (int i = 0; i < 6; i++) printf("%d ", data[i]);
+  printf("\n");
+  free(data);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+  float *nums = malloc(2 * sizeof(float));
+  nums[0] = 1.1;
+  nums[1] = 2.2;
+
+  nums = realloc(nums, 3 * sizeof(float));
+  nums[2] = 3.3;
+
+  for (int i = 0; i < 3; i++) {
+    printf("%.1f ", nums[i]);
+  }
+  printf("\n");
+  free(nums);
+  return 0;
+}</code></pre>
+</div>
+
+<!-- Day 25 -->
+<h2>Day 4：free 的正確釋放與陷阱</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  int *ptr = malloc(sizeof(int));
+  *ptr = 123;
+  free(ptr);
+  // free(ptr); // 錯誤：重複釋放
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  int *arr = malloc(3 * sizeof(int));
+  if (arr != NULL) {
+    free(arr);
+    arr = NULL; // 避免懸空指標
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+void release(int *p) {
+  free(p);
+  // p = NULL; // 無效：只在函數內改變
+}
+
+int main() {
+  int *data = malloc(sizeof(int));
+  release(data);
+  // printf("%d", *data); // 錯誤：使用已釋放記憶體
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  int *ptr = malloc(sizeof(int));
+  *ptr = 77;
+  free(ptr);
+  ptr = malloc(sizeof(int)); // 重新配置
+  *ptr = 88;
+  free(ptr);
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 5：記憶體洩漏示範與修正</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  int *leak = malloc(sizeof(int));
+  *leak = 999;
+  // 忘記 free(leak); // 洩漏
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  int *safe = malloc(sizeof(int));
+  *safe = 123;
+  free(safe); // 修正洩漏
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+void create() {
+  int *temp = malloc(10 * sizeof(int));
+  // 沒有 free(temp); // 洩漏
+}
+
+int main() {
+  create();
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+
+int main() {
+  for (int i = 0; i &lt; 5; i++) {
+    int *block = malloc(100);
+    free(block); // 正確釋放
+  }
+  return 0;
+}</code></pre>
+</div>
+
+<h2>Day 6：動態字串儲存與釋放</h2>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+
+int main() {
+  char *name = malloc(20);
+  strcpy(name, "會安");
+  printf("名字：%s\n", name);
+  free(name);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+
+int main() {
+  char *msg = calloc(30, sizeof(char));
+  strcat(msg, "Hello ");
+  strcat(msg, "World");
+  printf("訊息：%s\n", msg);
+  free(msg);
+  return 0;
+}</code></pre>
+</div>
+
+<div class="code-block"><button class="copy-btn" onclick="copyCode(this)">複製程式碼</button>
+<pre><code>#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdio.h&gt;
+
+char* createMessage(const char *name) {
+  char *msg = malloc(50);
+  sprintf(msg, "歡迎 %s 來到 C 語言世界！", name);
+  return msg;
+}
+
+int main() {
+  char *welcome = createMessage("會安");
+  printf("%s\n", welcome);
+  free(welcome);
+  return 0;
+}</code></pre>
+</div>
+
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "已複製！";
+        setTimeout(() => button.innerText = "複製程式碼", 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>
