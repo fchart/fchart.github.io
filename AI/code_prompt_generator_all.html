@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>提升程式閱讀力的 AI 提示詞產生器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: #667eea;
+            border-radius: 2px;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .language-btn {
+            padding: 10px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .language-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .language-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .stage-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stage-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f9f9f9;
+        }
+
+        .stage-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .stage-card.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .stage-card h3 {
+            font-size: 16px;
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .stage-card p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .question-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question-tag {
+            padding: 8px 16px;
+            background: #f0f4ff;
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+            user-select: none;
+        }
+
+        .question-tag:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .question-tag.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-copy {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-copy:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-clear {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-clear:hover {
+            background: #dc2626;
+        }
+
+        .output {
+            background: #f9fafb;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 150px;
+            white-space: pre-wrap;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+            display: none;
+        }
+
+        .output.show {
+            display: block;
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💻 提升程式閱讀力的 AI 提示詞產生器</h1>
+            <p>支援多種程式語言，自動生成 AI 提問提示詞</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <div class="section-title">步驟 1: 選擇程式語言</div>
+                <div class="language-selector" id="languageSelector">
+                    <button class="language-btn active" data-lang="python">
+                        🐍 Python
+                    </button>
+                    <button class="language-btn" data-lang="c">
+                        🔧 C
+                    </button>    
+                    <button class="language-btn" data-lang="cpp">
+                        ⚡ C++
+                    </button>                                       
+                    <button class="language-btn" data-lang="java">
+                        ☕ Java
+                    </button>   
+                    <button class="language-btn" data-lang="javascript">
+                        📜 JavaScript
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">步驟 2: 貼上程式碼</div>
+                <textarea id="codeInput" placeholder="在此貼上你想學習的程式碼..."></textarea>
+            </div>
+
+            <div class="section">
+                <div class="section-title">步驟 3: 選擇學習階段</div>
+                <div class="stage-selector" id="stageSelector">
+                    <div class="stage-card" data-stage="1">
+                        <h3>📖 建立閱讀框架</h3>
+                        <p>理解程式目的、輸入輸出、執行流程</p>
+                    </div>
+                    <div class="stage-card" data-stage="2">
+                        <h3>🔍 逐行拆解</h3>
+                        <p>深入理解每一行語法和運作方式</p>
+                    </div>
+                    <div class="stage-card" data-stage="3">
+                        <h3>🏗️ 識別結構</h3>
+                        <p>辨認程式模式和控制流程</p>
+                    </div>
+                    <div class="stage-card" data-stage="4">
+                        <h3>📊 追蹤變數</h3>
+                        <p>理解資料在程式中如何變化</p>
+                    </div>
+                    <div class="stage-card" data-stage="5">
+                        <h3>🔗 函數互動</h3>
+                        <p>理解多個函數如何協作</p>
+                    </div>
+                    <div class="stage-card" data-stage="6">
+                        <h3>⚠️ 識別陷阱</h3>
+                        <p>發現潛在問題和改進方向</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">步驟 4: 選擇提問類型（可多選）</div>
+                <div class="question-options" id="questionOptions"></div>
+            </div>
+
+            <div class="section">
+                <div class="button-group">
+                    <button class="btn-generate" onclick="generatePrompt()">✨ 生成提示詞</button>
+                    <button class="btn-copy" onclick="copyToClipboard()">📋 複製到剪貼簿</button>
+                    <button class="btn-clear" onclick="clearAll()">🗑️ 清除</button>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">生成的提示詞</div>
+                <div class="output" id="output"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">已複製到剪貼簿！</div>
+
+    <script>
+        let selectedLanguage = 'python';
+        let selectedStage = null;
+        let selectedQuestions = [];
+
+        const languageNames = {
+            'python': 'Python',
+            'javascript': 'JavaScript',
+            'java': 'Java',
+            'cpp': 'C++',
+            'c': 'C'
+        };
+
+        const stageQuestions = {
+            1: [
+                '請用一句話說明這段程式的目的',
+                '這段程式的輸入和輸出分別是什麼？',
+                '請列出程式執行的步驟流程'
+            ],
+            2: [
+                '請把這段程式拆解成多個步驟解釋',
+                '請解釋每一行程式的作用',
+                '請用更簡單的方式改寫這段程式',
+                '這段程式使用了哪些語法糖？請展示基本版本'
+            ],
+            3: [
+                '這段程式使用了哪些程式結構？',
+                '請畫出這段程式的執行流程圖',
+                '這段程式的邏輯判斷條件是什麼？',
+                '請說明這段程式的控制流程'
+            ],
+            4: [
+                '請列出每次迴圈後變數的值',
+                '請用表格顯示變數在每步的變化',
+                '請追蹤關鍵變數在程式中的變化過程',
+                '如果輸入改變，變數會如何變化？'
+            ],
+            5: [
+                '請追蹤變數經過每個函數的變化',
+                '各函數的回傳值如何被使用？',
+                '請畫出函數呼叫關係圖',
+                '請說明函數之間的資料流動'
+            ],
+            6: [
+                '這段程式有什麼潛在問題？',
+                '在什麼情況下會出錯？',
+                '應該如何改進這段程式？',
+                '請展示加入錯誤處理的版本',
+                '這段程式有哪些邊界條件需要注意？'
+            ]
+        };
+
+        // 初始化語言選擇器
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                selectedLanguage = this.dataset.lang;
+                updatePlaceholder();
+            });
+        });
+
+        function updatePlaceholder() {
+            const placeholder = `在此貼上你想學習的 ${languageNames[selectedLanguage]} 程式碼...`;
+            document.getElementById('codeInput').placeholder = placeholder;
+        }
+
+        // 初始化階段選擇器
+        document.querySelectorAll('.stage-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+                selectedStage = this.dataset.stage;
+                updateQuestionOptions();
+            });
+        });
+
+        function updateQuestionOptions() {
+            const container = document.getElementById('questionOptions');
+            container.innerHTML = '';
+            selectedQuestions = [];
+
+            if (selectedStage) {
+                stageQuestions[selectedStage].forEach((question, index) => {
+                    const tag = document.createElement('div');
+                    tag.className = 'question-tag';
+                    tag.textContent = question;
+                    tag.dataset.index = index;
+                    tag.addEventListener('click', function() {
+                        this.classList.toggle('selected');
+                        const idx = selectedQuestions.indexOf(index);
+                        if (idx > -1) {
+                            selectedQuestions.splice(idx, 1);
+                        } else {
+                            selectedQuestions.push(index);
+                        }
+                    });
+                    container.appendChild(tag);
+                });
+            }
+        }
+
+        function generatePrompt() {
+            const code = document.getElementById('codeInput').value.trim();
+            
+            if (!code) {
+                alert('請先貼上程式碼！');
+                return;
+            }
+
+            if (!selectedStage) {
+                alert('請選擇學習階段！');
+                return;
+            }
+
+            if (selectedQuestions.length === 0) {
+                alert('請至少選擇一個提問類型！');
+                return;
+            }
+
+            const stageTitles = {
+                1: '建立閱讀框架',
+                2: '逐行拆解理解',
+                3: '識別程式結構',
+                4: '追蹤變數變化',
+                5: '理解函數互動',
+                6: '識別常見陷阱'
+            };
+
+            let prompt = `我正在學習以下 ${languageNames[selectedLanguage]} 程式碼，想要透過「${stageTitles[selectedStage]}」的方式來理解它。\n\n`;
+            prompt += `程式碼：\n\`\`\`${selectedLanguage}\n${code}\n\`\`\`\n\n`;
+            prompt += `請幫我回答以下問題：\n\n`;
+
+            selectedQuestions.sort((a, b) => a - b).forEach((idx, i) => {
+                prompt += `${i + 1}. ${stageQuestions[selectedStage][idx]}\n`;
+            });
+
+            prompt += `\n請用清晰、具體的方式解釋，並在適當時提供範例或圖表說明。`;
+
+            const output = document.getElementById('output');
+            output.textContent = prompt;
+            output.classList.add('show');
+            output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('output');
+            if (!output.textContent) {
+                alert('請先生成提示詞！');
+                return;
+            }
+
+            navigator.clipboard.writeText(output.textContent).then(() => {
+                showToast();
+            }).catch(err => {
+                alert('複製失敗，請手動複製');
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
+
+        function clearAll() {
+            document.getElementById('codeInput').value = '';
+            document.getElementById('output').textContent = '';
+            document.getElementById('output').classList.remove('show');
+            document.querySelectorAll('.stage-card').forEach(c => c.classList.remove('active'));
+            document.getElementById('questionOptions').innerHTML = '';
+            selectedStage = null;
+            selectedQuestions = [];
+        }
+    </script>
+</body>
+</html>

@@ -1,97 +1,318 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-<title>透過生成式AI提升程式閱讀力</title>
-<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
-<style>
-body {
-  font-family: "Segoe UI", "Noto Sans TC", sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
-  margin: 0;
-  padding: 2em;
-  line-height: 1.6;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>透過生成式 AI 提升「程式閱讀力」</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-h1 {
-  font-size: 2em;
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
-  padding-bottom: 0.3em;
-  margin-bottom: 1em;
-}
+        body {
+            font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-h2 {
-  font-size: 1.5em;
-  color: #34495e;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
-}
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
 
-h3 {
-  font-size: 1.5em;
-  color: #34495e;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-}
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
 
-hr {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 1em 0;
-}
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
 
-ul, ol {
-  padding-left: 1.5em;
-}
+        .header h3 {
+            font-size: 16px;
+            opacity: 0.95;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
 
-ul > li {
-  margin-bottom: 0.5em;
-  font-weight: bold;
-}
+        .tool-banner {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
 
-ol > li {
-  margin: 0.3em 0;
-}
+        .tool-banner a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
 
-a {
-  text-decoration: none;
-  color: #2980b9;
-  transition: color 0.2s ease;
-}
+        .tool-banner a:hover {
+            transform: translateX(5px);
+        }
 
-a:hover {
-  color: #e74c3c;
-  text-decoration: underline;
-}
-</style>
+        .tool-banner a::before {
+            content: "🚀";
+            font-size: 20px;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .language-section {
+            margin-bottom: 50px;
+        }
+
+        .language-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-title::before {
+            font-size: 28px;
+        }
+
+        .python-title::before {
+            content: "🐍";
+        }
+
+        .c-title::before {
+            content: "🔧";
+        }
+
+        .guide-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .guide-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .guide-card a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .guide-card a::before {
+            content: "📚";
+            font-size: 24px;
+        }
+
+        .week-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .week-card {
+            background: #f9fafb;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .week-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .week-card a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+        }
+
+        .week-number {
+            font-size: 14px;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .week-title {
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .header h3 {
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 25px 20px;
+            }
+
+            .language-title {
+                font-size: 20px;
+            }
+
+            .week-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1 id="python%E5%87%BD%E6%95%B8%E5%AE%8C%E6%95%B4%E6%95%99%E5%AD%B8">透過生成式AI提升「程式閱讀力」</h1>
-<h3>因為你懂需求, AI會寫程式, 如何指揮AI寫程式, 取決於你的程式閱讀力。</h3>
-<h2 id="%E7%9B%AE%E9%8C%84">Python語言</h2>
-<ul>
-<li><a href="透過生成式AI提升Python程式閱讀力_教學指南.html">透過生成式AI提升Python程式閱讀力：教學指南</a></li>
-<ol>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第1週.html">實戰練習計畫第1週：基礎語法閱讀</a></li>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第2週.html">實戰練習計畫第2週：控制流程</a></li>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第3週.html">實戰練習計畫第3週：函數與模組化</a></li>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第4週.html">實戰練習計畫第4週：資料結構</a></li>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第5週.html">實戰練習計畫第5週：綜合應用</a></li>
-<li><a href="Python實戰練習計畫/Python實戰練習計畫_第6週.html">實戰練習計畫第6週：綜合應用（進階）</a></li>
-</ol>
-</ul>
-<h2 id="%E7%9B%AE%E9%8C%84">C語言</h2>
-<ul>
-<li><a href="透過生成式AI提升C語言程式閱讀力_教學指南.html">透過生成式AI提升C語言程式閱讀力：教學指南</a></li>
-<ol>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第1週.html">實戰練習計畫第1週：C 語言基礎語法教學</a></li>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第2週.html">實戰練習計畫第2週：控制流程與函數</a></li>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第3週.html">實戰練習計畫第3週：陣列與指標</a></li>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第4週.html">實戰練習計畫第4週：動態記憶體管理</a></li>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第5週.html">實戰練習計畫第5週：結構與檔案操作</a></li>
-<li><a href="C語言實戰練習計畫/C語言實戰練習計畫_第6週.html">實戰練習計畫第6週：綜合應用與偵錯</a></li>
-</ol>
-</ul>
+    <div class="container">
+        <div class="header">
+            <h1>💻 透過生成式 AI 提升「程式閱讀力」</h1>
+            <h3>因為你懂需求，AI 會寫程式，如何指揮 AI 寫程式，取決於你的程式閱讀力。</h3>
+            <div class="tool-banner">
+                <a href="code_prompt_generator_all.html">提升程式閱讀力的 AI 提示詞產生器</a>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Python 語言區塊 -->
+            <div class="language-section">
+                <h2 class="language-title python-title">Python 語言</h2>
+                
+                <div class="guide-card">
+                    <a href="透過生成式AI提升Python程式閱讀力_教學指南.html">
+                        透過生成式AI提升Python程式閱讀力：教學指南
+                    </a>
+                </div>
+
+                <ul class="week-list">
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第1週.html">
+                            <div class="week-number">第 1 週</div>
+                            <div class="week-title">基礎語法閱讀</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第2週.html">
+                            <div class="week-number">第 2 週</div>
+                            <div class="week-title">控制流程</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第3週.html">
+                            <div class="week-number">第 3 週</div>
+                            <div class="week-title">函數與模組化</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第4週.html">
+                            <div class="week-number">第 4 週</div>
+                            <div class="week-title">資料結構</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第5週.html">
+                            <div class="week-number">第 5 週</div>
+                            <div class="week-title">綜合應用</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="Python實戰練習計畫/Python實戰練習計畫_第6週.html">
+                            <div class="week-number">第 6 週</div>
+                            <div class="week-title">綜合應用（進階）</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- C 語言區塊 -->
+            <div class="language-section">
+                <h2 class="language-title c-title">C 語言</h2>
+                
+                <div class="guide-card">
+                    <a href="透過生成式AI提升C語言程式閱讀力_教學指南.html">
+                        透過生成式AI提升C語言程式閱讀力：教學指南
+                    </a>
+                </div>
+
+                <ul class="week-list">
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第1週.html">
+                            <div class="week-number">第 1 週</div>
+                            <div class="week-title">C 語言基礎語法教學</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第2週.html">
+                            <div class="week-number">第 2 週</div>
+                            <div class="week-title">控制流程與函數</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第3週.html">
+                            <div class="week-number">第 3 週</div>
+                            <div class="week-title">陣列與指標</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第4週.html">
+                            <div class="week-number">第 4 週</div>
+                            <div class="week-title">動態記憶體管理</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第5週.html">
+                            <div class="week-number">第 5 週</div>
+                            <div class="week-title">結構與檔案操作</div>
+                        </a>
+                    </li>
+                    <li class="week-card">
+                        <a href="C語言實戰練習計畫/C語言實戰練習計畫_第6週.html">
+                            <div class="week-number">第 6 週</div>
+                            <div class="week-title">綜合應用與偵錯</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
