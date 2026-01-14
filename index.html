@@ -82,6 +82,17 @@
       /* Navigation */
       #mainNav {
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      
+      #mainNav .container-fluid {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding-left: 12px;
+        padding-right: 12px;
       }
       
       /* Mobile Navigation Fixes */
@@ -93,17 +104,23 @@
         display: none;
       }
       
+      .navbar-brand {
+        flex-shrink: 1;
+        min-width: 0;
+        padding-right: 10px;
+      }
+      
+      .navbar-toggler {
+        flex-shrink: 0;
+        margin-left: auto;
+      }
+      
       @media (max-width: 991px) {
         .navbar-brand {
           font-size: 0.9rem;
         }
         
-        .navbar-toggler {
-          margin-left: auto;
-          flex-shrink: 0;
-        }
-        
-        .navbar > .container-fluid {
+        #mainNav .container-fluid {
           padding-left: 8px;
           padding-right: 8px;
         }
@@ -120,6 +137,12 @@
         
         .navbar-brand {
           font-size: 1rem;
+          max-width: calc(100vw - 80px);
+        }
+        
+        #mainNav .container-fluid {
+          padding-left: 5px;
+          padding-right: 5px;
         }
       }
       
@@ -217,7 +240,7 @@
   <body id="page-top">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <div class="container-fluid" style="padding-left: 12px; padding-right: 12px;">
+      <div class="container-fluid">
         <a class="navbar-brand js-scroll-trigger" href="#page-top">
           <b><span class="full-title">fChart 程式設計教學工具</span><span class="short-title">fChart</span></b>
         </a>
