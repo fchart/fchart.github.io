@@ -84,6 +84,34 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       }
       
+      /* Mobile Navigation Fixes */
+      @media (max-width: 991px) {
+        .navbar-brand {
+          font-size: 0.9rem;
+          max-width: calc(100% - 60px);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        .navbar-toggler {
+          margin-left: auto;
+          flex-shrink: 0;
+        }
+        
+        .navbar > .container-fluid {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+      
+      @media (max-width: 576px) {
+        .navbar-brand {
+          font-size: 0.85rem;
+          max-width: calc(100% - 60px);
+        }
+      }
+      
       /* Header Improvements */
       header {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
