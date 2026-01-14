@@ -2,22 +2,180 @@
 <html lang="big5">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=yes">
+    <meta name="description" content="fChart 程式設計教學工具 - 使用流程圖學習程式設計的最佳工具">
+    <meta name="author" content="陳會安">
 
-    <title>fChart程式設計教學工具+Blockly中文離線版</title>
+    <title>fChart程式設計教學工具+AI輔助程式設計+AI自動化流程</title>
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Material Design Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="css/scrolling-nav.css" rel="stylesheet">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    
+    <style>
+      * {
+        font-family: 'Noto Sans TC', sans-serif;
+      }
+      
+      /* Material Design Elevation Shadows */
+      .elevation-1 {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+      }
+      
+      .elevation-2 {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+      }
+      
+      .elevation-3 {
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.1);
+      }
+      
+      /* Material Design Buttons */
+      .btn {
+        border-radius: 4px;
+        text-transform: none;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      }
+      
+      .btn:active {
+        transform: translateY(0);
+      }
+      
+      .btn-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #3a7bd5 0%, #00d2ff 100%);
+        border: none;
+      }
+      
+      /* Card Styles */
+      .img-card {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .img-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      }
+      
+      /* Navigation */
+      #mainNav {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      
+      /* Header Improvements */
+      header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        width: 100vw !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw !important;
+        margin-right: -50vw !important;
+      }
+      
+      /* Section Headers */
+      section h2 {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 15px;
+      }
+      
+      section h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border-radius: 2px;
+      }
+      
+      /* List Improvements */
+      ul {
+        line-height: 1.8;
+      }
+      
+      /* Mobile Responsive Fixes */
+      @media (max-width: 768px) {
+        header {
+          padding: 100px 0 60px !important;
+        }
+        
+        header h1 {
+          font-size: 1.5rem !important;
+        }
+        
+        header h3 {
+          font-size: 1rem !important;
+        }
+        
+        .btn {
+          margin: 5px 2px !important;
+          font-size: 0.85rem !important;
+          padding: 0.5rem 0.75rem !important;
+          display: inline-block;
+        }
+        
+        /* Fix logo and image alignment */
+        .img-fluid {
+          max-width: 100%;
+          height: auto;
+          margin: 10px auto;
+          display: block;
+        }
+        
+        /* Better spacing on mobile */
+        section {
+          padding: 80px 0 !important;
+        }
+        
+        .row {
+          margin: 0;
+        }
+        
+        .col-md-5, .col-md-7 {
+          padding: 15px;
+        }
+        
+        /* Stack images vertically on mobile */
+        .col-md-7 img {
+          margin-bottom: 20px;
+        }
+      }
+      
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
   </head>
   <body id="page-top">
-    <section id="main-section" class="bg-primary text-white">
-    <div style="height: 100%" class="container">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <div class="container">
@@ -40,10 +198,10 @@
               <a class="nav-link js-scroll-trigger" href="#python">Python套件</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#node">Node套件</a>
+              <a class="nav-link js-scroll-trigger" href="#node">Node-RED套件</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#arduino">Arduino版</a>
+              <a class="nav-link js-scroll-trigger" href="#n8n">n8n套件</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#ardublockly">ArduBlockly</a>
@@ -52,55 +210,57 @@
               <a class="nav-link js-scroll-trigger" href="#microbit">Micro:bit</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#doc">文件與下載</a>
+              <a class="nav-link js-scroll-trigger" href="#doc">相關下載</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>   
-    <header class="bg-primary text-white">         
+    <header class="bg-primary text-white" style="width: 100%; margin: 0; padding-left: 0; padding-right: 0;">         
+      <div class="container-fluid" style="max-width: 100%; padding-left: 30px; padding-right: 30px;">
       <div class="container text-center">
-        <h1><b>台灣的下一步，就用 AI 學 Coding 開始</b></h1>
-        <p><h3><b>「輕鬆使用 fChart 流程圖學習程式邏輯，生成式 AI 輔助學習基礎程式設計」</b></h3></p><br>  
-        <div style="width:80%" class="container text-center">
-           <div class="row">
-               <div class="col-md-5">
+        <h1 class="mb-4"><b>台灣的下一步，就從 Vibe Coding + AI 自動化工作流程開始</b></h1>
+        <h4 class="mb-5"><b>輕鬆用 fChart 流程圖學習程式邏輯，生成式 AI 輔助撰寫程式和訓練「程式閱讀力」。<br>
+                          Node-RED 打造 IoT 監控儀表板和 n8n 建立全本機 AI 自動化工作流程。</b></h4>
+        <div class="container">
+           <div class="row align-items-center">
+               <div class="col-md-4 col-12 mb-4 mb-md-0 text-center">
                   <a href="#">
-                    <img class="img-fluid rounded mb-4 mb-md-0" src="img/logo.jpg" alt="fChart" width="180" height="40">
+                    <img class="img-fluid img-card" src="img/logo.jpg" alt="fChart" style="max-width: 200px;">
                   </a>  
                </div>
-               <div class="col-md-7">  
-                 <ul style="text-align:left">
-                    <li>fChart 程式設計教學工具-學 Coding 的好幫手</li>
-                    <li>fChart 分類 150 個流程圖專案-程式邏輯訓練的好幫手</li>                    
-                    <li>AI 輔助學習功能表-用功能表命令自動產生程式碼的 AI 提示詞</li> 
-                    <li>AI 神助攻-Thonny+AI 輔助學習 Python 程式設計/除錯</li>
-                    <li>AI 神助攻-fChart程式碼編輯器+AI 輔助學習 C 程式設計/除錯</li>
+               <div class="col-md-8 col-12">  
+                 <ul class="text-left" style="font-size: 0.95rem;">
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 20px; color: #ffd700;">school</i> fChart 程式設計教學工具-學 Coding 的好幫手</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 20px; color: #ffd700;">folder_special</i> fChart 分類 150 個流程圖專案-程式邏輯訓練的好幫手</li>                    
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 20px; color: #ffd700;">auto_awesome</i> AI 輔助學習功能表-用功能表命令自動產生程式碼的 AI 提示詞</li> 
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 20px; color: #ffd700;">psychology</i> AI 神助攻-Thonny+AI 輔助學習 Python 程式設計/除錯</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 20px; color: #ffd700;">code</i> AI 神助攻-fChart程式碼編輯器+AI 輔助學習 C 程式設計/除錯</li>
                  </ul>   
               </div>
            </div>
        </div>  
-       <br/> 
-       <a class="btn btn-info" style="font-size:small" href="https://hueyanchen.github.io/" target="_blank"><b>Cake Blockly for C 語言 1.01 中文線上版</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:small" href="http://blockly.is-best.net/" target="_blank"><b>ESP8266 Blockly for MicroPython 英文線上版</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:small" href="https://fchart.github.io/MyMind/index_zh-Hant.html" target="_blank"><b>My Mind 心智圖 中文線上版</b></a>
-       <br/><br/> 
-       <p class="lead">
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank"><b>下載fChart6標準版</b></a>   
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://github.com/fchart/test/raw/master/tools/fChartThonny6.exe" target="_blank"><b>下載fChart6Thonny套件</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://github.com/fchart/test/raw/master/tools/AI輔助學習功能表基礎版.pdf" target="_blank"><b>使用AI輔助學習功能表</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://fchart.github.io/fChart6%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf" target="_blank"><b>fChart6使用手冊</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://github.com/fchart/fChartExamples2" target="_blank"><b>分類流程圖專案</b></a>
-       &nbsp;&nbsp;
-       </p> 
-       <p class="lead">
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://mega.nz/file/HckAgK5D#8Z7P2UwRFZjZR4wcPSDVxUNNHLfYVfa8viM_EPJPjMg" target="_blank"><b>下載fChart6標準版(MEGA)</b></a>   
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://mega.nz/file/PBV2zahD#-v14kmkJ1mLCpEwA8xgYWYfY9cjIfB_xRcG1HyJImpI" target="_blank"><b>下載fChart6Thonny套件(MEGA)</b></a>
-       &nbsp;&nbsp; <a class="btn btn-info" style="font-size:normal" href="https://fchart.github.io/tutorial/" target="_blank"><b>運算思維與Python程式設計課程</b></a></p> 
+       <br/>
+       <div class="d-flex flex-wrap justify-content-center mb-3">
+         <a class="btn btn-info m-2" href="https://hueyanchen.github.io/" target="_blank"><i class="material-icons" style="vertical-align: middle;">language</i> <b>Cake Blockly for C 語言 1.01 中文線上版</b></a>
+         <a class="btn btn-info m-2" href="http://blockly.is-best.net/" target="_blank"><i class="material-icons" style="vertical-align: middle;">memory</i> <b>ESP8266 Blockly for MicroPython 英文線上版</b></a>
+         <a class="btn btn-info m-2" href="https://fchart.github.io/MyMind/index_zh-Hant.html" target="_blank"><i class="material-icons" style="vertical-align: middle;">account_tree</i> <b>My Mind 心智圖 中文線上版</b></a>
+       </div>
+       <div class="d-flex flex-wrap justify-content-center mb-3">
+         <a class="btn btn-info m-2" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> <b>下載fChart6標準版</b></a>   
+         <a class="btn btn-info m-2" href="https://github.com/fchart/test/raw/master/tools/fChartThonny6.exe" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> <b>下載fChart6Thonny套件</b></a>
+         <a class="btn btn-info m-2" href="https://github.com/fchart/test/raw/master/tools/AI輔助學習功能表基礎版.pdf" target="_blank"><i class="material-icons" style="vertical-align: middle;">description</i> <b>使用AI輔助學習功能表</b></a>
+         <a class="btn btn-info m-2" href="https://fchart.github.io/fChart6%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf" target="_blank"><i class="material-icons" style="vertical-align: middle;">menu_book</i> <b>fChart6使用手冊</b></a>
+         <a class="btn btn-info m-2" href="https://github.com/fchart/fChartExamples2" target="_blank"><i class="material-icons" style="vertical-align: middle;">folder</i> <b>分類流程圖專案</b></a>
+       </div>
+       <div class="d-flex flex-wrap justify-content-center mb-4">
+         <a class="btn btn-info m-2" href="https://mega.nz/file/HckAgK5D#8Z7P2UwRFZjZR4wcPSDVxUNNHLfYVfa8viM_EPJPjMg" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> <b>下載fChart6標準版(MEGA)</b></a>   
+         <a class="btn btn-info m-2" href="https://mega.nz/file/PBV2zahD#-v14kmkJ1mLCpEwA8xgYWYfY9cjIfB_xRcG1HyJImpI" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> <b>下載fChart6Thonny套件(MEGA)</b></a>
+         <a class="btn btn-info m-2" href="https://fchart.github.io/tutorial/" target="_blank"><i class="material-icons" style="vertical-align: middle;">school</i> <b>運算思維與Python程式設計課程</b></a>
+       </div> 
+       </div>
        </div>
     </header>  
-    </div>
-    </section>
     
     <section id="fchart">
       <div class="container">
@@ -129,7 +289,7 @@
               <li>在標準版V5新增NClass最簡單的UML類別圖工具(支援C#和Java語言)，<span style="color:brown;font-size:large">現在，我們可以使用流程圖學結構化程式設計; 類別圖學物件導向程式設計。</span></li>                  
               <li>fChart 6.0版支援多國語言介面:英文, 繁體中文和簡體中文, 再加上全新的L和U型連接線, 可以更容易繪製流程圖來輕鬆學習程式邏輯.</li>
             </ul>
-            <a class="btn btn-primary" href="https://fchart.github.io/fChart6%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf" target="_blank">fChart 6 使用手冊</a>
+            <a class="btn btn-primary elevation-2" href="https://fchart.github.io/fChart6%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8A.pdf" target="_blank"><i class="material-icons" style="vertical-align: middle;">menu_book</i> fChart 6 使用手冊</a>
           </div>
         </div>
       </div>
@@ -142,11 +302,11 @@
           <div class="col-lg-8 mx-auto">
             <h2><b>fChart流程圖直譯器</b></h2>  <hr>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-7 col-12 mb-4 mb-md-0">
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img/fchart01.png" alt="fChart直譯器圖例">
-                  </a>  <br/><br/>
-                  <a class="btn btn-primary" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank">下載 fChart6 標準版</a>
+                    <img class="img-fluid img-card mb-3" src="img/fchart01.png" alt="fChart直譯器圖例">
+                  </a>
+                  <a class="btn btn-primary elevation-2" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載 fChart6 標準版</a>
                 </div>
                 <div class="col-md-5">
                     <p>fChart流程圖直譯器是一套流程圖直譯器，我們不只可以編輯繪製流程圖；
@@ -164,7 +324,7 @@
                        </ul></small></div> </p>
                     <p>fChart 6.0版支援多國語言介面, 和全新的5種連接線, 支援直線, 2種方向的L型線, 順反時鐘的U型線, 
                        能夠自動依據空間使用直線或L型線的連接符號.</p>   
-                    <a class="btn btn-primary" href="fChart使用說明.htm" target="_blank">fChart使用說明</a><br/> <br/>
+                    <a class="btn btn-primary elevation-2" href="fChart使用說明.htm" target="_blank"><i class="material-icons" style="vertical-align: middle;">description</i> fChart使用說明</a><br/> <br/>
                  
                 </div>
             </div>
@@ -179,17 +339,17 @@
           <div class="col-lg-8 mx-auto">
             <h2><b>fChart程式碼編輯器</b></h2>   <hr>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-7 col-12 mb-4 mb-md-0">
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img/fchart02.png" alt="fChart程式碼編輯器">
-                  </a>  <br/><br/>
+                    <img class="img-fluid img-card mb-3" src="img/fchart02.png" alt="fChart程式碼編輯器">
+                  </a>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img/cakeBlockly.jpg" alt="Cake Blockly版">
-                  </a>  <br/><br/>
+                    <img class="img-fluid img-card mb-3" src="img/cakeBlockly.jpg" alt="Cake Blockly版">
+                  </a>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img/NClass.jpg" alt="NClass類別圖">
-                  </a>  <br/><br/>
-                  <a class="btn btn-primary" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank">下載 fChart6 標準版</a>
+                    <img class="img-fluid img-card mb-3" src="img/NClass.jpg" alt="NClass類別圖">
+                  </a>
+                  <a class="btn btn-primary elevation-2" href="https://github.com/fchart/test/raw/master/tools/fChart6.exe" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載 fChart6 標準版</a>
                 </div>
                 <div class="col-md-5">
                     <p>fChart程式碼編輯器是一套輕量級整合開發環境，不只可以編譯, 編輯和執行C, C++, C#, VB和Java程式，
@@ -204,7 +364,7 @@
                         </ol>
                        </div></p>
                     <p>新版支援多國語言介面: 英文, 繁體中文和簡體中文. </p>   
-                    <a class="btn btn-primary" href="fChart使用說明.htm" target="_blank">fChart使用說明</a><br/><br/>    
+                    <a class="btn btn-primary elevation-2" href="fChart使用說明.htm" target="_blank"><i class="material-icons" style="vertical-align: middle;">description</i> fChart使用說明</a><br/><br/>    
                 </div>
             </div>
           </div>
@@ -264,13 +424,13 @@
                   </ul>
                   <hr>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\python01.jpg" alt="Python套件">
+                    <img class="img-fluid img-card mb-3" src="img\python01.jpg" alt="Python套件">
                   </a>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\python02.jpg" alt="Python套件">
-                  </a><br/><br/>                    
-                  <a class="btn btn-primary" href="https://drive.google.com/file/d/1BL1v-hbrTdEXpTcvInBx4IduGT7qlBEr/view?usp=sharing" target="_blank">下載(Google)</a> 
-                  <a class="btn btn-primary" href="https://mega.nz/file/KdNUVbTQ#wjFl6-iNNfZuVrbaWaJaXD1099R4JUyrJ2RuKW3gRQg" target="_blank">下載(Mega)</a>
+                    <img class="img-fluid img-card mb-3" src="img\python02.jpg" alt="Python套件">
+                  </a>
+                  <a class="btn btn-primary elevation-2 m-2" href="https://drive.google.com/file/d/1BL1v-hbrTdEXpTcvInBx4IduGT7qlBEr/view?usp=sharing" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載(Google)</a> 
+                  <a class="btn btn-primary elevation-2 m-2" href="https://mega.nz/file/KdNUVbTQ#wjFl6-iNNfZuVrbaWaJaXD1099R4JUyrJ2RuKW3gRQg" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> 下載(Mega)</a>
                   <br/><br/>
                   <ul>
                     <li>Python Jupyter筆記本版: <a href="https://drive.google.com/file/d/1-nK3S5nYxActBsxF-pP63XsLUnsd7CKb/view?usp=sharing" target="_blank">Google</a>
@@ -300,7 +460,7 @@
                        * Blockly程式積木編輯器是使用源於"雲林SONG"的精簡版本，只保留Code部分<br/>
                        * 謝謝 Ping-Lun Liao的授權使用。
                        </p> 
-                    <a class="btn btn-primary" href="fChartPython使用說明.html" target="_blank">Python版使用說明</a> 
+                    <a class="btn btn-primary elevation-2" href="fChartPython使用說明.html" target="_blank"><i class="material-icons" style="vertical-align: middle;">description</i> Python版使用說明</a> 
                 </div>
             </div>        
           </div>
@@ -312,7 +472,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2><b>fChart程式設計教學工具-Node套件<br/>(支援 Node-RED 物聯網 AIOT 工具)</b></h2>    <hr>
+            <h2><b>fChart程式設計教學工具-Node-RED套件<br/>(支援 Node-RED 物聯網 AIOT 工具)</b></h2>    <hr>
             <div class="row">
                 <div class="col-md-7">
                   <br>
@@ -335,13 +495,13 @@
                   </ul>
                   <hr>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\node01.jpg" alt="Node套件">
+                    <img class="img-fluid img-card mb-3" src="img\node01.jpg" alt="Node套件">
                   </a>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\node02.jpg" alt="Node套件">
-                  </a><br/><br/>                    
-                  <a class="btn btn-primary" href="https://drive.google.com/file/d/1gdWFf4DBheVH8SuPrCuYaIYsNByx2t9V/view?usp=sharing" target="_blank">下載(Google)</a> 
-                  <a class="btn btn-primary" href="https://mega.nz/#!aEEEiQ7Z!G_VXHVAn_l3mCxOmBLPq_ZWMFtkEmVLpWLfzWMuv3yY" target="_blank">下載(Mega)</a>
+                    <img class="img-fluid img-card mb-3" src="img\node02.jpg" alt="Node套件">
+                  </a>
+                  <a class="btn btn-primary elevation-2 m-2" href="https://drive.google.com/file/d/1gdWFf4DBheVH8SuPrCuYaIYsNByx2t9V/view?usp=sharing" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載(Google)</a> 
+                  <a class="btn btn-primary elevation-2 m-2" href="https://mega.nz/#!aEEEiQ7Z!G_VXHVAn_l3mCxOmBLPq_ZWMFtkEmVLpWLfzWMuv3yY" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> 下載(Mega)</a>
                   <br/><br/>
                   <ul>
                     <li>fChartNode6 10教學套件-Node10版 <a href="https://drive.google.com/file/d/1tvnq3yKp6BJtuh-itHaDUVZLC0G7Ap5Y/view" target="_blank">Google</a>
@@ -363,7 +523,7 @@
                            <li>Node.js除了安裝 Johnny-Five 模組, 而且新增 MQTT 模組處理MQTT通訊協定。</li>
                            <li>Node圖書版本已經將 Node-RED 升級至2.04版。</li>
                        </ul> </p>
-                    <a class="btn btn-primary" href="fChartNode使用說明.html" target="_blank">Node版使用說明</a> 
+                    <a class="btn btn-primary elevation-2" href="fChartNode使用說明.html" target="_blank"><i class="material-icons" style="vertical-align: middle;">description</i> Node版使用說明</a> 
                 </div>
             </div>        
           </div>
@@ -371,52 +531,83 @@
       </div>
     </section>
     
-    <section id="arduino" class="bg-light">
+    <section id="n8n" class="bg-light">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
-            <h2><b>fChart程式設計教學工具-Arduino版(未升級6.0版)</b></h2>  <hr>
+            <h2><b>Easy系列：全本機 n8n 工作流程自動化工具套件<br/>(整合 Python，免 Docker，不需申請 OAuth 2.0)</b></h2>    <hr>
             <div class="row">
-                <div class="col-md-7">
-                  <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\fchart03.png" alt="Arduino版">
-                  </a><br/><br/>                    
-                  <a class="btn btn-primary" href="https://drive.google.com/file/d/1JTT2rcz1VOWx81HgW2e_MCHtyANkY3Qn/view?usp=sharing" target="_blank">下載(Google)</a> 
-                  <a class="btn btn-primary" href="https://mega.nz/#!LNsyXSaR!fe4CxK9sNCvmEzvGjUE_TjJW4PtJtyJNEWYfgb8sz0g" target="_blank">下載(Mega)</a>
+                <div class="col-md-7 col-12 mb-4 mb-md-0">
+                  <br>
+                  <h5><b style="color:maroon">什麼是 n8n？</b></h5><hr>
+                  <p>n8n 是一個功能強大的開源工作流程自動化工具，讓您可以輕鬆連接各種應用程式和服務，創建自動化工作流程。</p>
+                  <h5><b style="color:maroon">n8n 主要特點</b></h5>
+                  <ul>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>視覺化編輯器</b> - 使用拖放式介面設計工作流程</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>豐富的整合</b> - 支援 400+ 種應用程式和服務</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>本地部署</b> - 完全掌控您的數據和隱私</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>自訂程式碼</b> - 支援 JavaScript 和 Python</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>AI 整合</b> - 輕鬆整合 ChatGPT、Claude 等 AI 服務</li>
+                    <li><i class="material-icons" style="vertical-align: middle; font-size: 18px; color: #667eea;">check_circle</i> <b>排程執行</b> - 設定定時任務自動執行工作流程</li>
+                  </ul>
+                  <div class="alert" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                      <h5><i class="material-icons" style="vertical-align: middle;">info</i> 下載全本機 n8n 套件</h5>
+                      <p style="margin-bottom: 15px; font-size: 0.95rem;">提供完整 Windows 版 n8n 可攜式套件，並且已經設定好環境變數(1_n8n_server.bat)，開箱即用！
+                        <br/>在套件已經安裝好本機 Excel 檔案和 JSON 資料處理的三個社群節點，不需申請 OAuth 2.0，就可以讓你輕鬆打造出本機 Excel 檔案到 AI Agent的 AI 自動化工作流程，如下所示:
+                      <ul>              
+                       <li>n8n-nodes-excel-ai - 支援類似 Google Sheets 的 Excel 工作表操作，和支援 AI Agent Tool</li>
+                       <li>n8n-nodes-excel-api - 整合 Python 的 Excel API Server 建構雲端 Excel 資料庫</li>
+                       <li>n8n-nodes-json-crud - 導入 Pandas 操作方式來處理 n8n 的 JSON 資料</li>
+                      </ul>
+                      </p>
+                      <div class="d-flex flex-wrap justify-content-center">
+                        <a class="btn btn-light m-2" href="https://mega.nz/file/7EBwwbKJ#P6WT9zXG24z1ga4nXjr-WeHQDw8zX-rqcoABbn8bCpA" target="_blank" style="box-shadow: 0 2px 4px rgba(0,0,0,0.2);"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> <b>下載 n8n v2.2.6 套件 (MEGA)</b></a>
+                      </div>
+                   </div>
                 </div>
-                <div class="col-md-5">
-                    <p>支援Arduino程式編輯，可以作為Arduino IDE的外部編輯器，相關函數提供功能表命令，
-                       可以快速插入來編輯Arduino程式碼，其撰寫的程式是透過Arduino IDE上傳至開發板，
-                       內建Arduino UNO模擬器，不需購買開發板，就可以在Windows電腦模擬執行Arduino程式。</p>
-                    <p>S2A或S4A自造者可以使用Arduino版學習原生Arduino開發，因為提供功能表命令來建立程式，
-                       非常適合初學者或國中小學生從Scratch積木轉換成原生開發的Coding。</p>
-                    <p style="color:maroon">
-                       * v2 版: 更新Arduino IDE 1.8.2; Uno 模擬器 1.72，解決Windows 10注音輸入法的檔名字串問題。<br/>
-                       * v3版: C和C++語言都改用GCC編譯器。<br/>
-                       * v4版: 程式碼編輯器升級成.NET Framework 4。 </p>
-                    <p>請注意! 此版本尚未支援fChart 6.0流程圖和多國語言介面.</p> 
-                    <a class="btn btn-primary" href="fChartArduino4.5使用說明.htm" target="_blank">Arduino版使用說明</a> 
+                <div class="col-md-5 col-12">
+                    <p><b>n8n</b> 是類似 Node-RED 的視覺化自動化工具，但功能更強大，特別適合：</p>
+                    <ul style="color:maroon">              
+                       <li><b>業務流程自動化</b> - 自動化重複性的業務任務</li>
+                       <li><b>數據處理與分析</b> - 收集、轉換和分析數據</li>
+                       <li><b>API 整合</b> - 連接不同的服務和應用程式</li>
+                       <li><b>AI 應用開發</b> - 快速建立 AI 驅動的自動化流程</li>
+                       <li><b>監控與通知</b> - 設定系統監控和即時通知</li>
+                    </ul>
+                    <hr>
+                    <h5><b style="color:maroon">適用場景</b></h5>
+                    <ul>
+                       <li>數據同步與轉換</li>
+                       <li>社群媒體自動發布</li>
+                       <li>郵件自動化處理</li>
+                       <li>API 串接與整合</li>
+                       <li>AI 工作流程自動化</li>
+                       <li>物聯網數據處理</li>
+                    </ul>
+                    <br/>
+                    <div class="d-flex flex-wrap">
+                      <a class="btn btn-primary elevation-2 m-2" href="https://n8n.io" target="_blank"><i class="material-icons" style="vertical-align: middle;">language</i> n8n 官網</a> 
+                      <a class="btn btn-primary elevation-2 m-2" href="https://docs.n8n.io" target="_blank"><i class="material-icons" style="vertical-align: middle;">menu_book</i> n8n 文件</a>
+                    </div>
                 </div>
             </div>        
           </div>
         </div>
       </div>
     </section>
-        
     
-    
-    <section id="ardublockly">
+    <section id="ardublockly" class="bg-light">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 mx-auto">
             <h2><b>ArduBlockly中文離線版<br/>使用Blockly建立原生Arduino C程式</b></h2>  <hr>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-7 col-12 mb-4 mb-md-0">
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\ardublockly.jpg" alt="ArduBlockly">
-                  </a><br/><br/>                    
-                  <a class="btn btn-primary" href="https://drive.google.com/file/d/0B6TockxTwgQUcGk5a1o0RVpzNDQ/view?usp=sharing" target="_blank">下載(Google)</a> 
-                  <a class="btn btn-primary" href="https://mega.nz/#!3ckhFQQY!lG5lDuW1rKnmJI5ikU13hJC5vazbmwCgmlN9m9FkL0c" target="_blank">下載(MEGA)</a>
+                    <img class="img-fluid img-card mb-3" src="img\ardublockly.jpg" alt="ArduBlockly">
+                  </a>
+                  <a class="btn btn-primary elevation-2 m-2" href="https://drive.google.com/file/d/0B6TockxTwgQUcGk5a1o0RVpzNDQ/view?usp=sharing" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載(Google)</a> 
+                  <a class="btn btn-primary elevation-2 m-2" href="https://mega.nz/#!3ckhFQQY!lG5lDuW1rKnmJI5ikU13hJC5vazbmwCgmlN9m9FkL0c" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> 下載(MEGA)</a>
                 </div>
                 <div class="col-md-5">
                     <p>ArduBlockly是源於 BlocklyDuino 的眾多 Blockly for Arduino 工具之一, 
@@ -440,15 +631,15 @@
           <div class="col-lg-8 mx-auto">
             <h2><b>Micro:bit Python編輯器中文離線版<br/>使用Micro:bit學習Python程式設計</b></h2>     <hr>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-7 col-12 mb-4 mb-md-0">
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\pyeditor.jpg" alt="Micro:bit Python Editor">
+                    <img class="img-fluid img-card mb-3" src="img\pyeditor.jpg" alt="Micro:bit Python Editor">
                   </a>
                   <a href="#">
-                    <img class="img-fluid rounded mb-3 mb-md-0" src="img\microbit.jpg" alt="Micro:bit Simulator">
-                  </a><br/><br/>                    
-                  <a class="btn btn-primary" href="https://drive.google.com/file/d/1ZAHEh8rrC_RxRJ5XEUyd2JReV5Zap5C4/view?usp=sharing" target="_blank">下載(Google)</a> 
-                  <a class="btn btn-primary" href="https://mega.nz/#!eY9SlSAA!sSNlzoyDf-1ZV2xdDWnDj6ZSEZ7gHbwcE5TVwW-e-0w" target="_blank">下載(MEGA)</a>
+                    <img class="img-fluid img-card mb-3" src="img\microbit.jpg" alt="Micro:bit Simulator">
+                  </a>
+                  <a class="btn btn-primary elevation-2 m-2" href="https://drive.google.com/file/d/1ZAHEh8rrC_RxRJ5XEUyd2JReV5Zap5C4/view?usp=sharing" target="_blank"><i class="material-icons" style="vertical-align: middle;">download</i> 下載(Google)</a> 
+                  <a class="btn btn-primary elevation-2 m-2" href="https://mega.nz/#!eY9SlSAA!sSNlzoyDf-1ZV2xdDWnDj6ZSEZ7gHbwcE5TVwW-e-0w" target="_blank"><i class="material-icons" style="vertical-align: middle;">cloud_download</i> 下載(MEGA)</a>
                 </div>
                 <div class="col-md-5">
                     <p>Micro:bit Python編輯器是Web介面的Python程式碼編輯器, 可以編寫在Micro:bit執行的Python程式, 稱為MicroPython。
@@ -460,7 +651,7 @@
                     <p style="color:maroon">
                        Python編輯器第二版 PythonEditor2 整合withcode.uk的Micro:bit模擬器, 可以離線模擬執行MicroPython程式碼, 請注意 ! Micro:bit模擬器是早期版本, 並沒有完整支援microbit模組
                        , 為了啟動模擬器, Python編輯器改用Python+Bottle建立本機Web執行環境, 預設埠號是8000, 所以會有命令提示字元視窗, 在第三版修正積木產生程式碼的錯誤。</p>
-                    <a class="btn btn-primary" href="https://media.readthedocs.org/pdf/microbit-micropython/latest/microbit-micropython.pdf" target="_blank">MicroPython官方文件</a> 
+                    <a class="btn btn-primary elevation-2" href="https://media.readthedocs.org/pdf/microbit-micropython/latest/microbit-micropython.pdf" target="_blank"><i class="material-icons" style="vertical-align: middle;">library_books</i> MicroPython官方文件</a> 
                 </div>
             </div>        
           </div>
