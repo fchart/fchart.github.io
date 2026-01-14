@@ -85,13 +85,17 @@
       }
       
       /* Mobile Navigation Fixes */
+      .navbar-brand .full-title {
+        display: inline;
+      }
+      
+      .navbar-brand .short-title {
+        display: none;
+      }
+      
       @media (max-width: 991px) {
         .navbar-brand {
           font-size: 0.9rem;
-          max-width: calc(100% - 60px);
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
         }
         
         .navbar-toggler {
@@ -100,15 +104,22 @@
         }
         
         .navbar > .container-fluid {
-          padding-left: 10px;
-          padding-right: 10px;
+          padding-left: 8px;
+          padding-right: 8px;
         }
       }
       
       @media (max-width: 576px) {
+        .navbar-brand .full-title {
+          display: none;
+        }
+        
+        .navbar-brand .short-title {
+          display: inline;
+        }
+        
         .navbar-brand {
-          font-size: 0.85rem;
-          max-width: calc(100% - 60px);
+          font-size: 1rem;
         }
       }
       
@@ -206,8 +217,10 @@
   <body id="page-top">
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-      <div class="container-fluid px-3">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top"><b>fChart 程式設計教學工具</b></a>
+      <div class="container-fluid" style="padding-left: 12px; padding-right: 12px;">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+          <b><span class="full-title">fChart 程式設計教學工具</span><span class="short-title">fChart</span></b>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
