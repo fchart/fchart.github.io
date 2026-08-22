@@ -1,4 +1,4 @@
-var CACHE_VERSION = 'web-ide-v4';
+var CACHE_VERSION = 'web-ide-v9';
 var CACHE_NAME = CACHE_VERSION;
 
 var APP_SHELL = [
