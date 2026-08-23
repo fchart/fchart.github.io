@@ -13736,6 +13736,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
     setRunEnabled(false);
 
     var dbg;
+    var clock = cRunClock;   /* assigned BEFORE parse so syntax-error path (showCError) always has a valid clock */
     try {
       dbg = JSCPPModule.run(transformed.code, "", config);
     } catch (err) {
@@ -13745,7 +13746,6 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
 
     var CPU_LIMIT_MS = 15000;   // pure execution time; time spent waiting for user input does not count
     var startedAt = Date.now();
-    var clock = cRunClock;
     clock.active = true;
     clock.pausedTotal = 0;
     clock.pauseStarted = 0;
