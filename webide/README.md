@@ -107,7 +107,7 @@ Service Worker(離線快取)**只有在 HTTPS(或 localhost)下才能運作**。
 
 #### Android 安裝
 
-1. 用 **Chrome/ Safari** 開啟剛才的部署網址(Netlify 或 GitHub Pages)。
+1. 用 **Chrome** 開啟剛才的部署網址(Netlify 或 GitHub Pages)。
 2. 點右上角 **⋮ 選單** → **安裝應用程式**(部分版本顯示「加到主畫面」)。
 3. 按 **安裝** 即可,主畫面會出現 App 圖示,之後可全螢幕、離線啟動。
 4. (也可直接沿用根目錄的單檔 `.html` 版本,不需安裝。)
