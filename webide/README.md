@@ -237,12 +237,3 @@ Service Worker(離線快取)**只有在 HTTPS(或 localhost)下才能運作**。
 ## 適用情境
 
 設計初衷是給**非資訊本科的初學者**在平板或電腦上練習基礎 C / Python 語法,例如變數、運算子、條件判斷、迴圈、陣列、函式、基礎輸出入等,不需要在教室裡另外安裝編譯器或準備網路環境。大量部署給學生時,只要把這份 `.html` 檔傳到各裝置即可(iPhone / iPad 請改用 `Offline-Web-IDE2\` 的 PWA 版本,見上)。
-
----
-
-## 開發者補充
-
-- 開發進度與技術筆記請見 [`DEV_Note.md`](DEV_Note.md)。
-- 片段的原始資料來源是兩個 VS Code 延伸套件:`cpp-code-snippets-ai` 與 `python-code-snippets-ai`(本目錄下),全部以 `{ label, code }` 結構整理進單一檔案的 `SNIPPETS` 資料表。
-- **`cpp-code-snippets-ai` v1.0.6(2026-08-22)**:C 子選單分類順序調整為「**函數 → 陣列 → 指標**」(原為「陣列 → 函數」),與 Web IDE 片段選單及 Python 延伸套件「函數先於容器」的教學順序一致;僅調整 `package.json` 的 submenu 排序(group 鍵 `4_functions@1` / `5_arrays@1`),片段內容不變。已重新打包為 `cpp-code-snippets-ai-1.0.6.vsix`(版號維持 1.0.6),安裝方式同前:VS Code「延伸套件」面板 → ⋯ → **從 VSIX 安裝** → 選擇此檔案。
-- **延伸套件片段子選單分隔線移除(`cpp-code-snippets-ai` 與 `python-code-snippets-ai`,v1.0.6,2026-08-22)**:兩個套件「程式碼片段」的**所有子選單不再顯示分隔線**(統一為單一 group,項目順序不變);AI 輔助學習選單無子選單,分隔線保留。兩個 `.vsix` 均已重新打包(同名、版號維持 1.0.6),以「從 VSIX 安裝」重新安裝即可生效。
