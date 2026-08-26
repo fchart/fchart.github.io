@@ -684,6 +684,11 @@ button.run{
 }
 button.run:hover{background:var(--accent);}
 button.run:disabled{opacity:.5;cursor:default;}
+.runGroup{display:inline-flex;position:relative;}
+.runGroup .run:first-child{border-radius:6px 0 0 6px;border-right:none;}
+.runGroup .runArrow{border-radius:0 6px 6px 0;padding:8px 8px;font-size:12px;min-width:auto;}
+#runMenu{min-width:150px;right:0;left:auto;}
+#stopBtn{color:var(--danger);}
 #filenameInput{
   background:var(--bg-panel);border:1px solid var(--border);color:var(--text);
   padding:7px 10px;border-radius:6px;font-size:13px;width:150px;
@@ -815,7 +820,13 @@ input[type=file]{display:none;}
     <input type="text" id="filenameInput" value="main.c">
     <button class="iconbtn" id="saveBtn">💾 儲存</button>
     <button class="iconbtn" id="clearCodeBtn">🗑 清除</button>
-    <button class="iconbtn run" id="runBtn" title="執行(Ctrl+Enter / Cmd+Enter)">▶ 執行</button>
+    <span class="menuWrap runGroup">
+      <button class="iconbtn run" id="runBtn" title="執行(Ctrl+Enter / Cmd+Enter)">▶ 執行</button>
+      <button class="iconbtn run runArrow" id="runArrow" title="執行選單">▾</button>
+      <div class="menubox" id="runMenu">
+        <div class="mitem" id="stopBtn">⏹ 中斷執行</div>
+      </div>
+    </span>
     <button class="iconbtn" id="themeBtn" title="切換深色/淡色佈景(投影時建議使用淡色)">☀️ 淡色</button>
   </div>
   <div id="main">
@@ -13588,6 +13599,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
   filenameInput.addEventListener("change", scheduleEditorSave);
   window.addEventListener("beforeunload", function () { saveEditorState(); saveTermLog(); });
   var cRunClock = { active: false, pausedTotal: 0, pauseStarted: 0, hiddenSince: 0, py: false };
+  var isRunning = false;
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "hidden") {
       cRunClock.hiddenSince = Date.now();
@@ -13784,7 +13796,6 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
             /* ---- pause: hand control to the student ---- */
             clock.pauseStarted = Date.now();
             waitForTerminalLine().then(function (line) {
-              clock.pausedTotal += Date.now() - clock.pauseStarted;
               clock.pauseStarted = 0;
               try {
                 applyInput(req, line);
@@ -13881,10 +13892,13 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
   }
 
   var runBtn = document.getElementById("runBtn");
+  var runArrow = document.getElementById("runArrow");
+  var runMenu = document.getElementById("runMenu");
   function setRunEnabled(enabled) {
     runBtn.disabled = !enabled;
     runBtn.textContent = enabled ? "▶ 執行" : "執行中…";
-    if (enabled) saveTermLog();   /* flush terminal log at every run end (success or error) */
+    isRunning = !enabled;
+    if (enabled) { saveTermLog(); runMenu.classList.remove("open"); }   /* flush terminal log at every run end (success or error) */
   }
 
   function runCode() {
@@ -13893,6 +13907,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       term.focus();
       try { term.scrollToBottom(); } catch (e) {}
       setStatus("");
+      runMenu.classList.remove("open");
       if (activeLang === "c") {
         runC();
       } else {
@@ -13912,6 +13927,28 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       runCode();
     }
   });
+
+  /* ---- Stop execution ---- */
+  function stopExecution() {
+    if (!isRunning) return;
+    location.reload();
+  }
+  document.getElementById("stopBtn").addEventListener("click", function (e) {
+    e.stopPropagation();
+    closeAllMenus();
+    if (isRunning) {
+      stopExecution();
+    }
+  });
+
+  /* ---- Run menu (split button arrow) ---- */
+  runArrow.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var willOpen = !runMenu.classList.contains("open");
+    closeAllMenus();
+    if (willOpen) runMenu.classList.add("open");
+  });
+  runBtn.addEventListener("click", function () { runMenu.classList.remove("open"); });
 
   /* ---------------------------------------------------------------
    * Clear terminal
