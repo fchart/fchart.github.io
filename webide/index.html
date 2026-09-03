@@ -796,8 +796,8 @@ input[type=file]{display:none;}
 .flowgrid{display:flex;gap:12px;flex-wrap:wrap;}
 .flowLeft{flex:1 1 320px;display:flex;flex-direction:column;gap:8px;min-width:0;}
 .flowLeft textarea{height:300px;resize:vertical;}
-.flowRight{flex:1 1 360px;min-width:260px;background:#fff;border-radius:6px;min-height:320px;padding:10px;overflow:auto;}
-#flowDiagram svg{max-width:100%;height:auto;}
+.flowRight{flex:2 1 360px;min-width:260px;background:#fff;border-radius:6px;min-height:320px;padding:10px;overflow:auto;}
+#flowDiagram svg{max-width:none;}
 </style>
 </head>
 <body>
@@ -868,7 +868,7 @@ input[type=file]{display:none;}
 
 <!-- flowchart.js tool modal (embedded) -->
 <div class="modalOverlay" id="flowModal">
-  <div class="modalBox" style="width:min(96vw,1000px);">
+  <div class="modalBox" style="width:min(96vw,1400px);">
     <div class="modalHead"><span>📊 流程圖工具 (flowchart.js)</span><button class="iconbtn" id="flowClose">✕</button></div>
     <div class="modalBody">
       <div class="flowgrid">
@@ -13515,6 +13515,8 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
 
   term.onData(function (data) {
     if (!pendingInputResolve) return; // ignore keystrokes when nothing is waiting for input
+    // Strip escape sequences (ESC [ ... for arrow/function keys, ESC O ... etc.)
+    data = data.replace(/\x1b\[[0-9;]*[A-Za-z~]/g, "").replace(/\x1b[A-Za-z0-9~]/g, "");
     for (var i = 0; i < data.length; i++) {
       var ch = data[i];
       var code = data.charCodeAt(i);
@@ -13717,14 +13719,30 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
     var rawCode = cmC.getValue();
     term.writeln("\r\n\u001b[36m$ 執行 C 程式\u001b[0m");
 
+    /* JSCPP skips every line before the first #include (comments/blanks) and does not
+       count them, so its reported error line numbers are off by (firstIncludeLine-1).
+       Record the true first-#include line so we can compensate in showCError. */
+    var firstIncludeLine = (function (src) {
+      var ls = src.split("\n");
+      for (var i = 0; i < ls.length; i++) {
+        if (/^\s*#\s*include\b/.test(ls[i])) return i + 1;
+      }
+      return 1;   /* no #include found -> no offset */
+    })(rawCode);
+
     var transformed = encodeCJKLiteralsForJSCPP(rawCode);
     var cjkMap = transformed.map;
     var heldOut = "";   // partial CJK placeholder token held back between writes
 
     function writeChunk(s) {
       var hold = "";
+      /* Only hold back a genuinely *incomplete* tail token (e.g. "\u00010" or "\u0001")
+         straddling a chunk boundary, never a complete one ("\u00010\u0001") that simply
+         happens to sit at the chunk end -- otherwise the trailing CJK placeholder never
+         gets restored and its raw index leaks into the terminal. */
+      var complete = /\u0001\d+\u0001$/.test(s);
       var tail = /(\u0001\d*)$/.exec(s);
-      if (tail) { hold = tail[1]; s = s.slice(0, s.length - hold.length); }
+      if (tail && !complete) { hold = tail[1]; s = s.slice(0, s.length - hold.length); }
       if (s) term.write(restoreCJKPlaceholders(s, cjkMap).replace(/\n/g, "\r\n"));
       heldOut = hold;
     }
@@ -13825,10 +13843,25 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       }
     }
 
+    function fixErrorLine(msg) {
+      if (firstIncludeLine <= 1) return msg;   /* no offset when #include starts on line 1 */
+      var offset = firstIncludeLine - 1;
+      /* parse errors: "line 4 (column 5): ..." */
+      msg = msg.replace(/\bline\s+(\d+)/g, function (m, d) {
+        return "line " + (parseInt(d, 10) + offset);
+      });
+      /* runtime errors: leading "4:5 <message>" */
+      msg = msg.replace(/^(\d+):(\d+)/, function (m, l, c) {
+        return (parseInt(l, 10) + offset) + ":" + c;
+      });
+      return msg;
+    }
+
     function showCError(err) {
       flushHeld();
       clock.active = false;
       var errMsg = err && err.message ? err.message : String(err);
+      errMsg = fixErrorLine(errMsg);
       term.writeln("\r\n\u001b[31m錯誤: " + errMsg + "\u001b[0m");
       if (/overflow/.test(errMsg) && /char/.test(errMsg)) {
         term.writeln("\u001b[90m(提示: JSCPP 的 char 無法儲存任何非 ASCII 字元,包含中文的\u001b[90m單一字元變數(如 char c = '你')\u001b[90m 仍無法支援)\u001b[0m");
