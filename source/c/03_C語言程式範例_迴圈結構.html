@@ -1190,16 +1190,16 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    // C語言可以用 &lt;float.h&gt; 的 DBL_MAX 來取得最大值, 目前 JSCPP 並不支援
-    const double DBL_MAX = 1.7976931348623157e+308;
+    // C語言可以用 &lt;float.h&gt; 的 FLT_MAX 來取得最大值, 目前 JSCPP 並不支援
+    const float FLT_MAX = 3.402823466e+38F;
     printf(&quot;\n題目62：找出最大最小值\n&quot;);
     int n;
     printf(&quot;請輸入數字個數：&quot;);
     scanf(&quot;%d&quot;, &amp;n);
-    double max_num = -DBL_MAX;
-    double min_num = DBL_MAX;
+    float max_num = -FLT_MAX;
+    float min_num = FLT_MAX;
     for (int i = 0; i &lt; n; i++) {
-        double num;
+        float num;
         printf(&quot;請輸入第 %d 個數字：&quot;, i + 1);
         scanf(&quot;%f&quot;, &amp;num);
         if (num &gt; max_num) max_num = num;
@@ -1218,9 +1218,9 @@ int main() {
 
 int main() {
     printf(&quot;\n題目63：購物車總價計算\n&quot;);
-    double total_price = 0;
+    float total_price = 0;
     while (1) {
-        double price;
+        float price;
         printf(&quot;請輸入商品價格（輸入0結束）：&quot;);
         scanf(&quot;%f&quot;, &amp;price);
         if (price == 0) {
@@ -1289,8 +1289,8 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    printf(&quot;\n題目66：計算複利終值\n&quot;);
-    double principal, rate;
+    printf(&quot;\n題目66：計算複利的總金額\n&quot;);
+    float principal, rate;
     int years;
     printf(&quot;請輸入本金：&quot;);
     scanf(&quot;%f&quot;, &amp;principal);
@@ -1298,7 +1298,7 @@ int main() {
     scanf(&quot;%f&quot;, &amp;rate);
     printf(&quot;請輸入年數：&quot;);
     scanf(&quot;%d&quot;, &amp;years);
-    double amount = principal;
+    float amount = principal;
     for (int i = 0; i &lt; years; i++) {
         amount = amount * (1 + rate);
     }
@@ -1320,12 +1320,12 @@ int main() {
     scanf(&quot;%d&quot;, &amp;n);
     int overweight = 0, normal = 0, underweight = 0;
     for (int i = 0; i &lt; n; i++) {
-        double weight, height;
+        float weight, height;
         printf(&quot;第 %d 人體重（kg）：&quot;, i + 1);
         scanf(&quot;%f&quot;, &amp;weight);
         printf(&quot;第 %d 人身高（m）：&quot;, i + 1);
         scanf(&quot;%f&quot;, &amp;height);
-        double bmi = weight / (height * height);
+        float bmi = weight / (height * height);
         if (bmi &gt;= 24) {
             overweight++;
         } else if (bmi &gt;= 18.5) {
@@ -1368,10 +1368,10 @@ int main() {
 
 int main() {
     printf(&quot;\n題目69：計算折扣總價\n&quot;);
-    double subtotal = 0;
+    float subtotal = 0;
     int count = 0;
     while (1) {
-        double price;
+        float price;
         printf(&quot;請輸入商品價格（0結束）：&quot;);
         scanf(&quot;%f&quot;, &amp;price);
         if (price == 0) {
@@ -1381,7 +1381,7 @@ int main() {
         count++;
     }
     if (subtotal &gt;= 1000) {
-        double total = subtotal * 0.9;
+        float total = subtotal * 0.9;
         printf(&quot;購買 %d 件，享9折，實付 %g 元\n&quot;, count, total);
     } else {
         printf(&quot;購買 %d 件，實付 %g 元\n&quot;, count, subtotal);
@@ -1402,22 +1402,22 @@ int main() {
     int n;
     printf(&quot;請輸入數據個數：&quot;);
     scanf(&quot;%d&quot;, &amp;n);
-    double numbers[n];
-    double total = 0;
+    float numbers[n];
+    float total = 0;
     for (int i = 0; i &lt; n; i++) {
         printf(&quot;請輸入第 %d 個數據：&quot;, i + 1);
-        double temp;
+        float temp;
         scanf(&quot;%f&quot;, &amp;temp);  // 不能直接使用陣列元素
         numbers[i] = temp;
         total += numbers[i];
     }
-    double mean = total / n;
-    double variance = 0;
+    float mean = total / n;
+    float variance = 0;
     for (int i = 0; i &lt; n; i++) {
         variance += (numbers[i] - mean) * (numbers[i] - mean);
     }
     variance = variance / n;
-    double std_dev = sqrt(variance);
+    float std_dev = sqrt(variance);
     printf(&quot;平均數 = %.2f，標準差 = %.2f\n&quot;, mean, std_dev);
     return 0;
 }</pre>
@@ -1591,14 +1591,14 @@ int main() {
     int n;
     printf(&quot;請輸入數字個數：&quot;);
     scanf(&quot;%d&quot;, &amp;n);
-    double product = 1;
+    float product = 1;
     for (int i = 0; i &lt; n; i++) {
-        double num;
+        float num;
         printf(&quot;請輸入第 %d 個數字：&quot;, i + 1);
         scanf(&quot;%f&quot;, &amp;num);
         product *= num;
     }
-    double geo_mean = pow(product, 1.0 / n);
+    float geo_mean = pow(product, 1.0 / n);
     printf(&quot;幾何平均數 = %.2f\n&quot;, geo_mean);
     return 0;
 }</pre>

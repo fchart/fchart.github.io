@@ -787,7 +787,8 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double num;
+    // JSCPP 不支援 double 的 &quot;%lf&quot;, 只能輸入 float 浮點數值
+    float num;
     printf(&quot;題目43 - 請輸入一個數字：&quot;);
     scanf(&quot;%f&quot;, &amp;num);
     if (num &gt; 0) {
@@ -808,7 +809,8 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double temp;
+    // JSCPP 不支援 double 的 &quot;%lf&quot;, 只能輸入 float 浮點數值
+    float temp;
     printf(&quot;題目44 - 請輸入當前溫度：&quot;);
     scanf(&quot;%f&quot;, &amp;temp);
     if (temp &gt; 30) {
@@ -849,7 +851,7 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double amount, final_amount;
+    float amount, final_amount;
     printf(&quot;題目46 - 請輸入購物金額：&quot;);
     scanf(&quot;%f&quot;, &amp;amount);
     if (amount &gt;= 1000) {
@@ -869,7 +871,7 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double weight, height, bmi;
+    float weight, height, bmi;
     printf(&quot;題目47 - 請輸入體重（公斤）：&quot;);
     scanf(&quot;%f&quot;, &amp;weight);
     printf(&quot;請輸入身高（公尺）：&quot;);
@@ -963,7 +965,7 @@ int main() {
 
 int main() {
     char is_member[10];
-    double amount, final_amount;
+    float amount, final_amount;
     printf(&quot;題目51 - 你是會員嗎？(yes/no)：&quot;);
     scanf(&quot;%s&quot;, is_member);
     printf(&quot;請輸入購物金額：&quot;);
@@ -1028,7 +1030,7 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double a, b, c;
+    float a, b, c;
     printf(&quot;題目54 - 請輸入第一邊長：&quot;);
     scanf(&quot;%f&quot;, &amp;a);
     printf(&quot;請輸入第二邊長：&quot;);
@@ -1072,7 +1074,7 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double weight, shipping;
+    float weight, shipping;
     printf(&quot;題目56 - 請輸入包裹重量（公斤）：&quot;);
     scanf(&quot;%f&quot;, &amp;weight);
     if (weight &lt;= 1) {
@@ -1145,7 +1147,7 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double num1, num2;
+    float num1, num2;
     printf(&quot;題目59 - 請輸入第一個數字：&quot;);
     scanf(&quot;%f&quot;, &amp;num1);
     printf(&quot;請輸入第二個數字：&quot;);

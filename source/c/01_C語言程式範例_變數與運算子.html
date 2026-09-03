@@ -673,12 +673,13 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double length, width;
+    // JSCPP 不支援 double 的 &quot;%lf&quot;, 只能輸入 float 浮點數值
+    float length, width;
     printf(&quot;題目43 - 請輸入長度：&quot;);
     scanf(&quot;%f&quot;, &amp;length);
     printf(&quot;請輸入寬度：&quot;);
     scanf(&quot;%f&quot;, &amp;width);
-    double area = length * width;
+    float area = length * width;
     printf(&quot;矩形面積 = %g\n&quot;, area);
     return 0;
 }</pre>
@@ -691,10 +692,11 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double celsius;
+    // JSCPP 不支援 double 的 &quot;%lf&quot;, 只能輸入 float 浮點數值
+    float celsius;
     printf(&quot;題目44 - 請輸入攝氏溫度：&quot;);
     scanf(&quot;%f&quot;, &amp;celsius);
-    double fahrenheit = celsius * 9 / 5 + 32;
+    float fahrenheit = celsius * 9 / 5 + 32;
     printf(&quot;%g °C = %g °F\n&quot;, celsius, fahrenheit);
     return 0;
 }</pre>
@@ -727,13 +729,13 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double price;
+    float price;
     int quantity;
     printf(&quot;題目46 - 請輸入單價：&quot;);
     scanf(&quot;%f&quot;, &amp;price);
     printf(&quot;請輸入數量：&quot;);
     scanf(&quot;%d&quot;, &amp;quantity);
-    double total = price * quantity;
+    float total = price * quantity;
     printf(&quot;總價 = %g 元\n&quot;, total);
     return 0;
 }</pre>
@@ -746,12 +748,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double original, discount;
+    float original, discount;
     printf(&quot;題目47 - 請輸入原價：&quot;);
     scanf(&quot;%f&quot;, &amp;original);
     printf(&quot;請輸入折扣（如 0.8 表示 8 折）：&quot;);
     scanf(&quot;%f&quot;, &amp;discount);
-    double final_price = original * discount;
+    float final_price = original * discount;
     printf(&quot;折扣後價格 = %g 元\n&quot;, final_price);
     return 0;
 }</pre>
@@ -764,12 +766,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double weight, height;
+    float weight, height;
     printf(&quot;題目48 - 請輸入體重（公斤）：&quot;);
     scanf(&quot;%f&quot;, &amp;weight);
     printf(&quot;請輸入身高（公尺）：&quot;);
     scanf(&quot;%f&quot;, &amp;height);
-    double bmi = weight / (height * height);
+    float bmi = weight / (height * height);
     printf(&quot;BMI = %g\n&quot;, bmi);
     return 0;
 }</pre>
@@ -782,12 +784,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double distance, time;
+    float distance, time;
     printf(&quot;題目49 - 請輸入距離（公里）：&quot;);
     scanf(&quot;%f&quot;, &amp;distance);
     printf(&quot;請輸入時間（小時）：&quot;);
     scanf(&quot;%f&quot;, &amp;time);
-    double speed = distance / time;
+    float speed = distance / time;
     printf(&quot;時速 = %g 公里/小時\n&quot;, speed);
     return 0;
 }</pre>
@@ -881,12 +883,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double payment, cost;
+    float payment, cost;
     printf(&quot;題目54 - 請輸入付款金額：&quot;);
     scanf(&quot;%f&quot;, &amp;payment);
     printf(&quot;請輸入商品價格：&quot;);
     scanf(&quot;%f&quot;, &amp;cost);
-    double change = payment - cost;
+    float change = payment - cost;
     printf(&quot;找零 = %g 元\n&quot;, change);
     return 0;
 }</pre>
@@ -916,11 +918,11 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double radius;
+    float radius;
     printf(&quot;題目56 - 請輸入圓的半徑：&quot;);
     scanf(&quot;%f&quot;, &amp;radius);
-    double pi = 3.14159;
-    double area = pi * radius * radius;
+    float pi = 3.14159;
+    float area = pi * radius * radius;
     printf(&quot;圓面積 = %g\n&quot;, area);
     return 0;
 }</pre>
@@ -933,11 +935,11 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double radius;
+    float radius;
     printf(&quot;題目57 - 請輸入圓的半徑：&quot;);
     scanf(&quot;%f&quot;, &amp;radius);
-    double pi = 3.14159;
-    double circumference = 2 * pi * radius;
+    float pi = 3.14159;
+    float circumference = 2 * pi * radius;
     printf(&quot;圓周長 = %g\n&quot;, circumference);
     return 0;
 }</pre>
@@ -966,10 +968,10 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double side;
+    float side;
     printf(&quot;題目59 - 請輸入正方形邊長：&quot;);
     scanf(&quot;%f&quot;, &amp;side);
-    double perimeter = side * 4;
+    float perimeter = side * 4;
     printf(&quot;正方形周長 = %g\n&quot;, perimeter);
     return 0;
 }</pre>
@@ -982,12 +984,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 
 int main() {
-    double twd, exchange_rate;
+    float twd, exchange_rate;
     printf(&quot;題目60 - 請輸入台幣金額：&quot;);
     scanf(&quot;%f&quot;, &amp;twd);
     printf(&quot;請輸入匯率（例如 30）：&quot;);
     scanf(&quot;%f&quot;, &amp;exchange_rate);
-    double usd = twd / exchange_rate;
+    float usd = twd / exchange_rate;
     printf(&quot;兌換美金 = %g 元\n&quot;, usd);
     return 0;
 }</pre>

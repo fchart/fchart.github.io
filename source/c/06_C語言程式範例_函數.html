@@ -740,7 +740,7 @@ int main() {
                 <div class="code-header">題目 31：成績計數函數</div>
                 <button class="copy-btn" onclick="copyCode(this)">複製</button>
             </div>
-            <pre><pre>#include &lt;stdio.h&gt;
+            <pre>#include &lt;stdio.h&gt;
 
 char get_grade(int score) {
     if (score &gt;= 90) return &#x27;A&#x27;;
@@ -1052,7 +1052,7 @@ int main() {
             </div>
             <pre>#include &lt;stdio.h&gt;
 
-double calculator(double num1, char op, double num2, int *valid) {
+float calculator(float num1, char op, float num2, int *valid) {
     *valid = 1;
     switch (op) {
         case &#x27;+&#x27;: return num1 + num2;
@@ -1070,7 +1070,7 @@ double calculator(double num1, char op, double num2, int *valid) {
 
 int main() {
     printf(&quot;\n題目41：簡易計算機\n&quot;);
-    double num1, num2, result;
+    float num1, num2, result;
     char op[5];
     printf(&quot;請輸入第一個數字：&quot;);
     scanf(&quot;%f&quot;, &amp;num1);
@@ -1094,8 +1094,8 @@ int main() {
             </div>
             <pre>#include &lt;stdio.h&gt;
 
-double get_positive_number(const char *prompt) {
-    double num;
+float get_positive_number(const char *prompt) {
+    float num;
     while (1) {
         printf(&quot;%s&quot;, prompt);
         scanf(&quot;%f&quot;, &amp;num);
@@ -1106,7 +1106,7 @@ double get_positive_number(const char *prompt) {
 
 int main() {
     printf(&quot;\n題目42：驗證輸入正整數\n&quot;);
-    double age = get_positive_number(&quot;請輸入年齡：&quot;);
+    float age = get_positive_number(&quot;請輸入年齡：&quot;);
     printf(&quot;年齡：%.0f\n&quot;, age);
     return 0;
 }</pre>
@@ -1137,7 +1137,7 @@ void menu_calculator() {
             printf(&quot;結束程式\n&quot;);
             break;
         }
-        double a, b;
+        float a, b;
         printf(&quot;輸入第一個數：&quot;);
         scanf(&quot;%f&quot;, &amp;a);
         printf(&quot;輸入第二個數：&quot;);
@@ -1194,12 +1194,12 @@ int main() {
             <pre>#include &lt;stdio.h&gt;
 #include &lt;string.h&gt;
 
-double calculate_bmi(double weight, double height) {
+float calculate_bmi(float weight, float height) {
     return weight / (height * height);
 }
 
-void bmi_calculator(double *bmi, char *status) {
-    double weight, height;
+void bmi_calculator(float *bmi, char *status) {
+    float weight, height;
     printf(&quot;請輸入體重(公斤)：&quot;);
     scanf(&quot;%f&quot;, &amp;weight);
     printf(&quot;請輸入身高(公尺)：&quot;);
@@ -1214,7 +1214,7 @@ void bmi_calculator(double *bmi, char *status) {
 
 int main() {
     printf(&quot;\n題目45：BMI 計算與建議\n&quot;);
-    double bmi;
+    float bmi;
     char status[10];
     bmi_calculator(&amp;bmi, status);
     printf(&quot;BMI：%.2f，狀態：%s\n&quot;, bmi, status);
@@ -1488,13 +1488,13 @@ int main() {
             </div>
             <pre>#include &lt;stdio.h&gt;
 
-double celsius_to_fahrenheit(double celsius) {
+float celsius_to_fahrenheit(float celsius) {
     return celsius * 9 / 5 + 32;
 }
 
 int main() {
     printf("\n題目52：溫度轉換器\n");
-    double temp;
+    float temp;
     char unit[5];
     printf("輸入溫度：");
     scanf("%f", &amp;temp);
@@ -1502,10 +1502,10 @@ int main() {
     scanf("%s", unit);
 
     if (unit[0] == 'C') {
-        double result = celsius_to_fahrenheit(temp);
+        float result = celsius_to_fahrenheit(temp);
         printf("%.1f°C = %.1f°F\n", temp, result);
     } else if (unit[0] == 'F') {
-        double result = (temp - 32) * 5 / 9;
+        float result = (temp - 32) * 5 / 9;
         printf("%.1f°F = %.1f°C\n", temp, result);
     } else {
         printf("錯誤單位\n");
@@ -1614,7 +1614,7 @@ void reverse_string(const char *text, char *reversed) {
 int is_palindrome(const char *text) {
     char reversed[100];
     reverse_string(text, reversed);
-    return strcmp(text, reversed) == 0;
+    return strncmp(text, reversed, strlen(text)) == 0;
 }
 
 int main() {
@@ -1671,9 +1671,9 @@ int main() {
             </div>
             <pre>#include &lt;stdio.h&gt;
 
-double average(double numbers[], int size) {
+float average(float numbers[], int size) {
     if (size == 0) return 0;
-    double total = 0;
+    float total = 0;
     for (int i = 0; i &lt; size; i++) total += numbers[i];
     return total / size;
 }
@@ -1683,8 +1683,8 @@ int main() {
     int n;
     printf("輸入科目數量：");
     scanf("%d", &amp;n);
-    double s;
-    double scores[100];
+    float s;
+    float scores[100];
     for (int i = 0; i &lt; n; i++) {
         printf("第 %d 科分數：", i + 1);
         scanf("%f", &amp;s);
