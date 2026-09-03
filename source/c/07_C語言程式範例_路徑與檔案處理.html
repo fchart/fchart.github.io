@@ -1,0 +1,2300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言路徑與檔案處理完整教學範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 10px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        .subtitle { text-align: center; color: #666; margin-bottom: 40px; font-size: 1em; }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; white-space: pre-wrap; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note-box { background: #fff8e1; border-left: 5px solid #ffb300; border-radius: 5px; padding: 15px 20px; margin: 20px 0; color: #6b4f00; font-size: 0.95em; }
+        .note-box code { background: #ffe9b3; padding: 2px 6px; border-radius: 4px; }
+        .nav-links { text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+        .nav-links a { display: inline-block; padding: 12px 24px; margin: 0 10px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease; font-weight: bold; }
+        .nav-links a:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言路徑與檔案處理完整教學範例（80題）</h1>
+
+        <h2 id="module1">🙂 模組一：文字檔案基礎讀寫（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 1：寫入單行文字</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目1：寫入文字檔案\n&quot;);
+FILE *file = fopen(&quot;test1.txt&quot;, &quot;w&quot;);
+if (file == NULL) {
+    printf(&quot;檔案開啟失敗\n&quot;);
+    return 1;
+}
+fprintf(file, &quot;Hello, C!&quot;);
+fclose(file);
+printf(&quot;已寫入 test1.txt\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 2：讀取文字檔案</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目2：讀取文字檔案\n&quot;);
+FILE *file = fopen(&quot;test1.txt&quot;, &quot;r&quot;);
+if (file == NULL) {
+    printf(&quot;檔案開啟失敗\n&quot;);
+    return 1;
+}
+char content[1024] = {0};
+fread(content, sizeof(char), sizeof(content) - 1, file);
+fclose(file);
+printf(&quot;內容：%s\n&quot;, content);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 3：寫入多行文字</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目3：寫入多行\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;第一行\n&quot;);
+fprintf(file, &quot;第二行\n&quot;);
+fprintf(file, &quot;第三行\n&quot;);
+fclose(file);
+printf(&quot;已寫入 test2.txt\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 4：讀取所有行</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目4：讀取所有行\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char lines[100][256];
+int line_count = 0;
+while (fgets(lines[line_count], sizeof(lines[line_count]), file) != NULL) {
+    line_count++;
+}
+fclose(file);
+printf(&quot;行數：%d\n&quot;, line_count);
+for (int i = 0; i &lt; line_count; i++) {
+    lines[i][strcspn(lines[i], &quot;\n&quot;)] = &#x27;\0&#x27;;  /* 去除換行符 */
+    printf(&quot;第%d行：%s\n&quot;, i + 1, lines[i]);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 5：逐行讀取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目5：逐行讀取\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+int line_num = 1;
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    printf(&quot;行%d：%s\n&quot;, line_num, line);
+    line_num++;
+}
+fclose(file);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 6：追加內容</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目6：追加內容到檔案\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;a&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;第四行（追加）\n&quot;);
+fclose(file);
+printf(&quot;已追加內容\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 7：確保檔案正確關閉（防呆寫法）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>/* C 語言沒有 with 語句，需自行確保 fopen 後一定會 fclose。
+   常見作法：用 if 檢查回傳值，並在函式結尾統一關閉檔案。 */
+printf(&quot;\n題目7：確保檔案正確關閉\n&quot;);
+FILE *file = fopen(&quot;test3.txt&quot;, &quot;w&quot;);
+if (file == NULL) {
+    printf(&quot;開檔失敗\n&quot;);
+    return 1;
+}
+fprintf(file, &quot;使用 fopen/fclose 配對\n&quot;);
+fprintf(file, &quot;務必確保關閉檔案\n&quot;);
+fclose(file);   /* 對應每一次 fopen，務必呼叫一次 fclose */
+printf(&quot;已寫入 test3.txt\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 8：讀取並計數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目8：計算行數與字數\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+int line_count = 0, word_count = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    line_count++;
+    char *token = strtok(line, &quot; \t\n&quot;);
+    while (token != NULL) {
+        word_count++;
+        token = strtok(NULL, &quot; \t\n&quot;);
+    }
+}
+fclose(file);
+printf(&quot;行數：%d，字數：%d\n&quot;, line_count, word_count);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 9：寫入陣列資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目9：寫入陣列\n&quot;);
+const char *fruits[] = {&quot;蘋果&quot;, &quot;香蕉&quot;, &quot;橘子&quot;, &quot;芒果&quot;};
+int n = 4;
+FILE *file = fopen(&quot;fruits.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    fprintf(file, &quot;%s\n&quot;, fruits[i]);
+}
+fclose(file);
+printf(&quot;已寫入水果清單\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 10：讀取為陣列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目10：讀取為陣列\n&quot;);
+FILE *file = fopen(&quot;fruits.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char fruit_list[20][64];
+int count = 0;
+while (fgets(fruit_list[count], sizeof(fruit_list[count]), file) != NULL) {
+    fruit_list[count][strcspn(fruit_list[count], &quot;\n&quot;)] = &#x27;\0&#x27;;
+    count++;
+}
+fclose(file);
+printf(&quot;水果陣列：&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;%s%s&quot;, fruit_list[i], (i &lt; count - 1) ? &quot;, &quot; : &quot;\n&quot;);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 11：寫入數字陣列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目11：寫入數字\n&quot;);
+int numbers[] = {10, 20, 30, 40, 50};
+int n = 5;
+FILE *file = fopen(&quot;numbers.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    fprintf(file, &quot;%d\n&quot;, numbers[i]);
+}
+fclose(file);
+printf(&quot;已寫入數字檔案\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 12：讀取數字陣列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目12：讀取並轉換數字\n&quot;);
+FILE *file = fopen(&quot;numbers.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+int number_list[100];
+int count = 0;
+int sum = 0;
+while (fscanf(file, &quot;%d&quot;, &amp;number_list[count]) == 1) {
+    sum += number_list[count];
+    count++;
+}
+fclose(file);
+printf(&quot;數字陣列：&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;%d%s&quot;, number_list[i], (i &lt; count - 1) ? &quot;, &quot; : &quot;\n&quot;);
+}
+printf(&quot;總和：%d\n&quot;, sum);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 13：檔案存在檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目13：檢查檔案是否存在\n&quot;);
+const char *filename = &quot;test1.txt&quot;;
+FILE *file = fopen(filename, &quot;r&quot;);
+if (file != NULL) {
+    printf(&quot;%s 存在\n&quot;, filename);
+    fclose(file);
+} else {
+    printf(&quot;%s 不存在\n&quot;, filename);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 14：空檔案檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目14：檢查檔案是否為空\n&quot;);
+FILE *file = fopen(&quot;test3.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+fseek(file, 0, SEEK_END);
+long size = ftell(file);   /* 用檔案指標移到結尾取得大小 */
+fclose(file);
+if (size == 0) {
+    printf(&quot;檔案是空的\n&quot;);
+} else {
+    printf(&quot;檔案大小：%ld 字元\n&quot;, size);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 15：寫入結構化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目15：寫入結構化資料\n&quot;);
+typedef struct {
+    char name[32];
+    int score;
+} Student;
+
+Student students[] = {
+    {&quot;Alice&quot;, 85},
+    {&quot;Bob&quot;, 90},
+    {&quot;Charlie&quot;, 78}
+};
+int n = 3;
+
+FILE *file = fopen(&quot;students.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    fprintf(file, &quot;%s,%d\n&quot;, students[i].name, students[i].score);
+}
+fclose(file);
+printf(&quot;已寫入學生資料\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 16：讀取並解析結構化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目16：讀取格式化資料\n&quot;);
+typedef struct {
+    char name[32];
+    int score;
+} Student;
+
+FILE *file = fopen(&quot;students.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+Student student_list[100];
+int count = 0;
+char line[256];
+while (fgets(line, sizeof(line), file) != NULL) {
+    char *comma = strchr(line, &#x27;,&#x27;);
+    if (comma == NULL) continue;
+    *comma = &#x27;\0&#x27;;
+    strcpy(student_list[count].name, line);
+    student_list[count].score = atoi(comma + 1);
+    count++;
+}
+fclose(file);
+printf(&quot;學生資料：\n&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;  %s: %d\n&quot;, student_list[i].name, student_list[i].score);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 17：複製檔案</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目17：複製檔案\n&quot;);
+FILE *source = fopen(&quot;test1.txt&quot;, &quot;r&quot;);
+FILE *target = fopen(&quot;test1_copy.txt&quot;, &quot;w&quot;);
+if (source == NULL || target == NULL) return 1;
+char buffer[4096];
+size_t bytes;
+while ((bytes = fread(buffer, 1, sizeof(buffer), source)) &gt; 0) {
+    fwrite(buffer, 1, bytes, target);
+}
+fclose(source);
+fclose(target);
+printf(&quot;檔案已複製\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 18：統計各種資訊</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目18：統計各種資訊\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char content[4096] = {0};
+fread(content, 1, sizeof(content) - 1, file);
+fclose(file);
+
+int chars = (int)strlen(content);
+int lines = 1, words = 0;
+int in_word = 0;
+for (int i = 0; content[i] != &#x27;\0&#x27;; i++) {
+    if (content[i] == &#x27;\n&#x27;) lines++;
+    if (isspace((unsigned char)content[i])) {
+        in_word = 0;
+    } else if (!in_word) {
+        in_word = 1;
+        words++;
+    }
+}
+printf(&quot;字元數：%d\n&quot;, chars);
+printf(&quot;單字數：%d\n&quot;, words);
+printf(&quot;行數：%d\n&quot;, lines);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 19：過濾空行</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目19：過濾空行\n&quot;);
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char non_empty[100][256];
+int count = 0;
+char line[256];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    if (strlen(line) &gt; 0) {
+        strcpy(non_empty[count], line);
+        count++;
+    }
+}
+fclose(file);
+printf(&quot;非空行：\n&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;  %s\n&quot;, non_empty[i]);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 20：文字搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目20：搜尋關鍵字\n&quot;);
+const char *keyword = &quot;第&quot;;
+FILE *file = fopen(&quot;test2.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+int line_num = 1;
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    if (strstr(line, keyword) != NULL) {
+        printf(&quot;第%d行包含 &#x27;%s&#x27;：%s\n&quot;, line_num, keyword, line);
+    }
+    line_num++;
+}
+fclose(file);</pre>
+        </div>
+
+        <h2 id="module2">🙂 模組二：CSV 檔案處理（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 21：寫入 CSV 基礎</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目21：寫入 CSV 檔案\n&quot;);
+FILE *file = fopen(&quot;data.csv&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;姓名,年齡,城市\n&quot;);
+fprintf(file, &quot;Alice,20,台北\n&quot;);
+fprintf(file, &quot;Bob,22,台中\n&quot;);
+fprintf(file, &quot;Charlie,21,高雄\n&quot;);
+fclose(file);
+printf(&quot;已寫入 CSV\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 22：讀取 CSV 基礎</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目22：讀取 CSV 檔案\n&quot;);
+FILE *file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+
+/* 第一行為欄位標頭 */
+fgets(line, sizeof(line), file);
+line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+printf(&quot;欄位：%s\n&quot;, line);
+
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    printf(&quot;資料：%s\n&quot;, line);
+}
+fclose(file);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 23：CSV 轉結構陣列（取代字典）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目23：CSV 轉結構\n&quot;);
+typedef struct {
+    char name[32];
+    char age[8];
+    char city[32];
+} Row;
+
+FILE *file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);  /* 跳過標頭 */
+
+Row data[100];
+int count = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    sscanf(line, &quot;%31[^,],%7[^,],%31[^,]&quot;, data[count].name, data[count].age, data[count].city);
+    count++;
+}
+fclose(file);
+printf(&quot;資料：\n&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;  {姓名:%s, 年齡:%s, 城市:%s}\n&quot;, data[i].name, data[i].age, data[i].city);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 24：從結構寫入 CSV</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目24：結構轉 CSV\n&quot;);
+typedef struct {
+    char name[32];
+    int price;
+    int stock;
+} Product;
+
+Product products[] = {
+    {&quot;筆記本&quot;, 25, 100},
+    {&quot;原子筆&quot;, 10, 200},
+    {&quot;橡皮擦&quot;, 5, 150}
+};
+int n = 3;
+
+FILE *file = fopen(&quot;products.csv&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;name,price,stock\n&quot;);
+for (int i = 0; i &lt; n; i++) {
+    fprintf(file, &quot;%s,%d,%d\n&quot;, products[i].name, products[i].price, products[i].stock);
+}
+fclose(file);
+printf(&quot;已寫入產品 CSV\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 25：CSV 資料過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目25：過濾 CSV 資料\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);  /* 跳過標頭 */
+
+printf(&quot;價格 &gt;= 10 的商品：\n&quot;);
+char name[32];
+int price, stock;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    if (price &gt;= 10) {
+        printf(&quot;  %s：%d 元\n&quot;, name, price);
+    }
+}
+fclose(file);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 26：CSV 資料統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目26：CSV 資料統計\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+
+char name[32];
+int price, stock;
+int total_stock = 0, total_value = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    total_stock += stock;
+    total_value += price * stock;
+}
+fclose(file);
+printf(&quot;總庫存：%d\n&quot;, total_stock);
+printf(&quot;總價值：%d 元\n&quot;, total_value);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 27：CSV 新增欄位</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目27：新增計算欄位\n&quot;);
+FILE *in = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+FILE *out = fopen(&quot;products_enhanced.csv&quot;, &quot;w&quot;);
+if (in == NULL || out == NULL) return 1;
+
+char line[256];
+fgets(line, sizeof(line), in);
+line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+fprintf(out, &quot;%s,總價值\n&quot;, line);
+
+char name[32];
+int price, stock;
+while (fgets(line, sizeof(line), in) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    fprintf(out, &quot;%s,%d\n&quot;, line, price * stock);
+}
+fclose(in);
+fclose(out);
+printf(&quot;已新增總價值欄位\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 28：CSV 排序</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目28：CSV 資料排序\n&quot;);
+typedef struct {
+    char line[256];
+    int price;
+} Row;
+
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char header[256];
+fgets(header, sizeof(header), file);
+
+Row rows[100];
+int count = 0;
+char name[32]; int stock;
+while (fgets(rows[count].line, sizeof(rows[count].line), file) != NULL) {
+    sscanf(rows[count].line, &quot;%31[^,],%d,%d&quot;, name, &amp;rows[count].price, &amp;stock);
+    count++;
+}
+fclose(file);
+
+/* 依價格由高到低排序（氣泡排序） */
+for (int i = 0; i &lt; count - 1; i++) {
+    for (int j = 0; j &lt; count - 1 - i; j++) {
+        if (rows[j].price &lt; rows[j + 1].price) {
+            Row temp = rows[j];
+            rows[j] = rows[j + 1];
+            rows[j + 1] = temp;
+        }
+    }
+}
+
+FILE *out = fopen(&quot;products_sorted.csv&quot;, &quot;w&quot;);
+fprintf(out, &quot;%s&quot;, header);
+for (int i = 0; i &lt; count; i++) fprintf(out, &quot;%s&quot;, rows[i].line);
+fclose(out);
+printf(&quot;已按價格排序\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 29：CSV 搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目29：CSV 搜尋功能\n&quot;);
+const char *search_name = &quot;筆記本&quot;;
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+
+int found = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    if (strstr(line, search_name) != NULL) {
+        printf(&quot;找到：%s\n&quot;, line);
+        found = 1;
+    }
+}
+fclose(file);
+if (!found) printf(&quot;未找到\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 30：CSV 合併</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目30：合併兩個 CSV\n&quot;);
+FILE *f1 = fopen(&quot;scores1.csv&quot;, &quot;w&quot;);
+fprintf(f1, &quot;姓名,分數\nAlice,85\nBob,90\n&quot;);
+fclose(f1);
+
+FILE *f2 = fopen(&quot;scores2.csv&quot;, &quot;w&quot;);
+fprintf(f2, &quot;姓名,分數\nCharlie,78\nDavid,92\n&quot;);
+fclose(f2);
+
+FILE *in1 = fopen(&quot;scores1.csv&quot;, &quot;r&quot;);
+FILE *in2 = fopen(&quot;scores2.csv&quot;, &quot;r&quot;);
+FILE *merged = fopen(&quot;scores_merged.csv&quot;, &quot;w&quot;);
+char line[256];
+
+fgets(line, sizeof(line), in1);
+fprintf(merged, &quot;%s&quot;, line);  /* 只寫入一次標頭 */
+while (fgets(line, sizeof(line), in1) != NULL) fprintf(merged, &quot;%s&quot;, line);
+
+fgets(line, sizeof(line), in2);  /* 跳過第二個檔案的標頭 */
+while (fgets(line, sizeof(line), in2) != NULL) fprintf(merged, &quot;%s&quot;, line);
+
+fclose(in1); fclose(in2); fclose(merged);
+printf(&quot;CSV 已合併\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 31：CSV 欄位選擇</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目31：選擇特定欄位\n&quot;);
+FILE *file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+/* 選擇第 0 欄與第 2 欄（姓名、城市） */
+char col0[64], col1[64], col2[64];
+sscanf(line, &quot;%63[^,],%63[^,],%63[^,]&quot;, col0, col1, col2);
+
+FILE *out = fopen(&quot;data_selected.csv&quot;, &quot;w&quot;);
+fprintf(out, &quot;%s,%s\n&quot;, col0, col2);
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    sscanf(line, &quot;%63[^,],%63[^,],%63[^,]&quot;, col0, col1, col2);
+    fprintf(out, &quot;%s,%s\n&quot;, col0, col2);
+}
+fclose(file); fclose(out);
+printf(&quot;已選擇姓名和城市欄位\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 32：CSV 統計報表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目32：生成統計報表\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+
+char name[32]; int price, stock;
+int prices[100], count = 0, total_stock = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    prices[count] = price;
+    total_stock += stock;
+    count++;
+}
+fclose(file);
+
+int max_p = prices[0], min_p = prices[0], sum_p = 0;
+for (int i = 0; i &lt; count; i++) {
+    if (prices[i] &gt; max_p) max_p = prices[i];
+    if (prices[i] &lt; min_p) min_p = prices[i];
+    sum_p += prices[i];
+}
+
+FILE *out = fopen(&quot;statistics.txt&quot;, &quot;w&quot;);
+fprintf(out, &quot;\n=== 產品統計報表 ===\n&quot;);
+fprintf(out, &quot;商品數量：%d\n&quot;, count);
+fprintf(out, &quot;平均價格：%.2f\n&quot;, (double)sum_p / count);
+fprintf(out, &quot;最高價格：%d\n&quot;, max_p);
+fprintf(out, &quot;最低價格：%d\n&quot;, min_p);
+fprintf(out, &quot;總庫存：%d\n&quot;, total_stock);
+fclose(out);
+printf(&quot;統計報表已生成\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 33：CSV 資料驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目33：驗證 CSV 資料\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+
+char errors[100][128];
+int error_count = 0;
+char name[32]; int price, stock;
+int row_num = 2;
+while (fgets(line, sizeof(line), file) != NULL) {
+    int matched = sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    if (matched != 3) {
+        sprintf(errors[error_count++], &quot;第%d行：欄位數量錯誤&quot;, row_num);
+    } else {
+        if (price &lt; 0) sprintf(errors[error_count++], &quot;第%d行：價格不可為負&quot;, row_num);
+        if (stock &lt; 0) sprintf(errors[error_count++], &quot;第%d行：庫存不可為負&quot;, row_num);
+    }
+    row_num++;
+}
+fclose(file);
+
+if (error_count == 0) {
+    printf(&quot;資料驗證通過\n&quot;);
+} else {
+    printf(&quot;發現錯誤：\n&quot;);
+    for (int i = 0; i &lt; error_count; i++) printf(&quot;  %s\n&quot;, errors[i]);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 34：CSV 轉換為固定寬度</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目34：轉換為固定寬度格式\n&quot;);
+FILE *file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+FILE *out = fopen(&quot;data_fixed.txt&quot;, &quot;w&quot;);
+if (file == NULL || out == NULL) return 1;
+char line[256];
+char col0[64], col1[64], col2[64];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    sscanf(line, &quot;%63[^,],%63[^,],%63[^,]&quot;, col0, col1, col2);
+    fprintf(out, &quot;%-15s %-5s %-10s\n&quot;, col0, col1, col2);
+}
+fclose(file); fclose(out);
+printf(&quot;已轉換為固定寬度格式\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 35：CSV 分組統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目35：按城市分組\n&quot;);
+FILE *file = fopen(&quot;city_scores.csv&quot;, &quot;w&quot;);
+fprintf(file, &quot;姓名,城市,分數\nAlice,台北,85\nBob,台中,90\nCharlie,台北,78\nDavid,台中,92\n&quot;);
+fclose(file);
+
+typedef struct {
+    char city[32];
+    int total, count;
+} Group;
+
+file = fopen(&quot;city_scores.csv&quot;, &quot;r&quot;);
+char line[256];
+fgets(line, sizeof(line), file);
+
+Group groups[10];
+int group_count = 0;
+char name[32], city[32]; int score;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%31[^,],%d&quot;, name, city, &amp;score);
+    int idx = -1;
+    for (int i = 0; i &lt; group_count; i++) {
+        if (strcmp(groups[i].city, city) == 0) { idx = i; break; }
+    }
+    if (idx == -1) {
+        idx = group_count++;
+        strcpy(groups[idx].city, city);
+        groups[idx].total = 0;
+        groups[idx].count = 0;
+    }
+    groups[idx].total += score;
+    groups[idx].count++;
+}
+fclose(file);
+
+printf(&quot;城市分組：\n&quot;);
+for (int i = 0; i &lt; group_count; i++) {
+    printf(&quot;  %s：平均 %.1f 分\n&quot;, groups[i].city, (double)groups[i].total / groups[i].count);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 36：CSV 樞紐分析</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目36：簡易樞紐分析\n&quot;);
+FILE *file = fopen(&quot;sales.csv&quot;, &quot;w&quot;);
+fprintf(file, &quot;產品,地區,銷量\n筆記本,北部,100\n筆記本,南部,80\n原子筆,北部,200\n原子筆,南部,150\n&quot;);
+fclose(file);
+
+typedef struct {
+    char product[32];
+    char region[32];
+    int quantity;
+} Sale;
+
+file = fopen(&quot;sales.csv&quot;, &quot;r&quot;);
+char line[256];
+fgets(line, sizeof(line), file);
+
+Sale sales[100];
+int count = 0;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%31[^,],%d&quot;, sales[count].product, sales[count].region, &amp;sales[count].quantity);
+    count++;
+}
+fclose(file);
+
+printf(&quot;樞紐分析：\n&quot;);
+char seen[20][32]; int seen_count = 0;
+for (int i = 0; i &lt; count; i++) {
+    int already = 0;
+    for (int j = 0; j &lt; seen_count; j++) if (strcmp(seen[j], sales[i].product) == 0) already = 1;
+    if (already) continue;
+    strcpy(seen[seen_count++], sales[i].product);
+    printf(&quot;%s：{&quot;, sales[i].product);
+    int first = 1;
+    for (int k = 0; k &lt; count; k++) {
+        if (strcmp(sales[k].product, sales[i].product) == 0) {
+            printf(&quot;%s&#x27;%s&#x27;: %d&quot;, first ? &quot;&quot; : &quot;, &quot;, sales[k].region, sales[k].quantity);
+            first = 0;
+        }
+    }
+    printf(&quot;}\n&quot;);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 37：CSV 資料更新</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目37：更新 CSV 資料\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char header[256];
+fgets(header, sizeof(header), file);
+
+char lines[100][256];
+int count = 0;
+char name[32]; int price, stock;
+while (fgets(lines[count], sizeof(lines[count]), file) != NULL) {
+    sscanf(lines[count], &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    if (strcmp(name, &quot;筆記本&quot;) == 0) {
+        price += 5;
+        sprintf(lines[count], &quot;%s,%d,%d\n&quot;, name, price, stock);
+    }
+    count++;
+}
+fclose(file);
+
+FILE *out = fopen(&quot;products.csv&quot;, &quot;w&quot;);
+fprintf(out, &quot;%s&quot;, header);
+for (int i = 0; i &lt; count; i++) fprintf(out, &quot;%s&quot;, lines[i]);
+fclose(out);
+printf(&quot;已更新筆記本價格\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 38：CSV 欄位重命名</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目38：重命名欄位\n&quot;);
+FILE *file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char header[256];
+fgets(header, sizeof(header), file);
+header[strcspn(header, &quot;\n&quot;)] = &#x27;\0&#x27;;
+
+/* 簡易對照表：姓名-&gt;Name, 年齡-&gt;Age, 城市-&gt;City */
+char new_header[256] = &quot;Name,Age,City&quot;;
+
+FILE *out = fopen(&quot;data_en.csv&quot;, &quot;w&quot;);
+fprintf(out, &quot;%s\n&quot;, new_header);
+char line[256];
+while (fgets(line, sizeof(line), file) != NULL) {
+    fprintf(out, &quot;%s&quot;, line);
+}
+fclose(file); fclose(out);
+printf(&quot;欄位已重命名\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 39：CSV 缺失值處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目39：處理缺失值\n&quot;);
+FILE *file = fopen(&quot;missing_data.csv&quot;, &quot;w&quot;);
+fprintf(file, &quot;姓名,分數,等級\nAlice,85,A\nBob,,B\nCharlie,78,\n&quot;);
+fclose(file);
+
+file = fopen(&quot;missing_data.csv&quot;, &quot;r&quot;);
+FILE *out = fopen(&quot;missing_data_filled.csv&quot;, &quot;w&quot;);
+char header[256];
+fgets(header, sizeof(header), file);
+fprintf(out, &quot;%s&quot;, header);
+
+char line[256];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    /* 手動切割並填補空欄位為 N/A */
+    char *token = strtok(line, &quot;,&quot;);
+    char *fields[3]; int fi = 0;
+    while (fi &lt; 3) {
+        fields[fi] = (token != NULL &amp;&amp; strlen(token) &gt; 0) ? token : &quot;N/A&quot;;
+        fi++;
+        token = strtok(NULL, &quot;,&quot;);
+    }
+    fprintf(out, &quot;%s,%s,%s\n&quot;, fields[0], fields[1], fields[2]);
+}
+fclose(file); fclose(out);
+printf(&quot;缺失值已填補\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 40：CSV 匯出摘要</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目40：匯出摘要報告\n&quot;);
+FILE *file = fopen(&quot;products.csv&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+fgets(line, sizeof(line), file);
+
+char summary[2048] = &quot;=== 產品摘要 ===\n\n&quot;;
+int count = 0;
+char temp[128];
+char name[32]; int price, stock;
+char body[1024] = &quot;產品清單：\n&quot;;
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%31[^,],%d,%d&quot;, name, &amp;price, &amp;stock);
+    sprintf(temp, &quot;- %s：%d 元\n&quot;, name, price);
+    strcat(body, temp);
+    count++;
+}
+fclose(file);
+
+char count_line[64];
+sprintf(count_line, &quot;總產品數：%d\n\n&quot;, count);
+strcat(summary, count_line);
+strcat(summary, body);
+
+FILE *out = fopen(&quot;product_summary.txt&quot;, &quot;w&quot;);
+fprintf(out, &quot;%s&quot;, summary);
+fclose(out);
+printf(&quot;摘要報告已生成\n&quot;);</pre>
+        </div>
+
+        <h2 id="module3">🙂 模組三：結構化資料與設定檔（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 41：手動建立 JSON 風格字串</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>/* C 沒有內建 JSON 模組，示範以字串組合方式手動產生 JSON 格式文字 */
+printf(&quot;\n題目41：手動建立 JSON\n&quot;);
+const char *name = &quot;Alice&quot;;
+int age = 20;
+int scores[] = {85, 90, 88};
+
+FILE *file = fopen(&quot;data.json&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;{\n&quot;);
+fprintf(file, &quot;  \&quot;name\&quot;: \&quot;%s\&quot;,\n&quot;, name);
+fprintf(file, &quot;  \&quot;age\&quot;: %d,\n&quot;, age);
+fprintf(file, &quot;  \&quot;scores\&quot;: [%d, %d, %d]\n&quot;, scores[0], scores[1], scores[2]);
+fprintf(file, &quot;}\n&quot;);
+fclose(file);
+printf(&quot;已寫入 JSON\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 42：讀取 JSON 格式（簡易）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目42：讀取 JSON\n&quot;);
+FILE *file = fopen(&quot;data.json&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char content[1024] = {0};
+fread(content, 1, sizeof(content) - 1, file);
+fclose(file);
+printf(&quot;JSON 內容：\n%s\n&quot;, content);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 43：配置檔案讀寫</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目43：配置檔案\n&quot;);
+typedef struct { char key[32]; char value[32]; } KeyValue;
+KeyValue config[] = {
+    {&quot;app_name&quot;, &quot;MyApp&quot;},
+    {&quot;version&quot;, &quot;1.0&quot;},
+    {&quot;debug&quot;, &quot;true&quot;}
+};
+int n = 3;
+
+FILE *file = fopen(&quot;config.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) fprintf(file, &quot;%s=%s\n&quot;, config[i].key, config[i].value);
+fclose(file);
+printf(&quot;配置已寫入\n&quot;);
+
+file = fopen(&quot;config.txt&quot;, &quot;r&quot;);
+KeyValue loaded[10];
+int loaded_count = 0;
+char line[128];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    char *eq = strchr(line, &#x27;=&#x27;);
+    if (eq == NULL) continue;
+    *eq = &#x27;\0&#x27;;
+    strcpy(loaded[loaded_count].key, line);
+    strcpy(loaded[loaded_count].value, eq + 1);
+    loaded_count++;
+}
+fclose(file);
+printf(&quot;載入配置：\n&quot;);
+for (int i = 0; i &lt; loaded_count; i++) printf(&quot;  %s=%s\n&quot;, loaded[i].key, loaded[i].value);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 44：INI 風格配置</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目44：INI 風格配置\n&quot;);
+FILE *file = fopen(&quot;settings.ini&quot;, &quot;w&quot;);
+fprintf(file, &quot;[Database]\nhost=localhost\nport=3306\n\n[Application]\nname=MyApp\ndebug=true\n&quot;);
+fclose(file);
+
+typedef struct { char section[32]; char key[32]; char value[32]; } Setting;
+file = fopen(&quot;settings.ini&quot;, &quot;r&quot;);
+Setting settings[20];
+int count = 0;
+char current_section[32] = &quot;&quot;;
+char line[128];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    if (strlen(line) == 0) continue;
+    if (line[0] == &#x27;[&#x27; &amp;&amp; line[strlen(line) - 1] == &#x27;]&#x27;) {
+        strncpy(current_section, line + 1, strlen(line) - 2);
+        current_section[strlen(line) - 2] = &#x27;\0&#x27;;
+    } else if (strchr(line, &#x27;=&#x27;) != NULL) {
+        char *eq = strchr(line, &#x27;=&#x27;);
+        *eq = &#x27;\0&#x27;;
+        strcpy(settings[count].section, current_section);
+        strcpy(settings[count].key, line);
+        strcpy(settings[count].value, eq + 1);
+        count++;
+    }
+}
+fclose(file);
+printf(&quot;INI 設定：\n&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;  [%s] %s=%s\n&quot;, settings[i].section, settings[i].key, settings[i].value);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 45：日誌檔案寫入</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目45：寫入日誌\n&quot;);
+const char *log_entries[] = {
+    &quot;2025-10-02 10:00:00 - 應用程式啟動&quot;,
+    &quot;2025-10-02 10:01:15 - 使用者登入：Alice&quot;,
+    &quot;2025-10-02 10:05:30 - 資料查詢完成&quot;
+};
+int n = 3;
+
+FILE *file = fopen(&quot;app.log&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) fprintf(file, &quot;%s\n&quot;, log_entries[i]);
+fclose(file);
+printf(&quot;日誌已寫入\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 46：日誌檔案讀取與過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目46：過濾日誌\n&quot;);
+FILE *file = fopen(&quot;app.log&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char line[256];
+while (fgets(line, sizeof(line), file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    if (strstr(line, &quot;使用者&quot;) != NULL) {
+        printf(&quot;使用者活動：%s\n&quot;, line);
+    }
+}
+fclose(file);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 47：結構化資料儲存</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目47：儲存學生資料\n&quot;);
+typedef struct { char id[16]; char name[32]; int grade; } Student;
+Student students[] = {
+    {&quot;S001&quot;, &quot;Alice&quot;, 85},
+    {&quot;S002&quot;, &quot;Bob&quot;, 90}
+};
+int n = 2;
+
+FILE *file = fopen(&quot;students_struct.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    fprintf(file, &quot;%s|%s|%d\n&quot;, students[i].id, students[i].name, students[i].grade);
+}
+fclose(file);
+printf(&quot;結構化資料已儲存\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 48：讀取結構化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目48：讀取結構化資料\n&quot;);
+typedef struct { char id[16]; char name[32]; int grade; } Student;
+FILE *file = fopen(&quot;students_struct.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+Student student_list[100];
+int count = 0;
+char line[128];
+while (fgets(line, sizeof(line), file) != NULL) {
+    sscanf(line, &quot;%15[^|]|%31[^|]|%d&quot;, student_list[count].id, student_list[count].name, &amp;student_list[count].grade);
+    count++;
+}
+fclose(file);
+printf(&quot;學生資料：\n&quot;);
+for (int i = 0; i &lt; count; i++) {
+    printf(&quot;  {id:%s, name:%s, grade:%d}\n&quot;, student_list[i].id, student_list[i].name, student_list[i].grade);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 49：多層結構資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目49：多層結構\n&quot;);
+typedef struct { char name[32]; int students; } Class;
+typedef struct { char name[32]; Class classes[10]; int class_count; } School;
+
+School school;
+strcpy(school.name, &quot;明德高中&quot;);
+school.class_count = 2;
+strcpy(school.classes[0].name, &quot;一年A班&quot;); school.classes[0].students = 30;
+strcpy(school.classes[1].name, &quot;一年B班&quot;); school.classes[1].students = 28;
+
+FILE *file = fopen(&quot;school.txt&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;學校:%s\n&quot;, school.name);
+for (int i = 0; i &lt; school.class_count; i++) {
+    fprintf(file, &quot;班級:%s,學生數:%d\n&quot;, school.classes[i].name, school.classes[i].students);
+}
+fclose(file);
+printf(&quot;學校資料已寫入\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 50：資料備份</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目50：資料備份\n&quot;);
+const char *source_file = &quot;products.csv&quot;;
+const char *backup_file = &quot;products_backup.csv&quot;;
+
+FILE *source = fopen(source_file, &quot;r&quot;);
+FILE *backup = fopen(backup_file, &quot;w&quot;);
+if (source == NULL || backup == NULL) return 1;
+char buffer[4096];
+size_t bytes;
+while ((bytes = fread(buffer, 1, sizeof(buffer), source)) &gt; 0) {
+    fwrite(buffer, 1, bytes, backup);
+}
+fclose(source); fclose(backup);
+printf(&quot;%s 已備份到 %s\n&quot;, source_file, backup_file);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 51：時間戳記日誌</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目51：帶時間戳記的日誌\n&quot;);
+const char *messages[] = {&quot;應用啟動&quot;, &quot;載入設定&quot;, &quot;初始化完成&quot;};
+int n = 3;
+
+FILE *file = fopen(&quot;timestamped.log&quot;, &quot;w&quot;);
+if (file == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    const char *timestamp = &quot;2025-10-02 10:00:00&quot;;
+    fprintf(file, &quot;[%s] %s\n&quot;, timestamp, messages[i]);
+}
+fclose(file);
+printf(&quot;時間戳記日誌已建立\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 52：資料版本控制</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目52：版本控制\n&quot;);
+int version = 1;
+const char *data = &quot;初始資料&quot;;
+
+char filename[64];
+sprintf(filename, &quot;data_v%d.txt&quot;, version);
+FILE *file = fopen(filename, &quot;w&quot;);
+if (file == NULL) return 1;
+fprintf(file, &quot;%s&quot;, data);
+fclose(file);
+printf(&quot;已儲存版本 %d\n&quot;, version);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 53：配置檔案更新</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目53：更新配置\n&quot;);
+FILE *file = fopen(&quot;config.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char lines[20][128];
+int count = 0;
+while (fgets(lines[count], sizeof(lines[count]), file) != NULL) {
+    if (strncmp(lines[count], &quot;version=&quot;, 8) == 0) {
+        strcpy(lines[count], &quot;version=2.0\n&quot;);
+    }
+    count++;
+}
+fclose(file);
+
+file = fopen(&quot;config.txt&quot;, &quot;w&quot;);
+for (int i = 0; i &lt; count; i++) fprintf(file, &quot;%s&quot;, lines[i]);
+fclose(file);
+printf(&quot;配置已更新\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 54：資料格式轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目54：CSV 轉固定格式\n&quot;);
+FILE *csv_file = fopen(&quot;data.csv&quot;, &quot;r&quot;);
+FILE *txt_file = fopen(&quot;data.txt&quot;, &quot;w&quot;);
+if (csv_file == NULL || txt_file == NULL) return 1;
+char line[256];
+while (fgets(line, sizeof(line), csv_file) != NULL) {
+    line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+    /* 將逗號替換成 &quot; | &quot; */
+    for (char *p = line; *p; p++) {
+        if (*p == &#x27;,&#x27;) { fprintf(txt_file, &quot; | &quot;); }
+        else fputc(*p, txt_file);
+    }
+    fprintf(txt_file, &quot;\n&quot;);
+}
+fclose(csv_file); fclose(txt_file);
+printf(&quot;格式轉換完成\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 55：資料索引建立</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目55：建立索引檔\n&quot;);
+FILE *file = fopen(&quot;students_struct.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+
+typedef struct { char id[16]; long pos; } IndexEntry;
+IndexEntry index[100];
+int count = 0;
+long position = 0;
+char line[128];
+while (fgets(line, sizeof(line), file) != NULL) {
+    char *bar = strchr(line, &#x27;|&#x27;);
+    if (bar != NULL) *bar = &#x27;\0&#x27;;
+    strcpy(index[count].id, line);
+    index[count].pos = position;
+    position += (long)strlen(line) + (bar ? 1 : 0);  /* 概略位置計算 */
+    count++;
+}
+fclose(file);
+
+FILE *idx_file = fopen(&quot;students.idx&quot;, &quot;w&quot;);
+for (int i = 0; i &lt; count; i++) fprintf(idx_file, &quot;%s:%ld\n&quot;, index[i].id, index[i].pos);
+fclose(idx_file);
+printf(&quot;索引檔已建立\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 56：批次檔案處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目56：批次處理多個檔案\n&quot;);
+const char *filenames[] = {&quot;file1.txt&quot;, &quot;file2.txt&quot;, &quot;file3.txt&quot;};
+int n = 3;
+
+for (int i = 0; i &lt; n; i++) {
+    FILE *file = fopen(filenames[i], &quot;w&quot;);
+    if (file == NULL) continue;
+    fprintf(file, &quot;這是 %s 的內容\n&quot;, filenames[i]);
+    fclose(file);
+}
+printf(&quot;已建立 %d 個檔案\n&quot;, n);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 57：檔案內容合併</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目57：合併多個檔案\n&quot;);
+const char *filenames[] = {&quot;file1.txt&quot;, &quot;file2.txt&quot;, &quot;file3.txt&quot;};
+int n = 3;
+
+FILE *merged = fopen(&quot;merged.txt&quot;, &quot;w&quot;);
+if (merged == NULL) return 1;
+for (int i = 0; i &lt; n; i++) {
+    FILE *file = fopen(filenames[i], &quot;r&quot;);
+    if (file == NULL) continue;
+    char content[1024] = {0};
+    fread(content, 1, sizeof(content) - 1, file);
+    fclose(file);
+    fprintf(merged, &quot;=== %s ===\n&quot;, filenames[i]);
+    fprintf(merged, &quot;%s&quot;, content);
+    fprintf(merged, &quot;\n&quot;);
+}
+fclose(merged);
+printf(&quot;檔案已合併\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 58：資料分割</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目58：分割大檔案\n&quot;);
+FILE *file = fopen(&quot;merged.txt&quot;, &quot;r&quot;);
+if (file == NULL) return 1;
+char lines[1000][256];
+int total = 0;
+while (fgets(lines[total], sizeof(lines[total]), file) != NULL) total++;
+fclose(file);
+
+int chunk_size = 2;
+int chunk_num = 1;
+for (int i = 0; i &lt; total; i += chunk_size) {
+    char chunk_name[32];
+    sprintf(chunk_name, &quot;chunk_%d.txt&quot;, chunk_num);
+    FILE *chunk_file = fopen(chunk_name, &quot;w&quot;);
+    for (int j = i; j &lt; i + chunk_size &amp;&amp; j &lt; total; j++) {
+        fprintf(chunk_file, &quot;%s&quot;, lines[j]);
+    }
+    fclose(chunk_file);
+    chunk_num++;
+}
+printf(&quot;已分割成 %d 個檔案\n&quot;, chunk_num - 1);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 59：檔案比較</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目59：比較兩個檔案\n&quot;);
+const char *file1_lines[] = {&quot;line1\n&quot;, &quot;line2\n&quot;, &quot;line3\n&quot;};
+const char *file2_lines[] = {&quot;line1\n&quot;, &quot;line2_modified\n&quot;, &quot;line3\n&quot;};
+
+FILE *file = fopen(&quot;compare1.txt&quot;, &quot;w&quot;);
+for (int i = 0; i &lt; 3; i++) fprintf(file, &quot;%s&quot;, file1_lines[i]);
+fclose(file);
+
+file = fopen(&quot;compare2.txt&quot;, &quot;w&quot;);
+for (int i = 0; i &lt; 3; i++) fprintf(file, &quot;%s&quot;, file2_lines[i]);
+fclose(file);
+
+FILE *f1 = fopen(&quot;compare1.txt&quot;, &quot;r&quot;);
+FILE *f2 = fopen(&quot;compare2.txt&quot;, &quot;r&quot;);
+char l1[256], l2[256];
+char differences[100][32];
+int diff_count = 0;
+int i = 1;
+while (fgets(l1, sizeof(l1), f1) != NULL &amp;&amp; fgets(l2, sizeof(l2), f2) != NULL) {
+    if (strcmp(l1, l2) != 0) {
+        sprintf(differences[diff_count++], &quot;第%d行不同&quot;, i);
+    }
+    i++;
+}
+fclose(f1); fclose(f2);
+
+if (diff_count == 0) {
+    printf(&quot;檔案相同\n&quot;);
+} else {
+    printf(&quot;找到差異：&quot;);
+    for (int k = 0; k &lt; diff_count; k++) printf(&quot;%s%s&quot;, differences[k], (k &lt; diff_count - 1) ? &quot;, &quot; : &quot;\n&quot;);
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 60：資料壓縮（簡易 RLE）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目60：簡易資料壓縮\n&quot;);
+const char *text = &quot;AAABBBCCCCDDDD&quot;;
+int len = (int)strlen(text);
+
+char compressed[256] = &quot;&quot;;
+int i = 0;
+while (i &lt; len) {
+    char ch = text[i];
+    int count = 1;
+    while (i + count &lt; len &amp;&amp; text[i + count] == ch) count++;
+    char part[16];
+    sprintf(part, &quot;%c%d&quot;, ch, count);
+    strcat(compressed, part);
+    i += count;
+}
+
+FILE *file = fopen(&quot;compressed.txt&quot;, &quot;w&quot;);
+fprintf(file, &quot;%s&quot;, compressed);
+fclose(file);
+
+printf(&quot;原始：%s\n&quot;, text);
+printf(&quot;壓縮：%s\n&quot;, compressed);</pre>
+        </div>
+
+        <h2 id="module4">🙂 模組四：實務應用與進階技巧（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 61：學生成績管理系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目61：成績管理系統\n&quot;);
+typedef struct { char id[16]; char name[32]; int score; } Student;
+
+void save_student(const char *filename, Student s) {
+    FILE *file = fopen(filename, &quot;a&quot;);
+    if (file == NULL) return;
+    fprintf(file, &quot;%s,%s,%d\n&quot;, s.id, s.name, s.score);
+    fclose(file);
+}
+
+int load_students(const char *filename, Student out[]) {
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if (file == NULL) return 0;
+    int count = 0;
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        sscanf(line, &quot;%15[^,],%31[^,],%d&quot;, out[count].id, out[count].name, &amp;out[count].score);
+        count++;
+    }
+    fclose(file);
+    return count;
+}
+
+/* 在 main 中呼叫： */
+save_student(&quot;grades.txt&quot;, (Student){&quot;S001&quot;, &quot;Alice&quot;, 85});
+save_student(&quot;grades.txt&quot;, (Student){&quot;S002&quot;, &quot;Bob&quot;, 90});
+
+Student students[100];
+int n = load_students(&quot;grades.txt&quot;, students);
+printf(&quot;載入學生：\n&quot;);
+for (int i = 0; i &lt; n; i++) printf(&quot;  {id:%s, name:%s, score:%d}\n&quot;, students[i].id, students[i].name, students[i].score);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 62：商品庫存系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目62：庫存管理\n&quot;);
+typedef struct { char name[32]; int price; int stock; } Product;
+
+void update_stock(const char *filename, const char *product_name, int quantity_change) {
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if (file == NULL) return;
+    char header[256];
+    fgets(header, sizeof(header), file);
+
+    Product products[100];
+    int count = 0;
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        sscanf(line, &quot;%31[^,],%d,%d&quot;, products[count].name, &amp;products[count].price, &amp;products[count].stock);
+        count++;
+    }
+    fclose(file);
+
+    for (int i = 0; i &lt; count; i++) {
+        if (strcmp(products[i].name, product_name) == 0) {
+            products[i].stock += quantity_change;
+        }
+    }
+
+    file = fopen(filename, &quot;w&quot;);
+    fprintf(file, &quot;%s&quot;, header);
+    for (int i = 0; i &lt; count; i++) {
+        fprintf(file, &quot;%s,%d,%d\n&quot;, products[i].name, products[i].price, products[i].stock);
+    }
+    fclose(file);
+}
+
+update_stock(&quot;products.csv&quot;, &quot;筆記本&quot;, -5);
+printf(&quot;庫存已更新\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 63：交易記錄系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目63：交易記錄\n&quot;);
+typedef struct { char date[16]; char type[16]; double amount; } Transaction;
+
+void log_transaction(const char *filename, Transaction t) {
+    FILE *file = fopen(filename, &quot;a&quot;);
+    if (file == NULL) return;
+    fprintf(file, &quot;%s,%s,%.2f\n&quot;, t.date, t.type, t.amount);
+    fclose(file);
+}
+
+double get_balance(const char *filename) {
+    double balance = 0;
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if (file == NULL) return 0;
+    char date[16], type[16];
+    double amount;
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        sscanf(line, &quot;%15[^,],%15[^,],%lf&quot;, date, type, &amp;amount);
+        if (strcmp(type, &quot;存款&quot;) == 0) balance += amount;
+        else if (strcmp(type, &quot;提款&quot;) == 0) balance -= amount;
+    }
+    fclose(file);
+    return balance;
+}
+
+log_transaction(&quot;transactions.txt&quot;, (Transaction){&quot;2025-10-02&quot;, &quot;存款&quot;, 1000});
+log_transaction(&quot;transactions.txt&quot;, (Transaction){&quot;2025-10-03&quot;, &quot;提款&quot;, 300});
+
+double balance = get_balance(&quot;transactions.txt&quot;);
+printf(&quot;目前餘額：%.2f 元\n&quot;, balance);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 64：資料匯出報表（HTML）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目64：生成 HTML 報表\n&quot;);
+typedef struct { char id[16]; char name[32]; int score; } Student;
+
+void generate_html_report(Student data[], int n, const char *filename) {
+    FILE *file = fopen(filename, &quot;w&quot;);
+    if (file == NULL) return;
+    fprintf(file,
+        &quot;&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;head&gt;\n&quot;
+        &quot;    &lt;meta charset=\&quot;UTF-8\&quot;&gt;\n    &lt;title&gt;報表&lt;/title&gt;\n&quot;
+        &quot;    &lt;style&gt;\n        table { border-collapse: collapse; width: 100%%; }\n&quot;
+        &quot;        th, td { border: 1px solid black; padding: 8px; text-align: left; }\n&quot;
+        &quot;        th { background-color: #f2f2f2; }\n    &lt;/style&gt;\n&lt;/head&gt;\n&lt;body&gt;\n&quot;
+        &quot;    &lt;h1&gt;學生成績報表&lt;/h1&gt;\n    &lt;table&gt;\n&quot;
+        &quot;        &lt;tr&gt;&lt;th&gt;學號&lt;/th&gt;&lt;th&gt;姓名&lt;/th&gt;&lt;th&gt;分數&lt;/th&gt;&lt;/tr&gt;\n&quot;);
+
+    for (int i = 0; i &lt; n; i++) {
+        fprintf(file, &quot;        &lt;tr&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%s&lt;/td&gt;&lt;td&gt;%d&lt;/td&gt;&lt;/tr&gt;\n&quot;,
+                data[i].id, data[i].name, data[i].score);
+    }
+
+    fprintf(file, &quot;    &lt;/table&gt;\n&lt;/body&gt;\n&lt;/html&gt;&quot;);
+    fclose(file);
+}
+
+Student students_data[] = {
+    {&quot;S001&quot;, &quot;Alice&quot;, 85},
+    {&quot;S002&quot;, &quot;Bob&quot;, 90}
+};
+generate_html_report(students_data, 2, &quot;report.html&quot;);
+printf(&quot;HTML 報表已生成\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 65：資料匯入驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目65：匯入資料驗證\n&quot;);
+typedef struct { char id[16]; char name[32]; int score; } Record;
+
+int import_with_validation(const char *filename, Record valid[], char errors[][64], int *error_count) {
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if (file == NULL) return 0;
+    int valid_count = 0;
+    *error_count = 0;
+    char line[128];
+    int row = 1;
+    while (fgets(line, sizeof(line), file) != NULL) {
+        line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+        char id[16], name[32]; int score;
+        int matched = sscanf(line, &quot;%15[^,],%31[^,],%d&quot;, id, name, &amp;score);
+        if (matched != 3) {
+            sprintf(errors[(*error_count)++], &quot;第%d行：欄位數量或格式錯誤&quot;, row);
+        } else if (score &lt; 0 || score &gt; 100) {
+            sprintf(errors[(*error_count)++], &quot;第%d行：分數超出範圍&quot;, row);
+        } else {
+            strcpy(valid[valid_count].id, id);
+            strcpy(valid[valid_count].name, name);
+            valid[valid_count].score = score;
+            valid_count++;
+        }
+        row++;
+    }
+    fclose(file);
+    return valid_count;
+}
+
+Record valid[100];
+char errors[100][64];
+int error_count = 0;
+int valid_count = import_with_validation(&quot;grades.txt&quot;, valid, errors, &amp;error_count);
+printf(&quot;有效資料：%d 筆\n&quot;, valid_count);
+printf(&quot;錯誤：%d 筆\n&quot;, error_count);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 66：資料同步</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目66：資料同步\n&quot;);
+void sync_files(const char *source, const char *target) {
+    FILE *src = fopen(source, &quot;r&quot;);
+    FILE *tgt = fopen(target, &quot;w&quot;);
+    if (src == NULL || tgt == NULL) return;
+    char buffer[4096];
+    size_t bytes;
+    while ((bytes = fread(buffer, 1, sizeof(buffer), src)) &gt; 0) {
+        fwrite(buffer, 1, bytes, tgt);
+    }
+    fclose(src); fclose(tgt);
+    printf(&quot;%s -&gt; %s 同步完成\n&quot;, source, target);
+}
+
+sync_files(&quot;products.csv&quot;, &quot;products_mirror.csv&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 67：增量備份</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目67：增量備份\n&quot;);
+void incremental_backup(const char *filename, const char *backup_dir) {
+    int backup_count = 1;
+    char backup_name[128];
+    sprintf(backup_name, &quot;%s/backup_%d.txt&quot;, backup_dir, backup_count);
+
+    /* 找出尚未使用的檔名 */
+    FILE *test;
+    while ((test = fopen(backup_name, &quot;r&quot;)) != NULL) {
+        fclose(test);
+        backup_count++;
+        sprintf(backup_name, &quot;%s/backup_%d.txt&quot;, backup_dir, backup_count);
+    }
+
+    FILE *source = fopen(filename, &quot;r&quot;);
+    FILE *backup = fopen(backup_name, &quot;w&quot;);
+    if (source == NULL || backup == NULL) return;
+    char buffer[4096];
+    size_t bytes;
+    while ((bytes = fread(buffer, 1, sizeof(buffer), source)) &gt; 0) {
+        fwrite(buffer, 1, bytes, backup);
+    }
+    fclose(source); fclose(backup);
+    printf(&quot;備份到：%s\n&quot;, backup_name);
+}
+
+incremental_backup(&quot;data.csv&quot;, &quot;backups&quot;);  /* backups 目錄須事先建立 */</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 68：檔案搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目68：搜尋檔案內容\n&quot;);
+typedef struct { char file[32]; int line; char content[128]; } SearchResult;
+
+int search_in_files(const char *keyword, const char *filenames[], int n, SearchResult results[]) {
+    int result_count = 0;
+    for (int f = 0; f &lt; n; f++) {
+        FILE *file = fopen(filenames[f], &quot;r&quot;);
+        if (file == NULL) continue;
+        char line[128];
+        int line_num = 1;
+        while (fgets(line, sizeof(line), file) != NULL) {
+            line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+            if (strstr(line, keyword) != NULL) {
+                strcpy(results[result_count].file, filenames[f]);
+                results[result_count].line = line_num;
+                strcpy(results[result_count].content, line);
+                result_count++;
+            }
+            line_num++;
+        }
+        fclose(file);
+    }
+    return result_count;
+}
+
+const char *files_to_search[] = {&quot;test1.txt&quot;, &quot;test2.txt&quot;, &quot;test3.txt&quot;};
+SearchResult search_results[100];
+int found = search_in_files(&quot;C&quot;, files_to_search, 3, search_results);
+printf(&quot;搜尋結果：找到 %d 筆\n&quot;, found);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 69：資料清理工具</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目69：資料清理\n&quot;);
+void clean_csv(const char *input_file, const char *output_file) {
+    FILE *file = fopen(input_file, &quot;r&quot;);
+    if (file == NULL) return;
+    char lines[1000][256];
+    int count = 0;
+    while (fgets(lines[count], sizeof(lines[count]), file) != NULL) count++;
+    fclose(file);
+
+    FILE *out = fopen(output_file, &quot;w&quot;);
+    int cleaned = 0;
+    for (int i = 0; i &lt; count; i++) {
+        char temp[256];
+        strcpy(temp, lines[i]);
+        temp[strcspn(temp, &quot;\n&quot;)] = &#x27;\0&#x27;;
+        if (strlen(temp) &gt; 0) {
+            fprintf(out, &quot;%s\n&quot;, temp);
+            cleaned++;
+        }
+    }
+    fclose(out);
+    printf(&quot;已清理 %d 行資料\n&quot;, cleaned);
+}
+
+clean_csv(&quot;data.csv&quot;, &quot;data_cleaned.csv&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 70：資料轉換管道</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目70：資料轉換管道\n&quot;);
+void process_pipeline(const char *input_file, const char *output_file) {
+    FILE *file = fopen(input_file, &quot;r&quot;);
+    if (file == NULL) return;
+    char header[128];
+    fgets(header, sizeof(header), file);
+
+    FILE *out = fopen(output_file, &quot;w&quot;);
+    fprintf(out, &quot;姓名,分數,等級\n&quot;);
+
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        char name[32]; int score;
+        sscanf(line, &quot;%31[^,],%d&quot;, name, &amp;score);
+        char grade = (score &gt;= 90) ? &#x27;A&#x27; : (score &gt;= 80) ? &#x27;B&#x27; : &#x27;C&#x27;;
+        fprintf(out, &quot;%s,%d,%c\n&quot;, name, score, grade);
+    }
+    fclose(file); fclose(out);
+}
+
+process_pipeline(&quot;scores1.csv&quot;, &quot;scores_processed.csv&quot;);
+printf(&quot;資料處理完成\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 71：報表生成器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目71：多格式報表\n&quot;);
+typedef struct { char name[32]; int score; } Item;
+
+void generate_report(Item data[], int n, const char *format_type) {
+    if (strcmp(format_type, &quot;txt&quot;) == 0) {
+        FILE *file = fopen(&quot;report.txt&quot;, &quot;w&quot;);
+        fprintf(file, &quot;=== 成績報表 ===\n&quot;);
+        for (int i = 0; i &lt; n; i++) fprintf(file, &quot;%s: %d\n&quot;, data[i].name, data[i].score);
+        fclose(file);
+    } else if (strcmp(format_type, &quot;csv&quot;) == 0) {
+        FILE *file = fopen(&quot;report.csv&quot;, &quot;w&quot;);
+        fprintf(file, &quot;姓名,分數\n&quot;);
+        for (int i = 0; i &lt; n; i++) fprintf(file, &quot;%s,%d\n&quot;, data[i].name, data[i].score);
+        fclose(file);
+    }
+}
+
+Item report_data[] = {{&quot;Alice&quot;, 85}, {&quot;Bob&quot;, 90}};
+generate_report(report_data, 2, &quot;txt&quot;);
+generate_report(report_data, 2, &quot;csv&quot;);
+printf(&quot;報表已生成\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 72：資料快取系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目72：快取機制\n&quot;);
+const char *cache_file = &quot;cache.txt&quot;;
+
+int get_cached_data(const char *key, char *value_out) {
+    FILE *file = fopen(cache_file, &quot;r&quot;);
+    if (file == NULL) return 0;
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+        char *colon = strchr(line, &#x27;:&#x27;);
+        if (colon == NULL) continue;
+        *colon = &#x27;\0&#x27;;
+        if (strcmp(line, key) == 0) {
+            strcpy(value_out, colon + 1);
+            fclose(file);
+            return 1;
+        }
+    }
+    fclose(file);
+    return 0;
+}
+
+void set_cache(const char *key, const char *value) {
+    typedef struct { char key[32]; char value[32]; } Entry;
+    Entry cache[100];
+    int count = 0;
+
+    FILE *file = fopen(cache_file, &quot;r&quot;);
+    if (file != NULL) {
+        char line[128];
+        while (fgets(line, sizeof(line), file) != NULL) {
+            line[strcspn(line, &quot;\n&quot;)] = &#x27;\0&#x27;;
+            char *colon = strchr(line, &#x27;:&#x27;);
+            if (colon == NULL) continue;
+            *colon = &#x27;\0&#x27;;
+            strcpy(cache[count].key, line);
+            strcpy(cache[count].value, colon + 1);
+            count++;
+        }
+        fclose(file);
+    }
+
+    int found = 0;
+    for (int i = 0; i &lt; count; i++) {
+        if (strcmp(cache[i].key, key) == 0) {
+            strcpy(cache[i].value, value);
+            found = 1;
+        }
+    }
+    if (!found) {
+        strcpy(cache[count].key, key);
+        strcpy(cache[count].value, value);
+        count++;
+    }
+
+    file = fopen(cache_file, &quot;w&quot;);
+    for (int i = 0; i &lt; count; i++) fprintf(file, &quot;%s:%s\n&quot;, cache[i].key, cache[i].value);
+    fclose(file);
+}
+
+set_cache(&quot;user_count&quot;, &quot;100&quot;);
+char value[32] = &quot;&quot;;
+get_cached_data(&quot;user_count&quot;, value);
+printf(&quot;快取值：%s\n&quot;, value);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 73：資料歸檔</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目73：歸檔舊資料\n&quot;);
+void archive_old_data(const char *source_file, const char *archive_file, int days_old) {
+    (void)archive_file; (void)days_old;  /* 本範例未實作日期判斷，示範保留標頭改寫檔案 */
+    FILE *file = fopen(source_file, &quot;r&quot;);
+    if (file == NULL) return;
+    char header[128];
+    fgets(header, sizeof(header), file);
+
+    char lines[1000][256];
+    int count = 0;
+    while (fgets(lines[count], sizeof(lines[count]), file) != NULL) count++;
+    fclose(file);
+
+    file = fopen(source_file, &quot;w&quot;);
+    fprintf(file, &quot;%s&quot;, header);
+    for (int i = 0; i &lt; count; i++) fprintf(file, &quot;%s&quot;, lines[i]);
+    fclose(file);
+
+    printf(&quot;已歸檔 0 筆資料\n&quot;);
+}
+
+archive_old_data(&quot;transactions.txt&quot;, &quot;transactions_archive.txt&quot;, 30);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 74：資料匯出器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目74：自訂格式匯出\n&quot;);
+typedef struct { char name[32]; int age; int score; } Item;
+
+void export_custom_format(Item data[], int n, const char *filename, const char *separator) {
+    FILE *file = fopen(filename, &quot;w&quot;);
+    if (file == NULL) return;
+    for (int i = 0; i &lt; n; i++) {
+        fprintf(file, &quot;%s%s%d%s%d\n&quot;, data[i].name, separator, data[i].age, separator, data[i].score);
+    }
+    fclose(file);
+}
+
+Item export_data[] = {
+    {&quot;Alice&quot;, 20, 85},
+    {&quot;Bob&quot;, 22, 90}
+};
+export_custom_format(export_data, 2, &quot;export.txt&quot;, &quot; | &quot;);
+printf(&quot;已匯出自訂格式\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 75：批次資料處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目75：批次處理\n&quot;);
+typedef struct { char file[32]; int result; } BatchResult;
+
+int count_lines(const char *content) {
+    int lines = 1;
+    for (int i = 0; content[i] != &#x27;\0&#x27;; i++) if (content[i] == &#x27;\n&#x27;) lines++;
+    return lines;
+}
+
+int batch_process_files(const char *file_list[], int n, BatchResult results[], int (*operation)(const char *)) {
+    int result_count = 0;
+    for (int i = 0; i &lt; n; i++) {
+        FILE *file = fopen(file_list[i], &quot;r&quot;);
+        strcpy(results[result_count].file, file_list[i]);
+        if (file == NULL) {
+            results[result_count].result = -1;  /* 代表錯誤 */
+        } else {
+            char content[2048] = {0};
+            fread(content, 1, sizeof(content) - 1, file);
+            fclose(file);
+            results[result_count].result = operation(content);
+        }
+        result_count++;
+    }
+    return result_count;
+}
+
+const char *files[] = {&quot;test1.txt&quot;, &quot;test2.txt&quot;};
+BatchResult results[10];
+int n = batch_process_files(files, 2, results, count_lines);
+printf(&quot;批次處理結果：\n&quot;);
+for (int i = 0; i &lt; n; i++) printf(&quot;  {file:%s, result:%d}\n&quot;, results[i].file, results[i].result);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 76：資料校驗碼</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目76：簡易校驗碼\n&quot;);
+long calculate_checksum(const char *filename) {
+    FILE *file = fopen(filename, &quot;r&quot;);
+    if (file == NULL) return -1;
+    long checksum = 0;
+    int ch;
+    while ((ch = fgetc(file)) != EOF) {
+        checksum += ch;  /* 逐位元組加總（對純 ASCII 內容等同於逐字元） */
+    }
+    fclose(file);
+    return checksum % 1000;
+}
+
+long checksum = calculate_checksum(&quot;test1.txt&quot;);
+printf(&quot;校驗碼：%ld\n&quot;, checksum);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 77：資料分析報告</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目77：分析報告生成\n&quot;);
+void generate_analysis_report(const char *csv_file, const char *output_file) {
+    FILE *file = fopen(csv_file, &quot;r&quot;);
+    if (file == NULL) return;
+    char header[128];
+    fgets(header, sizeof(header), file);
+
+    int scores[1000], count = 0;
+    char name[32]; int score;
+    char line[128];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        if (sscanf(line, &quot;%31[^,],%d&quot;, name, &amp;score) == 2) {
+            scores[count++] = score;
+        }
+    }
+    fclose(file);
+
+    if (count &gt; 0) {
+        int max_s = scores[0], min_s = scores[0], sum = 0;
+        for (int i = 0; i &lt; count; i++) {
+            if (scores[i] &gt; max_s) max_s = scores[i];
+            if (scores[i] &lt; min_s) min_s = scores[i];
+            sum += scores[i];
+        }
+        FILE *out = fopen(output_file, &quot;w&quot;);
+        fprintf(out, &quot;\n資料分析報告\n============\n&quot;);
+        fprintf(out, &quot;總筆數：%d\n&quot;, count);
+        fprintf(out, &quot;平均分：%.2f\n&quot;, (double)sum / count);
+        fprintf(out, &quot;最高分：%d\n&quot;, max_s);
+        fprintf(out, &quot;最低分：%d\n&quot;, min_s);
+        fprintf(out, &quot;總分：%d\n&quot;, sum);
+        fclose(out);
+        printf(&quot;分析報告已生成\n&quot;);
+    }
+}
+
+generate_analysis_report(&quot;scores1.csv&quot;, &quot;analysis_report.txt&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 78：資料去重工具</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目78：去除重複資料\n&quot;);
+void remove_duplicates(const char *input_file, const char *output_file) {
+    FILE *file = fopen(input_file, &quot;r&quot;);
+    if (file == NULL) return;
+    char lines[1000][256];
+    int total = 0;
+    while (fgets(lines[total], sizeof(lines[total]), file) != NULL) total++;
+    fclose(file);
+
+    char unique_lines[1000][256];
+    int unique_count = 0;
+    for (int i = 0; i &lt; total; i++) {
+        int seen = 0;
+        for (int j = 0; j &lt; unique_count; j++) {
+            if (strcmp(unique_lines[j], lines[i]) == 0) { seen = 1; break; }
+        }
+        if (!seen) strcpy(unique_lines[unique_count++], lines[i]);
+    }
+
+    FILE *out = fopen(output_file, &quot;w&quot;);
+    for (int i = 0; i &lt; unique_count; i++) fprintf(out, &quot;%s&quot;, unique_lines[i]);
+    fclose(out);
+
+    printf(&quot;原始：%d 行，去重後：%d 行\n&quot;, total, unique_count);
+}
+
+remove_duplicates(&quot;data.csv&quot;, &quot;data_unique.csv&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 79：智慧日誌系統（結構＋函式模擬物件）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>/* C 沒有類別，改用「結構 + 操作該結構的函式」模擬 Python 的 class */
+printf(&quot;\n題目79：智慧日誌\n&quot;);
+typedef struct { char filename[64]; } SimpleLogger;
+
+void logger_log(SimpleLogger *logger, const char *level, const char *message) {
+    const char *timestamp = &quot;2025-10-02 10:00:00&quot;;
+    FILE *file = fopen(logger-&gt;filename, &quot;a&quot;);
+    if (file == NULL) return;
+    fprintf(file, &quot;[%s] [%s] %s\n&quot;, timestamp, level, message);
+    fclose(file);
+}
+
+void logger_info(SimpleLogger *logger, const char *message) { logger_log(logger, &quot;INFO&quot;, message); }
+void logger_error(SimpleLogger *logger, const char *message) { logger_log(logger, &quot;ERROR&quot;, message); }
+
+SimpleLogger logger;
+strcpy(logger.filename, &quot;app_smart.log&quot;);
+logger_info(&amp;logger, &quot;應用程式啟動&quot;);
+logger_error(&amp;logger, &quot;發生錯誤&quot;);
+
+printf(&quot;智慧日誌已記錄\n&quot;);</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 80：完整檔案管理系統（結構＋函式模擬物件）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>printf(&quot;\n題目80：檔案管理系統\n&quot;);
+typedef struct { char base_dir[64]; } FileManager;
+
+char *fm_create_file(FileManager *fm, const char *filename, const char *content, char *result) {
+    char path[128];
+    sprintf(path, &quot;%s/%s&quot;, fm-&gt;base_dir, filename);
+    FILE *file = fopen(path, &quot;w&quot;);
+    if (file != NULL) {
+        fprintf(file, &quot;%s&quot;, content);
+        fclose(file);
+    }
+    sprintf(result, &quot;已建立：%s&quot;, path);
+    return result;
+}
+
+char *fm_read_file(FileManager *fm, const char *filename, char *result) {
+    char path[128];
+    sprintf(path, &quot;%s/%s&quot;, fm-&gt;base_dir, filename);
+    FILE *file = fopen(path, &quot;r&quot;);
+    if (file == NULL) {
+        strcpy(result, &quot;檔案不存在&quot;);
+        return result;
+    }
+    fread(result, 1, 1024, file);
+    fclose(file);
+    return result;
+}
+
+int fm_delete_file(const char *base_dir, const char *filename, char *result) {
+    char path[128];
+    sprintf(path, &quot;%s/%s&quot;, base_dir, filename);
+    int ok = (remove(path) == 0);
+    sprintf(result, &quot;已刪除：%s&quot;, filename);
+    return ok;
+}
+
+FileManager fm;
+strcpy(fm.base_dir, &quot;data&quot;);  /* data 目錄須事先建立 */
+char msg[128] = {0};
+fm_create_file(&amp;fm, &quot;test.txt&quot;, &quot;測試內容&quot;, msg);
+
+char content[1024] = {0};
+fm_read_file(&amp;fm, &quot;test.txt&quot;, content);
+printf(&quot;讀取內容：%s\n&quot;, content);</pre>
+        </div>
+
+    </div>
+    <div class="toast" id="toast">程式碼已複製！</div>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

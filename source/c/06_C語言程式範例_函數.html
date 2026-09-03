@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言函數教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .nav-buttons { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
+        .nav-btn { background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s ease; text-decoration: none; display: inline-block; }
+        .nav-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言函數教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：函數基礎（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 1：無參數無回傳值函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void greet() {
+    printf(&quot;Hello, World!\n&quot;);
+}
+
+int main() {
+    printf(&quot;\n題目1：最簡單的函數\n&quot;);
+    greet();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 2：有參數無回傳值函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void greet_person(char *name) {
+    printf(&quot;你好，%s！\n&quot;, name);
+}
+
+int main() {
+    printf(&quot;\n題目2：帶參數的函數\n&quot;);
+    greet_person(&quot;小明&quot;);
+    greet_person(&quot;Alice&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 3：有回傳值的函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    printf(&quot;\n題目3：有回傳值的函數\n&quot;);
+    int result = add(5, 3);
+    printf(&quot;5 + 3 = %d\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 4：多個參數的函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int rectangle_area(int length, int width) {
+    return length * width;
+}
+
+int main() {
+    printf(&quot;\n題目4：多個參數\n&quot;);
+    int area = rectangle_area(5, 3);
+    printf(&quot;矩形面積(5×3)= %d\n&quot;, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 5：使用預設參數值呼叫其他函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+double pow_default(double base) {
+    return pow(base, 2);  // 在 pow() 函數指定預設參數值 2
+}
+
+int main() {
+    printf(&quot;\n題目5：使用預設參數值呼叫其他函數\n&quot;);
+    printf(&quot;2 的平方 = %.0f\n&quot;, pow_default(2));
+    printf(&quot;2 的 3 次方 = %.0f\n&quot;, pow(2, 3));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 6：回傳多個值（使用指標）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void divide_with_remainder(int dividend, int divisor, int *quotient, int *remainder) {
+    *quotient = dividend / divisor;
+    *remainder = dividend % divisor;
+}
+
+int main() {
+    printf(&quot;\n題目6：回傳多個值\n&quot;);
+    int q, r;
+    divide_with_remainder(17, 5, &amp;q, &amp;r);
+    printf(&quot;17 ÷ 5 = %d 餘 %d\n&quot;, q, r);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 7：使用註解建立函數說明文件</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+/*
+ * 計算 BMI 值
+ * weight: 體重(公斤)
+ * height: 身高(公尺)
+ */
+double calculate_bmi(double weight, double height) {
+    return weight / (height * height);
+}
+
+int main() {
+    printf(&quot;\n題目7：使用註解建立函數說明文件\n&quot;);
+    double bmi = calculate_bmi(70, 1.75);
+    printf(&quot;BMI = %.2f\n&quot;, bmi);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 8：布林回傳值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int is_even(int number) {
+    return number % 2 == 0;
+}
+
+int main() {
+    printf(&quot;\n題目8：回傳布林值\n&quot;);
+    printf(&quot;10 是偶數嗎？%s\n&quot;, is_even(10) ? &quot;true&quot; : &quot;false&quot;);
+    printf(&quot;7 是偶數嗎？%s\n&quot;, is_even(7) ? &quot;true&quot; : &quot;false&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 9：字串處理函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void reverse_string(const char *text, char *reversed) {
+    int len = strlen(text);
+    for (int i = 0; i &lt; len; i++) {
+        reversed[i] = text[len - 1 - i];
+    }
+    reversed[len] = &#x27;\0&#x27;;
+}
+
+int main() {
+    printf(&quot;\n題目9：字串處理函數\n&quot;);
+    char original[] = &quot;This is a book.&quot;;
+    char reversed_str[20];
+    reverse_string(original, reversed_str);
+    printf(&quot;原始：%s，反轉：%s\n&quot;, original, reversed_str);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 10：數值比較函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int find_max(int a, int b) {
+    if (a &gt; b) return a;
+    else return b;
+}
+
+int main() {
+    printf(&quot;\n題目10：找最大值\n&quot;);
+    int max_num = find_max(15, 23);
+    printf(&quot;15 和 23 的最大值 = %d\n&quot;, max_num);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 11：溫度轉換函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double celsius_to_fahrenheit(double celsius) {
+    return celsius * 9 / 5 + 32;
+}
+
+int main() {
+    printf(&quot;\n題目11：溫度轉換\n&quot;);
+    double celsius = 25;
+    double fahrenheit = celsius_to_fahrenheit(celsius);
+    printf(&quot;%.0f°C = %.1f°F\n&quot;, celsius, fahrenheit);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 12：函數內的條件判斷</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+char get_grade(int score) {
+    if (score &gt;= 90) return &#x27;A&#x27;;
+    else if (score &gt;= 80) return &#x27;B&#x27;;
+    else if (score &gt;= 70) return &#x27;C&#x27;;
+    else if (score &gt;= 60) return &#x27;D&#x27;;
+    else return &#x27;F&#x27;;
+}
+
+int main() {
+    printf(&quot;\n題目12：成績等級\n&quot;);
+    printf(&quot;85 分的等級：%c\n&quot;, get_grade(85));
+    printf(&quot;55 分的等級：%c\n&quot;, get_grade(55));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 13：函數內的迴圈</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+long factorial(int n) {
+    long result = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        result *= i;
+    }
+    return result;
+}
+
+int main() {
+    printf(&quot;\n題目13：階乘計算\n&quot;);
+    printf(&quot;5! = %d\n&quot;, factorial(5));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 14：累加函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int sum_range(int start, int end) {
+    int total = 0;
+    for (int i = start; i &lt;= end; i++) {
+        total += i;
+    }
+    return total;
+}
+
+int main() {
+    printf(&quot;\n題目14：計算總和\n&quot;);
+    printf(&quot;1 到 10 的總和 = %d\n&quot;, sum_range(1, 10));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 15：字串重複函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void repeat_string(const char *text, int times, char *result) {
+    result[0] = &#x27;\0&#x27;;
+    for (int i = 0; i &lt; times; i++) {
+        strcat(result, text);
+    }
+}
+
+int main() {
+    printf(&quot;\n題目15：字串重複\n&quot;);
+    char result[50];
+    repeat_string(&quot;Hi&quot;, 3, result);
+    printf(&quot;結果：%s\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 16：函數呼叫函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int square(int x) {
+    return x * x;
+}
+
+int sum_of_squares(int a, int b) {
+    return square(a) + square(b);
+}
+
+int main() {
+    printf(&quot;\n題目16：函數呼叫其他函數\n&quot;);
+    int result = sum_of_squares(3, 4);
+    printf(&quot;3² + 4² = %d\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 17：參數驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int safe_divide(double a, double b, double *result) {
+    if (b == 0) {
+        return 0;
+    }
+    *result = a / b;
+    return 1;
+}
+
+int main() {
+    printf(&quot;\n題目17：參數驗證\n&quot;);
+    double result;
+    if (safe_divide(10, 2, &amp;result))
+        printf(&quot;10 ÷ 2 = %.2f\n&quot;, result);
+    if (!safe_divide(10, 0, &amp;result))
+        printf(&quot;10 ÷ 0 = 無法除以零\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 18：提早返回</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 提早返回: 當某個條件滿足時，就立刻用 return 結束函式並返回結果
+const char* check_positive(int number) {
+    if (number &lt;= 0) return &quot;不是正數&quot;;
+    return &quot;是正數&quot;;
+}
+
+int main() {
+    printf(&quot;\n題目18：提早返回\n&quot;);
+    printf(&quot;5：%s\n&quot;, check_positive(5));
+    printf(&quot;-3：%s\n&quot;, check_positive(-3));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 19：偶數計數函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int count_evens(int numbers[], int size) {
+    int count = 0;
+    for (int i = 0; i &lt; size; i++) {
+        if (numbers[i] % 2 == 0) count++;
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目19：計數陣列中的偶數\n&quot;);
+    int data[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int size = sizeof(data) / sizeof(data[0]);
+    printf(&quot;陣列中有 %d 個偶數\n&quot;, count_evens(data, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 20：格式化輸出函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void print_info(const char *name, int age, const char *city) {
+    printf(&quot;姓名：%s，年齡：%d，城市：%s\n&quot;, name, age, city);
+}
+
+int main() {
+    printf(&quot;\n題目20：格式化輸出\n&quot;);
+    print_info(&quot;小明&quot;, 25, &quot;台北&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：函數進階應用（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 21：陣列加總函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int sum_array(int numbers[], int size) {
+    int total = 0;
+    for (int i = 0; i &lt; size; i++) {
+        total += numbers[i];
+    }
+    return total;
+}
+
+int main() {
+    printf(&quot;\n題目21：陣列加總\n&quot;);
+    int data[] = {10, 20, 30, 40, 50};
+    int size = sizeof(data) / sizeof(data[0]);
+    printf(&quot;陣列總和：%d\n&quot;, sum_array(data, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 22：陣列平均值函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int sum_array(int numbers[], int size) {
+    int total = 0;
+    for (int i = 0; i &lt; size; i++) total += numbers[i];
+    return total;
+}
+
+double average(int numbers[], int size) {
+    if (size == 0) return 0;
+    return (double)sum_array(numbers, size) / size;
+}
+
+int main() {
+    printf(&quot;\n題目22：計算平均\n&quot;);
+    int scores[] = {85, 90, 78, 92, 88};
+    int size = sizeof(scores) / sizeof(scores[0]);
+    printf(&quot;平均分數：%.2f\n&quot;, average(scores, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 23：陣列最大值函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int find_maximum(int numbers[], int size) {
+    int max_num = numbers[0];
+    for (int i = 0; i &lt; size; i++) {
+        if (numbers[i] &gt; max_num) max_num = numbers[i];
+    }
+    return max_num;
+}
+
+int main() {
+    printf(&quot;\n題目23：找最大值\n&quot;);
+    int data[] = {45, 78, 23, 91, 56};
+    int size = sizeof(data) / sizeof(data[0]);
+    printf(&quot;最大值：%d\n&quot;, find_maximum(data, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 24：陣列篩選函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int filter_evens(int numbers[], int size, int result[]) {
+    int count = 0;
+    for (int i = 0; i &lt; size; i++) {
+        if (numbers[i] % 2 == 0) {
+            result[count++] = numbers[i];
+        }
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目24：篩選出偶數\n&quot;);
+    int data[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int size = sizeof(data) / sizeof(data[0]);
+    int evens[8];
+    int count = filter_evens(data, size, evens);
+    printf(&quot;偶數：&quot;);
+    for (int i = 0; i &lt; count; i++) printf(&quot;%d &quot;, evens[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 25：陣列平方函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void square_all(int numbers[], int size, int result[]) {
+    for (int i = 0; i &lt; size; i++) {
+        result[i] = numbers[i] * numbers[i];
+    }
+}
+
+int main() {
+    printf(&quot;\n題目25：陣列平方\n&quot;);
+    int data[] = {1, 2, 3, 4, 5};
+    int size = sizeof(data) / sizeof(data[0]);
+    int squared[5];
+    square_all(data, size, squared);
+    printf(&quot;平方後：&quot;);
+    for (int i = 0; i &lt; size; i++) printf(&quot;%d &quot;, squared[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 26：字串母音分析函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+             <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int count_vowels(const char *text) {
+    char vowels[] = &quot;aeiouAEIOU&quot;;
+    int count = 0;
+    for (int i = 0; text[i] != &#x27;\0&#x27;; i++) {
+        int is_vowel = 0;
+        for (int j = 0; vowels[j] != &#x27;\0&#x27;; j++) {
+            if (text[i] == vowels[j]) { is_vowel = 1; break; }
+        }
+        if (is_vowel) count++;
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目26：字串母音分析函數\n&quot;);
+    char text[] = &quot;Hello World&quot;;
+    printf(&quot;&#x27;%s&#x27; 中有 %d 個母音\n&quot;, text, count_vowels(text));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 27：回文檢查函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void reverse_string(const char *text, char *reversed) {
+    int len = strlen(text);
+    for (int i = 0; i &lt; len; i++) reversed[i] = text[len - 1 - i];
+    reversed[len] = &#x27;\0&#x27;;
+}
+
+int is_palindrome(const char *text) {
+    char reversed[100];
+    reverse_string(text, reversed);
+    return strncmp(text, reversed, strlen(text)) == 0;  // JSCPP 不支援 strcmp() 函數
+}
+
+int main() {
+    printf(&quot;\n題目27：回文檢查\n&quot;);
+    printf(&quot;&#x27;radar&#x27; 是回文：%s\n&quot;, is_palindrome(&quot;radar&quot;) ? &quot;true&quot; : &quot;false&quot;);
+    printf(&quot;&#x27;python&#x27; 是回文：%s\n&quot;, is_palindrome(&quot;books&quot;) ? &quot;true&quot; : &quot;false&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 28：質數判斷函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int is_prime(int number) {
+    if (number &lt; 2) return false;
+    for (int i = 2; i &lt; number; i++) {
+        if (number % i == 0) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    printf(&quot;\n題目28：質數判斷\n&quot;);
+    printf(&quot;7 是質數：%s\n&quot;, is_prime(7) ? &quot;true&quot; : &quot;false&quot;);
+    printf(&quot;8 是質數：%s\n&quot;, is_prime(8) ? &quot;true&quot; : &quot;false&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 29：找出所有的質數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int is_prime(int number) {
+    if (number &lt; 2) return false;
+    for (int i = 2; i &lt; number; i++) {
+        if (number % i == 0) return 0;
+    }
+    return 1;
+}
+
+int find_primes(int start, int end, int primes[]) {
+    int count = 0;
+    for (int num = start; num &lt;= end; num++) {
+        if (is_prime(num)) primes[count++] = num;
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目29：找出範圍內質數\n&quot;);
+    int primes[20];
+    int count = find_primes(1, 20, primes);
+    printf(&quot;1 到 20 的質數：&quot;);
+    for (int i = 0; i &lt; count; i++) printf(&quot;%d &quot;, primes[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 30：費氏數列函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int fibonacci(int n, int fib[]) {
+    if (n &lt;= 0) return 0;
+    if (n &gt;= 1) fib[0] = 0;
+    if (n &gt;= 2) fib[1] = 1;
+    for (int i = 2; i &lt; n; i++) {
+        fib[i] = fib[i-1] + fib[i-2];
+    }
+    return n;
+}
+
+int main() {
+    printf(&quot;\n題目30：費氏數列\n&quot;);
+    int fib[10];
+    int n = fibonacci(10, fib);
+    printf(&quot;前 10 項費氏數列：&quot;);
+    for (int i = 0; i &lt; n; i++) printf(&quot;%d &quot;, fib[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 31：成績計數函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre><pre>#include &lt;stdio.h&gt;
+
+char get_grade(int score) {
+    if (score &gt;= 90) return &#x27;A&#x27;;
+    else if (score &gt;= 80) return &#x27;B&#x27;;
+    else if (score &gt;= 70) return &#x27;C&#x27;;
+    else if (score &gt;= 60) return &#x27;D&#x27;;
+    else return &#x27;F&#x27;;
+}
+
+void count_grades(int scores[], int size, int *a, int *b, int *c, int *d, int *f) {
+    *a = *b = *c = *d = *f = 0;
+    for (int i = 0; i &lt; size; i++) {
+        char grade = get_grade(scores[i]);
+        switch (grade) {
+            case &#x27;A&#x27;: (*a)++; break;
+            case &#x27;B&#x27;: (*b)++; break;
+            case &#x27;C&#x27;: (*c)++; break;
+            case &#x27;D&#x27;: (*d)++; break;
+            case &#x27;F&#x27;: (*f)++; break;
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目31：成績計數函數\n&quot;);
+    int scores[] = {85, 92, 78, 65, 90, 55, 88};
+    int size = sizeof(scores) / sizeof(scores[0]);
+    int ca, cb, cc, cd, cf;
+    count_grades(scores, size, &amp;ca, &amp;cb, &amp;cc, &amp;cd, &amp;cf);
+    printf(&quot;成績計數：{A: %d, B: %d, C: %d, D: %d, F: %d}\n&quot;, ca, cb, cc, cd, cf);
+    return 0;
+}</pre>
+
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 32：查詢學生分數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int get_student_score(char names[][20], int scores[], int size, const char *name) {
+    for (int i = 0; i &lt; size; i++) {
+        if (strncmp(names[i], name, strlen(names[i])) == 0) return scores[i];
+    }
+    return -1;
+}
+
+int main() {
+    printf(&quot;\n題目32：查詢學生分數\n&quot;);
+    char names[3][20] = {&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;};
+    int scores[3] = {85, 90, 78};
+    int s = get_student_score(names, scores, 3, &quot;Alice&quot;);
+    printf(&quot;Alice 的分數：%d\n&quot;, s);
+    int d = get_student_score(names, scores, 3, &quot;David&quot;);
+    printf(&quot;David 的分數：%d（找不到）\n&quot;, d);
+    return 0;
+}</pre>
+
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 33：合併鍵/值資料函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int merge_dicts(char k1[][10], int v1[], int n1, char k2[][10], int v2[], int n2, char rk[][10], int rv[]) {
+    int count = 0;
+    for (int i = 0; i &lt; n1; i++) { strcpy(rk[count], k1[i]); rv[count] = v1[i]; count++; }
+    for (int i = 0; i &lt; n2; i++) { strcpy(rk[count], k2[i]); rv[count] = v2[i]; count++; }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目33：合併鍵/值資料\n&quot;);
+    char d1k[2][10] = {&quot;a&quot;, &quot;b&quot;};
+    int d1v[2] = {1, 2};
+    char d2k[2][10] = {&quot;c&quot;, &quot;d&quot;};
+    int d2v[2] = {3, 4};
+    char rk[4][10];
+    int rv[4];
+    int count = merge_dicts(d1k, d1v, 2, d2k, d2v, 2, rk, rv);
+    printf(&quot;合併結果：{&quot;);
+    for (int i = 0; i &lt; count; i++) {
+        printf(&quot;&#x27;%s&#x27;: %d%s&quot;, rk[i], rv[i], i &lt; count - 1 ? &quot;, &quot; : &quot;&quot;);
+    }
+    printf(&quot;}\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 34：遞迴函數 - 階乘</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+long factorial_recursive(int n) {
+    if (n &lt;= 1) return 1;
+    return n * factorial_recursive(n - 1);
+}
+
+int main() {
+    printf(&quot;\n題目34：遞迴計算階乘\n&quot;);
+    printf(&quot;5! = %d\n&quot;, factorial_recursive(5));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 35：遞迴函數 - 總和</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int sum_recursive(int n) {
+    if (n &lt;= 0) return 0;
+    return n + sum_recursive(n - 1);
+}
+
+int main() {
+    printf(&quot;\n題目35：遞迴計算總和\n&quot;);
+    printf(&quot;1 到 10 的總和 = %d\n&quot;, sum_recursive(10));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 36：二進位轉換函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void to_binary(int number, char *binary) {
+    if (number == 0) {
+        binary[0] = &#x27;0&#x27;;
+        binary[1] = &#x27;\0&#x27;;
+        return;
+    }
+    char temp[32];
+    int idx = 0;
+    while (number &gt; 0) {
+        temp[idx++] = (number % 2) + &#x27;0&#x27;;
+        number /= 2;
+    }
+    for (int i = 0; i &lt; idx; i++) {
+        binary[i] = temp[idx - 1 - i];
+    }
+    binary[idx] = &#x27;\0&#x27;;
+}
+
+int main() {
+    printf(&quot;\n題目36：數字轉二進位字串\n&quot;);
+    char binary[32];
+    to_binary(20, binary);
+    printf(&quot;20 的二進位：%s\n&quot;, binary);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 37：排序函數（氣泡排序）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void bubble_sort(int numbers[], int size, int sorted[]) {
+    // 使用 for 迴圈逐一複製元素
+    for (int i = 0; i &lt; size; i++) {
+        sorted[i] = numbers[i];
+    }    
+    // 氣泡排序巢狀迴圈
+    for (int i = 0; i &lt; size; i++) {
+        for (int j = 0; j &lt; size - i - 1; j++) {
+            if (sorted[j] &gt; sorted[j + 1]) {
+                int temp = sorted[j];
+                sorted[j] = sorted[j + 1];
+                sorted[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void print_array(int arr[], int size) {
+    for (int i = 0; i &lt; size; i++) printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    printf("\n題目37：氣泡排序\n");
+    int data[] = {64, 34, 25, 12, 22, 11, 90};
+    int size = sizeof(data) / sizeof(data[0]);
+    int sorted[7];
+    bubble_sort(data, size, sorted);
+    printf("排序前：");
+    print_array(data, size);
+    printf("排序後：");
+    print_array(sorted, size);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 38：搜尋函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int linear_search(int numbers[], int size, int target) {
+    for (int i = 0; i &lt; size; i++) {
+        if (numbers[i] == target) return i;
+    }
+    return -1;
+}
+
+int main() {
+    printf(&quot;\n題目38：線性搜尋\n&quot;);
+    int data[] = {10, 20, 30, 40, 50};
+    int size = sizeof(data) / sizeof(data[0]);
+    int index = linear_search(data, size, 30);
+    printf(&quot;30 在索引：%d\n&quot;, index);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 39：標準差計算函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+double average(int numbers[], int size) {
+    int total = 0;
+    for (int i = 0; i &lt; size; i++) total += numbers[i];
+    return (double)total / size;
+}
+
+double standard_deviation(int numbers[], int size) {
+    double avg = average(numbers, size);
+    double variance = 0;
+    for (int i = 0; i &lt; size; i++) {
+        variance += (numbers[i] - avg) * (numbers[i] - avg);
+    }
+    variance /= size;
+    return sqrt(variance);
+}
+
+int main() {
+    printf(&quot;\n題目39：標準差計算\n&quot;);
+    int data[] = {10, 12, 23, 23, 16, 23, 21, 16};
+    int size = sizeof(data) / sizeof(data[0]);
+    printf(&quot;標準差：%.2f\n&quot;, standard_deviation(data, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 40：Email 資料驗證函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int is_valid_email(const char *email) {
+    int at_index = -1;
+    int dot_index = -1;
+    int len = strlen(email);
+    // 手動遍歷字串尋找字符位置
+    for (int i = 0; i &lt; len; i++) {
+        if (email[i] == '@') {
+            at_index = i;
+        } else if (email[i] == '.') {
+            dot_index = i;
+        }
+    }
+    // 若沒找到 '@' 或 '.'，或 '@' 出現在開頭/結尾，則為不合法
+    if (at_index == -1 || dot_index == -1) return 0;
+    if (at_index == 0 || at_index == len - 1) return 0;
+    return 1;
+}
+
+int main() {
+    printf("\n題目40：Email 格式簡易驗證\n");
+    printf("test@example.com：%s\n", is_valid_email("test@example.com") ? "true" : "false");
+    printf("invalid.com：%s\n", is_valid_email("invalid.com") ? "true" : "false");
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：函數互動應用（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 41：互動式計算機</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double calculator(double num1, char op, double num2, int *valid) {
+    *valid = 1;
+    switch (op) {
+        case &#x27;+&#x27;: return num1 + num2;
+        case &#x27;-&#x27;: return num1 - num2;
+        case &#x27;*&#x27;: return num1 * num2;
+        case &#x27;/&#x27;:
+            if (num2 != 0) return num1 / num2;
+            *valid = 0;
+            return 0;
+        default:
+            *valid = 0;
+            return 0;
+    }
+}
+
+int main() {
+    printf(&quot;\n題目41：簡易計算機\n&quot;);
+    double num1, num2, result;
+    char op[5];
+    printf(&quot;請輸入第一個數字：&quot;);
+    scanf(&quot;%f&quot;, &amp;num1);
+    printf(&quot;請輸入運算符號(+、-、*、/)：&quot;);
+    scanf(&quot;%s&quot;, op);  // JSCPP 請用字串輸入, 不要用字元輸入
+    printf(&quot;請輸入第二個數字：&quot;);
+    scanf(&quot;%f&quot;, &amp;num2);
+
+    int valid;
+    result = calculator(num1, op[0], num2, &amp;valid);
+    if (valid) printf(&quot;結果：%.2f\n&quot;, result);
+    else printf(&quot;結果：錯誤\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 42：輸入驗證函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double get_positive_number(const char *prompt) {
+    double num;
+    while (1) {
+        printf(&quot;%s&quot;, prompt);
+        scanf(&quot;%f&quot;, &amp;num);
+        if (num &gt; 0) return num;
+        printf(&quot;請輸入正數\n&quot;);
+    }
+}
+
+int main() {
+    printf(&quot;\n題目42：驗證輸入正整數\n&quot;);
+    double age = get_positive_number(&quot;請輸入年齡：&quot;);
+    printf(&quot;年齡：%.0f\n&quot;, age);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 43：選單系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int show_menu() {
+    int choice;
+    printf(&quot;\n=== 選單 ===\n&quot;);
+    printf(&quot;1. 加法\n&quot;);
+    printf(&quot;2. 減法\n&quot;);
+    printf(&quot;3. 離開\n&quot;);
+    printf(&quot;請選擇：&quot;);
+    scanf(&quot;%d&quot;, &amp;choice);
+    return choice;
+}
+
+void menu_calculator() {
+    while (1) {
+        int choice = show_menu();
+        if (choice == 3) {
+            printf(&quot;結束程式\n&quot;);
+            break;
+        }
+        double a, b;
+        printf(&quot;輸入第一個數：&quot;);
+        scanf(&quot;%f&quot;, &amp;a);
+        printf(&quot;輸入第二個數：&quot;);
+        scanf(&quot;%f&quot;, &amp;b);
+
+        if (choice == 1) printf(&quot;結果：%.2f\n&quot;, a + b);
+        else if (choice == 2) printf(&quot;結果：%.2f\n&quot;, a - b);
+    }
+}
+
+int main() {
+    printf(&quot;\n題目43：選單驅動程式\n&quot;);
+    menu_calculator();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 44：密碼驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int check_password() {
+    const char *password = &quot;password123&quot;;
+    int attempts = 0, max_attempts = 3;
+    char user_input[50];
+
+    while (attempts &lt; max_attempts) {
+        printf(&quot;請輸入密碼：&quot;);
+        scanf(&quot;%s&quot;, user_input);
+        if (strncmp(user_input, password, strlen(user_input)) == 0) return 1;
+        attempts++;
+        printf(&quot;密碼錯誤，剩餘 %d 次機會\n&quot;, max_attempts - attempts);
+    }
+    return 0;
+}
+
+int main() {
+    printf(&quot;\n題目44：密碼驗證\n&quot;);
+    if (check_password()) printf(&quot;登入成功\n&quot;);
+    else printf(&quot;登入失敗\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 45：BMI 計算器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+double calculate_bmi(double weight, double height) {
+    return weight / (height * height);
+}
+
+void bmi_calculator(double *bmi, char *status) {
+    double weight, height;
+    printf(&quot;請輸入體重(公斤)：&quot;);
+    scanf(&quot;%f&quot;, &amp;weight);
+    printf(&quot;請輸入身高(公尺)：&quot;);
+    scanf(&quot;%f&quot;, &amp;height);
+
+    *bmi = calculate_bmi(weight, height);
+
+    if (*bmi &gt;= 24) strcpy(status, &quot;過重&quot;);
+    else if (*bmi &gt;= 18.5) strcpy(status, &quot;正常&quot;);
+    else strcpy(status, &quot;過輕&quot;);
+}
+
+int main() {
+    printf(&quot;\n題目45：BMI 計算與建議\n&quot;);
+    double bmi;
+    char status[10];
+    bmi_calculator(&amp;bmi, status);
+    printf(&quot;BMI：%.2f，狀態：%s\n&quot;, bmi, status);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 46：成績統計系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+double average(double numbers[], int size) {
+    if (size == 0) return 0;
+    double total = 0;
+    for (int i = 0; i &lt; size; i++) total += numbers[i];
+    return total / size;
+}
+
+int main() {
+    printf(&quot;\n題目46：成績統計\n&quot;);
+    double scores[100];
+    int count = 0;
+    char input[20];
+
+    while (1) {
+        printf(&quot;請輸入成績(輸入 q 結束)：&quot;);
+        scanf(&quot;%s&quot;, input);
+        if (input[0] == &#x27;q&#x27; &amp;&amp; input[1] == &#x27;\0&#x27;) break;
+        scores[count++] = atof(input);
+    }
+
+    if (count == 0) {
+        printf(&quot;無資料\n&quot;);
+    } else {
+        double avg = average(scores, count);
+        double max_score = scores[0], min_score = scores[0];
+        for (int i = 1; i &lt; count; i++) {
+            if (scores[i] &gt; max_score) max_score = scores[i];
+            if (scores[i] &lt; min_score) min_score = scores[i];
+        }
+        printf(&quot;平均：%.2f，最高：%.0f，最低：%.0f\n&quot;, avg, max_score, min_score);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 47：購物車</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int shopping_cart(char items[][30], float prices[], int max, float *total) {
+    int count = 0;
+    *total = 0;
+    char item[30];
+    float p;
+    while (1) {
+        printf("輸入商品名(輸入'done'結束)：");
+        scanf("%s", item);
+        if (strncmp(item, "done", strlen(item)) == 0) break;
+        strcpy(items[count], item);
+        printf("輸入價格：");
+        scanf("%f", &amp;p);
+        prices[count] = p;
+        *total += prices[count];
+        count++;
+    }
+    return count;
+}
+
+int main() {
+    printf("\n題目47：購物車\n");
+    char items[50][30];
+    float prices[50];
+    float total;
+    int count = shopping_cart(items, prices, 50, &amp;total);
+    printf("購物清單：");
+    for (int i = 0; i &lt; count; i++) {
+        printf("{%s: %.1f} ", items[i], prices[i]);
+    }
+    printf("\n總金額：%.1f 元\n", total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 48：猜數字遊戲</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int guess_number_game() {
+    int secret = 42;
+    int attempts = 0;
+    int guess;
+
+    while (1) {
+        printf(&quot;猜一個數字(1-100)：&quot;);
+        scanf(&quot;%d&quot;, &amp;guess);
+        attempts++;
+
+        if (guess == secret) return attempts;
+        else if (guess &lt; secret) printf(&quot;太小了\n&quot;);
+        else printf(&quot;太大了\n&quot;);
+    }
+}
+
+int main() {
+    printf(&quot;\n題目48：猜數字遊戲\n&quot;);
+    int attempts = guess_number_game();
+    printf(&quot;恭喜答對！你猜了 %d 次\n&quot;, attempts);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 49：電話簿</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void find_phone(char names[][30], char phones[][20], int size, const char *name, char *out) {
+    for (int i = 0; i &lt; size; i++) {
+        if (strncmp(names[i], name, strlen(names[i])) == 0) { strcpy(out, phones[i]); return; }
+    }
+    strcpy(out, &quot;找不到&quot;);
+}
+
+int phonebook(char names[][30], char phones[][20]) {
+    int count = 0;
+    int choice;
+    while (1) {
+        printf(&quot;\n1.新增 2.查詢 3.離開\n&quot;);
+        printf(&quot;請選擇：&quot;);
+        scanf(&quot;%d&quot;, &amp;choice);
+        if (choice == 1) {
+            printf(&quot;姓名：&quot;);
+            scanf(&quot;%s&quot;, names[count]);
+            printf(&quot;電話：&quot;);
+            scanf(&quot;%s&quot;, phones[count]);
+            count++;
+            printf(&quot;已新增\n&quot;);
+        } else if (choice == 2) {
+            char name[30], out[20];
+            printf(&quot;查詢姓名：&quot;);
+            scanf(&quot;%s&quot;, name);
+            find_phone(names, phones, count, name, out);
+            printf(&quot;%s\n&quot;, out);
+        } else if (choice == 3) {
+            break;
+        }
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目49：電話簿\n&quot;);
+    char names[100][30];
+    char phones[100][20];
+    int count = phonebook(names, phones);
+    printf(&quot;電話簿：&quot;);
+    for (int i = 0; i &lt; count; i++) {
+        printf(&quot;{%s: %s} &quot;, names[i], phones[i]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 50：投票系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int find_candidate(char candidates[][20], int size, const char *name) {
+    for (int i = 0; i &lt; size; i++) {
+        if (strncmp(candidates[i], name, strlen(candidates[i])) == 0) return i;
+    }
+    return -1;
+}
+
+int main() {
+    printf(&quot;\n題目50：投票系統\n&quot;);
+    char candidates[][20] = {&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;};
+    int votes[3] = {0, 0, 0};
+    int num_candidates = 3;
+
+    printf(&quot;候選人：Alice, Bob, Charlie\n&quot;);
+
+    char vote[20];
+    while (1) {
+        printf(&quot;投給誰？(或 &#x27;end&#x27; 結束)：&quot;);
+        scanf(&quot;%s&quot;, vote);
+        if (strncmp(vote, &quot;end&quot;, strlen(vote)) == 0) break;
+
+        int idx = find_candidate(candidates, num_candidates, vote);
+        if (idx != -1) {
+            votes[idx]++;
+            printf(&quot;已投票\n&quot;);
+        } else {
+            printf(&quot;無效候選人\n&quot;);
+        }
+    }
+
+    printf(&quot;投票結果：&quot;);
+    for (int i = 0; i &lt; num_candidates; i++) {
+        printf(&quot;{%s: %d} &quot;, candidates[i], votes[i]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 51：待辦事項</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf(&quot;\n題目51：待辦事項\n&quot;);
+    char tasks[100][50];
+    int done[100];
+    int count = 0;
+    int choice;
+    while (1) {
+        printf(&quot;\n1.新增 2.顯示 3.完成 4.離開\n&quot;);
+        printf(&quot;請選擇：&quot;);
+        scanf(&quot;%d&quot;, &amp;choice);
+        if (choice == 1) {
+            printf(&quot;輸入任務：&quot;);
+            scanf(&quot;%s&quot;, tasks[count]);
+            done[count] = 0;
+            count++;
+        } else if (choice == 2) {
+            for (int i = 0; i &lt; count; i++) {
+                printf(&quot;%d. [%s] %s\n&quot;, i + 1, done[i] ? &quot;完成&quot; : &quot;未完成&quot;, tasks[i]);
+            }
+        } else if (choice == 3) {
+            int index;
+            printf(&quot;完成哪一項？&quot;);
+            scanf(&quot;%d&quot;, &amp;index);
+            index--;
+            if (index &gt;= 0 &amp;&amp; index &lt; count) done[index] = 1;
+        } else if (choice == 4) {
+            break;
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 52：溫度轉換器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double celsius_to_fahrenheit(double celsius) {
+    return celsius * 9 / 5 + 32;
+}
+
+int main() {
+    printf("\n題目52：溫度轉換器\n");
+    double temp;
+    char unit[5];
+    printf("輸入溫度：");
+    scanf("%f", &amp;temp);
+    printf("單位(C/F)：");
+    scanf("%s", unit);
+
+    if (unit[0] == 'C') {
+        double result = celsius_to_fahrenheit(temp);
+        printf("%.1f°C = %.1f°F\n", temp, result);
+    } else if (unit[0] == 'F') {
+        double result = (temp - 32) * 5 / 9;
+        printf("%.1f°F = %.1f°C\n", temp, result);
+    } else {
+        printf("錯誤單位\n");
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 53：階乘計算器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+long factorial(int n) {
+    long result = 1;
+    for (int i = 1; i &lt;= n; i++) result *= i;
+    return result;
+}
+
+int main() {
+    printf(&quot;\n題目53：階乘計算器\n&quot;);
+    int n;
+    printf(&quot;請輸入正整數：&quot;);
+    scanf(&quot;%d&quot;, &amp;n);
+
+    if (n &lt; 0) printf(&quot;請輸入正整數\n&quot;);
+    else printf(&quot;%d! = %d\n&quot;, n, factorial(n));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 54：找最大公因數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 定義一個函數來計算最大公因數
+int gcd(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+int main() {
+    printf("\n題目54：最大公因數\n");
+    int a, b;
+    printf("輸入第一個數：");
+    scanf("%d", &amp;a);
+    printf("輸入第二個數：");
+    scanf("%d", &amp;b);
+    // 呼叫 gcd 函數
+    int result = gcd(a, b);
+    printf("最大公因數：%d\n", result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 55：質數檢查器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int is_prime(int number) {
+    if (number &lt; 2) return false;
+    for (int i = 2; i &lt; number; i++) {
+        if (number % i == 0) return 0;
+    }
+    return 1;
+}
+
+int main() {
+    printf(&quot;\n題目55：質數檢查器\n&quot;);
+    int num;
+    printf(&quot;輸入數字：&quot;);
+    scanf(&quot;%d&quot;, &amp;num);
+
+    if (is_prime(num)) printf(&quot;%d 是質數\n&quot;, num);
+    else printf(&quot;%d 不是質數\n&quot;, num);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 56：回文檢查器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void reverse_string(const char *text, char *reversed) {
+    int len = strlen(text);
+    for (int i = 0; i &lt; len; i++) reversed[i] = text[len - 1 - i];
+    reversed[len] = &#x27;\0&#x27;;
+}
+
+int is_palindrome(const char *text) {
+    char reversed[100];
+    reverse_string(text, reversed);
+    return strcmp(text, reversed) == 0;
+}
+
+int main() {
+    printf(&quot;\n題目56：回文檢查器\n&quot;);
+    char text[100];
+    printf(&quot;輸入文字：&quot;);
+    gets(text);
+
+    if (is_palindrome(text)) printf(&quot;&#x27;%s&#x27; 是回文\n&quot;, text);
+    else printf(&quot;&#x27;%s&#x27; 不是回文\n&quot;, text);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 57：字數統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 定義一個函數來計算字數
+int word_count(const char *text) {
+    int count = 0;
+    int in_word = 0;
+    for (int i = 0; text[i] != '\0'; i++) {
+        if (text[i] != ' ') {
+            if (!in_word) {
+                count++;
+                in_word = 1;
+            }
+        } else {
+            in_word = 0;
+        }
+    }
+    return count;
+}
+
+int main() {
+    printf("\n題目57：字數統計\n");
+    char text[200];
+    printf("輸入文字：");
+    gets(text);
+    int count = word_count(text);
+    printf("字數：%d\n", count);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 58：平均分數計算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double average(double numbers[], int size) {
+    if (size == 0) return 0;
+    double total = 0;
+    for (int i = 0; i &lt; size; i++) total += numbers[i];
+    return total / size;
+}
+
+int main() {
+    printf("\n題目58：平均分數\n");
+    int n;
+    printf("輸入科目數量：");
+    scanf("%d", &amp;n);
+    double s;
+    double scores[100];
+    for (int i = 0; i &lt; n; i++) {
+        printf("第 %d 科分數：", i + 1);
+        scanf("%f", &amp;s);
+        scores[i] = s;
+    }
+    printf("平均：%.2f\n", average(scores, n));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 59：找出範圍內偶數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int even_number_finder(int start, int end, int evens[]) {
+    int count = 0;
+    for (int i = start; i &lt;= end; i++) {
+        if (i % 2 == 0) evens[count++] = i;
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目59：偶數列表\n&quot;);
+    int start, end;
+    printf(&quot;起始：&quot;);
+    scanf(&quot;%d&quot;, &amp;start);
+    printf(&quot;結束：&quot;);
+    scanf(&quot;%d&quot;, &amp;end);
+    int evens[1000];
+    int count = even_number_finder(start, end, evens);
+    printf(&quot;偶數：&quot;);
+    for (int i = 0; i &lt; count; i++) printf(&quot;%d &quot;, evens[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 60：簡易搜尋引擎</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    printf(&quot;\n題目60：簡易搜尋引擎\n&quot;);
+    char data[][20] = {&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;, &quot;date&quot;, &quot;elderberry&quot;};
+    int size = 5;
+    char keyword[20];
+    printf(&quot;搜尋關鍵字：&quot;);
+    scanf(&quot;%s&quot;, keyword);
+
+    printf(&quot;搜尋結果：&quot;);
+    for (int i = 0; i &lt; size; i++) {
+        int found = 0;
+        int len = strlen(data[i]);
+        int klen = strlen(keyword);
+        for (int j = 0; j &lt;= len - klen && !found; j++) {
+            int match = 1;
+            for (int k = 0; k &lt; klen; k++) {
+                if (data[i][j + k] != keyword[k]) { match = 0; break; }
+            }
+            if (match) found = 1;
+        }
+        if (found) {
+            printf(&quot;找到=> %s &quot;, data[i]);
+        }
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：實務函數設計（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 61：數學函數庫</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double circle_area(double radius) {
+    return 3.14159 * radius * radius;
+}
+
+double circle_circumference(double radius) {
+    return 2 * 3.14159 * radius;
+}
+
+int main() {
+    printf(&quot;\n題目61：數學函數庫\n&quot;);
+    double radius = 5;
+    printf(&quot;半徑 %.0f 的圓：\n&quot;, radius);
+    printf(&quot;  面積：%.2f\n&quot;, circle_area(radius));
+    printf(&quot;  周長：%.2f\n&quot;, circle_circumference(radius));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 62：資料清理函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int clean_data(char data[][20], int size, char result[][20]) {
+    int count = 0;
+    for (int i = 0; i &lt; size; i++) {
+        if (strlen(data[i]) &gt; 0) {
+            strcpy(result[count], data[i]);
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目62：資料清理\n&quot;);
+    char data[5][20] = {&quot;apple&quot;, &quot;&quot;, &quot;banana&quot;, &quot;&quot;, &quot;cherry&quot;};
+    int size = 5;
+    char cleaned[5][20];
+    printf(&quot;原始資料：[apple, , banana, , cherry]\n&quot;);
+    int count = clean_data(data, size, cleaned);
+    printf(&quot;清理結果：[&quot;);
+    for (int i = 0; i &lt; count; i++) {
+        printf(&quot;%s%s&quot;, cleaned[i], i &lt; count - 1 ? &quot;, &quot; : &quot;&quot;);
+    }
+    printf(&quot;]\n&quot;);
+    return 0;
+}
+</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 63：資料標準化函數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void normalize(double numbers[], int size, double result[]) {
+    double max_val = numbers[0], min_val = numbers[0];
+    for (int i = 1; i &lt; size; i++) {
+        if (numbers[i] &gt; max_val) max_val = numbers[i];
+        if (numbers[i] &lt; min_val) min_val = numbers[i];
+    }
+    if (max_val == min_val) {
+        for (int i = 0; i &lt; size; i++) result[i] = 0;
+        return;
+    }
+    for (int i = 0; i &lt; size; i++) {
+        result[i] = (numbers[i] - min_val) / (max_val - min_val);
+    }
+}
+
+int main() {
+    printf(&quot;\n題目63：資料標準化\n&quot;);
+    double data[] = {10, 20, 30, 40, 50};
+    int size = 5;
+    double normalized[5];
+    normalize(data, size, normalized);
+    printf(&quot;原始資料：10 20 30 40 50\n&quot;);
+    printf(&quot;標準化後：&quot;);
+    for (int i = 0; i &lt; size; i++) printf(&quot;%.2f &quot;, normalized[i]);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 64：字串工具集</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+
+void capitalize_words(const char *text, char *result) {
+    int j = 0;
+    int start_of_word = 1;
+    for (int i = 0; text[i] != &#x27;\0&#x27;; i++) {
+        if (text[i] == &#x27; &#x27;) {
+            result[j++] = text[i];
+            start_of_word = 1;
+        } else {
+            result[j++] = start_of_word ? toupper(text[i]) : text[i];
+            start_of_word = 0;
+        }
+    }
+    result[j] = &#x27;\0&#x27;;
+}
+
+void remove_spaces(const char *text, char *result) {
+    int j = 0;
+    for (int i = 0; text[i] != &#x27;\0&#x27;; i++) {
+        if (text[i] != &#x27; &#x27;) result[j++] = text[i];
+    }
+    result[j] = &#x27;\0&#x27;;
+}
+
+int main() {
+    printf(&quot;\n題目64：字串工具集\n&quot;);
+    char text[] = &quot;hello world c language&quot;;
+    char capitalized[50], no_spaces[50];
+    capitalize_words(text, capitalized);
+    remove_spaces(text, no_spaces);
+    printf(&quot;首字母大寫：%s\n&quot;, capitalized);
+    printf(&quot;移除空格：%s\n&quot;, no_spaces);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 65：成績報告生成器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+double average(double numbers[], int size) {
+    double total = 0;
+    for (int i = 0; i &lt; size; i++) total += numbers[i];
+    return total / size;
+}
+
+char get_grade(int score) {
+    if (score &gt;= 90) return &#x27;A&#x27;;
+    else if (score &gt;= 80) return &#x27;B&#x27;;
+    else if (score &gt;= 70) return &#x27;C&#x27;;
+    else if (score &gt;= 60) return &#x27;D&#x27;;
+    else return &#x27;F&#x27;;
+}
+
+void generate_report(const char *name, double scores[], int size) {
+    double avg = average(scores, size);
+    double max_score = scores[0], min_score = scores[0];
+    for (int i = 1; i &lt; size; i++) {
+        if (scores[i] &gt; max_score) max_score = scores[i];
+        if (scores[i] &lt; min_score) min_score = scores[i];
+    }
+    char grade = get_grade((int)avg);
+    printf(&quot;\n    === 成績報告 ===\n&quot;);
+    printf(&quot;    姓名：%s\n&quot;, name);
+    printf(&quot;    各科成績：&quot;);
+    for (int i = 0; i &lt; size; i++) printf(&quot;%.0f &quot;, scores[i]);
+    printf(&quot;\n&quot;);
+    printf(&quot;    平均分數：%.2f\n&quot;, avg);
+    printf(&quot;    最高分：%.0f\n&quot;, max_score);
+    printf(&quot;    最低分：%.0f\n&quot;, min_score);
+    printf(&quot;    等級：%c\n&quot;, grade);
+}
+
+int main() {
+    printf(&quot;\n題目65：成績報告\n&quot;);
+    double scores[] = {85, 90, 78, 92, 88};
+    generate_report(&quot;Alice&quot;, scores, 5);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 66：選擇排序</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void selection_sort(int numbers[], int size, int sorted[]) {
+    for (int i = 0; i &lt; size; i++) {
+        sorted[i] = numbers[i];
+    }
+    for (int i = 0; i &lt; size; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j &lt; size; j++) {
+            if (sorted[j] &lt; sorted[min_idx]) min_idx = j;
+        }
+        int temp = sorted[i];
+        sorted[i] = sorted[min_idx];
+        sorted[min_idx] = temp;
+    }
+}
+
+int main() {
+    printf("\n題目66：選擇排序\n");
+    int data[] = {64, 25, 12, 22, 11};
+    int size = 5;
+    int sorted[5];
+    selection_sort(data, size, sorted);
+    printf("選擇排序結果：");
+    for (int i = 0; i &lt; size; i++) printf("%d ", sorted[i]);
+    printf("\n");
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 67：二分搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+int binary_search(int sorted_list[], int size, int target) {
+    int left = 0, right = size - 1;
+    while (left &lt;= right) {
+        int mid = (left + right) / 2;
+        if (sorted_list[mid] == target) return mid;
+        else if (sorted_list[mid] &lt; target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}
+
+int main() {
+    printf(&quot;\n題目67：二分搜尋\n&quot;);
+    int sorted_data[] = {1, 3, 5, 7, 9, 11, 13, 15};
+    int size = 8;
+    int target = 7;
+    int index = binary_search(sorted_data, size, target);
+    printf(&quot;找到 %d 在索引：%d\n&quot;, target, index);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 68：矩陣運算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void matrix_add(int m1[2][2], int m2[2][2], int result[2][2], int rows, int cols) {
+    for (int i = 0; i &lt; rows; i++) {
+        for (int j = 0; j &lt; cols; j++) {
+            result[i][j] = m1[i][j] + m2[i][j];
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目68：矩陣加法\n&quot;);
+    int m1[2][2] = {{1, 2}, {3, 4}};
+    int m2[2][2] = {{5, 6}, {7, 8}};
+    int result[2][2];
+    matrix_add(m1, m2, result, 2, 2);
+    printf(&quot;矩陣相加結果：[&quot;);
+    for (int i = 0; i &lt; 2; i++) {
+        printf(&quot;[%d, %d]&quot;, result[i][0], result[i][1]);
+        if (i == 0) printf(&quot;, &quot;);
+    }
+    printf(&quot;]\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 69：轉置矩陣</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void transpose(int matrix[2][3], int result[3][2], int rows, int cols) {
+    for (int j = 0; j &lt; cols; j++) {
+        for (int i = 0; i &lt; rows; i++) {
+            result[j][i] = matrix[i][j];
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目69：矩陣轉置\n&quot;);
+    int matrix[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int result[3][2];
+    transpose(matrix, result, 2, 3);
+    printf(&quot;原矩陣：[[1, 2, 3], [4, 5, 6]]\n&quot;);
+    printf(&quot;轉置後：[&quot;);
+    for (int i = 0; i &lt; 3; i++) {
+        printf(&quot;[%d, %d]&quot;, result[i][0], result[i][1]);
+        if (i &lt; 2) printf(&quot;, &quot;);
+    }
+    printf(&quot;]\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 70：區間分組</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void group_by_range(int numbers[], int n_numbers, int starts[], int ends[], int lists[][20], int counts[], int n_groups) {
+    for (int i = 0; i &lt; n_numbers; i++) {
+        for (int g = 0; g &lt; n_groups; g++) {
+            if (starts[g] &lt;= numbers[i] &amp;&amp; numbers[i] &lt;= ends[g]) {
+                lists[g][counts[g]++] = numbers[i];
+                break;
+            }
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目70：區間分組\n&quot;);
+    int data[] = {15, 25, 35, 45, 55, 65, 75, 85, 95};
+    int n_numbers = 9;
+    int starts[4] = {0, 31, 61, 91};
+    int ends[4] = {30, 60, 90, 100};
+    int lists[4][20] = {{0}, {0}, {0}, {0}};
+    int counts[4] = {0, 0, 0, 0};
+    group_by_range(data, n_numbers, starts, ends, lists, counts, 4);
+    printf(&quot;分組結果：{&quot;);
+    for (int g = 0; g &lt; 4; g++) {
+        printf(&quot;&#x27;%d-%d&#x27;: [&quot;, starts[g], ends[g]);
+        for (int i = 0; i &lt; counts[g]; i++) {
+            printf(&quot;%d%s&quot;, lists[g][i], i &lt; counts[g] - 1 ? &quot;, &quot; : &quot;&quot;);
+        }
+        printf(&quot;]%s&quot;, g &lt; 3 ? &quot;, &quot; : &quot;&quot;);
+    }
+    printf(&quot;}\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 71：字詞頻率</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+
+int word_frequency(const char *text, char words[][20], int counts[]) {
+    char buffer[200];
+    // 手動複製 text 到 buffer
+    int idx = 0;
+    while (text[idx] != '\0' &amp;&amp; idx &lt; sizeof(buffer) - 1) {
+        buffer[idx] = tolower((unsigned char)text[idx]);
+        idx++;
+    }
+    buffer[idx] = '\0';
+    int freq_count = 0;
+    int start = 0;
+    for (int i = 0; ; i++) {
+        if (buffer[i] == ' ' || buffer[i] == '\0') {
+            if (i &gt; start) {
+                char token[20];
+                int len = i - start;
+                if (len &gt;= sizeof(token)) len = sizeof(token) - 1; // 避免溢位
+                for (int k = 0; k &lt; len; k++) token[k] = buffer[start + k];
+                token[len] = '\0';
+                int found = 0;
+                for (int j = 0; j &lt; freq_count; j++) {
+                    if (strncmp(words[j], token, strlen(words[j])) == 0) {
+                        counts[j]++;
+                        found = 1;
+                        break;
+                    }
+                }
+                if (!found) {
+                    int copy_len = strlen(token);
+                    if (copy_len &gt;= 20) copy_len = 19;
+                    for (int k = 0; k &lt; copy_len; k++) {
+                        words[freq_count][k] = token[k];
+                    }
+                    words[freq_count][copy_len] = '\0';
+                    counts[freq_count] = 1;
+                    freq_count++;
+                }
+            }
+            start = i + 1;
+        }
+        if (buffer[i] == '\0') break;
+    }
+    return freq_count;
+}
+
+int main() {
+    printf("\n題目71：字詞頻率\n");
+    char text[] = "Python is great and Python is fun and Python is powerful";
+    char words[50][20];
+    int counts[50];
+    int count = word_frequency(text, words, counts);
+    printf("字詞頻率：{");
+    for (int i = 0; i &lt; count; i++) {
+        printf("'%s': %d%s", words[i], counts[i], i &lt; count - 1 ? ", " : "");
+    }
+    printf("}\n");
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 72：找出眾數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void find_mode(int numbers[], int size, int *mode, int *max_freq) {
+    int values[100], counts[100], n_unique = 0;
+    for (int i = 0; i &lt; size; i++) {
+        int found = 0;
+        for (int j = 0; j &lt; n_unique; j++) {
+            if (values[j] == numbers[i]) {
+                counts[j]++;
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            values[n_unique] = numbers[i];
+            counts[n_unique] = 1;
+            n_unique++;
+        }
+    }
+    *max_freq = 0;
+    *mode = 0;
+    for (int j = 0; j &lt; n_unique; j++) {
+        if (counts[j] &gt; *max_freq) {
+            *max_freq = counts[j];
+            *mode = values[j];
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目72：找出眾數\n&quot;);
+    int data[] = {1, 2, 3, 2, 4, 2, 5, 3, 2};
+    int size = 9;
+    int mode, freq;
+    find_mode(data, size, &amp;mode, &amp;freq);
+    printf(&quot;眾數：%d，出現 %d 次\n&quot;, mode, freq);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 73：中位數計算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void bubble_sort(int numbers[], int size, int sorted[]) {
+    for (int i = 0; i &lt; size; i++) {
+        sorted[i] = numbers[i];
+    }
+    for (int i = 0; i &lt; size; i++) {
+        for (int j = 0; j &lt; size - i - 1; j++) {
+            if (sorted[j] &gt; sorted[j + 1]) {
+                int temp = sorted[j];
+                sorted[j] = sorted[j + 1];
+                sorted[j + 1] = temp;
+            }
+        }
+    }
+}
+
+double find_median(int numbers[], int size) {
+    int sorted_nums[100];
+    bubble_sort(numbers, size, sorted_nums);
+    if (size % 2 == 0) {
+        int mid1 = sorted_nums[size / 2 - 1];
+        int mid2 = sorted_nums[size / 2];
+        return (mid1 + mid2) / 2.0;
+    } else {
+        return sorted_nums[size / 2];
+    }
+}
+
+int main() {
+    printf("\n題目73：中位數計算\n");
+    int data[] = {3, 1, 4, 1, 5, 9, 2, 6};
+    int size = 8;
+    printf("中位數：%.1f\n", find_median(data, size));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 74：資料篩選</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int filter_data(char names[][20], int ages[], char grades[], int size, int age_cond, char grade_cond, char rnames[][20], int rages[], char rgrades[]) {
+    int count = 0;
+    for (int i = 0; i &lt; size; i++) {
+        if (ages[i] == age_cond &amp;&amp; grades[i] == grade_cond) {
+            strcpy(rnames[count], names[i]);
+            rages[count] = ages[i];
+            rgrades[count] = grades[i];
+            count++;
+        }
+    }
+    return count;
+}
+
+int main() {
+    printf(&quot;\n題目74：資料篩選\n&quot;);
+    char names[3][20] = {&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;};
+    int ages[3] = {20, 22, 20};
+    char grades[3] = {&#x27;A&#x27;, &#x27;B&#x27;, &#x27;A&#x27;};
+    int size = 3;
+    char rnames[3][20];
+    int rages[3];
+    char rgrades[3];
+    int count = filter_data(names, ages, grades, size, 20, &#x27;A&#x27;, rnames, rages, rgrades);
+    printf(&quot;篩選結果：[&quot;);
+    for (int i = 0; i &lt; count; i++) {
+        printf(&quot;{name: %s, age: %d, grade: %c}%s&quot;, rnames[i], rages[i], rgrades[i], i &lt; count - 1 ? &quot;, &quot; : &quot;&quot;);
+    }
+    printf(&quot;]\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 75：銷售彙總</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void aggregate_sales(char sproducts[], int samounts[], int size, int *total, char bproducts[], int btotals[], int *n_products) {
+    *total = 0;
+    *n_products = 0;
+    for (int i = 0; i &lt; size; i++) {
+        *total += samounts[i];
+        int found = 0;
+        for (int j = 0; j &lt; *n_products; j++) {
+            if (bproducts[j] == sproducts[i]) {
+                btotals[j] += samounts[i];
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            bproducts[*n_products] = sproducts[i];
+            btotals[*n_products] = samounts[i];
+            (*n_products)++;
+        }
+    }
+}
+
+int main() {
+    printf(&quot;\n題目75：銷售彙總\n&quot;);
+    char sproducts[] = {&#x27;A&#x27;, &#x27;B&#x27;, &#x27;A&#x27;};
+    int samounts[] = {100, 200, 150};
+    int size = 3;
+    int total;
+    char bproducts[10];
+    int btotals[10];
+    int n_products;
+    aggregate_sales(sproducts, samounts, size, &amp;total, bproducts, btotals, &amp;n_products);
+    printf(&quot;銷售結果：{total: %d, by_product: {&quot;, total);
+    for (int i = 0; i &lt; n_products; i++) {
+        printf(&quot;&#x27;%c&#x27;: %d%s&quot;, bproducts[i], btotals[i], i &lt; n_products - 1 ? &quot;, &quot; : &quot;&quot;);
+    }
+    printf(&quot;}}\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 76：路徑解析</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void parse_path(const char *path, char *full_path, char *directory, char *filename, char *extension) {
+    int i = 0;
+    while (path[i]) { full_path[i] = path[i]; i++; }
+    full_path[i] = &#x27;\0&#x27;;
+    extension[0] = &#x27;\0&#x27;;
+    int last_slash = -1;
+    i = 0;
+    while (path[i]) { if (path[i] == &#x27;/&#x27;) last_slash = i; i++; }
+    if (last_slash &gt;= 0) {
+        for (int j = 0; j &lt; last_slash; j++) directory[j] = path[j];
+        directory[last_slash] = &#x27;\0&#x27;;
+        int k = 0;
+        for (int j = last_slash + 1; path[j]; j++) filename[k++] = path[j];
+        filename[k] = &#x27;\0&#x27;;
+    } else {
+        directory[0] = &#x27;\0&#x27;;
+        for (int j = 0; path[j]; j++) filename[j] = path[j];
+        filename[i] = &#x27;\0&#x27;;
+    }
+    int last_dot = -1;
+    i = 0;
+    while (filename[i]) { if (filename[i] == &#x27;.&#x27;) last_dot = i; i++; }
+    if (last_dot &gt;= 0) {
+        int k = 0;
+        for (int j = last_dot + 1; filename[j]; j++) extension[k++] = filename[j];
+        extension[k] = &#x27;\0&#x27;;
+    }
+}
+
+int main() {
+    printf(&quot;\n題目76：路徑解析\n&quot;);
+    char full_path[100], directory[100], filename[50], extension[20];
+    parse_path(&quot;/home/user/documents/file.txt&quot;, full_path, directory, filename, extension);
+    printf(&quot;路徑資訊：{full_path: %s, directory: %s, filename: %s, extension: %s}\n&quot;,
+           full_path, directory, filename, extension);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 77：時間格式化</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+
+void print_time(int total_seconds) {
+    int hours = total_seconds / 3600;
+    int minutes = (total_seconds % 3600) / 60;
+    int seconds = total_seconds % 60;
+    printf(&quot;%02d:%02d:%02d&quot;, hours, minutes, seconds);
+}
+
+int main() {
+    printf(&quot;\n題目77：時間格式化\n&quot;);
+    printf(&quot;3661 秒 = &quot;);
+    print_time(3661);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 78：密碼生成器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+void generate_password(int length, int include_numbers, char *password) {
+    char chars[40] = &quot;abcdefghijklmnopqrstuvwxyz&quot;;
+    if (include_numbers) strcat(chars, &quot;0123456789&quot;);
+    int chars_len = strlen(chars);
+    for (int i = 0; i &lt; length; i++) {
+        int index = (i * 7 + 13) % chars_len;
+        password[i] = chars[index];
+    }
+    password[length] = &#x27;\0&#x27;;
+}
+
+int main() {
+    printf(&quot;\n題目78：簡易密碼生成\n&quot;);
+    char password[20];
+    generate_password(8, 1, password);
+    printf(&quot;生成密碼：%s\n&quot;, password);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 79：表單驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int validate_form(const char *name, int age, const char *email, char errors[][30], int *error_count) {
+    *error_count = 0;
+    if (strlen(name) == 0) {
+        strcpy(errors[(*error_count)++], &quot;姓名不可為空&quot;);
+    }
+    if (age &lt; 0 || age &gt; 150) {
+        strcpy(errors[(*error_count)++], &quot;年齡不合理&quot;);
+    }
+    int has_at = 0;
+    for (int i = 0; email[i]; i++) if (email[i] == &#x27;@&#x27;) has_at = 1;
+    if (!has_at) {
+        strcpy(errors[(*error_count)++], &quot;Email 格式錯誤&quot;);
+    }
+    return *error_count == 0;
+}
+
+int main() {
+    printf(&quot;\n題目79：表單驗證\n&quot;);
+    char e1[10][30], e2[10][30];
+    int c1, c2;
+    int v1 = validate_form(&quot;Alice&quot;, 25, &quot;alice@example.com&quot;, e1, &amp;c1);
+    int v2 = validate_form(&quot;&quot;, 200, &quot;invalid&quot;, e2, &amp;c2);
+    printf(&quot;表單1：%s\n&quot;, v1 ? &quot;true&quot; : &quot;false&quot;);
+    printf(&quot;表單2：%s, [&quot;, v2 ? &quot;true&quot; : &quot;false&quot;);
+    for (int i = 0; i &lt; c2; i++) printf(&quot;%s%s&quot;, e2[i], i &lt; c2 - 1 ? &quot;, &quot; : &quot;&quot;);
+    printf(&quot;]\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 80：學生管理系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+char student_ids[100][10];
+char student_names[100][30];
+int student_scores[100][10];
+int student_n[100];
+double student_avg[100];
+char student_grade[100];
+int student_count = 0;
+
+void add_student(const char *id, const char *name, int scores[], int n_scores) {
+    int idx = student_count++;
+    // 用 for 迴圈複製 id
+    int i;
+    for (i = 0; id[i] != '\0' &amp;&amp; i &lt; sizeof(student_ids[idx]) - 1; i++) {
+        student_ids[idx][i] = id[i];
+    }
+    student_ids[idx][i] = '\0';  // 確保字串結尾
+    // 用 for 迴圈複製 name
+    for (i = 0; name[i] != '\0' &amp;&amp; i &lt; sizeof(student_names[idx]) - 1; i++) {
+        student_names[idx][i] = name[i];
+    }
+    student_names[idx][i] = '\0';  // 確保字串結尾
+    // 複製分數
+    for (i = 0; i &lt; n_scores; i++) student_scores[idx][i] = scores[i];
+    student_n[idx] = n_scores;
+    // 計算平均
+    int total = 0;
+    for (i = 0; i &lt; n_scores; i++) total += scores[i];
+    student_avg[idx] = (double)total / n_scores;
+    // 判斷等級
+    if (student_avg[idx] &gt;= 90) student_grade[idx] = 'A';
+    else if (student_avg[idx] &gt;= 80) student_grade[idx] = 'B';
+    else if (student_avg[idx] &gt;= 70) student_grade[idx] = 'C';
+    else if (student_avg[idx] &gt;= 60) student_grade[idx] = 'D';
+    else student_grade[idx] = 'F';
+}
+
+int get_student_index(const char *id) {
+    for (int i = 0; i &lt; student_count; i++) {
+        if (strncmp(student_ids[i], id, strlen(student_ids[i])) == 0) return i;
+    }
+    return -1;
+}
+
+void list_all_students() {
+    for (int i = 0; i &lt; student_count; i++) {
+        printf("  %s: {name: %s, average: %.2f, grade: %c}\n",
+               student_ids[i], student_names[i], student_avg[i], student_grade[i]);
+    }
+}
+
+void get_statistics() {
+    if (student_count == 0) {
+        printf("沒有學生\n");
+        return;
+    }
+    double total = 0, highest = student_avg[0], lowest = student_avg[0];
+    for (int i = 0; i &lt; student_count; i++) {
+        total += student_avg[i];
+        if (student_avg[i] &gt; highest) highest = student_avg[i];
+        if (student_avg[i] &lt; lowest) lowest = student_avg[i];
+    }
+    printf("{total_students: %d, class_average: %.2f, highest: %.2f, lowest: %.2f}\n",
+           student_count, total / student_count, highest, lowest);
+}
+
+void student_management_system() {
+    int scores1[] = {85, 90, 88};
+    int scores2[] = {78, 82, 80};
+    int scores3[] = {92, 95, 93};
+    add_student("S001", "Alice", scores1, 3);
+    add_student("S002", "Bob", scores2, 3);
+    add_student("S003", "Charlie", scores3, 3);
+    printf("=== 學生成績管理系統 ===\n");
+    printf("所有學生：\n");
+    list_all_students();
+    printf("統計結果：");
+    get_statistics();
+    int idx = get_student_index("S001");
+    printf("查詢 S001：{name: %s, average: %.2f, grade: %c}\n", student_names[idx], student_avg[idx], student_grade[idx]);
+}
+
+int main() {
+    printf("\n題目80：學生成績管理系統\n");
+    student_management_system();
+    return 0;
+}</pre>
+        </div>
+
+   </div>
+    <div class="toast" id="toast">程式碼已複製！</div>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

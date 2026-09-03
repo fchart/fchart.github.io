@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言資料型態與字串教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言資料型態與字串教學程式範例（80題）</h1>
+
+        <h2>😊 模組一：數值型態基本操作範例（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：整數型態 int 的宣告與輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    int year = 2025;
+    printf(&quot;Age: %d\n&quot;, age);
+    printf(&quot;Year: %d\n&quot;, year);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：浮點數型態 double 的宣告與輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double height = 175.5;
+    double weight = 68.3;
+    printf(&quot;Height: %f\n&quot;, height);
+    printf(&quot;Weight: %f\n&quot;, weight);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：字元型態 char</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char letter = 'A';
+    char digit = '7';
+    printf(&quot;Letter: %c\n&quot;, letter);
+    printf(&quot;Digit: %c\n&quot;, digit);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：基本四則運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10;
+    int b = 4;
+    printf(&quot;%d + %d = %d\n&quot;, a, b, a + b);
+    printf(&quot;%d - %d = %d\n&quot;, a, b, a - b);
+    printf(&quot;%d * %d = %d\n&quot;, a, b, a * b);
+    printf(&quot;%d / %d = %d\n&quot;, a, b, a / b);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：整數除法與餘數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 17;
+    int b = 5;
+    printf(&quot;商: %d\n&quot;, a / b);
+    printf(&quot;餘數: %d\n&quot;, a % b);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：強制型別轉換（int 轉 double）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 7;
+    int b = 2;
+    double result = (double)a / b;
+    printf(&quot;%d / %d = %f\n&quot;, a, b, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：強制型別轉換（double 轉 int 截斷）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double x = 9.7;
+    int y = (int)x;
+    printf(&quot;原始: %f\n&quot;, x);
+    printf(&quot;轉整數: %d\n&quot;, y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：sizeof 取得型別大小</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int size_int = sizeof(int);
+    int size_double = sizeof(double);
+    int size_char = sizeof(char);
+    printf(&quot;int: %d bytes\n&quot;, size_int);
+    printf(&quot;double: %d bytes\n&quot;, size_double);
+    printf(&quot;char: %d bytes\n&quot;, size_char);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：運算子優先序</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 2 + 3 * 4;
+    int y = (2 + 3) * 4;
+    printf(&quot;x = %d\n&quot;, x);
+    printf(&quot;y = %d\n&quot;, y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：格式化輸出小數位數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double pi = 3.14159265;
+    printf(&quot;%.2f\n&quot;, pi);
+    printf(&quot;%.3f\n&quot;, pi);
+    printf(&quot;%.1f\n&quot;, pi);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：累加器</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int total = 0;
+    total = total + 10;
+    total = total + 20;
+    total = total + 30;
+    printf(&quot;Total: %d\n&quot;, total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：遞增與遞減運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 5;
+    x++;
+    printf(&quot;+1: %d\n&quot;, x);
+    x--;
+    printf(&quot;-1: %d\n&quot;, x);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：複合指派運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 10;
+    x += 5;
+    printf(&quot;x += 5 : %d\n&quot;, x);
+    x *= 2;
+    printf(&quot;x *= 2 : %d\n&quot;, x);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：常數 const</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    const double PI = 3.14159;
+    double r = 5.0;
+    double area = PI * r * r;
+    printf(&quot;Circle area: %f\n&quot;, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：交換兩個變數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 3;
+    int b = 7;
+    int temp = a;
+    a = b;
+    b = temp;
+    printf(&quot;a = %d, b = %d\n&quot;, a, b);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：攝氏轉華氏</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double c = 100.0;
+    double f = c * 9.0 / 5.0 + 32.0;
+    printf(&quot;Celsius: %f\n&quot;, c);
+    printf(&quot;Fahrenheit: %f\n&quot;, f);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：矩形面積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double w = 8.5;
+    double h = 4.0;
+    double area = w * h;
+    printf(&quot;Area: %f\n&quot;, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：三個數字的平均</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double a = 80.0;
+    double b = 90.0;
+    double c = 70.0;
+    double avg = (a + b + c) / 3;
+    printf(&quot;Average: %.2f\n&quot;, avg);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：取整數部分（floor）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double x = 12.8;
+    int whole = (int)x;
+    printf(&quot;整數部分: %d\n&quot;, whole);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：數字格式化靠左對齊</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    printf(&quot;[%5d]\n&quot;, 42);
+    printf(&quot;[%-5d]\n&quot;, 42);
+    printf(&quot;%-10s%d\n&quot;, &quot;Count:&quot;, 100);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>😊 模組二：布林值與邏輯運算範例（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：比較運算子 == 與 !=</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5;
+    int b = 5;
+    int eq = (a == b);
+    int ne = (a != 10);
+    printf(&quot;等於: %d\n&quot;, eq);
+    printf(&quot;不等於: %d\n&quot;, ne);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：比較運算子 &lt; &lt;= &gt; &gt;=</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 3;
+    int b = 8;
+    printf(&quot;a &lt; b : %d\n&quot;, a &lt; b);
+    printf(&quot;a &gt;= b : %d\n&quot;, a &gt;= b);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：邏輯 AND（&&）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 7;
+    int ok = (x &gt; 0) &amp;&amp; (x &lt; 10);
+    printf(&quot;0~9 之間: %d\n&quot;, ok);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：邏輯 OR（||）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int grade = 85;
+    int pass = (grade &gt;= 90) || (grade &gt;= 60 &amp;&amp; grade &lt; 90);
+    printf(&quot;通過: %d\n&quot;, pass);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：邏輯 NOT（!）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int done = 0;
+    int not_done = !done;
+    printf(&quot;done: %d\n&quot;, done);
+    printf(&quot;not_done: %d\n&quot;, not_done);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：判斷是否為偶數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 8;
+    int even = (n % 2 == 0);
+    printf(&quot;%d 是偶數: %d\n&quot;, n, even);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：範圍判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 75;
+    int in_range = (score &gt;= 0) &amp;&amp; (score &lt;= 100);
+    printf(&quot;合法分數: %d\n&quot;, in_range);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：條件運算式 ?:</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 82;
+    int pass = score &gt;= 60 ? 1 : 0;
+    printf(&quot;及格: %d\n&quot;, pass);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：多重條件組合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 5, b = 9, c = 3;
+    int max = a;
+    if (b &gt; max) max = b;
+    if (c &gt; max) max = c;
+    printf(&quot;最大: %d\n&quot;, max);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：判斷英文字母大小寫</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char ch = 'b';
+    int is_lower = (ch &gt;= 'a') &amp;&amp; (ch &lt;= 'z');
+    int is_upper = (ch &gt;= 'A') &amp;&amp; (ch &lt;= 'Z');
+    printf(&quot;小寫: %d, 大寫: %d\n&quot;, is_lower, is_upper);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：判斷是否為數字字元</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char ch = '5';
+    int is_digit = (ch &gt;= '0') &amp;&amp; (ch &lt;= '9');
+    printf(&quot;是數字: %d\n&quot;, is_digit);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：門檻判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int temp = 38;
+    int fever = temp &gt; 37.5;
+    printf(&quot;發燒: %d\n&quot;, fever);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：奇數偶數分類輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 11;
+    if (n % 2 == 0) {
+        printf(&quot;偶數\n&quot;);
+    } else {
+        printf(&quot;奇數\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：布林變數用 int 0/1 表示</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int is_raining = 1;
+    int has_umbrella = 0;
+    int walk = is_raining &amp;&amp; has_umbrella;
+    printf(&quot;可外出: %d\n&quot;, walk);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：三個數字找最大</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 12, b = 45, c = 30;
+    int max = a;
+    if (b &gt; max) max = b;
+    if (c &gt; max) max = c;
+    printf(&quot;Maximum: %d\n&quot;, max);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：手工求絕對值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int x = -15;
+    int abs_value = x;
+    if (x &lt; 0) {
+        abs_value = -x;
+    }
+    printf(&quot;絕對值: %d\n&quot;, abs_value);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：判斷正數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 5;
+    if (n &gt; 0) {
+        printf(&quot;正數\n&quot;);
+    } else {
+        printf(&quot;非正數\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：兩個數字比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 8, b = 4;
+    if (a &gt; b) {
+        printf(&quot;a 較大\n&quot;);
+    } else if (a &lt; b) {
+        printf(&quot;b 較大\n&quot;);
+    } else {
+        printf(&quot;相等\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：判斷數字在某區間</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    if (age &gt;= 20 &amp;&amp; age &lt;= 30) {
+        printf(&quot;20~30 歲\n&quot;);
+    } else {
+        printf(&quot;其他範圍\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：邏輯運算綜合判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 7, b = 9;
+    int result = (a % 2 == 0 &amp;&amp; b % 2 == 0) ? 1 : 0;
+    printf(&quot;皆為偶數: %d\n&quot;, result);
+    result = (a &gt; 0 &amp;&amp; b &gt; 0) ? 1 : 0;
+    printf(&quot;皆為正數: %d\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>😊 模組三：字串型態基本操作範例（20題）基礎篇</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：字串宣告與 %s 輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char name[] = &quot;Alice&quot;;
+    char city[] = &quot;Taipei&quot;;
+    printf(&quot;姓名: %s\n&quot;, name);
+    printf(&quot;城市: %s\n&quot;, city);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：字串長度 strlen</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char word[] = &quot;hello&quot;;
+    int len = strlen(word);
+    printf(&quot;長度: %d\n&quot;, len);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：用索引取出單一字元</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char word[] = &quot;HELLO&quot;;
+    printf(&quot;第1個字: %c\n&quot;, word[0]);
+    printf(&quot;第3個字: %c\n&quot;, word[2]);
+    printf(&quot;第5個字: %c\n&quot;, word[4]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：走訪字串逐字元輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char word[] = &quot;CAT&quot;;
+    for (int i = 0; i &lt; 3; i++) {
+        printf(&quot;第 %d 個字: %c\n&quot;, i + 1, word[i]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：用逗號分隔走訪（含空字元停止）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char word[] = &quot;DOG&quot;;
+    for (int i = 0; word[i] != '\0'; i++) {
+        printf(&quot;%c &quot;, word[i]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：字串連接 strcat</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char greeting[50] = &quot;Hello &quot;;
+    char name[] = &quot;World&quot;;
+    strcat(greeting, name);
+    printf(&quot;%s\n&quot;, greeting);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：複製字串 strcpy</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char source[] = &quot;apple&quot;;
+    char target[20];
+    strcpy(target, source);
+    printf(&quot;複製結果: %s\n&quot;, target);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：比較字串是否相等（strncmp）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char a[] = &quot;apple&quot;;
+    char b[] = &quot;apple&quot;;
+    char c[] = &quot;orange&quot;;
+    int lb = strlen(b);
+    printf(&quot;a == b : %d\n&quot;, strncmp(a, b, lb) == 0);
+    printf(&quot;a == c : %d\n&quot;, strncmp(a, c, lb + 1) == 0);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：使用 while 走訪整個字串</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char word[] = &quot;HELLO&quot;;
+    int i = 0;
+    while (word[i] != '\0') {
+        printf(&quot;%c\n&quot;, word[i]);
+        i++;
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：計算字串中某字元出現次數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char text[] = &quot;banana&quot;;
+    int count = 0;
+    for (int i = 0; text[i] != '\0'; i++) {
+        if (text[i] == 'a') {
+            count++;
+        }
+    }
+    printf(&quot;字元 a 出現: %d 次\n&quot;, count);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：取出字串第一個字元</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char word[] = &quot;student&quot;;
+    char first = word[0];
+    char last = word[strlen(word) - 1];
+    printf(&quot;首字元: %c\n&quot;, first);
+    printf(&quot;末字元: %c\n&quot;, last);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：字串轉大寫（逐字元判斷）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char word[] = &quot;hello&quot;;
+    for (int i = 0; word[i] != '\0'; i++) {
+        if (word[i] &gt;= 'a' &amp;&amp; word[i] &lt;= 'z') {
+            word[i] = word[i] - 32;
+        }
+    }
+    printf(&quot;大寫: %s\n&quot;, word);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：字串與數字一起輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char name[] = &quot;Tom&quot;;
+    int age = 20;
+    printf(&quot;姓名: %s, 年齡: %d\n&quot;, name, age);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：走訪字串存回新陣列（由左到右）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char source[] = &quot;code&quot;;
+    char result[20];
+    int i;
+    for (i = 0; source[i] != '\0'; i++) {
+        result[i] = source[i];
+    }
+    result[i] = '\0';
+    printf(&quot;複製: %s\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：比較字串長短（不靠函式）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char a[] = &quot;hi&quot;;
+    char b[] = &quot;hello&quot;;
+    int la = 0, lb = 0;
+    while (a[la] != '\0') la++;
+    while (b[lb] != '\0') lb++;
+    printf(&quot;字串a: %d, 字串b: %d\n&quot;, la, lb);
+    if (la &lt; lb) {
+        printf(&quot;a 較短\n&quot;);
+    } else {
+        printf(&quot;a 較長或相等\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：判斷字串是否為空</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char name[] = &quot;Tom&quot;;
+    int len = strlen(name);
+    if (len == 0) {
+        printf(&quot;字串是空的\n&quot;);
+    } else {
+        printf(&quot;字串不為空, 長度: %d\n&quot;, len);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：計算字串總長並輸出每個字元</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char word[] = &quot;C++&quot;;
+    int len = strlen(word);
+    printf(&quot;長度: %d\n&quot;, len);
+    for (int i = 0; i &lt; len; i++) {
+        printf(&quot;字元 %d: %c\n&quot;, i, word[i]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：字典序比較大小（strncmp）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char a[] = &quot;apple&quot;;
+    char b[] = &quot;banana&quot;;
+    int la = strlen(a);
+    int lb = strlen(b);
+    int cmp = strncmp(a, b, (la &lt; lb) ? la : lb);
+    if (cmp &lt; 0) {
+        printf(&quot;a 在 b 前面\n&quot;);
+    } else {
+        printf(&quot;a 在 b 後面\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：字串倒序輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char word[] = &quot;ABC&quot;;
+    int len = strlen(word);
+    for (int i = len - 1; i &gt;= 0; i--) {
+        printf(&quot;%c&quot;, word[i]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：組合多段字串輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char result[100] = &quot;&quot;;
+    strcat(result, &quot;Red&quot;);
+    strcat(result, &quot; &quot;);
+    strcat(result, &quot;Green&quot;);
+    printf(&quot;%s\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>😊 模組四：綜合練習與應用範例（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：計算平均分數與判定</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double s1 = 85, s2 = 92, s3 = 78;
+    double avg = (s1 + s2 + s3) / 3;
+    printf(&quot;平均: %.2f\n&quot;, avg);
+    if (avg &gt;= 60) {
+        printf(&quot;及格\n&quot;);
+    } else {
+        printf(&quot;不及格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：數字的奇偶與正負綜合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = -7;
+    if (n &gt; 0) {
+        printf(&quot;正數 &quot;);
+    } else if (n &lt; 0) {
+        printf(&quot;負數 &quot;);
+    } else {
+        printf(&quot;零 &quot;);
+    }
+    if (n % 2 == 0) {
+        printf(&quot;偶數\n&quot;);
+    } else {
+        printf(&quot;奇數\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：溫度轉換表（三組）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double c1 = 0, c2 = 50, c3 = 100;
+    printf(&quot;%6s %6s\n&quot;, &quot;C&quot;, &quot;F&quot;);
+    printf(&quot;%6.1f %6.1f\n&quot;, c1, c1 * 9.0 / 5.0 + 32);
+    printf(&quot;%6.1f %6.1f\n&quot;, c2, c2 * 9.0 / 5.0 + 32);
+    printf(&quot;%6.1f %6.1f\n&quot;, c3, c3 * 9.0 / 5.0 + 32);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：判斷閏年</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int year = 2024;
+    int leap = (year % 400 == 0) || (year % 4 == 0 &amp;&amp; year % 100 != 0);
+    printf(&quot;%d 是閏年: %d\n&quot;, year, leap);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：會員折扣計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double price = 1200.0;
+    int is_member = 1;
+    double final = price;
+    if (is_member == 1) {
+        final = price * 0.8;
+    }
+    printf(&quot;原價: %.2f\n&quot;, price);
+    printf(&quot;折扣後: %.2f\n&quot;, final);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：計算階乘</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 5;
+    int fact = 1;
+    for (int i = 1; i &lt;= n; i++) {
+        fact = fact * i;
+    }
+    printf(&quot;%d! = %d\n&quot;, n, fact);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：累加 1 到 N</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 10;
+    int sum = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        sum = sum + i;
+    }
+    printf(&quot;1 到 %d 的總和: %d\n&quot;, n, sum);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：輸出偶數序列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    for (int i = 1; i &lt;= 10; i++) {
+        if (i % 2 == 0) {
+            printf(&quot;%d &quot;, i);
+        }
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：折扣分級（多重條件）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double amount = 2500.0;
+    double rate = 1.0;
+    if (amount &gt;= 3000) {
+        rate = 0.7;
+    } else if (amount &gt;= 2000) {
+        rate = 0.8;
+    } else if (amount &gt;= 1000) {
+        rate = 0.9;
+    }
+    printf(&quot;需付: %.2f\n&quot;, amount * rate);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：BMI 計算與分類</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double weight = 65.0;
+    double height = 1.7;
+    double bmi = weight / (height * height);
+    printf(&quot;BMI: %.2f\n&quot;, bmi);
+    if (bmi &lt; 18.5) {
+        printf(&quot;過輕\n&quot;);
+    } else if (bmi &lt; 24) {
+        printf(&quot;正常\n&quot;);
+    } else {
+        printf(&quot;過重\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：找出一組數字的最大最小值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 15, b = 8, c = 22;
+    int max = a, min = a;
+    if (b &gt; max) max = b;
+    if (c &gt; max) max = c;
+    if (b &lt; min) min = b;
+    if (c &lt; min) min = c;
+    printf(&quot;最大: %d, 最小: %d\n&quot;, max, min);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：成績等級判定</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 87;
+    char grade;
+    if (score &gt;= 90) {
+        grade = 'A';
+    } else if (score &gt;= 80) {
+        grade = 'B';
+    } else if (score &gt;= 70) {
+        grade = 'C';
+    } else {
+        grade = 'D';
+    }
+    printf(&quot;成績: %c\n&quot;, grade);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：顯示個人資料（字串+數字）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char name[] = &quot;Alice&quot;;
+    int age = 25;
+    double score = 88.5;
+    printf(&quot;=== 個人資料 ===\n&quot;);
+    printf(&quot;姓名: %s\n&quot;, name);
+    printf(&quot;年齡: %d\n&quot;, age);
+    printf(&quot;成績: %.1f\n&quot;, score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：數字的十位與個位分離</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 57;
+    int tens = n / 10;
+    int ones = n % 10;
+    printf(&quot;十位數: %d\n&quot;, tens);
+    printf(&quot;個位數: %d\n&quot;, ones);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：判斷是否為質數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 11;
+    int is_prime = 1;
+    if (n &lt; 2) {
+        is_prime = 0;
+    }
+    for (int i = 2; i &lt; n; i++) {
+        if (n % i == 0) {
+            is_prime = 0;
+            break;
+        }
+    }
+    printf(&quot;%d 是質數: %d\n&quot;, n, is_prime);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：回文數判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int n = 121;
+    int reverse = 0;
+    int temp = n;
+    while (temp &gt; 0) {
+        reverse = reverse * 10 + temp % 10;
+        temp = temp / 10;
+    }
+    printf(&quot;%d 是回文數: %d\n&quot;, n, reverse == n);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：購物車總額（數個商品）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double p1 = 99.0, p2 = 199.0, p3 = 299.0;
+    int q1 = 2, q2 = 1, q3 = 3;
+    double total = p1 * q1 + p2 * q2 + p3 * q3;
+    printf(&quot;商品總額: %.2f\n&quot;, total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：平方數與立方數表</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    for (int i = 1; i &lt;= 5; i++) {
+        printf(&quot;%d 平方=%d 立方=%d\n&quot;, i, i * i, i * i * i);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：判斷三個數是否可組三角形</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 3, b = 4, c = 5;
+    int valid = (a + b &gt; c) &amp;&amp; (a + c &gt; b) &amp;&amp; (b + c &gt; a);
+    printf(&quot;可形成三角形: %d\n&quot;, valid);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：綜合報表輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    char product[] = &quot;Keyboard&quot;;
+    int quantity = 3;
+    double price = 450.0;
+    double subtotal = price * quantity;
+    int tax_rate_pct = 5;
+    double tax = subtotal * tax_rate_pct / 100.0;
+    double total = subtotal + tax;
+    printf(&quot;=== 帳單 ===\n&quot;);
+    printf(&quot;商品: %s\n&quot;, product);
+    printf(&quot;數量: %d\n&quot;, quantity);
+    printf(&quot;小計: %.2f\n&quot;, subtotal);
+    printf(&quot;稅額: %.2f\n&quot;, tax);
+    printf(&quot;總計: %.2f\n&quot;, total);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

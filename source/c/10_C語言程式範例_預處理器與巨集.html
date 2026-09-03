@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言預處理器與巨集教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言預處理器與巨集教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：前置處理器基礎（#define 常數與 #include）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：定義並使用常數巨集（圓周率）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PI 3.14159
+
+int main() {
+    double radius = 5.0;
+    double area = PI * radius * radius;
+    printf(&quot;題目1：圓面積 = %.2f\n&quot;, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：定義多個常數巨集（陣列大小）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ARRAY_SIZE 5
+
+int main() {
+    int arr[ARRAY_SIZE] = {1, 2, 3, 4, 5};
+    printf(&quot;題目2：陣列大小巨集 = %d，第一個元素 = %d\n&quot;, ARRAY_SIZE, arr[0]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：使用#define定義字串常數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define GREETING &quot;Hello, C Preprocessor!&quot;
+
+int main() {
+    printf(&quot;題目3：%s\n&quot;, GREETING);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：巨集常數用於陣列宣告</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX_STUDENTS 3
+
+int main() {
+    int scores[MAX_STUDENTS] = {88, 76, 95};
+    printf(&quot;題目4：學生人數上限 = %d，第2位成績 = %d\n&quot;, MAX_STUDENTS, scores[1]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：巨集常數用於迴圈範圍</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LOOP_COUNT 5
+
+int main() {
+    int sum = 0;
+    for (int i = 0; i &lt; LOOP_COUNT; i++) {
+        sum += i;
+    }
+    printf(&quot;題目5：迴圈執行 %d 次，總和 = %d\n&quot;, LOOP_COUNT, sum);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：undef 取消定義後重新定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define VALUE 100
+
+int main() {
+    printf(&quot;題目6：第一次定義 VALUE = %d\n&quot;, VALUE);
+#undef VALUE
+#define VALUE 200
+    printf(&quot;題目6：重新定義後 VALUE = %d\n&quot;, VALUE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：巨集常數的算術運算（面積計算）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define WIDTH 8
+#define HEIGHT 6
+
+int main() {
+    int area = WIDTH * HEIGHT;
+    printf(&quot;題目7：矩形面積（寬%d高%d） = %d\n&quot;, WIDTH, HEIGHT, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：巨集常數之間互相引用</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define BASE_PRICE 100
+#define TAX_RATE 0.05
+#define TOTAL_PRICE (BASE_PRICE + BASE_PRICE * TAX_RATE)
+
+int main() {
+    printf(&quot;題目8：含稅總價 = %.2f\n&quot;, TOTAL_PRICE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：使用#include引入標準函式庫（stdio.h與math.h）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+int main() {
+    double result = sqrt(64.0);
+    printf(&quot;題目9：sqrt(64) = %.1f\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：巨集常數表示布林值（TRUE/FALSE）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define TRUE 1
+#define FALSE 0
+
+int main() {
+    int isPassing = TRUE;
+    printf(&quot;題目10：是否及格 = %d（1表示TRUE）\n&quot;, isPassing);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：巨集常數用於陣列大小與sizeof驗證</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 6
+
+int main() {
+    int arr[SIZE];
+    int elementCount = sizeof(arr) / sizeof(arr[0]);
+    printf(&quot;題目11：陣列實際元素數量 = %d（應等於SIZE=%d）\n&quot;, elementCount, SIZE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：巨集常數命名慣例（全大寫）示範多個設定值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX_HP 100
+#define MAX_MP 50
+#define MAX_LEVEL 99
+
+int main() {
+    printf(&quot;題目12：角色設定 HP上限=%d MP上限=%d 等級上限=%d\n&quot;, MAX_HP, MAX_MP, MAX_LEVEL);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：巨集常數取代magic number（提升可讀性）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DAYS_IN_WEEK 7
+
+int main() {
+    int totalDays = 21;
+    int weeks = totalDays / DAYS_IN_WEEK;
+    printf(&quot;題目13：%d 天等於 %d 週\n&quot;, totalDays, weeks);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：巨集常數用於switch case</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MONDAY 1
+#define TUESDAY 2
+#define WEDNESDAY 3
+
+int main() {
+    int today = TUESDAY;
+    switch (today) {
+        case MONDAY:
+            printf(&quot;題目14：今天是星期一\n&quot;);
+            break;
+        case TUESDAY:
+            printf(&quot;題目14：今天是星期二\n&quot;);
+            break;
+        case WEDNESDAY:
+            printf(&quot;題目14：今天是星期三\n&quot;);
+            break;
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：巨集常數用於條件判斷（溫度門檻）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define HIGH_TEMP_THRESHOLD 38
+
+int main() {
+    int temperature = 40;
+    if (temperature &gt;= HIGH_TEMP_THRESHOLD) {
+        printf(&quot;題目15：溫度 %d 度，已達高溫警戒（門檻 %d 度）\n&quot;, temperature, HIGH_TEMP_THRESHOLD);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：巨集常數搭配enum比較用途</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define RED_MACRO 0
+
+enum Color { RED_ENUM, GREEN_ENUM, BLUE_ENUM };
+
+int main() {
+    printf(&quot;題目16：巨集常數 RED_MACRO = %d，列舉常數 RED_ENUM = %d\n&quot;, RED_MACRO, RED_ENUM);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：巨集字串常數用於printf格式化訊息</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define APP_NAME &quot;VSCodeEasy&quot;
+#define VERSION_STR &quot;1.0.0&quot;
+
+int main() {
+    printf(&quot;題目17：%s 版本 %s 已啟動\n&quot;, APP_NAME, VERSION_STR);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：巨集常數定義陣列的最大長度並在函式間共用</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX_LEN 4
+
+void printArray(int arr[]) {
+    for (int i = 0; i &lt; MAX_LEN; i++) {
+        printf(&quot;%d &quot;, arr[i]);
+    }
+}
+
+int main() {
+    int nums[MAX_LEN] = {2, 4, 6, 8};
+    printf(&quot;題目18：陣列內容：&quot;);
+    printArray(nums);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：巨集常數用於計算費用（單價乘以數量）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define UNIT_PRICE 25
+
+int main() {
+    int quantity = 8;
+    int total = UNIT_PRICE * quantity;
+    printf(&quot;題目19：單價 %d 元，購買 %d 個，總價 = %d 元\n&quot;, UNIT_PRICE, quantity, total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：巨集常數 undef 後偵測是否已定義（配合ifdef）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define FEATURE_X 1
+#undef FEATURE_X
+
+int main() {
+#ifdef FEATURE_X
+    printf(&quot;題目20：FEATURE_X 已定義\n&quot;);
+#else
+    printf(&quot;題目20：FEATURE_X 未定義（已被undef）\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：巨集函式（Macro Functions）與參數化巨集（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：巨集函式計算兩數最大值（MAX）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))
+
+int main() {
+    int x = 15, y = 28;
+    printf(&quot;題目21：MAX(%d, %d) = %d\n&quot;, x, y, MAX(x, y));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：巨集函式計算兩數最小值（MIN）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MIN(a, b) ((a) &lt; (b) ? (a) : (b))
+
+int main() {
+    int x = 42, y = 17;
+    printf(&quot;題目22：MIN(%d, %d) = %d\n&quot;, x, y, MIN(x, y));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：巨集函式計算平方</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SQUARE(x) ((x) * (x))
+
+int main() {
+    int num = 9;
+    printf(&quot;題目23：%d 的平方 = %d\n&quot;, num, SQUARE(num));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：巨集函式計算絕對值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ABS(x) ((x) &lt; 0 ? -(x) : (x))
+
+int main() {
+    int num = -25;
+    printf(&quot;題目24：%d 的絕對值 = %d\n&quot;, num, ABS(num));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：巨集函式忘記加括號的錯誤示範與正確寫法比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define WRONG_SQUARE(x) x * x
+#define CORRECT_SQUARE(x) ((x) * (x))
+
+int main() {
+    int a = 3, b = 2;
+    printf(&quot;題目25：錯誤巨集 WRONG_SQUARE(a+b) = %d（因缺少括號而展開錯誤）\n&quot;, WRONG_SQUARE(a + b));
+    printf(&quot;題目25：正確巨集 CORRECT_SQUARE(a+b) = %d\n&quot;, CORRECT_SQUARE(a + b));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：巨集函式計算圓面積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PI 3.14159
+#define CIRCLE_AREA(r) (PI * (r) * (r))
+
+int main() {
+    double radius = 4.0;
+    printf(&quot;題目26：半徑 %.1f 的圓面積 = %.2f\n&quot;, radius, CIRCLE_AREA(radius));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：巨集函式（安全加法巨集）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ADD(a, b) ((a) + (b))
+
+int main() {
+    int x = 12, y = 30;
+    printf(&quot;題目27：ADD(%d, %d) = %d\n&quot;, x, y, ADD(x, y));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：巨集函式判斷奇偶數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define IS_EVEN(x) ((x) % 2 == 0)
+
+int main() {
+    int num = 17;
+    printf(&quot;題目28：%d 是否為偶數 = %d（1表示是）\n&quot;, num, IS_EVEN(num));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：巨集函式限制數值範圍（CLAMP）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define CLAMP(x, low, high) ((x) &lt; (low) ? (low) : ((x) &gt; (high) ? (high) : (x)))
+
+int main() {
+    int value = 150;
+    printf(&quot;題目29：CLAMP(%d, 0, 100) = %d\n&quot;, value, CLAMP(value, 0, 100));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：巨集函式與一般函式行為比較（展開概念）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MACRO_DOUBLE(x) ((x) * 2)
+
+int funcDouble(int x) {
+    return x * 2;
+}
+
+int main() {
+    int num = 21;
+    printf(&quot;題目30：巨集展開結果 = %d，函式呼叫結果 = %d（結果相同，但巨集在編譯前展開）\n&quot;, MACRO_DOUBLE(num), funcDouble(num));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：巨集函式計算立方</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define CUBE(x) ((x) * (x) * (x))
+
+int main() {
+    int num = 3;
+    printf(&quot;題目31：%d 的立方 = %d\n&quot;, num, CUBE(num));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：巨集參數的副作用問題示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))
+
+int main() {
+    int i = 5;
+    int result = MAX(i++, 3);  // 副作用：i++ 在巨集展開後可能被計算多次
+    printf(&quot;題目32：MAX(i++, 3) 結果 = %d，副作用導致 i 最終變為 = %d（非預期的多加1）\n&quot;, result, i);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：巨集函式搭配do-while(0)包裝多述句</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_TWICE(msg) do { \
+    printf(&quot;%s\n&quot;, msg); \
+    printf(&quot;%s\n&quot;, msg); \
+} while (0)
+
+int main() {
+    printf(&quot;題目33：\n&quot;);
+    PRINT_TWICE(&quot;Hi&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：巨集函式計算兩點平方距離（不含sqrt）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SQ_DIST(x1, y1, x2, y2) (((x2)-(x1))*((x2)-(x1)) + ((y2)-(y1))*((y2)-(y1)))
+
+int main() {
+    printf(&quot;題目34：兩點(0,0)與(3,4)的平方距離 = %d\n&quot;, SQ_DIST(0, 0, 3, 4));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：巨集函式進行溫度轉換（攝氏轉華氏）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define C_TO_F(c) ((c) * 9.0 / 5.0 + 32)
+
+int main() {
+    double celsius = 30.0;
+    printf(&quot;題目35：攝氏 %.1f 度 = 華氏 %.1f 度\n&quot;, celsius, C_TO_F(celsius));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：巨集函式計算陣列元素數量（sizeof技巧）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ARRAY_LENGTH(arr) (sizeof(arr) / sizeof((arr)[0]))
+
+int main() {
+    int nums[] = {1, 2, 3, 4, 5, 6};
+    printf(&quot;題目36：陣列元素數量 = %zu\n&quot;, ARRAY_LENGTH(nums));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：巨集函式進行位元運算（設定位元、清除位元）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SET_BIT(x, n) ((x) | (1 &lt;&lt; (n)))
+#define CLEAR_BIT(x, n) ((x) &amp; ~(1 &lt;&lt; (n)))
+
+int main() {
+    int value = 0;
+    int setResult = SET_BIT(value, 2);
+    int clearResult = CLEAR_BIT(setResult, 2);
+    printf(&quot;題目37：設定第2位元後 = %d，清除第2位元後 = %d\n&quot;, setResult, clearResult);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：巨集函式檢查數值是否在範圍內</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define IN_RANGE(x, low, high) ((x) &gt;= (low) &amp;&amp; (x) &lt;= (high))
+
+int main() {
+    int score = 85;
+    printf(&quot;題目38：分數 %d 是否在60~100之間 = %d\n&quot;, score, IN_RANGE(score, 60, 100));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：巨集函式印出除錯訊息（DEBUG_PRINT）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DEBUG_PRINT(msg) printf(&quot;[DEBUG] %s\n&quot;, msg)
+
+int main() {
+    printf(&quot;題目39：&quot;);
+    DEBUG_PRINT(&quot;程式已啟動&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：巨集函式結合三元運算子回傳較大絕對值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ABS(x) ((x) &lt; 0 ? -(x) : (x))
+#define MAX_ABS(a, b) (ABS(a) &gt; ABS(b) ? ABS(a) : ABS(b))
+
+int main() {
+    int a = -20, b = 15;
+    printf(&quot;題目40：MAX_ABS(%d, %d) = %d\n&quot;, a, b, MAX_ABS(a, b));
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：條件式編譯（#ifdef、#ifndef、#if、#else、#elif）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：#ifdef 檢查巨集是否已定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define FEATURE_A
+
+int main() {
+#ifdef FEATURE_A
+    printf(&quot;題目41：FEATURE_A 已啟用\n&quot;);
+#else
+    printf(&quot;題目41：FEATURE_A 未啟用\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：#ifndef 用於避免重複定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#ifndef MAX_SIZE
+#define MAX_SIZE 10
+#endif
+
+int main() {
+    printf(&quot;題目42：MAX_SIZE = %d\n&quot;, MAX_SIZE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：#if 搭配常數運算式進行條件編譯</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define VERSION 3
+
+int main() {
+#if VERSION &gt;= 2
+    printf(&quot;題目43：目前版本 %d，支援新功能\n&quot;, VERSION);
+#else
+    printf(&quot;題目43：目前版本 %d，僅支援舊功能\n&quot;, VERSION);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：#if...#else 依據條件切換程式碼區塊</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define USE_METRIC 1
+
+int main() {
+#if USE_METRIC
+    printf(&quot;題目44：使用公制單位（公里）\n&quot;);
+#else
+    printf(&quot;題目44：使用英制單位（英里）\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：#if...#elif...#else 多重條件編譯</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LEVEL 2
+
+int main() {
+#if LEVEL == 1
+    printf(&quot;題目45：等級1：新手\n&quot;);
+#elif LEVEL == 2
+    printf(&quot;題目45：等級2：中階\n&quot;);
+#elif LEVEL == 3
+    printf(&quot;題目45：等級3：高階\n&quot;);
+#else
+    printf(&quot;題目45：未知等級\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：#define 搭配 #undef 動態切換條件編譯結果</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MODE_A
+
+int main() {
+#ifdef MODE_A
+    printf(&quot;題目46：目前模式為 MODE_A\n&quot;);
+#endif
+#undef MODE_A
+#define MODE_B
+#ifdef MODE_B
+    printf(&quot;題目46：切換後模式為 MODE_B\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：使用條件編譯切換偵錯模式（DEBUG開關）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DEBUG 1
+
+int main() {
+    int result = 10 + 20;
+#if DEBUG
+    printf(&quot;題目47：[DEBUG] 計算結果 = %d\n&quot;, result);
+#else
+    printf(&quot;題目47：結果 = %d\n&quot;, result);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：使用條件編譯切換不同平台的訊息（模擬）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PLATFORM_WINDOWS 1
+
+int main() {
+#if PLATFORM_WINDOWS
+    printf(&quot;題目48：目前執行平台：Windows\n&quot;);
+#else
+    printf(&quot;題目48：目前執行平台：Linux\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：使用條件編譯控制版本號輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAJOR_VERSION 2
+#define MINOR_VERSION 5
+
+int main() {
+#if MAJOR_VERSION &gt;= 2
+    printf(&quot;題目49：版本 %d.%d（穩定版）\n&quot;, MAJOR_VERSION, MINOR_VERSION);
+#else
+    printf(&quot;題目49：版本 %d.%d（測試版）\n&quot;, MAJOR_VERSION, MINOR_VERSION);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：#if defined() 語法示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ENABLE_LOG
+
+int main() {
+#if defined(ENABLE_LOG)
+    printf(&quot;題目50：日誌功能已啟用\n&quot;);
+#else
+    printf(&quot;題目50：日誌功能未啟用\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：巢狀條件編譯（多層 #ifdef）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define OUTER
+#define INNER
+
+int main() {
+#ifdef OUTER
+    printf(&quot;題目51：OUTER 已定義\n&quot;);
+    #ifdef INNER
+        printf(&quot;題目51：INNER 也已定義\n&quot;);
+    #endif
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：條件編譯搭配數學功能開關</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+#define ENABLE_ADVANCED_MATH 1
+
+int main() {
+#if ENABLE_ADVANCED_MATH
+    double result = sqrt(81.0);
+    printf(&quot;題目52：進階數學功能已啟用，sqrt(81) = %.1f\n&quot;, result);
+#else
+    printf(&quot;題目52：進階數學功能未啟用\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：條件編譯控制陣列大小</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LARGE_BUFFER 1
+
+#if LARGE_BUFFER
+    #define BUFFER_SIZE 100
+#else
+    #define BUFFER_SIZE 10
+#endif
+
+int main() {
+    int buffer[BUFFER_SIZE];
+    printf(&quot;題目53：緩衝區大小 = %d\n&quot;, BUFFER_SIZE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：條件編譯切換不同的常數設定（DEBUG模式下用小陣列）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DEBUG_MODE 1
+
+#if DEBUG_MODE
+    #define DATA_COUNT 3
+#else
+    #define DATA_COUNT 1000
+#endif
+
+int main() {
+    int data[DATA_COUNT];
+    printf(&quot;題目54：目前資料筆數設定 = %d\n&quot;, DATA_COUNT);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：條件編譯搭配 #error 檢查必要巨集是否定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define REQUIRED_CONFIG 1
+
+#ifndef REQUIRED_CONFIG
+    #error &quot;REQUIRED_CONFIG 必須被定義&quot;
+#endif
+
+int main() {
+    printf(&quot;題目55：必要設定 REQUIRED_CONFIG 已通過檢查\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：條件編譯控制函式是否被編譯（功能開關）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ENABLE_EXTRA_FEATURE 1
+
+#if ENABLE_EXTRA_FEATURE
+void extraFeature() {
+    printf(&quot;題目56：額外功能已執行\n&quot;);
+}
+#endif
+
+int main() {
+#if ENABLE_EXTRA_FEATURE
+    extraFeature();
+#else
+    printf(&quot;題目56：額外功能未編譯\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：條件編譯切換語言訊息（中文/英文提示）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LANG_CHINESE 1
+
+int main() {
+#if LANG_CHINESE
+    printf(&quot;題目57：歡迎使用本程式\n&quot;);
+#else
+    printf(&quot;Q57: Welcome to this program\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：條件編譯搭配版本比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define APP_VERSION 3
+
+int main() {
+#if APP_VERSION &gt;= 2
+    printf(&quot;題目58：版本 %d 支援雲端同步功能\n&quot;, APP_VERSION);
+#else
+    printf(&quot;題目58：版本 %d 不支援雲端同步功能\n&quot;, APP_VERSION);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：條件編譯示範標頭檔防衛（include guard）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#ifndef MYHEADER_H
+#define MYHEADER_H
+
+#define GUARD_MESSAGE &quot;標頭防衛生效&quot;
+
+#endif
+
+int main() {
+    printf(&quot;題目59：%s\n&quot;, GUARD_MESSAGE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：條件編譯綜合應用：依編譯設定切換執行模式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRODUCTION_MODE 0
+
+int main() {
+#if PRODUCTION_MODE
+    printf(&quot;題目60：目前為正式環境模式\n&quot;);
+#else
+    printf(&quot;題目60：目前為開發環境模式\n&quot;);
+#endif
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：進階巨集技巧（多行巨集、字串化、符號連接、可變參數巨集）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：多行巨集（使用反斜線接續）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_INFO(name, age) \
+    printf(&quot;姓名：%s\n&quot;, name); \
+    printf(&quot;年齡：%d\n&quot;, age)
+
+int main() {
+    printf(&quot;題目61：\n&quot;);
+    PRINT_INFO(&quot;Amy&quot;, 20);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：巨集搭配 do-while(0) 包裝多行邏輯</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SWAP_INT(a, b) do { \
+    int temp = a; \
+    a = b; \
+    b = temp; \
+} while (0)
+
+int main() {
+    int x = 5, y = 10;
+    SWAP_INT(x, y);
+    printf(&quot;題目62：交換後 x = %d, y = %d\n&quot;, x, y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：字串化運算子 # 將參數轉為字串</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define TO_STRING(x) #x
+
+int main() {
+    printf(&quot;題目63：TO_STRING(HelloWorld) = %s\n&quot;, TO_STRING(HelloWorld));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：符號連接運算子 ## 組合識別字</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define CONCAT(a, b) a##b
+
+int main() {
+    int CONCAT(my, Var) = 42;  // 展開為 int myVar = 42;
+    printf(&quot;題目64：myVar = %d\n&quot;, myVar);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：使用 ## 動態產生變數名稱</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DECLARE_VAR(name, num) int name##num
+
+int main() {
+    DECLARE_VAR(score, 1) = 90;  // 展開為 int score1 = 90;
+    printf(&quot;題目65：score1 = %d\n&quot;, score1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：可變參數巨集（__VA_ARGS__）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LOG(fmt, ...) printf(fmt, __VA_ARGS__)
+
+int main() {
+    LOG(&quot;題目66：學生 %s 成績 %d 分\n&quot;, &quot;Amy&quot;, 92);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：可變參數巨集實作簡易LOG函式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define LOG_INFO(fmt, ...) printf(&quot;[INFO] &quot; fmt &quot;\n&quot;, __VA_ARGS__)
+
+int main() {
+    LOG_INFO(&quot;題目67：系統啟動，版本 %d.%d&quot;, 1, 5);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：巨集搭配 __LINE__ 印出程式行號</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_LINE() printf(&quot;題目68：目前程式行號 = %d\n&quot;, __LINE__)
+
+int main() {
+    PRINT_LINE();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：巨集搭配 __FILE__ 印出檔案名稱</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_FILE() printf(&quot;題目69：目前檔案名稱 = %s\n&quot;, __FILE__)
+
+int main() {
+    PRINT_FILE();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：巨集搭配 __DATE__ 與 __TIME__ 印出編譯時間</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_BUILD_INFO() printf(&quot;題目70：編譯日期 = %s，編譯時間 = %s\n&quot;, __DATE__, __TIME__)
+
+int main() {
+    PRINT_BUILD_INFO();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：巨集實作簡易斷言（assert）功能</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define MY_ASSERT(cond, msg) do { \
+    if (!(cond)) { \
+        printf(&quot;題目71：斷言失敗：%s\n&quot;, msg); \
+        exit(1); \
+    } \
+} while (0)
+
+int main() {
+    int score = 85;
+    MY_ASSERT(score &gt;= 0 &amp;&amp; score &lt;= 100, &quot;分數必須介於0到100之間&quot;);
+    printf(&quot;題目71：斷言通過，分數 = %d\n&quot;, score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：巨集實作陣列自動計算元素數量的迴圈巨集</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define ARRAY_LEN(arr) (sizeof(arr) / sizeof((arr)[0]))
+#define FOR_EACH(i, arr) for (int i = 0; i &lt; (int)ARRAY_LEN(arr); i++)
+
+int main() {
+    int nums[] = {10, 20, 30, 40};
+    int sum = 0;
+    FOR_EACH(i, nums) {
+        sum += nums[i];
+    }
+    printf(&quot;題目72：使用巨集迴圈計算總和 = %d\n&quot;, sum);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：巨集搭配字串化印出變數名稱與值（除錯用）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define PRINT_VAR(x) printf(&quot;題目73：%s = %d\n&quot;, #x, x)
+
+int main() {
+    int score = 77;
+    PRINT_VAR(score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：巨集組合建立多個相似的函式（透過##產生函式名稱）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DEFINE_GETTER(name, value) \
+    int get_##name() { return value; }
+
+DEFINE_GETTER(maxHp, 100)
+DEFINE_GETTER(maxMp, 50)
+
+int main() {
+    printf(&quot;題目74：get_maxHp() = %d，get_maxMp() = %d\n&quot;, get_maxHp(), get_maxMp());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：巨集實作簡易的getter/setter產生器</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define DECLARE_PROPERTY(type, name) \
+    type name##_value; \
+    void set_##name(type v) { name##_value = v; } \
+    type get_##name() { return name##_value; }
+
+DECLARE_PROPERTY(int, health)
+
+int main() {
+    set_health(75);
+    printf(&quot;題目75：角色生命值 = %d\n&quot;, get_health());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：巨集實作型態安全的SWAP巨集</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SWAP(type, a, b) do { \
+    type temp = a; \
+    a = b; \
+    b = temp; \
+} while (0)
+
+int main() {
+    double x = 1.5, y = 2.5;
+    SWAP(double, x, y);
+    printf(&quot;題目76：交換後 x = %.1f, y = %.1f\n&quot;, x, y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：巨集組合實作簡易的單元測試檢查巨集</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define CHECK_EQUAL(actual, expected) do { \
+    if ((actual) == (expected)) { \
+        printf(&quot;題目77：測試通過：%d == %d\n&quot;, actual, expected); \
+    } else { \
+        printf(&quot;題目77：測試失敗：%d != %d\n&quot;, actual, expected); \
+    } \
+} while (0)
+
+int main() {
+    int result = 5 + 5;
+    CHECK_EQUAL(result, 10);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：巨集搭配結構初始化簡化語法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+#define MAKE_POINT(px, py) ((struct Point){(px), (py)})
+
+int main() {
+    struct Point p1 = MAKE_POINT(3, 7);
+    printf(&quot;題目78：透過巨集建立的座標 (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：巨集實作簡易的次數迴圈巨集</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define REPEAT(n) for (int repeatIdx = 0; repeatIdx &lt; (n); repeatIdx++)
+
+int main() {
+    int count = 0;
+    REPEAT(4) {
+        count++;
+    }
+    printf(&quot;題目79：REPEAT巨集執行次數統計 = %d\n&quot;, count);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：綜合應用：使用巨集打造簡易的組態設定系統</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define CONFIG_ITEM(name, value) static const int CONFIG_##name = value
+
+CONFIG_ITEM(MAX_USERS, 50);
+CONFIG_ITEM(TIMEOUT_SEC, 30);
+
+#define SHOW_CONFIG(name) printf(&quot;題目80：&quot; #name &quot; = %d\n&quot;, CONFIG_##name)
+
+int main() {
+    SHOW_CONFIG(MAX_USERS);
+    SHOW_CONFIG(TIMEOUT_SEC);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

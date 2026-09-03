@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言結構與自訂型態教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言結構與自訂型態教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：結構(Struct)基礎（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：定義學生結構並存取成員</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student s1 = {&quot;Amy&quot;, 92};
+    printf(&quot;題目1：學生 %s 的成績為 %d 分\n&quot;, s1.name, s1.score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：結構成員的初始化列表</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point p1 = {3, 7};
+    printf(&quot;題目2：座標點 (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：結構變數賦值複製整個結構</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point p1 = {5, 10};
+    struct Point p2;
+    p2 = p1;
+    printf(&quot;題目3：複製後 p2 座標 (%d, %d)\n&quot;, p2.x, p2.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：使用 sizeof 計算結構大小</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Rectangle {
+    int width;
+    int height;
+};
+
+int main() {
+    printf(&quot;題目4：Rectangle 結構大小 = %zu bytes\n&quot;, sizeof(struct Rectangle));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：結構內含多種資料型態（矩形面積）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Rectangle {
+    int width;
+    int height;
+};
+
+int main() {
+    struct Rectangle rect = {12, 8};
+    int area = rect.width * rect.height;
+    printf(&quot;題目5：矩形面積（長%d寬%d） = %d\n&quot;, rect.width, rect.height, area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：結構表示座標點並計算兩點距離</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+struct Point {
+    double x;
+    double y;
+};
+
+int main() {
+    struct Point p1 = {0, 0};
+    struct Point p2 = {3, 4};
+    double dist = sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+    printf(&quot;題目6：兩點距離 = %g\n&quot;, dist);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：結構表示時間（時、分、秒）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Time {
+    int hour;
+    int minute;
+    int second;
+};
+
+int main() {
+    struct Time t1 = {14, 30, 45};
+    printf(&quot;題目7：時間為 %02d:%02d:%02d\n&quot;, t1.hour, t1.minute, t1.second);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：結構表示日期（年、月、日）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Date {
+    int year;
+    int month;
+    int day;
+};
+
+int main() {
+    struct Date d1 = {2026, 8, 3};
+    printf(&quot;題目8：日期為 %d年%d月%d日\n&quot;, d1.year, d1.month, d1.day);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：結構表示複數並相加</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Complex {
+    double real;
+    double imag;
+};
+
+int main() {
+    struct Complex c1 = {2.0, 3.0};
+    struct Complex c2 = {1.5, -2.0};
+    struct Complex sum;
+    sum.real = c1.real + c2.real;
+    sum.imag = c1.imag + c2.imag;
+    printf(&quot;題目9：複數相加結果 = %g + %gi\n&quot;, sum.real, sum.imag);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：結構表示分數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Fraction {
+    int numerator;
+    int denominator;
+};
+
+int main() {
+    struct Fraction f1 = {3, 4};
+    printf(&quot;題目10：分數為 %d/%d\n&quot;, f1.numerator, f1.denominator);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：結構表示圓形並計算面積周長</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Circle {
+    double radius;
+};
+
+int main() {
+    struct Circle c1 = {5.0};
+    double pi = 3.14159;
+    double area = pi * c1.radius * c1.radius;
+    double perimeter = 2 * pi * c1.radius;
+    printf(&quot;題目11：圓面積 = %.2f，周長 = %.2f\n&quot;, area, perimeter);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：結構表示長方體並計算體積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Cuboid {
+    double length;
+    double width;
+    double height;
+};
+
+int main() {
+    struct Cuboid box = {4, 3, 2};
+    double volume = box.length * box.width * box.height;
+    printf(&quot;題目12：長方體體積 = %g\n&quot;, volume);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：結構表示員工資料（代號、薪資）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Employee {
+    int id;
+    double salary;
+};
+
+int main() {
+    struct Employee emp1 = {1001, 45000.0};
+    printf(&quot;題目13：員工代號 %d 薪資 %.0f 元\n&quot;, emp1.id, emp1.salary);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：結構內成員為字元陣列（姓名）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Person {
+    char name[30];
+    int age;
+};
+
+int main() {
+    struct Person p1;
+    strcpy(p1.name, &quot;Wang Ta-Ming&quot;);
+    p1.age = 20;
+    printf(&quot;題目14：姓名 %s，年齡 %d 歲\n&quot;, p1.name, p1.age);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：比較兩個結構是否相等</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point p1 = {3, 5};
+    struct Point p2 = {3, 5};
+    int isEqual = (p1.x == p2.x &amp;&amp; p1.y == p2.y);
+    printf(&quot;題目15：兩結構是否相等 = %d（1表示相等）\n&quot;, isEqual);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：結構做為函式的參數傳遞（傳值）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+void showPoint(struct Point p) {
+    printf(&quot;題目16：函式接收到的座標 (%d, %d)\n&quot;, p.x, p.y);
+}
+
+int main() {
+    struct Point p1 = {6, 9};
+    showPoint(p1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：結構初始化為零</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Score {
+    int chinese;
+    int math;
+    int english;
+};
+
+int main() {
+    struct Score s1 = {0};
+    printf(&quot;題目17：初始化後成績為 國文%d 數學%d 英文%d\n&quot;, s1.chinese, s1.math, s1.english);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：結構表示向量並計算長度</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+struct Vector {
+    double x;
+    double y;
+};
+
+int main() {
+    struct Vector v1 = {3, 4};
+    double length = sqrt(v1.x * v1.x + v1.y * v1.y);
+    printf(&quot;題目18：向量長度 = %g\n&quot;, length);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：結構表示矩形並計算對角線長度</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+struct Rectangle {
+    double width;
+    double height;
+};
+
+int main() {
+    struct Rectangle rect = {6, 8};
+    double diagonal = sqrt(rect.width * rect.width + rect.height * rect.height);
+    printf(&quot;題目19：矩形對角線長度 = %g\n&quot;, diagonal);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：結構表示溫度並轉換攝氏華氏</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Temperature {
+    double celsius;
+};
+
+int main() {
+    struct Temperature t1 = {25.0};
+    double fahrenheit = t1.celsius * 9.0 / 5.0 + 32;
+    printf(&quot;題目20：攝氏 %.1f 度 = 華氏 %.1f 度\n&quot;, t1.celsius, fahrenheit);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：結構陣列與巢狀結構（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：結構陣列宣告與初始化</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88},
+        {&quot;Bob&quot;, 76},
+        {&quot;Cathy&quot;, 95}
+    };
+    printf(&quot;題目21：第2位學生 %s 成績 %d 分\n&quot;, students[1].name, students[1].score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：結構陣列使用迴圈輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    for (int i = 0; i &lt; 3; i++) {
+        printf(&quot;題目22：學生%d：%s，成績%d\n&quot;, i + 1, students[i].name, students[i].score);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：結構陣列找最大值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    int maxIndex = 0;
+    for (int i = 1; i &lt; 3; i++) {
+        if (students[i].score &gt; students[maxIndex].score) {
+            maxIndex = i;
+        }
+    }
+    printf(&quot;題目23：最高分學生為 %s，成績 %d 分\n&quot;, students[maxIndex].name, students[maxIndex].score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：結構陣列找最小值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    int minIndex = 0;
+    for (int i = 1; i &lt; 3; i++) {
+        if (students[i].score &lt; students[minIndex].score) {
+            minIndex = i;
+        }
+    }
+    printf(&quot;題目24：最低分學生為 %s，成績 %d 分\n&quot;, students[minIndex].name, students[minIndex].score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：結構陣列計算平均</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    int total = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        total += students[i].score;
+    }
+    double average = (double)total / 3;
+    printf(&quot;題目25：全班平均成績 = %.2f\n&quot;, average);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：結構陣列排序（氣泡排序）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    for (int i = 0; i &lt; 2; i++) {
+        for (int j = 0; j &lt; 2 - i; j++) {
+            if (students[j].score &gt; students[j + 1].score) {
+                struct Student temp = students[j];
+                students[j] = students[j + 1];
+                students[j + 1] = temp;
+            }
+        }
+    }
+    printf(&quot;題目26：排序後最低分為 %s（%d分）\n&quot;, students[0].name, students[0].score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：巢狀結構（地址結構包在員工結構內）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Address {
+    char city[20];
+    char street[30];
+};
+
+struct Employee {
+    char name[20];
+    struct Address addr;
+};
+
+int main() {
+    struct Employee emp1 = {&quot;Chen&quot;, {&quot;Taipei&quot;, &quot;Zhongshan Rd.&quot;}};
+    printf(&quot;題目27：員工 %s 住在 %s %s\n&quot;, emp1.name, emp1.addr.city, emp1.addr.street);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：巢狀結構的成員存取</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Engine {
+    int horsepower;
+};
+
+struct Car {
+    char brand[20];
+    struct Engine engine;
+};
+
+int main() {
+    struct Car car1 = {&quot;Toyota&quot;, {180}};
+    printf(&quot;題目28：%s 汽車引擎馬力 = %d hp\n&quot;, car1.brand, car1.engine.horsepower);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：結構陣列統計符合條件的筆數（及格人數）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[5] = {
+        {&quot;A&quot;, 55}, {&quot;B&quot;, 78}, {&quot;C&quot;, 90}, {&quot;D&quot;, 40}, {&quot;E&quot;, 68}
+    };
+    int passCount = 0;
+    for (int i = 0; i &lt; 5; i++) {
+        if (students[i].score &gt;= 60) {
+            passCount++;
+        }
+    }
+    printf(&quot;題目29：及格（60分以上）人數 = %d 人\n&quot;, passCount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：結構陣列搜尋（依姓名搜尋）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    char target[20] = &quot;Bob&quot;;
+    for (int i = 0; i &lt; 3; i++) {
+        if (strcmp(students[i].name, target) == 0) {
+            printf(&quot;題目30：找到學生 %s，成績 %d 分\n&quot;, students[i].name, students[i].score);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：結構陣列加總（商品總金額）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Product {
+    char name[20];
+    int price;
+    int quantity;
+};
+
+int main() {
+    struct Product cart[3] = {
+        {&quot;Book&quot;, 250, 2},
+        {&quot;Pen&quot;, 15, 5},
+        {&quot;Bag&quot;, 480, 1}
+    };
+    int totalAmount = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        totalAmount += cart[i].price * cart[i].quantity;
+    }
+    printf(&quot;題目31：購物車總金額 = %d 元\n&quot;, totalAmount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：結構內含結構陣列（班級含多個學生）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+struct Classroom {
+    char className[10];
+    struct Student students[2];
+};
+
+int main() {
+    struct Classroom class1 = {
+        &quot;Class A&quot;,
+        {{&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}}
+    };
+    printf(&quot;題目32：%s 的第1位學生為 %s，成績 %d\n&quot;, class1.className, class1.students[0].name, class1.students[0].score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：結構陣列的部分複製</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point src[3] = {{1, 1}, {2, 2}, {3, 3}};
+    struct Point dst[3];
+    for (int i = 0; i &lt; 3; i++) {
+        dst[i] = src[i];
+    }
+    printf(&quot;題目33：複製後 dst[2] = (%d, %d)\n&quot;, dst[2].x, dst[2].y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：兩個結構陣列合併</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point a[2] = {{1, 1}, {2, 2}};
+    struct Point b[2] = {{3, 3}, {4, 4}};
+    struct Point merged[4];
+    for (int i = 0; i &lt; 2; i++) merged[i] = a[i];
+    for (int i = 0; i &lt; 2; i++) merged[i + 2] = b[i];
+    printf(&quot;題目34：合併後 merged[3] = (%d, %d)\n&quot;, merged[3].x, merged[3].y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：結構陣列反轉順序</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    for (int i = 0; i &lt; 3 / 2; i++) {
+        struct Student temp = students[i];
+        students[i] = students[3 - 1 - i];
+        students[3 - 1 - i] = temp;
+    }
+    printf(&quot;題目35：反轉後第一位學生為 %s\n&quot;, students[0].name);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：結構表示多邊形頂點座標陣列，計算周長</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+struct Point {
+    double x;
+    double y;
+};
+
+int main() {
+    struct Point poly[4] = {{0, 0}, {4, 0}, {4, 3}, {0, 3}};
+    double perimeter = 0;
+    for (int i = 0; i &lt; 4; i++) {
+        struct Point p1 = poly[i];
+        struct Point p2 = poly[(i + 1) % 4];
+        perimeter += sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+    }
+    printf(&quot;題目36：多邊形周長 = %g\n&quot;, perimeter);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：結構陣列表示矩陣（成員為二維陣列）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Matrix {
+    int data[2][2];
+};
+
+int main() {
+    struct Matrix m1 = {{{1, 2}, {3, 4}}};
+    int trace = m1.data[0][0] + m1.data[1][1];
+    printf(&quot;題目37：矩陣對角線總和（跡）= %d\n&quot;, trace);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：巢狀結構（書本結構內含作者結構）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Author {
+    char name[20];
+    int age;
+};
+
+struct Book {
+    char title[30];
+    struct Author author;
+};
+
+int main() {
+    struct Book book1 = {&quot;C Programming&quot;, {&quot;Lin&quot;, 45}};
+    printf(&quot;題目38：《%s》作者為 %s，%d 歲\n&quot;, book1.title, book1.author.name, book1.author.age);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：結構陣列統計顏色出現次數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Item {
+    char color[10];
+};
+
+int main() {
+    struct Item items[5] = {
+        {&quot;red&quot;}, {&quot;blue&quot;}, {&quot;red&quot;}, {&quot;green&quot;}, {&quot;red&quot;}
+    };
+    int redCount = 0;
+    for (int i = 0; i &lt; 5; i++) {
+        if (strcmp(items[i].color, &quot;red&quot;) == 0) {
+            redCount++;
+        }
+    }
+    printf(&quot;題目39：紅色物品數量 = %d 個\n&quot;, redCount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：結構陣列依多個條件篩選</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Employee {
+    char name[20];
+    char dept[10];
+    double salary;
+};
+
+int main() {
+    struct Employee emps[3] = {
+        {&quot;Amy&quot;, &quot;Sales&quot;, 42000},
+        {&quot;Bob&quot;, &quot;IT&quot;, 55000},
+        {&quot;Cathy&quot;, &quot;IT&quot;, 60000}
+    };
+    int count = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        if (strcmp(emps[i].dept, &quot;IT&quot;) == 0 &amp;&amp; emps[i].salary &gt;= 50000) {
+            count++;
+        }
+    }
+    printf(&quot;題目40：IT部門且薪資達5萬以上的員工數 = %d 人\n&quot;, count);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：結構指標與函式傳遞（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：結構指標宣告與 -> 運算子存取</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point p1 = {5, 8};
+    struct Point *ptr = &amp;p1;
+    printf(&quot;題目41：透過指標存取座標 (%d, %d)\n&quot;, ptr-&gt;x, ptr-&gt;y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：傳遞結構指標給函式修改內容</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+void movePoint(struct Point *p, int dx, int dy) {
+    p-&gt;x += dx;
+    p-&gt;y += dy;
+}
+
+int main() {
+    struct Point p1 = {2, 3};
+    movePoint(&amp;p1, 5, 5);
+    printf(&quot;題目42：移動後座標 (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：傳值 vs 傳指標比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+};
+
+void tryModifyByValue(struct Point p) {
+    p.x = 999;
+}
+
+void modifyByPointer(struct Point *p) {
+    p-&gt;x = 999;
+}
+
+int main() {
+    struct Point p1 = {10};
+    tryModifyByValue(p1);
+    printf(&quot;題目43：傳值後 p1.x 仍為 %d（未被修改）\n&quot;, p1.x);
+    modifyByPointer(&amp;p1);
+    printf(&quot;題目43：傳指標後 p1.x 變為 %d\n&quot;, p1.x);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：動態配置結構記憶體（malloc）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point *p = (struct Point *)malloc(sizeof(struct Point));
+    p-&gt;x = 7;
+    p-&gt;y = 9;
+    printf(&quot;題目44：動態配置的座標 (%d, %d)\n&quot;, p-&gt;x, p-&gt;y);
+    free(p);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：動態配置結構陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    int n = 3;
+    struct Student *arr = (struct Student *)malloc(n * sizeof(struct Student));
+    for (int i = 0; i &lt; n; i++) {
+        arr[i].score = (i + 1) * 10;
+    }
+    printf(&quot;題目45：動態陣列第3筆成績 = %d\n&quot;, arr[2].score);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：函式回傳結構</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point makePoint(int x, int y) {
+    struct Point p;
+    p.x = x;
+    p.y = y;
+    return p;
+}
+
+int main() {
+    struct Point p1 = makePoint(4, 6);
+    printf(&quot;題目46：函式建立的座標 (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：函式回傳結構指標</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+struct Point* createPoint(int x, int y) {
+    struct Point *p = (struct Point *)malloc(sizeof(struct Point));
+    p-&gt;x = x;
+    p-&gt;y = y;
+    return p;
+}
+
+int main() {
+    struct Point *p1 = createPoint(11, 22);
+    printf(&quot;題目47：函式回傳指標的座標 (%d, %d)\n&quot;, p1-&gt;x, p1-&gt;y);
+    free(p1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：結構指標陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student s1 = {&quot;Amy&quot;, 90};
+    struct Student s2 = {&quot;Bob&quot;, 85};
+    struct Student *ptrArr[2] = {&amp;s1, &amp;s2};
+    printf(&quot;題目48：指標陣列第2筆學生 %s，成績 %d\n&quot;, ptrArr[1]-&gt;name, ptrArr[1]-&gt;score);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：使用指標走訪結構陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int main() {
+    struct Student students[3] = {
+        {&quot;Amy&quot;, 88}, {&quot;Bob&quot;, 76}, {&quot;Cathy&quot;, 95}
+    };
+    struct Student *ptr = students;
+    int total = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        total += (ptr + i)-&gt;score;
+    }
+    printf(&quot;題目49：透過指標走訪計算總分 = %d\n&quot;, total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：交換兩個結構的內容（用指標）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+void swapPoints(struct Point *a, struct Point *b) {
+    struct Point temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int main() {
+    struct Point p1 = {1, 2};
+    struct Point p2 = {9, 8};
+    swapPoints(&amp;p1, &amp;p2);
+    printf(&quot;題目50：交換後 p1 = (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：連結串列節點基礎（自我參照結構）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stddef.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node n1;
+    n1.data = 100;
+    n1.next = NULL;
+    printf(&quot;題目51：節點資料 = %d，下一個節點是否為空 = %d\n&quot;, n1.data, n1.next == NULL);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：建立簡單連結串列（3個節點）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *n1 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n2 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n3 = (struct Node *)malloc(sizeof(struct Node));
+    n1-&gt;data = 10; n1-&gt;next = n2;
+    n2-&gt;data = 20; n2-&gt;next = n3;
+    n3-&gt;data = 30; n3-&gt;next = NULL;
+    printf(&quot;題目52：串列第2個節點資料 = %d\n&quot;, n1-&gt;next-&gt;data);
+    free(n1); free(n2); free(n3);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：走訪連結串列並印出所有值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *n1 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n2 = (struct Node *)malloc(sizeof(struct Node));
+    n1-&gt;data = 5; n1-&gt;next = n2;
+    n2-&gt;data = 15; n2-&gt;next = NULL;
+    struct Node *cur = n1;
+    printf(&quot;題目53：走訪串列：&quot;);
+    while (cur != NULL) {
+        printf(&quot;%d &quot;, cur-&gt;data);
+        cur = cur-&gt;next;
+    }
+    printf(&quot;\n&quot;);
+    free(n1); free(n2);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：連結串列插入節點（在開頭插入）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *head = (struct Node *)malloc(sizeof(struct Node));
+    head-&gt;data = 20;
+    head-&gt;next = NULL;
+    struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
+    newNode-&gt;data = 10;
+    newNode-&gt;next = head;
+    struct Node *oldHead = head;
+    head = newNode;
+    printf(&quot;題目54：插入後串列開頭資料 = %d\n&quot;, head-&gt;data);
+    free(oldHead);
+    free(head);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：連結串列計算節點數量</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *n1 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n2 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n3 = (struct Node *)malloc(sizeof(struct Node));
+    n1-&gt;next = n2; n2-&gt;next = n3; n3-&gt;next = NULL;
+    int count = 0;
+    struct Node *cur = n1;
+    while (cur != NULL) {
+        count++;
+        cur = cur-&gt;next;
+    }
+    printf(&quot;題目55：串列節點總數 = %d\n&quot;, count);
+    free(n1); free(n2); free(n3);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：連結串列釋放記憶體</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *n1 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n2 = (struct Node *)malloc(sizeof(struct Node));
+    n1-&gt;data = 1; n1-&gt;next = n2;
+    n2-&gt;data = 2; n2-&gt;next = NULL;
+    int freedCount = 0;
+    struct Node *cur = n1;
+    while (cur != NULL) {
+        struct Node *temp = cur;
+        cur = cur-&gt;next;
+        free(temp);
+        freedCount++;
+    }
+    printf(&quot;題目56：已釋放節點數量 = %d\n&quot;, freedCount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：結構指標作為函式參數並回傳布林值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Student {
+    char name[20];
+    int score;
+};
+
+int isPassing(struct Student *s) {
+    return s-&gt;score &gt;= 60;
+}
+
+int main() {
+    struct Student s1 = {&quot;Amy&quot;, 75};
+    printf(&quot;題目57：學生 %s 是否及格 = %d（1表示及格）\n&quot;, s1.name, isPassing(&amp;s1));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：使用 const struct* 保護資料不被修改</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+void printPoint(const struct Point *p) {
+    printf(&quot;題目58：唯讀存取座標 (%d, %d)\n&quot;, p-&gt;x, p-&gt;y);
+}
+
+int main() {
+    struct Point p1 = {3, 4};
+    printPoint(&amp;p1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：結構陣列指標運算（指標算術走訪）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    struct Point pts[3] = {{1, 1}, {2, 2}, {3, 3}};
+    struct Point *start = pts;
+    struct Point *end = pts + 3;
+    int sumX = 0;
+    for (struct Point *p = start; p &lt; end; p++) {
+        sumX += p-&gt;x;
+    }
+    printf(&quot;題目59：指標算術走訪 x 座標總和 = %d\n&quot;, sumX);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：動態配置的結構陣列並釋放記憶體</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Product {
+    char name[20];
+    double price;
+};
+
+int main() {
+    int n = 2;
+    struct Product *products = (struct Product *)malloc(n * sizeof(struct Product));
+    products[0].price = 100.5;
+    products[1].price = 250.0;
+    double total = products[0].price + products[1].price;
+    printf(&quot;題目60：動態配置商品總價 = %.1f 元\n&quot;, total);
+    free(products);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：typedef、enum、union 與自訂型態應用（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：typedef 簡化結構型態宣告</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+typedef struct Point Point;
+
+int main() {
+    Point p1 = {5, 6};
+    printf(&quot;題目61：使用typedef後的座標 (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：typedef 定義結構同時宣告（匿名結構）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef struct {
+    char name[20];
+    int age;
+} Person;
+
+int main() {
+    Person p1 = {&quot;Lin&quot;, 22};
+    printf(&quot;題目62：%s，%d 歲\n&quot;, p1.name, p1.age);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：enum 列舉基礎（星期）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Weekday { MON, TUE, WED, THU, FRI, SAT, SUN };
+
+int main() {
+    enum Weekday today = WED;
+    printf(&quot;題目63：今天是星期的列舉編號 = %d（0表示星期一）\n&quot;, today);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：enum 列舉表示狀態（燈號）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Light { RED, YELLOW, GREEN };
+
+int main() {
+    enum Light signal = GREEN;
+    printf(&quot;題目64：目前燈號編號 = %d（2表示綠燈）\n&quot;, signal);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：enum 指定列舉值編號</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Grade { A = 90, B = 80, C = 70, D = 60 };
+
+int main() {
+    enum Grade myGrade = B;
+    printf(&quot;題目65：等第B對應分數門檻 = %d\n&quot;, myGrade);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：enum 用於 switch case 判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Light { RED, YELLOW, GREEN };
+
+int main() {
+    enum Light signal = RED;
+    switch (signal) {
+        case RED:
+            printf(&quot;題目66：紅燈，請停止\n&quot;);
+            break;
+        case YELLOW:
+            printf(&quot;題目66：黃燈，請注意\n&quot;);
+            break;
+        case GREEN:
+            printf(&quot;題目66：綠燈，可通行\n&quot;);
+            break;
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：union 基礎宣告與使用</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+union Data {
+    int i;
+    float f;
+};
+
+int main() {
+    union Data d;
+    d.i = 100;
+    printf(&quot;題目67：union 存入整數後 d.i = %d\n&quot;, d.i);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：union 記憶體共用示範（sizeof比較struct與union）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct SData {
+    int i;
+    double d;
+};
+
+union UData {
+    int i;
+    double d;
+};
+
+int main() {
+    printf(&quot;題目68：struct大小=%zu bytes，union大小=%zu bytes\n&quot;, sizeof(struct SData), sizeof(union UData));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：union 用於不同型態儲存同一份資料</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+union Value {
+    int intVal;
+    char charVal;
+};
+
+int main() {
+    union Value v;
+    v.intVal = 65;
+    printf(&quot;題目69：以整數存入65後，以char讀取 = %c\n&quot;, v.charVal);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：struct 內含 enum 成員（訂單狀態）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Status { PENDING, SHIPPED, DELIVERED };
+
+struct Order {
+    int orderId;
+    enum Status status;
+};
+
+int main() {
+    struct Order order1 = {1001, SHIPPED};
+    printf(&quot;題目70：訂單 %d 狀態編號 = %d（1表示已出貨）\n&quot;, order1.orderId, order1.status);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：struct 內含 union 成員（資料庫欄位）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+union FieldValue {
+    int intValue;
+    double doubleValue;
+};
+
+struct Field {
+    char type[10];
+    union FieldValue value;
+};
+
+int main() {
+    struct Field f1;
+    f1.value.intValue = 42;
+    printf(&quot;題目71：欄位儲存的整數值 = %d\n&quot;, f1.value.intValue);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：typedef 定義函式指標型態</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef int (*MathFunc)(int, int);
+
+int add(int a, int b) { return a + b; }
+
+int main() {
+    MathFunc func = add;
+    int result = func(3, 4);
+    printf(&quot;題目72：透過函式指標型態呼叫結果 = %d\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：使用 typedef 定義陣列型態</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef int IntArray5[5];
+
+int main() {
+    IntArray5 numbers = {10, 20, 30, 40, 50};
+    int sum = 0;
+    for (int i = 0; i &lt; 5; i++) sum += numbers[i];
+    printf(&quot;題目73：typedef陣列型態總和 = %d\n&quot;, sum);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：enum 列舉的計數與迴圈搭配</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Weekday { MON, TUE, WED, THU, FRI, SAT, SUN };
+
+int main() {
+    const char *names[] = {&quot;一&quot;, &quot;二&quot;, &quot;三&quot;, &quot;四&quot;, &quot;五&quot;, &quot;六&quot;, &quot;日&quot;};
+    for (enum Weekday d = MON; d &lt;= SUN; d++) {
+        printf(&quot;題目74：星期%s &quot;, names[d]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：struct 巢狀 enum 與 union 綜合應用（表示圖形）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum ShapeType { CIRCLE, RECTANGLE };
+
+union ShapeData {
+    double radius;
+    struct { double width, height; } rect;
+};
+
+struct Shape {
+    enum ShapeType type;
+    union ShapeData data;
+};
+
+int main() {
+    struct Shape s1;
+    s1.type = CIRCLE;
+    s1.data.radius = 5.0;
+    printf(&quot;題目75：圖形類型 = %d（0表示圓形），半徑 = %g\n&quot;, s1.type, s1.data.radius);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：位元欄位 struct (bit field) 基礎示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Flags {
+    unsigned int isVisible : 1;
+    unsigned int isActive : 1;
+    unsigned int level : 4;
+};
+
+int main() {
+    struct Flags f1 = {1, 0, 9};
+    printf(&quot;題目76：位元欄位 visible=%d active=%d level=%d\n&quot;, f1.isVisible, f1.isActive, f1.level);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：typedef struct 用於堆疊（stack）資料結構定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef struct {
+    int data[10];
+    int top;
+} Stack;
+
+int main() {
+    Stack s1;
+    s1.top = -1;
+    s1.data[++s1.top] = 100;
+    s1.data[++s1.top] = 200;
+    printf(&quot;題目77：堆疊頂端元素 = %d\n&quot;, s1.data[s1.top]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：typedef struct 用於佇列（queue）資料結構定義</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef struct {
+    int data[10];
+    int front;
+    int rear;
+} Queue;
+
+int main() {
+    Queue q1;
+    q1.front = 0;
+    q1.rear = 0;
+    q1.data[q1.rear++] = 11;
+    q1.data[q1.rear++] = 22;
+    printf(&quot;題目78：佇列前端元素 = %d\n&quot;, q1.data[q1.front]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：自訂型態應用：撲克牌結構（花色enum+點數）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Suit { SPADE, HEART, DIAMOND, CLUB };
+
+typedef struct {
+    enum Suit suit;
+    int rank;
+} Card;
+
+int main() {
+    Card card1 = {HEART, 13};
+    printf(&quot;題目79：撲克牌花色編號 = %d（1表示紅心），點數 = %d\n&quot;, card1.suit, card1.rank);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：自訂型態應用：學生成績等第計算（struct+enum等第）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+enum Grade { A, B, C, D, F };
+
+typedef struct {
+    char name[20];
+    int score;
+    enum Grade grade;
+} Student;
+
+int main() {
+    Student s1 = {&quot;Amy&quot;, 85, 0};
+    if (s1.score &gt;= 90) s1.grade = A;
+    else if (s1.score &gt;= 80) s1.grade = B;
+    else if (s1.score &gt;= 70) s1.grade = C;
+    else if (s1.score &gt;= 60) s1.grade = D;
+    else s1.grade = F;
+    printf(&quot;題目80：學生 %s 成績 %d 分，等第編號 = %d（1表示B）\n&quot;, s1.name, s1.score, s1.grade);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

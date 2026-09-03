@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言條件結構教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言條件結構教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：基礎條件判斷（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：單一條件 - 判斷正數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int num = 10;
+    if (num &gt; 0) {
+        printf(&quot;題目1： %d 是正數\n&quot;, num);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：單一條件 - 判斷成年</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 20;
+    if (age &gt;= 18) {
+        printf(&quot;題目2：年齡 %d 已成年\n&quot;, age);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：單一條件 - 判斷及格</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 75;
+    if (score &gt;= 60) {
+        printf(&quot;題目3：分數 %d 及格了\n&quot;, score);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：if-else 雙向選擇 - 奇偶判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int number = 7;
+    if (number % 2 == 0) {
+        printf(&quot;題目4： %d 是偶數\n&quot;, number);
+    } else {
+        printf(&quot;題目4： %d 是奇數\n&quot;, number);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：if-else - 溫度判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int temperature = 35;
+    if (temperature &gt; 30) {
+        printf(&quot;題目5：天氣炎熱\n&quot;);
+    } else {
+        printf(&quot;題目5：天氣涼爽\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：if-else - 價格比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int price1 = 100;
+    int price2 = 150;
+    if (price1 &lt; price2) {
+        printf(&quot;題目6：商品1比較便宜\n&quot;);
+    } else {
+        printf(&quot;題目6：商品2比較便宜或同價\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：if-else - 身高判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int height = 145;
+    if (height &gt;= 150) {
+        printf(&quot;題目7：可以搭乘遊樂設施\n&quot;);
+    } else {
+        printf(&quot;題目7：身高不足，無法搭乘\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：if-elif-else 三向選擇 - 分數等級</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 85;
+    if (score &gt;= 90) {
+        printf(&quot;題目8：等級 A\n&quot;);
+    } else if (score &gt;= 60) {
+        printf(&quot;題目8：等級 B\n&quot;);
+    } else {
+        printf(&quot;題目8：等級 C\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：if-elif-else - 溫度分級</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int temp = 15;
+    if (temp &gt; 25) {
+        printf(&quot;題目9：炎熱\n&quot;);
+    } else if (temp &gt; 15) {
+        printf(&quot;題目9：溫暖\n&quot;);
+    } else {
+        printf(&quot;題目9：寒冷\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：if-elif-else - BMI 分級</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double bmi = 22.5;
+    if (bmi &gt;= 24) {
+        printf(&quot;題目10：過重\n&quot;);
+    } else if (bmi &gt;= 18.5) {
+        printf(&quot;題目10：正常\n&quot;);
+    } else {
+        printf(&quot;題目10：過輕\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：比較字串相等</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char name[20] = &quot;Books&quot;;
+    // C 語言的字串比較是用 strcmp() 函數，目前 Web-IDE 的 JSCPP 只支援 strncmp() 函數
+    if (strncmp(name, &quot;Books&quot;, strlen(name)) == 0) {
+        printf(&quot;題目11：語言名稱正確\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：字串不相等判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char password[20] = &quot;abc123&quot;;
+    if (strncmp(password, &quot;123456&quot;, strlen(password)) != 0) {
+        printf(&quot;題目12：密碼不是預設值\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：判斷空字串</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char text[10] = &quot;&quot;;
+    if (strncmp(text, &quot;&quot;, strlen(text)) == 0) {
+        printf(&quot;題目13：字串是空的\n&quot;);
+    } else {
+        printf(&quot;題目13：字串有內容\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：數字範圍判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 75;
+    if (score &gt;= 60) {
+        if (score &lt; 80) {
+            printf(&quot;題目14：分數在 60-79 之間\n&quot;);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：判斷負數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int value = -5;
+    if (value &lt; 0) {
+        printf(&quot;題目15： %d 是負數\n&quot;, value);
+    } else {
+        printf(&quot;題目15： %d 是非負數\n&quot;, value);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：判斷零</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int num = 0;
+    if (num == 0) {
+        printf(&quot;題目16：數字是零\n&quot;);
+    } else {
+        printf(&quot;題目16：數字不是零\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：多條件判斷 - 年齡分組</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    if (age &lt; 12) {
+        printf(&quot;題目17：兒童\n&quot;);
+    } else if (age &lt; 18) {
+        printf(&quot;題目17：青少年\n&quot;);
+    } else if (age &lt; 65) {
+        printf(&quot;題目17：成年人\n&quot;);
+    } else {
+        printf(&quot;題目17：老年人\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：成績優良判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 95;
+    if (score &gt;= 90) {
+        printf(&quot;題目18：優秀！\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：打折資格判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int amount = 1200;
+    if (amount &gt;= 1000) {
+        printf(&quot;題目19：符合打折資格\n&quot;);
+    } else {
+        printf(&quot;題目19：不符合打折資格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：票價計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 10;
+    int price;
+    if (age &lt; 12) {
+        price = 50;
+    } else {
+        price = 100;
+    }
+    printf(&quot;題目20：票價 = %d 元\n&quot;, price);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：複合條件與邏輯運算（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：and 運算 - 兩個條件都成立</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    int income = 30000;
+    if (age &gt;= 18 &amp;&amp; income &gt;= 25000) {
+        printf(&quot;題目21：符合貸款資格\n&quot;);
+    } else {
+        printf(&quot;題目21：不符合貸款資格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：and 運算 - 分數範圍</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 75;
+    if (score &gt;= 60 &amp;&amp; score &lt; 80) {
+        printf(&quot;題目22：分數在及格範圍內（60-79）\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：or 運算 - 任一條件成立</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char day[10] = &quot;Saturday&quot;;
+    if (strncmp(day, &quot;Saturday&quot;, strlen(day)) == 0 || strncmp(day, &quot;Sunday&quot;, strlen(day)) == 0) {
+        printf(&quot;題目23：今天是週末\n&quot;);
+    } else {
+        printf(&quot;題目23：今天是平日\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：or 運算 - 多重選擇</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char grade[5] = &quot;A&quot;;
+    if (strncmp(grade, &quot;A&quot;, strlen(grade)) == 0 || strncmp(grade, &quot;B&quot;, strlen(grade)) == 0) {
+        printf(&quot;題目24：成績良好\n&quot;);
+    } else {
+        printf(&quot;題目24：需要加強\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：not 運算 - 否定條件</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int is_raining = 0;
+    if (!is_raining) {
+        printf(&quot;題目25：天氣晴朗，可以出門\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：not 運算 - 反向邏輯</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int is_member = 0;
+    if (!is_member) {
+        printf(&quot;題目26：需要註冊會員\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：複合條件 - and 與 or 混合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 25;
+    int has_license = 1;
+    if (age &gt;= 18 &amp;&amp; has_license) {
+        printf(&quot;題目27：可以開車\n&quot;);
+    } else {
+        printf(&quot;題目27：不可以開車\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：複合條件 - 溫度舒適度判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int temp = 22;
+    int humidity = 60;
+    if (temp &gt;= 20 &amp;&amp; temp &lt;= 26 &amp;&amp; humidity &lt; 70) {
+        printf(&quot;題目28：天氣舒適\n&quot;);
+    } else {
+        printf(&quot;題目28：天氣不太舒適\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：多重 or 條件</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int month = 7;
+    if (month == 6 || month == 7 || month == 8) {
+        printf(&quot;題目29：現在是夏季\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：成績獎學金判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 88;
+    int attendance = 95;
+    if (score &gt;= 85 &amp;&amp; attendance &gt;= 90) {
+        printf(&quot;題目30：獲得獎學金\n&quot;);
+    } else {
+        printf(&quot;題目30：未獲得獎學金\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：購物滿額贈品</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int amount = 800;
+    int is_member = 1;
+    if (amount &gt;= 500 &amp;&amp; is_member) {
+        printf(&quot;題目31：獲得贈品\n&quot;);
+    } else {
+        printf(&quot;題目31：未獲得贈品\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：停車費計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int hours = 3;
+    int is_member = 0;
+    int fee;
+    if (is_member) {
+        fee = hours * 20;
+    } else {
+        fee = hours * 30;
+    }
+    printf(&quot;題目32：停車費 = %d 元\n&quot;, fee);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：考試通過條件</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int written_score = 70;
+    int practical_score = 75;
+    if (written_score &gt;= 60 &amp;&amp; practical_score &gt;= 60) {
+        printf(&quot;題目33：考試通過\n&quot;);
+    } else {
+        printf(&quot;題目33：考試未通過\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：緊急狀況判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int temperature = 39;
+    int heart_rate = 120;
+    if (temperature &gt; 38 || heart_rate &gt; 100) {
+        printf(&quot;題目34：需要就醫\n&quot;);
+    } else {
+        printf(&quot;題目34：狀況正常\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：會員等級判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int points = 1500;
+    int years = 3;
+    const char *level;  // 字串會在不同分支被重新指定，改用字元指標
+    if (points &gt;= 1000 &amp;&amp; years &gt;= 2) {
+        level = &quot;金卡&quot;;
+    } else if (points &gt;= 500 || years &gt;= 1) {
+        level = &quot;銀卡&quot;;
+    } else {
+        level = &quot;普通&quot;;
+    }
+    printf(&quot;題目35：會員等級 = %s\n&quot;, level);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：密碼強度檢查（長度）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char password[20] = &quot;abc12345&quot;;
+    int length = 8;
+    if (strlen(password) &gt;= length &amp;&amp; strncmp(password, &quot;12345678&quot;, strlen(password)) != 0) {
+        printf(&quot;題目36：密碼強度足夠\n&quot;);
+    } else {
+        printf(&quot;題目36：密碼強度不足\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：運動建議</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 30;
+    int health_score = 80;
+    if (age &lt; 40 &amp;&amp; health_score &gt; 70) {
+        printf(&quot;題目37：建議進行高強度運動\n&quot;);
+    } else if (health_score &gt; 50) {
+        printf(&quot;題目37：建議進行中強度運動\n&quot;);
+    } else {
+        printf(&quot;題目37：建議進行低強度運動\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：折扣資格複合判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int purchase = 1500;
+    int is_vip = 1;
+    int first_time = 0;
+    double discount;
+    if (purchase &gt;= 1000 &amp;&amp; is_vip) {
+        discount = 0.8;
+    } else if (purchase &gt;= 1000 || first_time) {
+        discount = 0.9;
+    } else {
+        discount = 1.0;
+    }
+    printf(&quot;題目38：折扣 = %g\n&quot;, discount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：三個條件的綜合判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score1 = 80;
+    int score2 = 75;
+    int score3 = 85;
+    if (score1 &gt;= 60 &amp;&amp; score2 &gt;= 60 &amp;&amp; score3 &gt;= 60) {
+        printf(&quot;題目39：三科都及格\n&quot;);
+    } else {
+        printf(&quot;題目39：有科目不及格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：範圍外判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int number = 150;
+    if (number &lt; 0 || number &gt; 100) {
+        printf(&quot;題目40：數字超出範圍（0-100）\n&quot;);
+    } else {
+        printf(&quot;題目40：數字在範圍內\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：互動式條件程式（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：輸入年齡判斷成年</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age;
+    printf(&quot;題目41 - 請輸入你的年齡：&quot;);
+    scanf(&quot;%d&quot;, &amp;age);
+    if (age &gt;= 18) {
+        printf(&quot;你已成年\n&quot;);
+    } else {
+        printf(&quot;你未成年\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：輸入分數判斷及格</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    printf(&quot;題目42 - 請輸入你的分數：&quot;);
+    scanf(&quot;%d&quot;, &amp;score);
+    if (score &gt;= 60) {
+        printf(&quot;恭喜及格！\n&quot;);
+    } else {
+        printf(&quot;很遺憾，不及格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：輸入數字判斷正負</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double num;
+    printf(&quot;題目43 - 請輸入一個數字：&quot;);
+    scanf(&quot;%f&quot;, &amp;num);
+    if (num &gt; 0) {
+        printf(&quot;這是正數\n&quot;);
+    } else if (num &lt; 0) {
+        printf(&quot;這是負數\n&quot;);
+    } else {
+        printf(&quot;這是零\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：輸入溫度給建議</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double temp;
+    printf(&quot;題目44 - 請輸入當前溫度：&quot;);
+    scanf(&quot;%f&quot;, &amp;temp);
+    if (temp &gt; 30) {
+        printf(&quot;天氣炎熱，記得多喝水\n&quot;);
+    } else if (temp &gt; 20) {
+        printf(&quot;天氣舒適\n&quot;);
+    } else {
+        printf(&quot;天氣寒冷，注意保暖\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：輸入密碼驗證</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char password[50];
+    printf(&quot;題目45 - 請輸入密碼：&quot;);
+    scanf(&quot;%s&quot;, password);
+    if (strncmp(password, &quot;python123&quot;, strlen(password)) == 0) {
+        printf(&quot;密碼正確，登入成功\n&quot;);
+    } else {
+        printf(&quot;密碼錯誤\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：購物金額計算折扣</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double amount, final_amount;
+    printf(&quot;題目46 - 請輸入購物金額：&quot;);
+    scanf(&quot;%f&quot;, &amp;amount);
+    if (amount &gt;= 1000) {
+        final_amount = amount * 0.9;
+        printf(&quot;享有9折優惠，實付 %g 元\n&quot;, final_amount);
+    } else {
+        printf(&quot;不符合折扣條件，實付 %g 元\n&quot;, amount);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：BMI 計算與建議</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double weight, height, bmi;
+    printf(&quot;題目47 - 請輸入體重（公斤）：&quot;);
+    scanf(&quot;%f&quot;, &amp;weight);
+    printf(&quot;請輸入身高（公尺）：&quot;);
+    scanf(&quot;%f&quot;, &amp;height);
+    bmi = weight / (height * height);
+    if (bmi &gt;= 24) {
+        printf(&quot;BMI = %g ，建議減重\n&quot;, bmi);
+    } else if (bmi &gt;= 18.5) {
+        printf(&quot;BMI = %g ，體重正常\n&quot;, bmi);
+    } else {
+        printf(&quot;BMI = %g ，建議增重\n&quot;, bmi);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：電影票價計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age, price;
+    printf(&quot;題目48 - 請輸入年齡：&quot;);
+    scanf(&quot;%d&quot;, &amp;age);
+    if (age &lt; 12) {
+        price = 100;
+    } else if (age &gt;= 65) {
+        price = 150;
+    } else {
+        price = 250;
+    }
+    printf(&quot;票價 = %d 元\n&quot;, price);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：奇偶數判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int number;
+    printf(&quot;題目49 - 請輸入一個整數：&quot;);
+    scanf(&quot;%d&quot;, &amp;number);
+    if (number % 2 == 0) {
+        printf(&quot;%d 是偶數\n&quot;, number);
+    } else {
+        printf(&quot;%d 是奇數\n&quot;, number);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：成績等級評定</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    const char *grade;
+    printf(&quot;題目50 - 請輸入成績：&quot;);
+    scanf(&quot;%d&quot;, &amp;score);
+    if (score &gt;= 90) {
+        grade = &quot;A&quot;;
+    } else if (score &gt;= 80) {
+        grade = &quot;B&quot;;
+    } else if (score &gt;= 70) {
+        grade = &quot;C&quot;;
+    } else if (score &gt;= 60) {
+        grade = &quot;D&quot;;
+    } else {
+        grade = &quot;F&quot;;
+    }
+    printf(&quot;等級： %s\n&quot;, grade);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：會員登入與折扣</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char is_member[10];
+    double amount, final_amount;
+    printf(&quot;題目51 - 你是會員嗎？(yes/no)：&quot;);
+    scanf(&quot;%s&quot;, is_member);
+    printf(&quot;請輸入購物金額：&quot;);
+    scanf(&quot;%f&quot;, &amp;amount);
+    if (strncmp(is_member, &quot;yes&quot;, strlen(is_member)) == 0) {
+        final_amount = amount * 0.85;
+        printf(&quot;會員享85折，實付 %g 元\n&quot;, final_amount);
+    } else {
+        printf(&quot;非會員，實付 %g 元\n&quot;, amount);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：停車費計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int hours, fee;
+    printf(&quot;題目52 - 請輸入停車時數：&quot;);
+    scanf(&quot;%d&quot;, &amp;hours);
+    if (hours &lt;= 1) {
+        fee = 30;
+    } else if (hours &lt;= 3) {
+        fee = 30 + (hours - 1) * 40;
+    } else {
+        fee = 30 + 2 * 40 + (hours - 3) * 50;
+    }
+    printf(&quot;停車費 = %d 元\n&quot;, fee);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：考試及格與獎勵</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score;
+    printf(&quot;題目53 - 請輸入考試分數：&quot;);
+    scanf(&quot;%d&quot;, &amp;score);
+    if (score &gt;= 90) {
+        printf(&quot;優秀！獎勵1000元\n&quot;);
+    } else if (score &gt;= 60) {
+        printf(&quot;及格\n&quot;);
+    } else {
+        printf(&quot;不及格，需要補考\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：三角形判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double a, b, c;
+    printf(&quot;題目54 - 請輸入第一邊長：&quot;);
+    scanf(&quot;%f&quot;, &amp;a);
+    printf(&quot;請輸入第二邊長：&quot;);
+    scanf(&quot;%f&quot;, &amp;b);
+    printf(&quot;請輸入第三邊長：&quot;);
+    scanf(&quot;%f&quot;, &amp;c);
+    if (a + b &gt; c &amp;&amp; b + c &gt; a &amp;&amp; a + c &gt; b) {
+        printf(&quot;可以構成三角形\n&quot;);
+    } else {
+        printf(&quot;無法構成三角形\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：閏年判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int year;
+    printf(&quot;題目55 - 請輸入年份：&quot;);
+    scanf(&quot;%d&quot;, &amp;year);
+    if (year % 4 == 0 &amp;&amp; year % 100 != 0) {
+        printf(&quot;%d 是閏年\n&quot;, year);
+    } else if (year % 400 == 0) {
+        printf(&quot;%d 是閏年\n&quot;, year);
+    } else {
+        printf(&quot;%d 不是閏年\n&quot;, year);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：運費計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double weight, shipping;
+    printf(&quot;題目56 - 請輸入包裹重量（公斤）：&quot;);
+    scanf(&quot;%f&quot;, &amp;weight);
+    if (weight &lt;= 1) {
+        shipping = 60;
+    } else if (weight &lt;= 5) {
+        shipping = 60 + (weight - 1) * 20;
+    } else {
+        shipping = 60 + 4 * 20 + (weight - 5) * 30;
+    }
+    printf(&quot;運費 = %g 元\n&quot;, shipping);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：速度罰單判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int speed;
+    int limit = 60;
+    int fine;
+    printf(&quot;題目57 - 請輸入行駛速度（公里/小時）：&quot;);
+    scanf(&quot;%d&quot;, &amp;speed);
+    if (speed &gt; limit + 40) {
+        fine = 3600;
+        printf(&quot;超速 %d 公里，罰款 %d 元\n&quot;, speed - limit, fine);
+    } else if (speed &gt; limit + 20) {
+        fine = 2400;
+        printf(&quot;超速 %d 公里，罰款 %d 元\n&quot;, speed - limit, fine);
+    } else if (speed &gt; limit) {
+        fine = 1200;
+        printf(&quot;超速 %d 公里，罰款 %d 元\n&quot;, speed - limit, fine);
+    } else {
+        printf(&quot;速度正常，無罰款\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：水電費階梯計費</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int usage;
+    double bill;
+    printf(&quot;題目58 - 請輸入用電度數：&quot;);
+    scanf(&quot;%d&quot;, &amp;usage);
+    if (usage &lt;= 120) {
+        bill = usage * 2;
+    } else if (usage &lt;= 330) {
+        bill = 120 * 2 + (usage - 120) * 3;
+    } else {
+        bill = 120 * 2 + 210 * 3 + (usage - 330) * 4;
+    }
+    printf(&quot;電費 = %g 元\n&quot;, bill);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：兩數比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double num1, num2;
+    printf(&quot;題目59 - 請輸入第一個數字：&quot;);
+    scanf(&quot;%f&quot;, &amp;num1);
+    printf(&quot;請輸入第二個數字：&quot;);
+    scanf(&quot;%f&quot;, &amp;num2);
+    if (num1 &gt; num2) {
+        printf(&quot;%g 比較大\n&quot;, num1);
+    } else if (num1 &lt; num2) {
+        printf(&quot;%g 比較大\n&quot;, num2);
+    } else {
+        printf(&quot;兩數相等\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：星座月份簡易判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int month;
+    printf(&quot;題目60 - 請輸入出生月份（1-12）：&quot;);
+    scanf(&quot;%d&quot;, &amp;month);
+    if (month &gt;= 3 &amp;&amp; month &lt;= 5) {
+        printf(&quot;春季星座\n&quot;);
+    } else if (month &gt;= 6 &amp;&amp; month &lt;= 8) {
+        printf(&quot;夏季星座\n&quot;);
+    } else if (month &gt;= 9 &amp;&amp; month &lt;= 11) {
+        printf(&quot;秋季星座\n&quot;);
+    } else {
+        printf(&quot;冬季星座\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：實務應用與決策邏輯（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：所得稅計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double income = 600000;
+    double tax;
+    if (income &lt;= 540000) {
+        tax = income * 0.05;
+    } else if (income &lt;= 1210000) {
+        tax = 540000 * 0.05 + (income - 540000) * 0.12;
+    } else {
+        tax = 540000 * 0.05 + 670000 * 0.12 + (income - 1210000) * 0.2;
+    }
+    printf(&quot;題目61：年收入 %g 元，應繳稅額 = %g 元\n&quot;, income, tax);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：貸款資格審核</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 30;
+    int income = 40000;
+    int credit_score = 750;
+    if (age &gt;= 20 &amp;&amp; age &lt;= 65 &amp;&amp; income &gt;= 30000 &amp;&amp; credit_score &gt;= 700) {
+        printf(&quot;題目62：符合貸款資格\n&quot;);
+    } else {
+        printf(&quot;題目62：不符合貸款資格\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：學生成績獎懲</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 92;
+    int attendance = 88;
+    if (score &gt;= 90 &amp;&amp; attendance &gt;= 90) {
+        printf(&quot;題目63：記大功一次\n&quot;);
+    } else if (score &gt;= 80 &amp;&amp; attendance &gt;= 85) {
+        printf(&quot;題目63：記小功一次\n&quot;);
+    } else if (score &lt; 60 || attendance &lt; 70) {
+        printf(&quot;題目63：記警告一次\n&quot;);
+    } else {
+        printf(&quot;題目63：無獎懲\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：餐廳訂位判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int people = 8;
+    int time_hour = 19;
+    if (people &gt; 10) {
+        printf(&quot;題目64：需要預約包廂\n&quot;);
+    } else if (time_hour &gt;= 18 &amp;&amp; time_hour &lt;= 20) {
+        printf(&quot;題目64：尖峰時段，建議提前預約\n&quot;);
+    } else {
+        printf(&quot;題目64：可以直接入座\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：健康檢查建議</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 45;
+    int blood_pressure = 135;
+    int cholesterol = 220;
+    if (age &gt;= 40 &amp;&amp; blood_pressure &gt; 130) {
+        printf(&quot;題目65：建議定期追蹤血壓\n&quot;);
+    }
+    if (cholesterol &gt; 200) {
+        printf(&quot;題目65：建議調整飲食，降低膽固醇\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：快遞配送時間</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int distance = 15;
+    int urgent = 1;
+    const char *delivery_time;
+    if (urgent &amp;&amp; distance &lt;= 10) {
+        delivery_time = &quot;2小時內&quot;;
+    } else if (urgent) {
+        delivery_time = &quot;4小時內&quot;;
+    } else if (distance &lt;= 10) {
+        delivery_time = &quot;今日內&quot;;
+    } else {
+        delivery_time = &quot;明日內&quot;;
+    }
+    printf(&quot;題目66：預計 %s 送達\n&quot;, delivery_time);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：信用卡分期利率</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double amount = 25000;
+    int periods = 12;
+    double rate;
+    if (periods &lt;= 3) {
+        rate = 0;
+    } else if (periods &lt;= 6) {
+        rate = 0.05;
+    } else {
+        rate = 0.08;
+    }
+    double interest = amount * rate;
+    double total = amount + interest;
+    printf(&quot;題目67：分 %d 期，總付款 = %g 元\n&quot;, periods, total);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：保險費計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 35;
+    int smoker = 0;
+    double base_premium, premium;
+    if (age &lt; 30) {
+        base_premium = 5000;
+    } else if (age &lt; 50) {
+        base_premium = 8000;
+    } else {
+        base_premium = 12000;
+    }
+    if (smoker) {
+        premium = base_premium * 1.5;
+    } else {
+        premium = base_premium;
+    }
+    printf(&quot;題目68：年保費 = %g 元\n&quot;, premium);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：租車費用計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int days = 5;
+    char car_type[10] = &quot;sedan&quot;;
+    double daily_rate;
+    if (strncmp(car_type, &quot;sedan&quot;, strlen(car_type)) == 0) {
+        daily_rate = 1500;
+    } else if (strncmp(car_type, &quot;suv&quot;, strlen(car_type)) == 0) {
+        daily_rate = 2500;
+    } else {
+        daily_rate = 2000;
+    }
+    double total_cost = days * daily_rate;
+    if (days &gt;= 7) {
+        total_cost = total_cost * 0.85;
+    } else if (days &gt;= 3) {
+        total_cost = total_cost * 0.9;
+    }
+    printf(&quot;題目69：租車 %d 天，費用 = %g 元\n&quot;, days, total_cost);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：員工獎金計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double salary = 45000;
+    double performance = 4.2;
+    int years = 8;
+    double bonus_rate;
+    if (performance &gt;= 4.5) {
+        bonus_rate = 3;
+    } else if (performance &gt;= 4.0) {
+        bonus_rate = 2;
+    } else if (performance &gt;= 3.5) {
+        bonus_rate = 1.5;
+    } else {
+        bonus_rate = 1;
+    }
+    if (years &gt;= 10) {
+        bonus_rate = bonus_rate * 1.2;
+    } else if (years &gt;= 5) {
+        bonus_rate = bonus_rate * 1.1;
+    }
+    double bonus = salary * bonus_rate;
+    printf(&quot;題目70：年終獎金 = %g 元\n&quot;, bonus);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：運動強度建議</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int age = 28;
+    double resting_heart_rate = 65;
+    double max_heart_rate = 220 - age;
+    double target_low = (max_heart_rate - resting_heart_rate) * 0.5 + resting_heart_rate;
+    double target_high = (max_heart_rate - resting_heart_rate) * 0.85 + resting_heart_rate;
+    printf(&quot;題目71：建議運動心率範圍： %g - %g 次/分\n&quot;, target_low, target_high);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：航班行李費用</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    double weight = 28;
+    char class_type[10] = &quot;economy&quot;;
+    double free_allowance;
+    if (strncmp(class_type, &quot;first&quot;, strlen(class_type)) == 0) {
+        free_allowance = 40;
+    } else if (strncmp(class_type, &quot;business&quot;, strlen(class_type)) == 0) {
+        free_allowance = 30;
+    } else {
+        free_allowance = 20;
+    }
+    if (weight &gt; free_allowance) {
+        double excess = weight - free_allowance;
+        double fee = excess * 500;
+        printf(&quot;題目72：超重 %g 公斤，行李費 = %g 元\n&quot;, excess, fee);
+    } else {
+        printf(&quot;題目72：行李未超重，無需額外費用\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：遊戲等級判定</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int experience = 15000;
+    int level = 1;
+    if (experience &gt;= 50000) {
+        level = 10;
+    } else if (experience &gt;= 30000) {
+        level = 8;
+    } else if (experience &gt;= 20000) {
+        level = 6;
+    } else if (experience &gt;= 10000) {
+        level = 4;
+    } else if (experience &gt;= 5000) {
+        level = 2;
+    }
+    printf(&quot;題目73：經驗值 %d ，等級 = %d\n&quot;, experience, level);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：投資風險評估</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int age = 40;
+    char risk_tolerance[15] = &quot;moderate&quot;;
+    double investment_amount = 500000;
+    double stock_ratio;
+    if (strncmp(risk_tolerance, &quot;aggressive&quot;, strlen(risk_tolerance)) == 0 &amp;&amp; age &lt; 40) {
+        stock_ratio = 0.8;
+    } else if (strncmp(risk_tolerance, &quot;moderate&quot;, strlen(risk_tolerance)) == 0) {
+        stock_ratio = 0.6;
+    } else {
+        stock_ratio = 0.4;
+    }
+    double stock_amount = investment_amount * stock_ratio;
+    double bond_amount = investment_amount - stock_amount;
+    printf(&quot;題目74：建議股票投資 %g 元，債券 %g 元\n&quot;, stock_amount, bond_amount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：考試補考資格</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 55;
+    double attendance_rate = 0.75;
+    if (score &gt;= 60) {
+        printf(&quot;題目75：及格，無需補考\n&quot;);
+    } else if (score &gt;= 40 &amp;&amp; attendance_rate &gt;= 0.7) {
+        printf(&quot;題目75：可參加補考\n&quot;);
+    } else {
+        printf(&quot;題目75：不及格且不得補考，需重修\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：手機方案推薦</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int data_usage = 15;
+    int call_minutes = 200;
+    const char *plan;
+    int price;
+    if (data_usage &gt;= 20) {
+        plan = &quot;無限方案&quot;;
+        price = 999;
+    } else if (data_usage &gt;= 10 &amp;&amp; call_minutes &gt;= 150) {
+        plan = &quot;豪華方案&quot;;
+        price = 699;
+    } else if (data_usage &gt;= 5) {
+        plan = &quot;標準方案&quot;;
+        price = 499;
+    } else {
+        plan = &quot;經濟方案&quot;;
+        price = 299;
+    }
+    printf(&quot;題目76：推薦 %s ，月租 %d 元\n&quot;, plan, price);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：颱風警報判斷</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int wind_speed = 55;
+    int rainfall = 150;
+    const char *alert;
+    if (wind_speed &gt;= 51 &amp;&amp; rainfall &gt;= 200) {
+        alert = &quot;海上陸上颱風警報&quot;;
+    } else if (wind_speed &gt;= 51) {
+        alert = &quot;海上颱風警報&quot;;
+    } else if (rainfall &gt;= 200) {
+        alert = &quot;豪雨特報&quot;;
+    } else {
+        alert = &quot;無特殊警報&quot;;
+    }
+    printf(&quot;題目77： %s\n&quot;, alert);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：餐廳評分系統</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double food_score = 4.5;
+    double service_score = 4.0;
+    double environment_score = 3.8;
+    double average_score = (food_score + service_score + environment_score) / 3;
+    const char *rating;
+    if (average_score &gt;= 4.5) {
+        rating = &quot;極力推薦&quot;;
+    } else if (average_score &gt;= 4.0) {
+        rating = &quot;推薦&quot;;
+    } else if (average_score &gt;= 3.0) {
+        rating = &quot;普通&quot;;
+    } else {
+        rating = &quot;不推薦&quot;;
+    }
+    printf(&quot;題目78：平均評分 %g ，評價： %s\n&quot;, average_score, rating);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：空氣品質指標</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int aqi = 85;
+    const char *level;
+    const char *suggestion;
+    if (aqi &lt;= 50) {
+        level = &quot;良好&quot;;
+        suggestion = &quot;適合戶外活動&quot;;
+    } else if (aqi &lt;= 100) {
+        level = &quot;普通&quot;;
+        suggestion = &quot;一般民眾可正常活動&quot;;
+    } else if (aqi &lt;= 150) {
+        level = &quot;對敏感族群不健康&quot;;
+        suggestion = &quot;敏感族群應減少戶外活動&quot;;
+    } else {
+        level = &quot;不健康&quot;;
+        suggestion = &quot;所有人應減少戶外活動&quot;;
+    }
+    printf(&quot;題目79：AQI = %d ，等級： %s\n&quot;, aqi, level);
+    printf(&quot;建議： %s\n&quot;, suggestion);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：網購運費與折扣綜合計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    double subtotal = 1200;
+    int is_member = 1;
+    double free_shipping_threshold = 1000;
+    double member_discount = 0.95;
+    double shipping;
+    if (subtotal &gt;= free_shipping_threshold) {
+        shipping = 0;
+    } else {
+        shipping = 80;
+    }
+    double final_total;
+    if (is_member) {
+        final_total = subtotal * member_discount + shipping;
+    } else {
+        final_total = subtotal + shipping;
+    }
+    printf(&quot;題目80：小計 %g 元，運費 %g 元\n&quot;, subtotal, shipping);
+    printf(&quot;總金額 = %g 元\n&quot;, final_total);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

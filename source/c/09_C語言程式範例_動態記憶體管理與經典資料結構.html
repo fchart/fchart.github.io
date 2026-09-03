@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言動態記憶體管理與經典資料結構教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言動態記憶體管理與經典資料結構教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：動態記憶體管理基礎（malloc / calloc / realloc / free）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：malloc 配置單一整數空間</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *p = (int *)malloc(sizeof(int));
+    *p = 88;
+    printf(&quot;題目1：動態配置的整數值 = %d\n&quot;, *p);
+    free(p);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：malloc 配置整數陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) arr[i] = (i + 1) * 10;
+    printf(&quot;題目2：動態陣列第3個元素 = %d\n&quot;, arr[2]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：calloc 配置並自動歸零</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int *)calloc(5, sizeof(int));
+    printf(&quot;題目3：calloc配置後第1個元素初始值 = %d\n&quot;, arr[0]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：malloc 與 calloc 的初始化差異</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *a = (int *)malloc(3 * sizeof(int));
+    int *b = (int *)calloc(3, sizeof(int));
+    for (int i = 0; i &lt; 3; i++) a[i] = 0;  // malloc須自行歸零
+    printf(&quot;題目4：malloc手動歸零後 a[0]=%d，calloc自動歸零 b[0]=%d\n&quot;, a[0], b[0]);
+    free(a);
+    free(b);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：realloc 擴大陣列容量</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int *)malloc(3 * sizeof(int));
+    arr[0] = 1; arr[1] = 2; arr[2] = 3;
+    arr = (int *)realloc(arr, 5 * sizeof(int));
+    arr[3] = 4;
+    arr[4] = 5;
+    printf(&quot;題目5：擴大後第5個元素 = %d\n&quot;, arr[4]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：realloc 縮小陣列容量</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int *)malloc(5 * sizeof(int));
+    for (int i = 0; i &lt; 5; i++) arr[i] = i + 1;
+    arr = (int *)realloc(arr, 2 * sizeof(int));
+    printf(&quot;題目6：縮小後陣列元素 = %d, %d\n&quot;, arr[0], arr[1]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：動態配置失敗檢查（NULL檢查）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *p = (int *)malloc(10 * sizeof(int));
+    if (p == NULL) {
+        printf(&quot;題目7：記憶體配置失敗\n&quot;);
+        return 1;
+    }
+    p[0] = 100;
+    printf(&quot;題目7：配置成功，p[0] = %d\n&quot;, p[0]);
+    free(p);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：free 釋放記憶體並避免懸置指標</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *p = (int *)malloc(sizeof(int));
+    *p = 50;
+    free(p);
+    p = NULL;
+    printf(&quot;題目8：釋放後指標是否為NULL = %d（1表示是）\n&quot;, p == NULL);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：動態配置字串（malloc + strcpy）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char *str = (char *)malloc(20 * sizeof(char));
+    strcpy(str, &quot;Hello, C!&quot;);
+    printf(&quot;題目9：動態配置的字串 = %s\n&quot;, str);
+    free(str);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：動態配置二維陣列（陣列的陣列）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int rows = 2, cols = 3;
+    int **matrix = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i &lt; rows; i++) {
+        matrix[i] = (int *)malloc(cols * sizeof(int));
+    }
+    matrix[1][2] = 99;
+    printf(&quot;題目10：動態二維陣列 matrix[1][2] = %d\n&quot;, matrix[1][2]);
+    for (int i = 0; i &lt; rows; i++) free(matrix[i]);
+    free(matrix);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：sizeof 與動態配置陣列大小計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 8;
+    int *arr = (int *)malloc(n * sizeof(int));
+    printf(&quot;題目11：配置 %d 個 int，共使用 %zu bytes\n&quot;, n, n * sizeof(int));
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：動態配置結構陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    int n = 3;
+    struct Point *pts = (struct Point *)malloc(n * sizeof(struct Point));
+    pts[1].x = 7;
+    pts[1].y = 9;
+    printf(&quot;題目12：動態結構陣列 pts[1] = (%d, %d)\n&quot;, pts[1].x, pts[1].y);
+    free(pts);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：memset 初始化動態記憶體</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int *arr = (int *)malloc(5 * sizeof(int));
+    memset(arr, 0, 5 * sizeof(int));
+    printf(&quot;題目13：memset歸零後 arr[3] = %d\n&quot;, arr[3]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：記憶體洩漏概念：正確配置與釋放</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void correctFree() {
+    int *p = (int *)malloc(sizeof(int));
+    *p = 1;
+    free(p);  // 正確：使用完畢後立即釋放，避免記憶體洩漏
+}
+
+int main() {
+    correctFree();
+    printf(&quot;題目14：正確配置並釋放，避免記憶體洩漏\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：動態配置後計算記憶體用量</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 100;
+    double *arr = (double *)malloc(n * sizeof(double));
+    printf(&quot;題目15：配置 %d 個 double，共使用 %zu bytes\n&quot;, n, n * sizeof(double));
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：使用指標動態建立陣列並加總</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 4;
+    int *arr = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) arr[i] = (i + 1) * 5;
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += *(arr + i);
+    printf(&quot;題目16：動態陣列總和 = %d\n&quot;, sum);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：動態字串串接（malloc + strcat）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char *result = (char *)malloc(50 * sizeof(char));
+    strcpy(result, &quot;Hello, &quot;);
+    strcat(result, &quot;World!&quot;);
+    printf(&quot;題目17：字串串接結果 = %s\n&quot;, result);
+    free(result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：函式回傳動態配置的陣列指標</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int* createArray(int n) {
+    int *arr = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) arr[i] = i * i;
+    return arr;
+}
+
+int main() {
+    int *squares = createArray(5);
+    printf(&quot;題目18：函式回傳陣列 squares[4] = %d\n&quot;, squares[4]);
+    free(squares);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：動態配置的連續記憶體矩陣並存取</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int rows = 2, cols = 2;
+    int *matrix = (int *)malloc(rows * cols * sizeof(int));
+    matrix[0 * cols + 0] = 1;
+    matrix[0 * cols + 1] = 2;
+    matrix[1 * cols + 0] = 3;
+    matrix[1 * cols + 1] = 4;
+    printf(&quot;題目19：連續記憶體矩陣 matrix[1][1] = %d\n&quot;, matrix[1 * cols + 1]);
+    free(matrix);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：透過函式建立動態記憶體並於main釋放</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int* allocateAndFill(int value) {
+    int *p = (int *)malloc(sizeof(int));
+    *p = value;
+    return p;
+}
+
+int main() {
+    int *p = allocateAndFill(777);
+    printf(&quot;題目20：函式建立的動態記憶體值 = %d\n&quot;, *p);
+    free(p);  // 呼叫端負責釋放
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：動態陣列（Dynamic Array）與應用（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：實作簡易動態陣列結構（capacity, size, data）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    int *data;
+    int size;
+    int capacity;
+} DynArray;
+
+int main() {
+    DynArray arr;
+    arr.capacity = 4;
+    arr.size = 0;
+    arr.data = (int *)malloc(arr.capacity * sizeof(int));
+    printf(&quot;題目21：動態陣列初始容量 = %d，目前大小 = %d\n&quot;, arr.capacity, arr.size);
+    free(arr.data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：動態陣列 push_back 新增元素</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    int *data;
+    int size;
+    int capacity;
+} DynArray;
+
+void push_back(DynArray *arr, int value) {
+    arr-&gt;data[arr-&gt;size] = value;
+    arr-&gt;size++;
+}
+
+int main() {
+    DynArray arr;
+    arr.capacity = 5;
+    arr.size = 0;
+    arr.data = (int *)malloc(arr.capacity * sizeof(int));
+    push_back(&amp;arr, 10);
+    push_back(&amp;arr, 20);
+    printf(&quot;題目22：push_back後 size = %d，最後一個元素 = %d\n&quot;, arr.size, arr.data[arr.size - 1]);
+    free(arr.data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：動態陣列容量不足時 realloc 擴充（倍增策略）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    int *data;
+    int size;
+    int capacity;
+} DynArray;
+
+void push_back(DynArray *arr, int value) {
+    if (arr-&gt;size == arr-&gt;capacity) {
+        arr-&gt;capacity *= 2;
+        arr-&gt;data = (int *)realloc(arr-&gt;data, arr-&gt;capacity * sizeof(int));
+    }
+    arr-&gt;data[arr-&gt;size] = value;
+    arr-&gt;size++;
+}
+
+int main() {
+    DynArray arr;
+    arr.capacity = 2;
+    arr.size = 0;
+    arr.data = (int *)malloc(arr.capacity * sizeof(int));
+    for (int i = 0; i &lt; 5; i++) push_back(&amp;arr, i + 1);
+    printf(&quot;題目23：擴充後容量 = %d，元素數量 = %d\n&quot;, arr.capacity, arr.size);
+    free(arr.data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：動態陣列刪除最後一個元素（pop_back）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+typedef struct {
+    int *data;
+    int size;
+    int capacity;
+} DynArray;
+
+int pop_back(DynArray *arr) {
+    arr-&gt;size--;
+    return arr-&gt;data[arr-&gt;size];
+}
+
+int main() {
+    int init[] = {5, 10, 15};
+    DynArray arr;
+    arr.capacity = 3;
+    arr.size = 3;
+    arr.data = (int *)malloc(arr.capacity * sizeof(int));
+    for (int i = 0; i &lt; 3; i++) arr.data[i] = init[i];
+    int popped = pop_back(&amp;arr);
+    printf(&quot;題目24：彈出的元素 = %d，剩餘大小 = %d\n&quot;, popped, arr.size);
+    free(arr.data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：動態陣列插入到指定位置</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 4;
+    int *arr = (int *)malloc((n + 1) * sizeof(int));
+    int original[] = {1, 2, 4, 5};
+    for (int i = 0; i &lt; n; i++) arr[i] = original[i];
+    int insertPos = 2, insertValue = 3;
+    for (int i = n; i &gt; insertPos; i--) arr[i] = arr[i - 1];
+    arr[insertPos] = insertValue;
+    n++;
+    printf(&quot;題目25：插入後陣列第3個元素 = %d\n&quot;, arr[2]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：動態陣列刪除指定位置元素</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    int original[] = {10, 20, 30, 40, 50};
+    for (int i = 0; i &lt; n; i++) arr[i] = original[i];
+    int deletePos = 2;
+    for (int i = deletePos; i &lt; n - 1; i++) arr[i] = arr[i + 1];
+    n--;
+    printf(&quot;題目26：刪除後陣列第3個元素變為 = %d\n&quot;, arr[2]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：動態陣列反轉</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) arr[i] = i + 1;
+    for (int i = 0; i &lt; n / 2; i++) {
+        int temp = arr[i];
+        arr[i] = arr[n - 1 - i];
+        arr[n - 1 - i] = temp;
+    }
+    printf(&quot;題目27：反轉後第一個元素 = %d\n&quot;, arr[0]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：動態陣列搜尋元素</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 6;
+    int *arr = (int *)malloc(n * sizeof(int));
+    int original[] = {4, 8, 15, 16, 23, 42};
+    for (int i = 0; i &lt; n; i++) arr[i] = original[i];
+    int target = 16, foundIndex = -1;
+    for (int i = 0; i &lt; n; i++) {
+        if (arr[i] == target) { foundIndex = i; break; }
+    }
+    printf(&quot;題目28：搜尋 %d，找到位置索引 = %d\n&quot;, target, foundIndex);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：動態陣列排序（selection sort）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    int original[] = {29, 10, 45, 3, 18};
+    for (int i = 0; i &lt; n; i++) arr[i] = original[i];
+    for (int i = 0; i &lt; n - 1; i++) {
+        int minIdx = i;
+        for (int j = i + 1; j &lt; n; j++) {
+            if (arr[j] &lt; arr[minIdx]) minIdx = j;
+        }
+        int temp = arr[i]; arr[i] = arr[minIdx]; arr[minIdx] = temp;
+    }
+    printf(&quot;題目29：排序後最小值 = %d\n&quot;, arr[0]);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：動態陣列求總和與平均</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 5;
+    int *arr = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) arr[i] = (i + 1) * 4;
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += arr[i];
+    printf(&quot;題目30：動態陣列總和 = %d，平均 = %.2f\n&quot;, sum, (double)sum / n);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：動態陣列求最大最小值</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 6;
+    int *arr = (int *)malloc(n * sizeof(int));
+    int original[] = {12, 45, 3, 88, 21, 7};
+    for (int i = 0; i &lt; n; i++) arr[i] = original[i];
+    int maxVal = arr[0], minVal = arr[0];
+    for (int i = 1; i &lt; n; i++) {
+        if (arr[i] &gt; maxVal) maxVal = arr[i];
+        if (arr[i] &lt; minVal) minVal = arr[i];
+    }
+    printf(&quot;題目31：最大值 = %d，最小值 = %d\n&quot;, maxVal, minVal);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：動態陣列複製（deep copy）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    int n = 4;
+    int *src = (int *)malloc(n * sizeof(int));
+    for (int i = 0; i &lt; n; i++) src[i] = i * 10;
+    int *dst = (int *)malloc(n * sizeof(int));
+    memcpy(dst, src, n * sizeof(int));
+    printf(&quot;題目32：複製後 dst[3] = %d\n&quot;, dst[3]);
+    free(src);
+    free(dst);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：動態陣列釋放與重置</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int *arr = (int *)malloc(5 * sizeof(int));
+    arr[0] = 1;
+    free(arr);
+    arr = NULL;
+    printf(&quot;題目33：釋放並重置後指標是否為NULL = %d\n&quot;, arr == NULL);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：動態二維陣列（矩陣）建立與釋放</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int rows = 3, cols = 3;
+    int **matrix = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i &lt; rows; i++) {
+        matrix[i] = (int *)malloc(cols * sizeof(int));
+        for (int j = 0; j &lt; cols; j++) {
+            matrix[i][j] = i * cols + j;
+        }
+    }
+    printf(&quot;題目34：3x3矩陣 matrix[2][2] = %d\n&quot;, matrix[2][2]);
+    for (int i = 0; i &lt; rows; i++) free(matrix[i]);
+    free(matrix);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：動態陣列讀取逗號分隔資料並計算總和</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char data[] = &quot;3,5,7,9&quot;;
+    int *arr = (int *)malloc(10 * sizeof(int));
+    int count = 0;
+    char *token = strtok(data, &quot;,&quot;);
+    while (token != NULL) {
+        arr[count++] = atoi(token);
+        token = strtok(NULL, &quot;,&quot;);
+    }
+    int sum = 0;
+    for (int i = 0; i &lt; count; i++) sum += arr[i];
+    printf(&quot;題目35：解析後共 %d 筆資料，總和 = %d\n&quot;, count, sum);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：動態陣列合併兩個陣列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n1 = 3, n2 = 2;
+    int a[] = {1, 2, 3};
+    int b[] = {4, 5};
+    int *merged = (int *)malloc((n1 + n2) * sizeof(int));
+    for (int i = 0; i &lt; n1; i++) merged[i] = a[i];
+    for (int i = 0; i &lt; n2; i++) merged[n1 + i] = b[i];
+    printf(&quot;題目36：合併後陣列共 %d 個元素，最後一個 = %d\n&quot;, n1 + n2, merged[n1 + n2 - 1]);
+    free(merged);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：動態陣列去除重複元素</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int n = 6;
+    int arr[] = {1, 2, 2, 3, 3, 3};
+    int *result = (int *)malloc(n * sizeof(int));
+    int count = 0;
+    for (int i = 0; i &lt; n; i++) {
+        int isDup = 0;
+        for (int j = 0; j &lt; count; j++) {
+            if (result[j] == arr[i]) { isDup = 1; break; }
+        }
+        if (!isDup) result[count++] = arr[i];
+    }
+    printf(&quot;題目37：去重後剩餘元素數量 = %d\n&quot;, count);
+    free(result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：動態陣列作為堆疊使用（push/pop）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int capacity = 5, top = -1;
+    int *stack = (int *)malloc(capacity * sizeof(int));
+    stack[++top] = 100;
+    stack[++top] = 200;
+    stack[++top] = 300;
+    int popped = stack[top--];
+    printf(&quot;題目38：彈出元素 = %d，目前堆疊頂端 = %d\n&quot;, popped, stack[top]);
+    free(stack);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：動態陣列擴充策略比較（倍增法統計realloc次數）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int capacity = 1;
+    int *arr = (int *)malloc(capacity * sizeof(int));
+    int size = 0, reallocCount = 0;
+    for (int i = 0; i &lt; 20; i++) {
+        if (size == capacity) {
+            capacity *= 2;
+            arr = (int *)realloc(arr, capacity * sizeof(int));
+            reallocCount++;
+        }
+        arr[size++] = i;
+    }
+    printf(&quot;題目39：新增20個元素，倍增策略共realloc %d 次\n&quot;, reallocCount);
+    free(arr);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：動態陣列釋放巢狀記憶體（矩陣每列個別free）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int rows = 3;
+    int **matrix = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i &lt; rows; i++) {
+        matrix[i] = (int *)malloc((i + 1) * sizeof(int));
+        matrix[i][0] = i;
+    }
+    int freedRows = 0;
+    for (int i = 0; i &lt; rows; i++) {
+        free(matrix[i]);
+        freedRows++;
+    }
+    free(matrix);
+    printf(&quot;題目40：已釋放 %d 列的動態記憶體\n&quot;, freedRows);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：堆疊（Stack）與佇列（Queue）經典資料結構（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：陣列實作堆疊 push</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX 10
+
+int main() {
+    int stack[MAX];
+    int top = -1;
+    stack[++top] = 10;
+    stack[++top] = 20;
+    printf(&quot;題目41：push後堆疊頂端元素 = %d\n&quot;, stack[top]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：陣列實作堆疊 pop</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX 10
+
+int main() {
+    int stack[MAX] = {5, 15, 25};
+    int top = 2;
+    int popped = stack[top--];
+    printf(&quot;題目42：pop的元素 = %d，剩餘頂端 = %d\n&quot;, popped, stack[top]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：陣列實作堆疊判斷是否為空/滿</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX 3
+
+int main() {
+    int stack[MAX];
+    int top = -1;
+    stack[++top] = 1;
+    stack[++top] = 2;
+    stack[++top] = 3;
+    int isFull = (top == MAX - 1);
+    int isEmpty = (top == -1);
+    printf(&quot;題目43：堆疊是否已滿 = %d，是否為空 = %d\n&quot;, isFull, isEmpty);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：堆疊應用：括號配對檢查</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char expr[] = &quot;((a+b)*(c-d))&quot;;
+    char stack[50];
+    int top = -1;
+    int isValid = 1;
+    for (int i = 0; i &lt; (int)strlen(expr); i++) {
+        if (expr[i] == &#x27;(&#x27;) {
+            stack[++top] = &#x27;(&#x27;;
+        } else if (expr[i] == &#x27;)&#x27;) {
+            if (top == -1) { isValid = 0; break; }
+            top--;
+        }
+    }
+    if (top != -1) isValid = 0;
+    printf(&quot;題目44：括號是否配對正確 = %d\n&quot;, isValid);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：堆疊應用：反轉字串</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main() {
+    char str[] = &quot;Hello&quot;;
+    int n = strlen(str);
+    char stack[50];
+    int top = -1;
+    for (int i = 0; i &lt; n; i++) stack[++top] = str[i];
+    char reversed[50];
+    for (int i = 0; i &lt; n; i++) reversed[i] = stack[top--];
+    reversed[n] = &#x27;\0&#x27;;
+    printf(&quot;題目45：反轉後字串 = %s\n&quot;, reversed);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：堆疊應用：十進位轉二進位</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int num = 26;
+    int stack[20];
+    int top = -1;
+    int n = num;
+    while (n &gt; 0) {
+        stack[++top] = n % 2;
+        n /= 2;
+    }
+    printf(&quot;題目46：%d 的二進位表示 = &quot;, num);
+    while (top &gt;= 0) {
+        printf(&quot;%d&quot;, stack[top--]);
+    }
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：動態連結串列實作堆疊 push</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct StackNode {
+    int data;
+    struct StackNode *next;
+};
+
+int main() {
+    struct StackNode *top = NULL;
+    struct StackNode *n1 = (struct StackNode *)malloc(sizeof(struct StackNode));
+    n1-&gt;data = 100;
+    n1-&gt;next = top;
+    top = n1;
+    struct StackNode *n2 = (struct StackNode *)malloc(sizeof(struct StackNode));
+    n2-&gt;data = 200;
+    n2-&gt;next = top;
+    top = n2;
+    printf(&quot;題目47：連結串列堆疊頂端 = %d\n&quot;, top-&gt;data);
+    free(n2); free(n1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：動態連結串列實作堆疊 pop</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct StackNode {
+    int data;
+    struct StackNode *next;
+};
+
+int main() {
+    struct StackNode *top = (struct StackNode *)malloc(sizeof(struct StackNode));
+    top-&gt;data = 50;
+    struct StackNode *second = (struct StackNode *)malloc(sizeof(struct StackNode));
+    second-&gt;data = 30;
+    second-&gt;next = NULL;
+    top-&gt;next = second;
+    struct StackNode *temp = top;
+    int popped = top-&gt;data;
+    top = top-&gt;next;
+    free(temp);
+    printf(&quot;題目48：pop的元素 = %d，新的頂端 = %d\n&quot;, popped, top-&gt;data);
+    free(top);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：陣列實作環狀佇列 enqueue</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 5
+
+int main() {
+    int queue[SIZE];
+    int front = 0, rear = 0, count = 0;
+    queue[rear] = 10; rear = (rear + 1) % SIZE; count++;
+    queue[rear] = 20; rear = (rear + 1) % SIZE; count++;
+    queue[rear] = 30; rear = (rear + 1) % SIZE; count++;
+    printf(&quot;題目49：環狀佇列元素數量 = %d，最後加入 = %d\n&quot;, count, queue[(rear - 1 + SIZE) % SIZE]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：陣列實作環狀佇列 dequeue</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 5
+
+int main() {
+    int queue[SIZE] = {10, 20, 30};
+    int front = 0, count = 3;
+    int dequeued = queue[front];
+    front = (front + 1) % SIZE;
+    count--;
+    printf(&quot;題目50：dequeue的元素 = %d，剩餘數量 = %d\n&quot;, dequeued, count);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：佇列判斷空/滿</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 3
+
+int main() {
+    int count = 3;
+    int isFull = (count == SIZE);
+    int isEmpty = (count == 0);
+    printf(&quot;題目51：佇列是否已滿 = %d，是否為空 = %d\n&quot;, isFull, isEmpty);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：佇列應用：模擬排隊系統(FIFO)</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 5
+
+int main() {
+    char names[SIZE][10] = {&quot;Amy&quot;, &quot;Bob&quot;, &quot;Cathy&quot;};
+    int front = 0, count = 3;
+    printf(&quot;題目52：第一位服務的顧客是 %s\n&quot;, names[front]);
+    front = (front + 1) % SIZE;
+    count--;
+    printf(&quot;題目52：服務完畢，下一位是 %s\n&quot;, names[front]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：動態連結串列實作佇列 enqueue</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct QNode {
+    int data;
+    struct QNode *next;
+};
+
+int main() {
+    struct QNode *front = NULL, *rear = NULL;
+    struct QNode *n1 = (struct QNode *)malloc(sizeof(struct QNode));
+    n1-&gt;data = 1; n1-&gt;next = NULL;
+    front = rear = n1;
+    struct QNode *n2 = (struct QNode *)malloc(sizeof(struct QNode));
+    n2-&gt;data = 2; n2-&gt;next = NULL;
+    rear-&gt;next = n2;
+    rear = n2;
+    printf(&quot;題目53：連結串列佇列前端 = %d，尾端 = %d\n&quot;, front-&gt;data, rear-&gt;data);
+    free(n1); free(n2);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：動態連結串列實作佇列 dequeue</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct QNode {
+    int data;
+    struct QNode *next;
+};
+
+int main() {
+    struct QNode *n1 = (struct QNode *)malloc(sizeof(struct QNode));
+    struct QNode *n2 = (struct QNode *)malloc(sizeof(struct QNode));
+    n1-&gt;data = 5; n1-&gt;next = n2;
+    n2-&gt;data = 15; n2-&gt;next = NULL;
+    struct QNode *front = n1;
+    int dequeued = front-&gt;data;
+    struct QNode *temp = front;
+    front = front-&gt;next;
+    free(temp);
+    printf(&quot;題目54：dequeue的元素 = %d，新的前端 = %d\n&quot;, dequeued, front-&gt;data);
+    free(front);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：雙向佇列（deque）基礎示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 5
+
+int main() {
+    int deque[SIZE];
+    int frontIdx = 2, rearIdx = 2;
+    deque[rearIdx] = 10; rearIdx++;
+    deque[--frontIdx] = 5;
+    printf(&quot;題目55：deque前端元素 = %d，後端元素 = %d\n&quot;, deque[frontIdx], deque[rearIdx - 1]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：堆疊應用：計算後綴表達式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    // 後綴運算式 &quot;5 3 + 2 *&quot; 相當於 (5+3)*2
+    int stack[10];
+    int top = -1;
+    stack[++top] = 5;
+    stack[++top] = 3;
+    int b = stack[top--], a = stack[top--];
+    stack[++top] = a + b;
+    stack[++top] = 2;
+    b = stack[top--]; a = stack[top--];
+    stack[++top] = a * b;
+    printf(&quot;題目56：後綴運算式結果 = %d\n&quot;, stack[top]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：兩個堆疊模擬佇列</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main() {
+    int stack1[10], top1 = -1;
+    int stack2[10], top2 = -1;
+    stack1[++top1] = 1;
+    stack1[++top1] = 2;
+    stack1[++top1] = 3;
+    while (top1 != -1) {
+        stack2[++top2] = stack1[top1--];
+    }
+    int dequeued = stack2[top2--];
+    printf(&quot;題目57：使用雙堆疊模擬佇列，第一個取出元素 = %d\n&quot;, dequeued);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：佇列應用：模擬數字的層序處理</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define SIZE 10
+
+int main() {
+    int queue[SIZE] = {1, 2, 3};
+    int front = 0, count = 3;
+    int processed = 0;
+    while (count &gt; 0) {
+        int val = queue[front];
+        front = (front + 1) % SIZE;
+        count--;
+        processed += val;
+    }
+    printf(&quot;題目58：層序處理後累計總和 = %d\n&quot;, processed);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：堆疊與動態記憶體結合（動態配置堆疊陣列）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int capacity = 5;
+    int *stack = (int *)malloc(capacity * sizeof(int));
+    int top = -1;
+    stack[++top] = 11;
+    stack[++top] = 22;
+    stack[++top] = 33;
+    printf(&quot;題目59：動態堆疊頂端元素 = %d\n&quot;, stack[top]);
+    free(stack);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：佇列與動態記憶體結合（動態配置佇列陣列）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main() {
+    int capacity = 5;
+    int *queue = (int *)malloc(capacity * sizeof(int));
+    int front = 0, rear = 0;
+    queue[rear++] = 100;
+    queue[rear++] = 200;
+    printf(&quot;題目60：動態佇列前端元素 = %d\n&quot;, queue[front]);
+    free(queue);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：經典資料結構進階（二元樹、雜湊表、連結串列進階）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：二元樹節點定義與建立</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+int main() {
+    struct TreeNode *root = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+    root-&gt;data = 50;
+    root-&gt;left = NULL;
+    root-&gt;right = NULL;
+    printf(&quot;題目61：二元樹根節點值 = %d\n&quot;, root-&gt;data);
+    free(root);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：二元樹插入節點（BST insert）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = NULL;
+        newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    printf(&quot;題目62：插入後右子節點值 = %d\n&quot;, root-&gt;right-&gt;data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：二元樹中序走訪（in-order）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+void inorder(struct TreeNode *node) {
+    if (node == NULL) return;
+    inorder(node-&gt;left);
+    printf(&quot;%d &quot;, node-&gt;data);
+    inorder(node-&gt;right);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目63：中序走訪結果：&quot;);
+    inorder(root);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：二元樹前序走訪（pre-order）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+void preorder(struct TreeNode *node) {
+    if (node == NULL) return;
+    printf(&quot;%d &quot;, node-&gt;data);
+    preorder(node-&gt;left);
+    preorder(node-&gt;right);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目64：前序走訪結果：&quot;);
+    preorder(root);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：二元樹後序走訪（post-order）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+void postorder(struct TreeNode *node) {
+    if (node == NULL) return;
+    postorder(node-&gt;left);
+    postorder(node-&gt;right);
+    printf(&quot;%d &quot;, node-&gt;data);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目65：後序走訪結果：&quot;);
+    postorder(root);
+    printf(&quot;\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：二元樹搜尋節點</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+struct TreeNode* search(struct TreeNode *node, int value) {
+    if (node == NULL || node-&gt;data == value) return node;
+    if (value &lt; node-&gt;data) return search(node-&gt;left, value);
+    return search(node-&gt;right, value);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    struct TreeNode *found = search(root, 40);
+    printf(&quot;題目66：搜尋值40，是否找到 = %d\n&quot;, found != NULL);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：二元樹計算節點總數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+int countNodes(struct TreeNode *node) {
+    if (node == NULL) return 0;
+    return 1 + countNodes(node-&gt;left) + countNodes(node-&gt;right);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目67：二元樹節點總數 = %d\n&quot;, countNodes(root));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：二元樹計算樹高</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+int treeHeight(struct TreeNode *node) {
+    if (node == NULL) return 0;
+    int leftH = treeHeight(node-&gt;left);
+    int rightH = treeHeight(node-&gt;right);
+    return 1 + (leftH &gt; rightH ? leftH : rightH);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目68：二元樹高度 = %d\n&quot;, treeHeight(root));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：二元樹尋找最小值（最左節點）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+struct TreeNode* findMin(struct TreeNode *node) {
+    while (node-&gt;left != NULL) node = node-&gt;left;
+    return node;
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目69：二元樹最小值 = %d\n&quot;, findMin(root)-&gt;data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：二元樹尋找最大值（最右節點）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+struct TreeNode* findMax(struct TreeNode *node) {
+    while (node-&gt;right != NULL) node = node-&gt;right;
+    return node;
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    printf(&quot;題目70：二元樹最大值 = %d\n&quot;, findMax(root)-&gt;data);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：二元樹釋放記憶體（post-order free）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+int freedCount = 0;
+
+void freeTree(struct TreeNode *node) {
+    if (node == NULL) return;
+    freeTree(node-&gt;left);
+    freeTree(node-&gt;right);
+    free(node);
+    freedCount++;
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {50, 30, 70, 20, 40};
+    for (int i = 0; i &lt; 5; i++) root = insert(root, values[i]);
+    freeTree(root);
+    printf(&quot;題目71：已釋放節點數量 = %d\n&quot;, freedCount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：雜湊表基礎：簡單雜湊函式設計</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int hashFunction(int key, int tableSize) {
+    return key % tableSize;
+}
+
+int main() {
+    int tableSize = 7;
+    int key = 23;
+    int index = hashFunction(key, tableSize);
+    printf(&quot;題目72：鍵值 %d 的雜湊索引 = %d\n&quot;, key, index);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：雜湊表插入資料（鏈結法）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define TABLE_SIZE 5
+
+struct HashNode {
+    int key;
+    int value;
+    struct HashNode *next;
+};
+
+int main() {
+    struct HashNode *table[TABLE_SIZE] = {NULL};
+    int key = 12, value = 100;
+    int index = key % TABLE_SIZE;
+    struct HashNode *newNode = (struct HashNode *)malloc(sizeof(struct HashNode));
+    newNode-&gt;key = key;
+    newNode-&gt;value = value;
+    newNode-&gt;next = table[index];
+    table[index] = newNode;
+    printf(&quot;題目73：鍵值 %d 存入索引 %d，值 = %d\n&quot;, key, index, table[index]-&gt;value);
+    free(newNode);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：雜湊表搜尋資料</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define TABLE_SIZE 5
+
+struct HashNode {
+    int key;
+    int value;
+    struct HashNode *next;
+};
+
+int main() {
+    struct HashNode *table[TABLE_SIZE] = {NULL};
+    int index = 12 % TABLE_SIZE;
+    struct HashNode *n1 = (struct HashNode *)malloc(sizeof(struct HashNode));
+    n1-&gt;key = 12; n1-&gt;value = 100; n1-&gt;next = NULL;
+    table[index] = n1;
+    struct HashNode *cur = table[index];
+    int found = -1;
+    while (cur != NULL) {
+        if (cur-&gt;key == 12) { found = cur-&gt;value; break; }
+        cur = cur-&gt;next;
+    }
+    printf(&quot;題目74：搜尋鍵值12的結果 = %d\n&quot;, found);
+    free(n1);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：雜湊表處理碰撞（chaining）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define TABLE_SIZE 5
+
+struct HashNode {
+    int key;
+    struct HashNode *next;
+};
+
+int main() {
+    struct HashNode *table[TABLE_SIZE] = {NULL};
+    int keys[] = {3, 8, 13};  // 3, 8, 13 對5取餘皆為3，會碰撞
+    int index = 3;
+    for (int i = 0; i &lt; 3; i++) {
+        struct HashNode *newNode = (struct HashNode *)malloc(sizeof(struct HashNode));
+        newNode-&gt;key = keys[i];
+        newNode-&gt;next = table[index];
+        table[index] = newNode;
+    }
+    int chainLength = 0;
+    struct HashNode *cur = table[index];
+    while (cur != NULL) { chainLength++; cur = cur-&gt;next; }
+    printf(&quot;題目75：索引 %d 的碰撞鏈結長度 = %d\n&quot;, index, chainLength);
+    struct HashNode *cur2 = table[index], *temp;
+    while (cur2 != NULL) { temp = cur2; cur2 = cur2-&gt;next; free(temp); }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：雙向連結串列節點定義與插入</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct DNode {
+    int data;
+    struct DNode *prev;
+    struct DNode *next;
+};
+
+int main() {
+    struct DNode *n1 = (struct DNode *)malloc(sizeof(struct DNode));
+    n1-&gt;data = 10; n1-&gt;prev = NULL; n1-&gt;next = NULL;
+    struct DNode *n2 = (struct DNode *)malloc(sizeof(struct DNode));
+    n2-&gt;data = 20; n2-&gt;prev = n1; n2-&gt;next = NULL;
+    n1-&gt;next = n2;
+    printf(&quot;題目76：雙向串列 n1的下一個節點值 = %d，n2的前一個節點值 = %d\n&quot;, n1-&gt;next-&gt;data, n2-&gt;prev-&gt;data);
+    free(n1); free(n2);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：雙向連結串列正向與反向走訪</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct DNode {
+    int data;
+    struct DNode *prev;
+    struct DNode *next;
+};
+
+int main() {
+    struct DNode *n1 = (struct DNode *)malloc(sizeof(struct DNode));
+    struct DNode *n2 = (struct DNode *)malloc(sizeof(struct DNode));
+    struct DNode *n3 = (struct DNode *)malloc(sizeof(struct DNode));
+    n1-&gt;data = 1; n1-&gt;prev = NULL; n1-&gt;next = n2;
+    n2-&gt;data = 2; n2-&gt;prev = n1; n2-&gt;next = n3;
+    n3-&gt;data = 3; n3-&gt;prev = n2; n3-&gt;next = NULL;
+    printf(&quot;題目77：正向走訪：&quot;);
+    for (struct DNode *cur = n1; cur != NULL; cur = cur-&gt;next) printf(&quot;%d &quot;, cur-&gt;data);
+    printf(&quot;\n題目77：反向走訪：&quot;);
+    for (struct DNode *cur = n3; cur != NULL; cur = cur-&gt;prev) printf(&quot;%d &quot;, cur-&gt;data);
+    printf(&quot;\n&quot;);
+    free(n1); free(n2); free(n3);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：環狀連結串列建立與走訪</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct CNode {
+    int data;
+    struct CNode *next;
+};
+
+int main() {
+    struct CNode *n1 = (struct CNode *)malloc(sizeof(struct CNode));
+    struct CNode *n2 = (struct CNode *)malloc(sizeof(struct CNode));
+    struct CNode *n3 = (struct CNode *)malloc(sizeof(struct CNode));
+    n1-&gt;data = 1; n1-&gt;next = n2;
+    n2-&gt;data = 2; n2-&gt;next = n3;
+    n3-&gt;data = 3; n3-&gt;next = n1;  // 形成環狀
+    struct CNode *cur = n1;
+    int sum = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        sum += cur-&gt;data;
+        cur = cur-&gt;next;
+    }
+    printf(&quot;題目78：環狀串列走訪一圈總和 = %d\n&quot;, sum);
+    free(n1); free(n2); free(n3);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：連結串列反轉（reverse linked list）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main() {
+    struct Node *n1 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n2 = (struct Node *)malloc(sizeof(struct Node));
+    struct Node *n3 = (struct Node *)malloc(sizeof(struct Node));
+    n1-&gt;data = 1; n1-&gt;next = n2;
+    n2-&gt;data = 2; n2-&gt;next = n3;
+    n3-&gt;data = 3; n3-&gt;next = NULL;
+    struct Node *prev = NULL, *cur = n1, *next = NULL;
+    while (cur != NULL) {
+        next = cur-&gt;next;
+        cur-&gt;next = prev;
+        prev = cur;
+        cur = next;
+    }
+    printf(&quot;題目79：反轉後串列開頭元素 = %d\n&quot;, prev-&gt;data);
+    struct Node *temp;
+    while (prev != NULL) { temp = prev; prev = prev-&gt;next; free(temp); }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：綜合應用：利用二元樹（BST）中序走訪得到排序結果</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct TreeNode {
+    int data;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
+
+struct TreeNode* insert(struct TreeNode *node, int value) {
+    if (node == NULL) {
+        struct TreeNode *newNode = (struct TreeNode *)malloc(sizeof(struct TreeNode));
+        newNode-&gt;data = value;
+        newNode-&gt;left = newNode-&gt;right = NULL;
+        return newNode;
+    }
+    if (value &lt; node-&gt;data) node-&gt;left = insert(node-&gt;left, value);
+    else node-&gt;right = insert(node-&gt;right, value);
+    return node;
+}
+
+int sortedArr[10];
+int idx = 0;
+
+void inorderFill(struct TreeNode *node) {
+    if (node == NULL) return;
+    inorderFill(node-&gt;left);
+    sortedArr[idx++] = node-&gt;data;
+    inorderFill(node-&gt;right);
+}
+
+int main() {
+    struct TreeNode *root = NULL;
+    int values[] = {40, 10, 60, 5, 25, 50, 70};
+    for (int i = 0; i &lt; 7; i++) root = insert(root, values[i]);
+    inorderFill(root);
+    printf(&quot;題目80：利用BST排序後的第一個與最後一個元素 = %d, %d\n&quot;, sortedArr[0], sortedArr[idx - 1]);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
