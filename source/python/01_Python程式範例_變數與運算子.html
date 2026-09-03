@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 變數與運算子教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; /* 把它拉到 code-block 的最上方 */ }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python 變數與運算子教學程式範例（80題）</h1>
+
+        <h2>🙂 模組一：基礎變數與運算子（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：整數加法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>a = 15
+b = 28
+sum_result = a + b
+print("題目1：15 + 28 =", sum_result)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：整數減法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>x = 100
+y = 37
+difference = x - y
+print("題目2：100 - 37 =", difference)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：整數乘法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>length = 12
+width = 8
+area = length * width
+print("題目3：12 × 8 =", area)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：浮點數除法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>total = 50
+parts = 4
+average = total / parts
+print("題目4：50 ÷ 4 =", average)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：整數除法（取商）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>candies = 47
+children = 6
+candies_per_child = candies // children
+print("題目5：47 顆糖果分給 6 個小孩，每人得", candies_per_child, "顆")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：取餘數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>remainder = 47 % 6
+print("題目6：47 除以 6 的餘數 =", remainder)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：次方運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>base = 3
+power = 4
+result = base ** power
+print("題目7：3 的 4 次方 =", result)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：負數運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>temperature = -5
+change = -3
+new_temp = temperature + change
+print("題目8：溫度 -5°C 下降 3°C 後 =", new_temp, "°C")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：混合運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>calculation = 10 + 5 * 2
+print("題目9：10 + 5 × 2 =", calculation)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：括號改變優先順序</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>calculation2 = (10 + 5) * 2
+print("題目10：(10 + 5) × 2 =", calculation2)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：字串串接</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>greeting = "你好"
+name = "世界"
+message = greeting + name
+print("題目11：", message)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：字串重複</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>pattern = "Ha"
+laugh = pattern * 3
+print("題目12：", laugh)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：字串與空格</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>first = "Python"
+last = "程式設計"
+full = first + " " + last
+print("題目13：", full)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：等於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>num1 = 50
+num2 = 50
+is_same = num1 == num2
+print("題目14：50 == 50 結果為", is_same)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：不等於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>price1 = 100
+price2 = 150
+is_different = price1 != price2
+print("題目15：100 != 150 結果為", is_different)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：大於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>score = 85
+passed = score > 60
+print("題目16：85 > 60 結果為", passed)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：小於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>age = 16
+is_child = age < 18
+print("題目17：16 < 18 結果為", is_child)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：大於等於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>height = 150
+tall_enough = height >= 150
+print("題目18：150 >= 150 結果為", tall_enough)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：小於等於比較</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>weight = 45
+lightweight = weight <= 50
+print("題目19：45 <= 50 結果為", lightweight)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：布林值變數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>is_sunny = True
+is_raining = False
+print("題目20：晴天 =", is_sunny, "，下雨 =", is_raining)</pre>
+        </div>
+
+        <h2>🙂 模組二：進階運算與型別轉換（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：整數轉浮點數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>integer_num = 10
+float_num = float(integer_num)
+print("題目21：整數 10 轉浮點數 =", float_num)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：浮點數轉整數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>decimal = 9.8
+integer = int(decimal)
+print("題目22：浮點數 9.8 轉整數 =", integer)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：字串轉整數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>text_number = "123"
+number = int(text_number)
+double = number * 2
+print("題目23：字串 '123' 轉整數後乘以 2 =", double)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：字串轉浮點數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>text_decimal = "3.14"
+pi = float(text_decimal)
+circumference = 2 * pi * 5
+print("題目24：半徑 5 的圓周長 =", circumference)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：數字轉字串</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>age = 25
+message = "我今年 " + str(age) + " 歲"
+print("題目25：", message)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：加法指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>counter = 10
+counter += 5
+print("題目26：counter 原本 10，加 5 後 =", counter)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：減法指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>balance = 1000
+balance -= 350
+print("題目27：餘額原本 1000，支出 350 後 =", balance)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：乘法指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>population = 100
+population *= 2
+print("題目28：人口原本 100，翻倍後 =", population)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：除法指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>total_hours = 100
+total_hours /= 4
+print("題目29：100 小時分 4 週 =", total_hours, "小時/週")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：整除指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>items = 50
+items //= 7
+print("題目30：50 個物品，每組 7 個，可分", items, "組")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：餘數指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>number = 100
+number %= 7
+print("題目31：100 除以 7 的餘數 =", number)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：次方指定運算子</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>value = 2
+value **= 5
+print("題目32：2 的 5 次方 =", value)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：複雜運算優先順序</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>result = 2 + 3 * 4 ** 2
+print("題目33：2 + 3 × 4² =", result)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：括號與次方</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>result2 = (2 + 3) * 4 ** 2
+print("題目34：(2 + 3) × 4² =", result2)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：多重括號</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>result3 = ((10 + 5) * 2 - 10) / 5
+print("題目35：((10 + 5) × 2 - 10) ÷ 5 =", result3)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：字串格式化（舊式）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>name = "小華"
+score = 95
+report = "學生 %s 的分數是 %d 分" % (name, score)
+print("題目36：", report)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：字串格式化（f-string）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>product = "筆記本"
+price = 25
+info = f"{product} 每本 {price} 元"
+print("題目37：", info)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：f-string 計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>width = 10
+height = 5
+area_message = f"面積 = {width} × {height} = {width * height}"
+print("題目38：", area_message)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：多個比較運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>x = 10
+result = x > 5
+result2 = x < 20
+both_true = result == True
+print("題目39：10 > 5 =", result, "，10 < 20 =", result2)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：比較結果的運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>a = 10
+b = 20
+c = 10
+comparison = a == c
+print("題目40：10 == 10 的結果 =", comparison)</pre>
+        </div>
+
+        <h2>🙂 模組三：互動式應用程式（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：基本輸入輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>name = input("題目41 - 請輸入你的名字：")
+print("歡迎", name)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：數字相加</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>num1 = input("題目42 - 請輸入第一個數字：")
+num2 = input("請輸入第二個數字：")
+result = int(num1) + int(num2)
+print("相加結果 =", result)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：計算矩形面積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>length = input("題目43 - 請輸入長度：")
+width = input("請輸入寬度：")
+area = float(length) * float(width)
+print("矩形面積 =", area)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：溫度轉換（攝氏轉華氏）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>celsius = input("題目44 - 請輸入攝氏溫度：")
+fahrenheit = float(celsius) * 9 / 5 + 32
+print(celsius, "°C =", fahrenheit, "°F")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：計算平均分數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>score1 = input("題目45 - 請輸入第一科分數：")
+score2 = input("請輸入第二科分數：")
+score3 = input("請輸入第三科分數：")
+average = (int(score1) + int(score2) + int(score3)) / 3
+print("平均分數 =", average)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：計算購物總價</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>price = input("題目46 - 請輸入單價：")
+quantity = input("請輸入數量：")
+total = float(price) * int(quantity)
+print("總價 =", total, "元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：計算折扣後價格</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>original = input("題目47 - 請輸入原價：")
+discount = input("請輸入折扣（如 0.8 表示 8 折）：")
+final_price = float(original) * float(discount)
+print("折扣後價格 =", final_price, "元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：計算 BMI</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>weight = input("題目48 - 請輸入體重（公斤）：")
+height = input("請輸入身高（公尺）：")
+bmi = float(weight) / (float(height) ** 2)
+print("BMI =", bmi)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：計算時速</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>distance = input("題目49 - 請輸入距離（公里）：")
+time = input("請輸入時間（小時）：")
+speed = float(distance) / float(time)
+print("時速 =", speed, "公里/小時")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：分配物品</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>total_items = input("題目50 - 請輸入物品總數：")
+people = input("請輸入人數：")
+per_person = int(total_items) // int(people)
+leftover = int(total_items) % int(people)
+print("每人分得", per_person, "個，剩餘", leftover, "個")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：字串重複輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>word = input("題目51 - 請輸入一個字：")
+times = input("請輸入重複次數：")
+result = word * int(times)
+print("結果：", result)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：姓名組合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>first_name = input("題目52 - 請輸入姓：")
+last_name = input("請輸入名：")
+full_name = first_name + last_name
+print("全名：", full_name)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：年齡計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>birth_year = input("題目53 - 請輸入出生年份：")
+current_year = input("請輸入今年年份：")
+age = int(current_year) - int(birth_year)
+print("你的年齡約 =", age, "歲")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：找零計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>payment = input("題目54 - 請輸入付款金額：")
+cost = input("請輸入商品價格：")
+change = float(payment) - float(cost)
+print("找零 =", change, "元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：時間轉換（分鐘轉小時）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>minutes = input("題目55 - 請輸入分鐘數：")
+hours = int(minutes) // 60
+remaining_minutes = int(minutes) % 60
+print(minutes, "分鐘 =", hours, "小時", remaining_minutes, "分鐘")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：計算圓面積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>radius = input("題目56 - 請輸入圓的半徑：")
+pi = 3.14159
+area = pi * float(radius) ** 2
+print("圓面積 =", area)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：計算圓周長</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>radius = input("題目57 - 請輸入圓的半徑：")
+pi = 3.14159
+circumference = 2 * pi * float(radius)
+print("圓周長 =", circumference)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：判斷奇偶數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>number = input("題目58 - 請輸入一個整數：")
+remainder = int(number) % 2
+print(number, "除以 2 的餘數 =", remainder, "（0是偶數，1是奇數）")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：計算正方形周長</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>side = input("題目59 - 請輸入正方形邊長：")
+perimeter = float(side) * 4
+print("正方形周長 =", perimeter)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：貨幣兌換</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>twd = input("題目60 - 請輸入台幣金額：")
+exchange_rate = input("請輸入匯率（例如 30）：")
+usd = float(twd) / float(exchange_rate)
+print("兌換美金 =", usd, "元")</pre>
+        </div>
+
+        <h2>🙂 模組四：常用數學公式實作（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：三角形面積（底×高÷2）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>base = 10
+height = 8
+triangle_area = base * height / 2
+print("題目61：三角形面積（底10，高8）=", triangle_area)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：梯形面積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>upper_base = 5
+lower_base = 10
+height = 6
+trapezoid_area = (upper_base + lower_base) * height / 2
+print("題目62：梯形面積（上底5，下底10，高6）=", trapezoid_area)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：圓柱體積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>radius = 3
+height = 10
+pi = 3.14159
+cylinder_volume = pi * radius ** 2 * height
+print("題目63：圓柱體積（半徑3，高10）=", cylinder_volume)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：球體積</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>radius = 5
+pi = 3.14159
+sphere_volume = 4 / 3 * pi * radius ** 3
+print("題目64：球體積（半徑5）=", sphere_volume)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：畢氏定理（直角三角形斜邊）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>a = 3
+b = 4
+c_squared = a ** 2 + b ** 2
+c = c_squared ** 0.5
+print("題目65：斜邊長度（邊長3和4）=", c)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：算術平均數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>num1 = 80
+num2 = 90
+num3 = 85
+average = (num1 + num2 + num3) / 3
+print("題目66：三個數的平均（80, 90, 85）=", average)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：加權平均</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>score1 = 80
+weight1 = 0.3
+score2 = 90
+weight2 = 0.7
+weighted_avg = score1 * weight1 + score2 * weight2
+print("題目67：加權平均（80×0.3 + 90×0.7）=", weighted_avg)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：簡單利息計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>principal = 10000
+rate = 0.05
+time = 3
+interest = principal * rate * time
+print("題目68：簡單利息（本金10000，利率5%，3年）=", interest)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：複利終值（一次性計算）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>principal = 10000
+rate = 1.05
+years = 3
+final_amount = principal * rate ** years
+print("題目69：複利終值（10000元，年利率5%，3年）=", final_amount)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：速度公式（距離÷時間）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>distance = 120
+time = 2
+speed = distance / time
+print("題目70：速度（距離120公里，時間2小時）=", speed, "km/h")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：加速度公式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>final_velocity = 20
+initial_velocity = 5
+time = 3
+acceleration = (final_velocity - initial_velocity) / time
+print("題目71：加速度（初速5，末速20，時間3秒）=", acceleration, "m/s²")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：動能公式（½mv²）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>mass = 10
+velocity = 5
+kinetic_energy = 0.5 * mass * velocity ** 2
+print("題目72：動能（質量10kg，速度5m/s）=", kinetic_energy, "焦耳")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：位能公式（mgh）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>mass = 10
+gravity = 9.8
+height = 5
+potential_energy = mass * gravity * height
+print("題目73：位能（質量10kg，高度5m）=", potential_energy, "焦耳")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：做功公式（力×距離）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>force = 50
+distance = 10
+work = force * distance
+print("題目74：做功（力50牛頓，距離10米）=", work, "焦耳")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：功率公式（功÷時間）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>work = 500
+time = 10
+power = work / time
+print("題目75：功率（功500焦耳，時間10秒）=", power, "瓦特")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：密度公式（質量÷體積）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>mass = 100
+volume = 50
+density = mass / volume
+print("題目76：密度（質量100g，體積50cm³）=", density, "g/cm³")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：壓力公式（力÷面積）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>force = 100
+area = 20
+pressure = force / area
+print("題目77：壓力（力100牛頓，面積20m²）=", pressure, "帕斯卡")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：等差數列第n項</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>first_term = 3
+common_difference = 5
+n = 10
+nth_term = first_term + (n - 1) * common_difference
+print("題目78：等差數列第10項（首項3，公差5）=", nth_term)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：等比數列第n項</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>first_term = 2
+common_ratio = 3
+n = 5
+nth_term = first_term * common_ratio ** (n - 1)
+print("題目79：等比數列第5項（首項2，公比3）=", nth_term)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：一元二次方程式判別式（b²-4ac）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>a = 1
+b = -5
+c = 6
+discriminant = b ** 2 - 4 * a * c
+print("題目80：判別式（a=1, b=-5, c=6）=", discriminant)</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            // const codeBlock = button.parentElement;
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // 更改按鈕文字和樣式
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                // 顯示提示訊息
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                
+                // 3秒後恢復原狀
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

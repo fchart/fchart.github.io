@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python容器型態教學程式範例 (80題)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python容器型態教學程式範例 (80題)</h1>
+        
+        <h2>😁 模組一:串列(List)基礎 (20題)</h2>
+        
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 1:串列的建立與顯示</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目1:建立串列")
+numbers = [1, 2, 3, 4, 5]
+fruits = ["蘋果", "香蕉", "橘子"]
+mixed = [1, "Python", 3.14, True]
+print(f"數字串列:{numbers}")
+print(f"水果串列:{fruits}")
+print(f"混合串列:{mixed}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 2:串列長度與型態</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目2:串列長度與型態")
+scores = [85, 90, 78, 92, 88]
+print(f"串列:{scores}")
+print(f"長度:{len(scores)}")
+print(f"型態:{type(scores)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 3:串列索引存取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目3:串列索引存取")
+colors = ["紅", "黃", "藍", "綠", "紫"]
+print(f"第1個元素:{colors[0]}")
+print(f"第3個元素:{colors[2]}")
+print(f"最後一個:{colors[-1]}")
+print(f"倒數第二個:{colors[-2]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 4:串列切片</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目4:串列切片")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(f"前3個:{numbers[0:3]}")
+print(f"第4到第7:{numbers[3:7]}")
+print(f"最後3個:{numbers[-3:]}")
+print(f"每隔2個取一個:{numbers[::2]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 5:修改串列元素</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目5:修改串列元素")
+fruits = ["蘋果", "香蕉", "橘子"]
+print(f"原始:{fruits}")
+fruits[1] = "芒果"
+print(f"修改後:{fruits}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 6:串列新增元素(append)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目6:新增元素到串列末端")
+numbers = [1, 2, 3]
+print(f"原始:{numbers}")
+numbers.append(4)
+print(f"加入 4:{numbers}")
+numbers.append(5)
+print(f"加入 5:{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 7:串列插入元素(insert)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目7:插入元素到指定位置")
+colors = ["紅", "藍", "綠"]
+print(f"原始:{colors}")
+colors.insert(1, "黃")
+print(f"在索引1插入'黃':{colors}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 8:串列刪除元素(remove)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目8:刪除指定值的元素")
+fruits = ["蘋果", "香蕉", "橘子", "香蕉"]
+print(f"原始:{fruits}")
+fruits.remove("香蕉")
+print(f"刪除'香蕉':{fruits}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 9:串列刪除元素(pop)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目9:刪除指定索引的元素")
+numbers = [10, 20, 30, 40, 50]
+print(f"原始:{numbers}")
+removed = numbers.pop(2)
+print(f"刪除索引2(值={removed}):{numbers}")
+last = numbers.pop()
+print(f"刪除最後一個(值={last}):{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 10:串列排序</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目10:串列排序")
+numbers = [45, 12, 78, 23, 56]
+print(f"原始:{numbers}")
+numbers.sort()
+print(f"升序排序:{numbers}")
+numbers.sort(reverse=True)
+print(f"降序排序:{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 11:串列反轉</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目11:串列反轉")
+letters = ["A", "B", "C", "D", "E"]
+print(f"原始:{letters}")
+letters.reverse()
+print(f"反轉後:{letters}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 12:串列成員檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目12:檢查元素是否在串列中")
+fruits = ["蘋果", "香蕉", "橘子"]
+print(f"串列:{fruits}")
+print(f"'香蕉' 在串列中:{'香蕉' in fruits}")
+print(f"'芒果' 在串列中:{'芒果' in fruits}")
+print(f"'草莓' 不在串列中:{'草莓' not in fruits}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 13:串列元素計數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目13:計算元素出現次數")
+numbers = [1, 2, 3, 2, 4, 2, 5]
+print(f"串列:{numbers}")
+print(f"數字 2 出現次數:{numbers.count(2)}")
+print(f"數字 3 出現次數:{numbers.count(3)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 14:串列元素位置查詢</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目14:查詢元素位置")
+colors = ["紅", "黃", "藍", "綠"]
+print(f"串列:{colors}")
+index = colors.index("藍")
+print(f"'藍' 的索引:{index}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 15:串列清空</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目15:清空串列")
+numbers = [1, 2, 3, 4, 5]
+print(f"原始:{numbers}")
+numbers.clear()
+print(f"清空後:{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 16:串列複製</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目16:串列複製")
+original = [1, 2, 3]
+copy1 = original
+copy2 = original.copy()
+print(f"原始:{original}")
+copy1.append(4)
+print(f"淺複製(參考):{copy1}")
+print(f"原始也改變:{original}")
+copy2.append(5)
+print(f"深複製(獨立):{copy2}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 17:串列遍歷</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目17:遍歷串列")
+fruits = ["蘋果", "香蕉", "橘子"]
+print("使用 for 迴圈遍歷:")
+for fruit in fruits:
+    print(f"  {fruit}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 18:串列與索引遍歷</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目18:同時取得索引和元素")
+colors = ["紅", "黃", "藍"]
+for i in range(len(colors)):
+    print(f"索引 {i}:{colors[i]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 19:串列加總與平均</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目19:計算串列總和與平均")
+scores = [85, 90, 78, 92, 88]
+total = 0
+for score in scores:
+    total += score
+average = total / len(scores)
+print(f"分數:{scores}")
+print(f"總和:{total}")
+print(f"平均:{average}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 20:串列最大最小值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目20:找出串列最大最小值")
+numbers = [45, 12, 78, 23, 56]
+max_num = numbers[0]
+min_num = numbers[0]
+for num in numbers:
+    if num > max_num:
+        max_num = num
+    if num < min_num:
+        min_num = num
+print(f"串列:{numbers}")
+print(f"最大值:{max_num}")
+print(f"最小值:{min_num}")</pre>
+        </div>
+
+        <h2>😁 模組二:元組(Tuple)基礎 (20題)</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 21:元組的建立與顯示</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目21:建立元組")
+coordinates = (10, 20)
+rgb = (255, 128, 0)
+info = ("Alice", 25, "Engineer")
+single = (42,)
+print(f"座標:{coordinates},型態:{type(coordinates)}")
+print(f"RGB:{rgb}")
+print(f"個人資訊:{info}")
+print(f"單元素元組:{single}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 22:元組索引存取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目22:元組索引存取")
+point = (100, 200, 300)
+print(f"元組:{point}")
+print(f"第1個元素:{point[0]}")
+print(f"第2個元素:{point[1]}")
+print(f"最後一個:{point[-1]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 23:元組切片</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目23:元組切片")
+numbers = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+print(f"前5個:{numbers[0:5]}")
+print(f"後5個:{numbers[-5:]}")
+print(f"奇數索引:{numbers[1::2]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 24:元組解包</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目24:元組解包")
+person = ("Bob", 30, "Doctor")
+name, age, job = person
+print(f"姓名:{name}")
+print(f"年齡:{age}")
+print(f"職業:{job}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 25:元組不可變性</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目25:元組不可變性")
+point = (10, 20)
+print(f"原始元組:{point}")
+print("元組是不可變的,無法修改元素")
+print("但可以建立新元組:")
+new_point = (30, 40)
+print(f"新元組:{new_point}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 26:元組與串列轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目26:元組與串列轉換")
+my_list = [1, 2, 3, 4, 5]
+my_tuple = (10, 20, 30)
+print(f"串列轉元組:{tuple(my_list)}")
+print(f"元組轉串列:{list(my_tuple)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 27:元組成員檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目27:元組成員檢查")
+colors = ("紅", "黃", "藍", "綠")
+print(f"元組:{colors}")
+print(f"'黃' 在元組中:{'黃' in colors}")
+print(f"'紫' 在元組中:{'紫' in colors}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 28:元組計數與查詢</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目28:元組計數與查詢")
+numbers = (1, 2, 3, 2, 4, 2, 5)
+print(f"元組:{numbers}")
+print(f"2 出現次數:{numbers.count(2)}")
+print(f"3 的索引:{numbers.index(3)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 29:元組遍歷</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目29:遍歷元組")
+days = ("一", "二", "三", "四", "五", "六", "日")
+print("星期:")
+for day in days:
+    print(f"  星期{day}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 30:元組連接</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目30:元組連接")
+tuple1 = (1, 2, 3)
+tuple2 = (4, 5, 6)
+combined = tuple1 + tuple2
+print(f"元組1:{tuple1}")
+print(f"元組2:{tuple2}")
+print(f"連接後:{combined}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 31:元組重複</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目31:元組重複")
+pattern = ("A", "B")
+repeated = pattern * 3
+print(f"原始:{pattern}")
+print(f"重複3次:{repeated}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 32:元組長度</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目32:元組長度")
+data = (10, 20, 30, 40, 50)
+print(f"元組:{data}")
+print(f"長度:{len(data)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 33:巢狀元組</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目33:巢狀元組")
+matrix = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
+print(f"矩陣:{matrix}")
+print(f"第1列:{matrix[0]}")
+print(f"第2列第3個元素:{matrix[1][2]}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 34:元組作為函數回傳值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目34:元組儲存多個相關值")
+student = ("Alice", 85, 90, 78)
+name = student[0]
+scores = student[1:]
+print(f"學生姓名:{name}")
+print(f"三科成績:{scores}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 35:元組與字串</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目35:字串轉元組")
+text = "Python"
+char_tuple = tuple(text)
+print(f"字串:{text}")
+print(f"字元元組:{char_tuple}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 36:元組最大最小值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目36:元組最大最小值")
+numbers = (45, 12, 78, 23, 56)
+max_num = numbers[0]
+min_num = numbers[0]
+for num in numbers:
+    if num > max_num:
+        max_num = num
+    if num < min_num:
+        min_num = num
+print(f"元組:{numbers}")
+print(f"最大值:{max_num}")
+print(f"最小值:{min_num}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 37:元組排序(轉成串列)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目37:元組排序")
+original = (5, 2, 8, 1, 9)
+print(f"原始元組:{original}")
+sorted_list = list(original)
+sorted_list.sort()
+sorted_tuple = tuple(sorted_list)
+print(f"排序後:{sorted_tuple}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 38:座標點計算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目38:座標點距離計算")
+point1 = (0, 0)
+point2 = (3, 4)
+dx = point2[0] - point1[0]
+dy = point2[1] - point1[1]
+distance = (dx ** 2 + dy ** 2) ** 0.5
+print(f"點1:{point1}")
+print(f"點2:{point2}")
+print(f"距離:{distance}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 39:RGB 顏色混合</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目39:RGB 顏色混合")
+red = (255, 0, 0)
+blue = (0, 0, 255)
+purple = (
+    (red[0] + blue[0]) // 2,
+    (red[1] + blue[1]) // 2,
+    (red[2] + blue[2]) // 2
+)
+print(f"紅色:{red}")
+print(f"藍色:{blue}")
+print(f"紫色(混合):{purple}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 40:日期元組</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目40:日期元組")
+date = (2025, 10, 2)
+year, month, day = date
+print(f"日期元組：{date}")
+print(f"年：{year}")
+print(f"月：{month}")
+print(f"日：{day}")
+print(f"格式化：{year}/{month:02d}/{day:02d}")</pre>
+        </div>
+
+        <h2>😁 模組三:字典(Dictionary)基礎 (20題)</h2>
+        
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 41:字典的建立與顯示</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目41:建立字典")
+student = {"name": "Alice", "age": 20, "grade": 85}
+empty_dict = {}
+print(f"學生字典:{student}")
+print(f"空字典:{empty_dict},型態:{type(empty_dict)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 42:字典存取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目42:字典元素存取")
+person = {"name": "Bob", "age": 30, "city": "台北"}
+print(f"姓名:{person['name']}")
+print(f"年齡:{person['age']}")
+print(f"城市:{person['city']}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 43:字典新增與修改</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目43:字典新增與修改")
+book = {"title": "Python 入門", "price": 450}
+print(f"原始:{book}")
+book["author"] = "張三"
+print(f"新增作者:{book}")
+book["price"] = 500
+print(f"修改價格:{book}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 44:字典刪除</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目44:字典刪除元素")
+product = {"name": "筆記本", "price": 25, "stock": 100}
+print(f"原始:{product}")
+del product["stock"]
+print(f"刪除庫存:{product}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 45:字典鍵值檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目45:檢查鍵是否存在")
+scores = {"math": 85, "english": 90, "science": 78}
+print(f"字典:{scores}")
+print(f"'math' 存在:{'math' in scores}")
+print(f"'history' 存在:{'history' in scores}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 46:字典取值(get 方法)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目46:安全取值")
+student = {"name": "Alice", "age": 20}
+print(f"姓名:{student.get('name')}")
+print(f"成績:{student.get('grade', '未登錄')}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 47:字典鍵列表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目47:取得所有鍵")
+menu = {"咖啡": 80, "奶茶": 60, "果汁": 70}
+keys = list(menu.keys())
+print(f"菜單:{menu}")
+print(f"所有品項:{keys}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 48:字典值列表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目48:取得所有值")
+scores = {"Alice": 85, "Bob": 90, "Charlie": 78}
+values = list(scores.values())
+print(f"成績表:{scores}")
+print(f"所有分數:{values}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 49:字典項目列表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目49:取得所有鍵值對")
+inventory = {"apple": 10, "banana": 5, "orange": 8}
+items = list(inventory.items())
+print(f"庫存:{inventory}")
+print(f"所有項目:{items}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 50:字典遍歷(鍵)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目50:遍歷字典的鍵")
+prices = {"apple": 30, "banana": 20, "orange": 25}
+print("商品價格:")
+for item in prices:
+    print(f"  {item}:{prices[item]} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 51:字典遍歷(鍵值對)</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目51:遍歷字典的鍵值對")
+student = {"name": "Bob", "age": 22, "major": "CS"}
+print("學生資訊:")
+for key, value in student.items():
+    print(f"  {key}:{value}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 52:字典長度</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目52:字典長度")
+contacts = {"Alice": "0912-345678", "Bob": "0923-456789", "Charlie": "0934-567890"}
+print(f"通訊錄:{contacts}")
+print(f"聯絡人數量:{len(contacts)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 53:字典清空</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目53:清空字典")
+temp_data = {"a": 1, "b": 2, "c": 3}
+print(f"原始:{temp_data}")
+temp_data.clear()
+print(f"清空後:{temp_data}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 54:字典更新</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目54:字典更新")
+dict1 = {"a": 1, "b": 2}
+dict2 = {"c": 3, "d": 4}
+print(f"字典1:{dict1}")
+print(f"字典2:{dict2}")
+dict1.update(dict2)
+print(f"更新後:{dict1}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 55:字典彈出元素</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目55:彈出字典元素")
+scores = {"math": 85, "english": 90, "science": 78}
+print(f"原始:{scores}")
+removed = scores.pop("english")
+print(f"彈出 english(值={removed}):{scores}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 56:巢狀字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目56:巢狀字典")
+students = {
+    "Alice": {"age": 20, "grade": 85},
+    "Bob": {"age": 22, "grade": 90}
+}
+print(f"學生資料:{students}")
+print(f"Alice 的年齡:{students['Alice']['age']}")
+print(f"Bob 的成績:{students['Bob']['grade']}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 57:字典計數應用</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目57:字元計數")
+text = "hello"
+char_count = {}
+for char in text:
+    if char in char_count:
+        char_count[char] += 1
+    else:
+        char_count[char] = 1
+print(f"字串:{text}")
+print(f"字元計數:{char_count}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 58:字典分數統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目58:分數統計")
+scores = {"Alice": 85, "Bob": 90, "Charlie": 78, "David": 92}
+total = 0
+count = 0
+for score in scores.values():
+    total += score
+    count += 1
+average = total / count
+print(f"成績表:{scores}")
+print(f"平均分數:{average}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 59:字典最高分</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目59:找出最高分")
+scores = {"Alice": 85, "Bob": 90, "Charlie": 78, "David": 92}
+max_name = ""
+max_score = 0
+for name, score in scores.items():
+    if score > max_score:
+        max_score = score
+        max_name = name
+print(f"成績表:{scores}")
+print(f"最高分:{max_name} = {max_score}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 60:字典過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目60:過濾字典")
+scores = {"Alice": 85, "Bob": 55, "Charlie": 78, "David": 45}
+passed = {}
+for name, score in scores.items():
+    if score >= 60:
+        passed[name] = score
+print(f"原始成績:{scores}")
+print(f"及格名單:{passed}")</pre>
+        </div>
+
+        <h2>😁 模組四:綜合應用與實務範例 (20題)</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 61:購物清單管理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目61:購物清單管理")
+shopping_list = []
+shopping_list.append("牛奶")
+shopping_list.append("麵包")
+shopping_list.append("雞蛋")
+print(f"購物清單:{shopping_list}")
+shopping_list.remove("麵包")
+print(f"移除麵包後:{shopping_list}")
+print(f"共 {len(shopping_list)} 項商品")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 62:成績管理系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目62:成績管理系統")
+students = []
+students.append(("Alice", 85))
+students.append(("Bob", 90))
+students.append(("Charlie", 78))
+print("學生成績:")
+for name, score in students:
+    status = "及格" if score >= 60 else "不及格"
+    print(f"  {name}:{score} 分({status})")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 63:通訊錄系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目63:通訊錄系統")
+contacts = {}
+contacts["Alice"] = "0912-345678"
+contacts["Bob"] = "0923-456789"
+contacts["Charlie"] = "0934-567890"
+search_name = "Bob"
+if search_name in contacts:
+    print(f"{search_name} 的電話:{contacts[search_name]}")
+else:
+    print(f"找不到 {search_name}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 64:庫存管理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目64:庫存管理")
+inventory = {"apple": 50, "banana": 30, "orange": 40}
+print(f"初始庫存:{inventory}")
+inventory["apple"] -= 10
+inventory["banana"] += 20
+print(f"更新後庫存:{inventory}")
+total_items = 0
+for count in inventory.values():
+    total_items += count
+print(f"總庫存量:{total_items}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 65:選單點餐系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目65:選單點餐系統")
+menu = {"漢堡": 80, "薯條": 40, "可樂": 30}
+order = []
+order.append("漢堡")
+order.append("薯條")
+order.append("可樂")
+order.append("漢堡")
+total = 0
+for item in order:
+    total += menu[item]
+print(f"菜單:{menu}")
+print(f"訂單:{order}")
+print(f"總價:{total} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 66:投票系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目66:投票統計")
+votes = ["Alice", "Bob", "Alice", "Charlie", "Bob", "Alice"]
+vote_count = {}
+for name in votes:
+    if name in vote_count:
+        vote_count[name] += 1
+    else:
+        vote_count[name] = 1
+print(f"投票紀錄:{votes}")
+print(f"得票統計:{vote_count}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 67:座位表管理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目67:座位表管理")
+seats = ["A1", "A2", "A3", "B1", "B2", "B3"]
+booked = ["A2", "B1"]
+available = []
+for seat in seats:
+    if seat not in booked:
+        available.append(seat)
+print(f"所有座位:{seats}")
+print(f"已預訂:{booked}")
+print(f"可預訂:{available}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 68:溫度記錄</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目68:溫度記錄統計")
+temperatures = [25.5, 26.8, 24.3, 27.1, 25.9, 26.2, 24.8]
+total = 0
+for temp in temperatures:
+    total += temp
+average = total / len(temperatures)
+max_temp = temperatures[0]
+min_temp = temperatures[0]
+for temp in temperatures:
+    if temp > max_temp:
+        max_temp = temp
+    if temp < min_temp:
+        min_temp = temp
+print(f"溫度紀錄:{temperatures}")
+print(f"平均溫度:{average:.1f}°C")
+print(f"最高溫度:{max_temp}°C")
+print(f"最低溫度:{min_temp}°C")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 69:單字頻率統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目69:單字頻率統計")
+sentence = "python is great and python is fun"
+words = sentence.split()
+word_count = {}
+for word in words:
+    if word in word_count:
+        word_count[word] += 1
+    else:
+        word_count[word] = 1
+print(f"句子:{sentence}")
+print(f"單字統計:{word_count}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 70:學生資料庫</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目70:學生資料庫")
+database = {
+    "S001": {"name": "Alice", "age": 20, "major": "CS"},
+    "S002": {"name": "Bob", "age": 22, "major": "Math"},
+    "S003": {"name": "Charlie", "age": 21, "major": "Physics"}
+}
+student_id = "S002"
+if student_id in database:
+    info = database[student_id]
+    print(f"學號:{student_id}")
+    print(f"姓名:{info['name']}")
+    print(f"年齡:{info['age']}")
+    print(f"科系:{info['major']}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 71:排行榜系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目71:遊戲排行榜")
+scores_list = [("Alice", 1500), ("Bob", 2000), ("Charlie", 1800)]
+for i in range(len(scores_list)):
+    max_idx = i
+    for j in range(i + 1, len(scores_list)):
+        if scores_list[j][1] > scores_list[max_idx][1]:
+            max_idx = j
+    temp = scores_list[i]
+    scores_list[i] = scores_list[max_idx]
+    scores_list[max_idx] = temp
+print("排行榜(由高到低):")
+for rank, (name, score) in enumerate(scores_list, 1):
+    print(f"  第 {rank} 名:{name} - {score} 分")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 72:課程選修系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目72:課程選修系統")
+courses = {
+    "數學": ["Alice", "Bob", "Charlie"],
+    "物理": ["Alice", "David"],
+    "化學": ["Bob", "Charlie", "David"]
+}
+student = "Alice"
+selected = []
+for course, students in courses.items():
+    if student in students:
+        selected.append(course)
+print(f"{student} 選修的課程:{selected}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 73:多維成績表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目73:多科成績統計")
+grades = {
+    "Alice": [85, 90, 78],
+    "Bob": [92, 88, 95],
+    "Charlie": [78, 82, 85]
+}
+print("學生平均成績:")
+for name, scores in grades.items():
+    total = 0
+    for score in scores:
+        total += score
+    average = total / len(scores)
+    print(f"  {name}:{average:.1f}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 74:購物車總價計算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目74:購物車系統")
+cart = [
+    {"name": "筆記本", "price": 25, "quantity": 3},
+    {"name": "原子筆", "price": 10, "quantity": 5},
+    {"name": "橡皮擦", "price": 5, "quantity": 2}
+]
+total = 0
+print("購物車明細:")
+for item in cart:
+    subtotal = item["price"] * item["quantity"]
+    total += subtotal
+    print(f"  {item['name']} x {item['quantity']} = {subtotal} 元")
+print(f"總計:{total} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 75:待辦事項管理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目75:待辦事項管理")
+todos = []
+todos.append({"task": "寫作業", "done": False})
+todos.append({"task": "買菜", "done": True})
+todos.append({"task": "運動", "done": False})
+print("待辦事項:")
+for todo in todos:
+    status = "✓" if todo["done"] else "✗"
+    print(f"  [{status}] {todo['task']}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 76:商品搜尋系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目76:商品搜尋")
+products = [
+    {"id": 1, "name": "筆記本", "category": "文具"},
+    {"id": 2, "name": "鉛筆", "category": "文具"},
+    {"id": 3, "name": "橡皮擦", "category": "文具"},
+    {"id": 4, "name": "計算機", "category": "電子"}
+]
+category = "文具"
+found = []
+for product in products:
+    if product["category"] == category:
+        found.append(product["name"])
+print(f"類別 '{category}' 的商品:{found}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 77：成績分組統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目77：成績分組統計")
+scores = [85, 92, 78, 65, 90, 55, 88, 73, 95, 62]
+grade_groups = {"A": 0, "B": 0, "C": 0, "D": 0, "F": 0}
+for score in scores:
+    if score >= 90:
+        grade_groups["A"] += 1
+    elif score >= 80:
+        grade_groups["B"] += 1
+    elif score >= 70:
+        grade_groups["C"] += 1
+    elif score >= 60:
+        grade_groups["D"] += 1
+    else:
+        grade_groups["F"] += 1
+print(f"分數分布：{grade_groups}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 78：矩陣運算（串列）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目78：矩陣加法")
+matrix1 = [[1, 2, 3], [4, 5, 6]]
+matrix2 = [[7, 8, 9], [10, 11, 12]]
+result = []
+for i in range(len(matrix1)):
+    row = []
+    for j in range(len(matrix1[i])):
+        row.append(matrix1[i][j] + matrix2[i][j])
+    result.append(row)
+print(f"矩陣1：{matrix1}")
+print(f"矩陣2：{matrix2}")
+print(f"相加結果：{result}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 79：資料去重</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目79：資料去重")
+numbers = [1, 2, 3, 2, 4, 1, 5, 3, 6]
+unique = []
+for num in numbers:
+    if num not in unique:
+        unique.append(num)
+print(f"原始資料：{numbers}")
+print(f"去重後：{unique}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 80：綜合互動系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目80：學生管理系統")
+students = {}
+print("=== 學生管理系統 ===")
+while True:
+    print("\n1.新增學生  2.查詢學生  3.顯示全部  4.離開")
+    choice = input("請選擇功能：")
+    
+    if choice == "1":
+        name = input("請輸入姓名：")
+        age = int(input("請輸入年齡："))
+        grade = int(input("請輸入成績："))
+        students[name] = {"age": age, "grade": grade}
+        print(f"已新增 {name}")
+    
+    elif choice == "2":
+        name = input("請輸入要查詢的姓名：")
+        if name in students:
+            info = students[name]
+            print(f"姓名：{name}")
+            print(f"年齡：{info['age']}")
+            print(f"成績：{info['grade']}")
+        else:
+            print("查無此人")
+    
+    elif choice == "3":
+        if len(students) == 0:
+            print("目前無學生資料")
+        else:
+            print("所有學生：")
+            for name, info in students.items():
+                print(f"  {name}：年齡 {info['age']}，成績 {info['grade']}")
+    
+    elif choice == "4":
+        print("系統結束")
+        break
+    
+    else:
+        print("無效選擇")</pre>
+        </div>
+
+ </div>
+    <div class="toast" id="toast">程式碼已複製！</div>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // 更改按鈕文字和樣式
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                // 顯示提示訊息
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');                
+                // 3秒後恢復原狀
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

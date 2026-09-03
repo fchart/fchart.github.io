@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 重複結構教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; /* 把它拉到 code-block 的最上方 */ }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python 重複結構教學程式範例（80題）</h1>
+        
+        <h2>🙂 模組一：基礎 for 迴圈（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 1：印出 1 到 5</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("題目1：印出 1 到 5")
+for i in range(1, 6):
+    print(i)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 2：印出 0 到 9</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目2：印出 0 到 9")
+for i in range(10):
+    print(i, end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 3：計算 1 到 10 的總和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目3：計算 1 到 10 的總和")
+total = 0
+for i in range(1, 11):
+    total += i
+print("總和 =", total)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 4：印出九九乘法表（某一行）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目4：印出 5 的乘法表")
+for i in range(1, 10):
+    print(f"5 × {i} = {5 * i}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 5：計算 1 到 100 的偶數和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目5：計算 1 到 100 的偶數和")
+even_sum = 0
+for i in range(2, 101, 2):
+    even_sum += i
+print("偶數和 =", even_sum)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 6：印出星號圖案</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目6：印出星號圖案")
+for i in range(5):
+    print("*" * (i + 1))</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 7：倒數計數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目7：倒數計數")
+for i in range(10, 0, -1):
+    print(i, end=" ")
+print("發射！")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 8：計算階乘</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目8：計算 5 的階乘")
+factorial = 1
+for i in range(1, 6):
+    factorial *= i
+print("5! =", factorial)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 9：印出所有奇數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目9：印出 1 到 20 的奇數")
+for i in range(1, 21, 2):
+    print(i, end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 10：計算平方和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目10：計算 1 到 5 的平方和")
+square_sum = 0
+for i in range(1, 6):
+    square_sum += i ** 2
+print("平方和 =", square_sum)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 11：重複印出字串</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目11：重複印出字串")
+for i in range(3):
+    print("Python 程式設計")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 12：印出乘法結果</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目12：印出 2 的次方")
+for i in range(1, 6):
+    print(f"2^{i} = {2 ** i}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 13：計數偶數個數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目13：計算 1 到 50 有多少個偶數")
+count = 0
+for i in range(1, 51):
+    if i % 2 == 0:
+        count += 1
+print("偶數個數 =", count)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 14：印出字母</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目14：印出 A 到 E")
+for i in range(5):
+    print(chr(65 + i), end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 15：計算平均數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目15：計算 1 到 10 的平均數")
+total = 0
+for i in range(1, 11):
+    total += i
+average = total / 10
+print("平均數 =", average)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 16：印出格子圖案</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目16：印出 3×3 格子")
+for i in range(3):
+    for j in range(3):
+        print("#", end=" ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 17：計算數字總和（特定範圍）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目17：計算 10 到 20 的總和")
+total = 0
+for i in range(10, 21):
+    total += i
+print("總和 =", total)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 18：印出數字與其平方</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目18：印出數字與其平方")
+for i in range(1, 6):
+    print(f"{i} 的平方是 {i ** 2}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 19：累加顯示</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目19：累加顯示")
+cumulative = 0
+for i in range(1, 6):
+    cumulative += i
+    print(f"累加到 {i} = {cumulative}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 20：字串重複拼接</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目20：字串重複拼接")
+text = ""
+for i in range(5):
+    text += "Ha"
+print(text)</pre></div>
+
+        <h2>🙂 模組二：進階 for 迴圈與巢狀結構（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 21：九九乘法表（完整版）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目21：九九乘法表")
+for i in range(1, 10):
+    for j in range(1, 10):
+        print(f"{i}×{j}={i*j:2d}", end="  ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 22：直角三角形星號</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目22：直角三角形星號")
+for i in range(1, 6):
+    for j in range(i):
+        print("*", end="")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 23：倒直角三角形</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目23：倒直角三角形")
+for i in range(5, 0, -1):
+    for j in range(i):
+        print("*", end="")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 24：金字塔星號</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目24：金字塔星號")
+for i in range(1, 6):
+    print(" " * (5 - i) + "*" * (2 * i - 1))</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 25：計算所有兩位數的總和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目25：計算所有兩位數的總和")
+total = 0
+for i in range(10, 100):
+    total += i
+print("10 到 99 的總和 =", total)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 26：找出 1 到 100 的質數個數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目26：計算 1 到 100 的質數個數")
+prime_count = 0
+for num in range(2, 101):
+    is_prime = True
+    for i in range(2, num):
+        if num % i == 0:
+            is_prime = False
+    if is_prime:
+        prime_count += 1
+print("質數個數 =", prime_count)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 27：數字方陣</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目27：數字方陣")
+for i in range(1, 5):
+    for j in range(1, 5):
+        print(i * j, end="\t")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 28：計算數字乘積</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目28：計算 1 到 10 的乘積")
+product = 1
+for i in range(1, 11):
+    product *= i
+print("乘積 =", product)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 29：印出菱形圖案</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目29：印出菱形圖案")
+n = 5
+for i in range(1, n + 1):
+    print(" " * (n - i) + "*" * (2 * i - 1))
+for i in range(n - 1, 0, -1):
+    print(" " * (n - i) + "*" * (2 * i - 1))</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 30：計算費氏數列前 10 項</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目30：費氏數列前 10 項")
+a = 0
+b = 1
+for i in range(10):
+    print(a, end=" ")
+    temp = a + b
+    a = b
+    b = temp
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 31：找出最大值</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目31：找出 5 個數字中的最大值")
+numbers = [23, 67, 12, 89, 45]
+max_num = numbers[0]
+for num in numbers:
+    if num > max_num:
+        max_num = num
+print("最大值 =", max_num)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 32：計算平方根（牛頓法簡化版）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目32：計算平方根近似值")
+n = 16
+guess = n / 2
+for i in range(5):
+    guess = (guess + n / guess) / 2
+print(f"{n} 的平方根約等於 {guess}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 33：印出字母金字塔</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目33：印出字母金字塔")
+for i in range(5):
+    for j in range(i + 1):
+        print(chr(65 + j), end="")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 34：數字階梯</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目34：數字階梯")
+for i in range(1, 6):
+    for j in range(1, i + 1):
+        print(j, end="")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 35：計算調和級數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目35：計算調和級數 H(10)")
+harmonic_sum = 0
+for i in range(1, 11):
+    harmonic_sum += 1 / i
+print(f"調和級數 H(10) = {harmonic_sum}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 36：空心正方形</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目36：空心正方形")
+size = 5
+for i in range(size):
+    for j in range(size):
+        if i == 0 or i == size - 1 or j == 0 or j == size - 1:
+            print("*", end=" ")
+        else:
+            print(" ", end=" ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 37：數字加權總和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目37：數字加權總和")
+weighted_sum = 0
+for i in range(1, 6):
+    weighted_sum += i * i
+print("加權總和（i×i）=", weighted_sum)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 38：計算等比級數和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目38：計算等比級數和 1+2+4+8+...+512")
+geo_sum = 0
+for i in range(10):
+    geo_sum += 2 ** i
+print("等比級數和 =", geo_sum)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 39：交錯數字圖案</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目39：交錯數字圖案")
+for i in range(5):
+    for j in range(5):
+        if (i + j) % 2 == 0:
+            print("1", end=" ")
+        else:
+            print("0", end=" ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 40：計算數字立方和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目40：計算 1 到 10 的立方和")
+cube_sum = 0
+for i in range(1, 11):
+    cube_sum += i ** 3
+print("立方和 =", cube_sum)</pre></div>
+
+        <h2>🙂 模組三：while 迴圈與跳出控制（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 41：while 基本計數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目41：while 計數 1 到 5")
+i = 1
+while i <= 5:
+    print(i, end=" ")
+    i += 1
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 42：while 計算總和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目42：while 計算 1 到 10 的總和")
+i = 1
+total = 0
+while i <= 10:
+    total += i
+    i += 1
+print("總和 =", total)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 43：使用 break 跳出</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目43：找到第一個大於 50 的平方數")
+i = 1
+while True:
+    square = i ** 2
+    if square > 50:
+        print(f"{i}² = {square}")
+        break
+    i += 1</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 44：使用 continue 跳過</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目44：印出 1 到 10 的奇數（使用 continue）")
+i = 0
+while i < 10:
+    i += 1
+    if i % 2 == 0:
+        continue
+    print(i, end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 45：猜數字遊戲</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目45：簡易猜數字（固定答案）")
+secret = 7
+guess = 0
+attempts = 0
+while guess != secret:
+    guess = int(input("請猜一個數字（1-10）："))
+    attempts += 1
+    if guess < secret:
+        print("太小了")
+    elif guess > secret:
+        print("太大了")
+    else:
+        print(f"答對了！你猜了 {attempts} 次")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 46：計算數字位數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目46：計算數字位數")
+number = 12345
+count = 0
+temp = number
+while temp > 0:
+    temp = temp // 10
+    count += 1
+print(f"{number} 有 {count} 位數")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 47：反轉數字</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目47：反轉數字")
+number = 1234
+reversed_num = 0
+while number > 0:
+    digit = number % 10
+    reversed_num = reversed_num * 10 + digit
+    number = number // 10
+print("反轉後 =", reversed_num)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 48：倍數累加到超過門檻</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目48：倍數累加到超過 100")
+total = 0
+i = 1
+while total <= 100:
+    total += i
+    i += 1
+print(f"累加到 {i-1}，總和 = {total}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 49：密碼驗證（限制次數）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目49：密碼驗證（最多 3 次）")
+password = "python"
+attempts = 0
+max_attempts = 3
+while attempts < max_attempts:
+    user_input = input("請輸入密碼：")
+    attempts += 1
+    if user_input == password:
+        print("登入成功")
+        break
+    else:
+        print(f"密碼錯誤，剩餘 {max_attempts - attempts} 次機會")
+else:
+    print("登入失敗，帳號已鎖定")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 50：計算最大公因數（GCD）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目50：計算最大公因數")
+a = 48
+b = 18
+while b != 0:
+    temp = b
+    b = a % b
+    a = temp
+print(f"GCD = {a}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 51：數字累乘到超過門檻</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目51：累乘到超過 1000")
+product = 1
+i = 1
+while product <= 1000:
+    i += 1
+    product *= i
+print(f"{i}! = {product} 首次超過 1000")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 52：印出平方數直到超過 100</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目52：印出平方數直到超過 100")
+i = 1
+while i ** 2 <= 100:
+    print(f"{i}² = {i ** 2}", end="  ")
+    i += 1
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 53：數字加總（輸入 0 結束）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目53：數字加總（輸入 0 結束）")
+total = 0
+while True:
+    num = int(input("請輸入數字（0結束）："))
+    if num == 0:
+        break
+    total += num
+print("總和 =", total)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 54：找出小於 N 的所有 3 的倍數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目54：找出小於 30 的所有 3 的倍數")
+i = 3
+while i < 30:
+    print(i, end=" ")
+    i += 3
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 55：階乘計算（while 版本）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目55：計算 6 的階乘")
+n = 6
+factorial = 1
+i = 1
+while i <= n:
+    factorial *= i
+    i += 1
+print(f"{n}! = {factorial}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 56：計數器遞減</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目56：倒數計時")
+count = 10
+while count > 0:
+    print(count, end=" ")
+    count -= 1
+print("時間到！")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 57：尋找第一個能被 7 整除的三位數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目57：尋找第一個能被 7 整除的三位數")
+num = 100
+while num % 7 != 0:
+    num += 1
+print(f"第一個能被 7 整除的三位數是 {num}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 58：數字總和達標</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目58：加到總和達到 50")
+total = 0
+i = 0
+while total < 50:
+    i += 1
+    total += i
+print(f"加到 {i}，總和 = {total}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 59：印出所有兩位數的完全平方數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目59：印出所有兩位數的完全平方數")
+i = 1
+while i ** 2 < 100:
+    square = i ** 2
+    if square >= 10:
+        print(square, end=" ")
+    i += 1
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 60：模擬計數器（跳過特定數字）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目60：計數 1 到 20，跳過 13")
+i = 0
+while i < 20:
+    i += 1
+    if i == 13:
+        continue
+    print(i, end=" ")
+print()</pre></div>
+
+        <h2>🙂 模組四：綜合應用與互動程式（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 61：成績統計</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目61：計算多個學生的平均成績")
+n = int(input("請輸入學生人數："))
+total = 0
+for i in range(n):
+    score = int(input(f"請輸入第 {i+1} 位學生的成績："))
+    total += score
+average = total / n
+print(f"平均成績 = {average:.2f}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 62：找出最大最小值</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目62：找出最大最小值")
+n = int(input("請輸入數字個數："))
+max_num = float('-inf')
+min_num = float('inf')
+for i in range(n):
+    num = float(input(f"請輸入第 {i+1} 個數字："))
+    if num > max_num:
+        max_num = num
+    if num < min_num:
+        min_num = num
+print(f"最大值 = {max_num}，最小值 = {min_num}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 63：計算購物車總價</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目63：購物車總價計算")
+total_price = 0
+while True:
+    price = float(input("請輸入商品價格（輸入0結束）："))
+    if price == 0:
+        break
+    quantity = int(input("請輸入數量："))
+    total_price += price * quantity
+print(f"總價 = {total_price} 元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 64：印出指定範圍的質數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目64：印出 1 到 N 的所有質數")
+n = int(input("請輸入 N："))
+for num in range(2, n + 1):
+    is_prime = True
+    for i in range(2, num):
+        if num % i == 0:
+            is_prime = False
+            break
+    if is_prime:
+        print(num, end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 65：九九乘法表（使用者指定）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目65：印出指定的乘法表")
+n = int(input("請輸入要印出的乘法表（1-9）："))
+for i in range(1, 10):
+    print(f"{n} × {i} = {n * i}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 66：計算複利</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目66：計算複利終值")
+principal = float(input("請輸入本金："))
+rate = float(input("請輸入年利率（例如 0.05）："))
+years = int(input("請輸入年數："))
+amount = principal
+for i in range(years):
+    amount = amount * (1 + rate)
+print(f"{years} 年後金額 = {amount:.2f} 元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 67：計算 BMI 並分級</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目67：計算多人 BMI 並統計")
+n = int(input("請輸入人數："))
+overweight = 0
+normal = 0
+underweight = 0
+for i in range(n):
+    weight = float(input(f"第 {i+1} 人體重（kg）："))
+    height = float(input(f"第 {i+1} 人身高（m）："))
+    bmi = weight / (height ** 2)
+    if bmi >= 24:
+        overweight += 1
+    elif bmi >= 18.5:
+        normal += 1
+    else:
+        underweight += 1
+print(f"過重：{overweight} 人，正常：{normal} 人，過輕：{underweight} 人")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 68：數字金字塔</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目68：數字金字塔")
+n = int(input("請輸入層數："))
+for i in range(1, n + 1):
+    print(" " * (n - i), end="")
+    for j in range(1, i + 1):
+        print(j, end="")
+    for j in range(i - 1, 0, -1):
+        print(j, end="")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 69：計算折扣總價</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目69：計算折扣總價")
+subtotal = 0
+count = 0
+while True:
+    price = float(input("請輸入商品價格（0結束）："))
+    if price == 0:
+        break
+    subtotal += price
+    count += 1
+if subtotal >= 1000:
+    total = subtotal * 0.9
+    print(f"購買 {count} 件，享9折，實付 {total} 元")
+else:
+    print(f"購買 {count} 件，實付 {subtotal} 元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 70：計算標準差</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目70：計算標準差")
+n = int(input("請輸入數據個數："))
+numbers = []
+total = 0
+for i in range(n):
+    num = float(input(f"請輸入第 {i+1} 個數據："))
+    numbers.append(num)
+    total += num
+mean = total / n
+variance = 0
+for num in numbers:
+    variance += (num - mean) ** 2
+variance = variance / n
+std_dev = variance ** 0.5
+print(f"平均數 = {mean:.2f}，標準差 = {std_dev:.2f}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 71：文字星號圖案選單</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目71：星號圖案選單")
+print("1. 直角三角形  2. 倒三角形  3. 金字塔")
+choice = int(input("請選擇圖案："))
+n = int(input("請輸入層數："))
+if choice == 1:
+    for i in range(1, n + 1):
+        print("*" * i)
+elif choice == 2:
+    for i in range(n, 0, -1):
+        print("*" * i)
+elif choice == 3:
+    for i in range(1, n + 1):
+        print(" " * (n - i) + "*" * (2 * i - 1))</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 72：找出因數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目72：找出所有因數")
+num = int(input("請輸入一個正整數："))
+print(f"{num} 的因數有：", end="")
+for i in range(1, num + 1):
+    if num % i == 0:
+        print(i, end=" ")
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 73：計算等差數列和</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目73：計算等差數列和")
+first = int(input("請輸入首項："))
+diff = int(input("請輸入公差："))
+n = int(input("請輸入項數："))
+total = 0
+for i in range(n):
+    term = first + i * diff
+    total += term
+print(f"前 {n} 項和 = {total}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 74：計算水電費</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目74：計算水電費（階梯計價）")
+usage = int(input("請輸入用電度數："))
+if usage <= 120:
+    bill = usage * 2
+elif usage <= 330:
+    bill = 120 * 2 + (usage - 120) * 3
+else:
+    bill = 120 * 2 + 210 * 3 + (usage - 330) * 4
+print(f"電費 = {bill} 元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 75：印出帕斯卡三角形</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目75：印出帕斯卡三角形")
+n = int(input("請輸入層數："))
+triangle = []
+for i in range(n):
+    row = [1] * (i + 1)
+    for j in range(1, i):
+        row[j] = triangle[i-1][j-1] + triangle[i-1][j]
+    triangle.append(row)
+    print(" " * (n - i), end="")
+    for num in row:
+        print(num, end=" ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 76：倒數計時器（指定時間）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目76：倒數計時器")
+seconds = int(input("請輸入秒數："))
+while seconds > 0:
+    print(f"剩餘 {seconds} 秒")
+    seconds -= 1
+print("時間到！")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 77：計算幾何平均數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目77：計算幾何平均數")
+n = int(input("請輸入數字個數："))
+product = 1
+for i in range(n):
+    num = float(input(f"請輸入第 {i+1} 個數字："))
+    product *= num
+geo_mean = product ** (1/n)
+print(f"幾何平均數 = {geo_mean:.2f}")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 78：印出矩形框</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目78：印出矩形框")
+width = int(input("請輸入寬度："))
+height = int(input("請輸入高度："))
+for i in range(height):
+    for j in range(width):
+        if i == 0 or i == height - 1 or j == 0 or j == width - 1:
+            print("*", end=" ")
+        else:
+            print(" ", end=" ")
+    print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 79：找出完全平方數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目79：找出範圍內的完全平方數")
+start = int(input("請輸入起始值："))
+end = int(input("請輸入結束值："))
+i = 1
+while i ** 2 <= end:
+    square = i ** 2
+    if square >= start:
+        print(square, end=" ")
+    i += 1
+print()</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 80：簡易 ATM 系統</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>print("\n題目80：簡易 ATM 系統")
+balance = 10000
+while True:
+    print(f"\n目前餘額：{balance} 元")
+    print("1.存款  2.提款  3.查詢  4.離開")
+    choice = int(input("請選擇功能："))
+    if choice == 1:
+        amount = int(input("請輸入存款金額："))
+        balance += amount
+        print(f"存款成功，餘額 = {balance} 元")
+    elif choice == 2:
+        amount = int(input("請輸入提款金額："))
+        if amount > balance:
+            print("餘額不足")
+        else:
+            balance -= amount
+            print(f"提款成功，餘額 = {balance} 元")
+    elif choice == 3:
+        print(f"目前餘額 = {balance} 元")
+    elif choice == 4:
+        print("謝謝使用，再見！")
+        break
+    else:
+        print("無效選擇")</pre></div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            // const codeBlock = button.parentElement;
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

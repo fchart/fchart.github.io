@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 條件結構教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; /* 把它拉到 code-block 的最上方 */ }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python 條件結構教學程式範例（80題）</h1>
+        <h2>🙂 模組一：基礎條件判斷（20題）</h2>
+        
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 1：單一條件 - 判斷正數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>num = 10
+if num > 0:
+    print("題目1：", num, "是正數")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 2：單一條件 - 判斷成年</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 20
+if age >= 18:
+    print("題目2：年齡", age, "已成年")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 3：單一條件 - 判斷及格</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 75
+if score >= 60:
+    print("題目3：分數", score, "及格了")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 4：if-else 雙向選擇 - 奇偶判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>number = 7
+if number % 2 == 0:
+    print("題目4：", number, "是偶數")
+else:
+    print("題目4：", number, "是奇數")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 5：if-else - 溫度判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>temperature = 35
+if temperature > 30:
+    print("題目5：天氣炎熱")
+else:
+    print("題目5：天氣涼爽")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 6：if-else - 價格比較</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>price1 = 100
+price2 = 150
+if price1 < price2:
+    print("題目6：商品1比較便宜")
+else:
+    print("題目6：商品2比較便宜或同價")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 7：if-else - 身高判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>height = 145
+if height >= 150:
+    print("題目7：可以搭乘遊樂設施")
+else:
+    print("題目7：身高不足，無法搭乘")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 8：if-elif-else 三向選擇 - 分數等級</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 85
+if score >= 90:
+    print("題目8：等級 A")
+elif score >= 60:
+    print("題目8：等級 B")
+else:
+    print("題目8：等級 C")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 9：if-elif-else - 溫度分級</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>temp = 15
+if temp > 25:
+    print("題目9：炎熱")
+elif temp > 15:
+    print("題目9：溫暖")
+else:
+    print("題目9：寒冷")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 10：if-elif-else - BMI 分級</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>bmi = 22.5
+if bmi >= 24:
+    print("題目10：過重")
+elif bmi >= 18.5:
+    print("題目10：正常")
+else:
+    print("題目10：過輕")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 11：比較字串相等</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>name = "Python"
+if name == "Python":
+    print("題目11：語言名稱正確")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 12：字串不相等判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>password = "abc123"
+if password != "123456":
+    print("題目12：密碼不是預設值")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 13：判斷空字串</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>text = ""
+if text == "":
+    print("題目13：字串是空的")
+else:
+    print("題目13：字串有內容")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 14：數字範圍判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 75
+if score >= 60:
+    if score < 80:
+        print("題目14：分數在 60-79 之間")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 15：判斷負數</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>value = -5
+if value < 0:
+    print("題目15：", value, "是負數")
+else:
+    print("題目15：", value, "是非負數")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 16：判斷零</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>num = 0
+if num == 0:
+    print("題目16：數字是零")
+else:
+    print("題目16：數字不是零")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 17：多條件判斷 - 年齡分組</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 25
+if age < 12:
+    print("題目17：兒童")
+elif age < 18:
+    print("題目17：青少年")
+elif age < 65:
+    print("題目17：成年人")
+else:
+    print("題目17：老年人")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 18：成績優良判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 95
+if score >= 90:
+    print("題目18：優秀！")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 19：打折資格判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>amount = 1200
+if amount >= 1000:
+    print("題目19：符合打折資格")
+else:
+    print("題目19：不符合打折資格")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 20：票價計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 10
+if age < 12:
+    price = 50
+else:
+    price = 100
+print("題目20：票價 =", price, "元")</pre></div>
+
+        <h2>🙂 模組二：複合條件與邏輯運算（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 21：and 運算 - 兩個條件都成立</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 25
+income = 30000
+if age >= 18 and income >= 25000:
+    print("題目21：符合貸款資格")
+else:
+    print("題目21：不符合貸款資格")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 22：and 運算 - 分數範圍</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 75
+if score >= 60 and score < 80:
+    print("題目22：分數在及格範圍內（60-79）")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 23：or 運算 - 任一條件成立</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>day = "Saturday"
+if day == "Saturday" or day == "Sunday":
+    print("題目23：今天是週末")
+else:
+    print("題目23：今天是平日")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 24：or 運算 - 多重選擇</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>grade = "A"
+if grade == "A" or grade == "B":
+    print("題目24：成績良好")
+else:
+    print("題目24：需要加強")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 25：not 運算 - 否定條件</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>is_raining = False
+if not is_raining:
+    print("題目25：天氣晴朗，可以出門")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 26：not 運算 - 反向邏輯</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>is_member = False
+if not is_member:
+    print("題目26：需要註冊會員")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 27：複合條件 - and 與 or 混合</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 25
+has_license = True
+if age >= 18 and has_license:
+    print("題目27：可以開車")
+else:
+    print("題目27：不可以開車")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 28：複合條件 - 溫度舒適度判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>temp = 22
+humidity = 60
+if temp >= 20 and temp <= 26 and humidity < 70:
+    print("題目28：天氣舒適")
+else:
+    print("題目28：天氣不太舒適")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 29：多重 or 條件</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>month = 7
+if month == 6 or month == 7 or month == 8:
+    print("題目29：現在是夏季")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 30：成績獎學金判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 88
+attendance = 95
+if score >= 85 and attendance >= 90:
+    print("題目30：獲得獎學金")
+else:
+    print("題目30：未獲得獎學金")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 31：購物滿額贈品</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>amount = 800
+is_member = True
+if amount >= 500 and is_member:
+    print("題目31：獲得贈品")
+else:
+    print("題目31：未獲得贈品")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 32：停車費計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>hours = 3
+is_member = False
+if is_member:
+    fee = hours * 20
+else:
+    fee = hours * 30
+print("題目32：停車費 =", fee, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 33：考試通過條件</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>written_score = 70
+practical_score = 75
+if written_score >= 60 and practical_score >= 60:
+    print("題目33：考試通過")
+else:
+    print("題目33：考試未通過")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 34：緊急狀況判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>temperature = 39
+heart_rate = 120
+if temperature > 38 or heart_rate > 100:
+    print("題目34：需要就醫")
+else:
+    print("題目34：狀況正常")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 35：會員等級判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>points = 1500
+years = 3
+if points >= 1000 and years >= 2:
+    level = "金卡"
+elif points >= 500 or years >= 1:
+    level = "銀卡"
+else:
+    level = "普通"
+print("題目35：會員等級 =", level)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 36：密碼強度檢查（長度）</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>password = "abc12345"
+length = 8
+if len(password) >= length and password != "12345678":
+    print("題目36：密碼強度足夠")
+else:
+    print("題目36：密碼強度不足")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 37：運動建議</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 30
+health_score = 80
+if age < 40 and health_score > 70:
+    print("題目37：建議進行高強度運動")
+elif health_score > 50:
+    print("題目37：建議進行中強度運動")
+else:
+    print("題目37：建議進行低強度運動")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 38：折扣資格複合判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>purchase = 1500
+is_vip = True
+first_time = False
+if purchase >= 1000 and is_vip:
+    discount = 0.8
+elif purchase >= 1000 or first_time:
+    discount = 0.9
+else:
+    discount = 1.0
+print("題目38：折扣 =", discount)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 39：三個條件的綜合判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score1 = 80
+score2 = 75
+score3 = 85
+if score1 >= 60 and score2 >= 60 and score3 >= 60:
+    print("題目39：三科都及格")
+else:
+    print("題目39：有科目不及格")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 40：範圍外判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>number = 150
+if number < 0 or number > 100:
+    print("題目40：數字超出範圍（0-100）")
+else:
+    print("題目40：數字在範圍內")</pre></div>
+
+        <h2>🙂 模組三：互動式條件程式（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 41：輸入年齡判斷成年</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = int(input("題目41 - 請輸入你的年齡："))
+if age >= 18:
+    print("你已成年")
+else:
+    print("你未成年")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 42：輸入分數判斷及格</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = int(input("題目42 - 請輸入你的分數："))
+if score >= 60:
+    print("恭喜及格！")
+else:
+    print("很遺憾，不及格")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 43：輸入數字判斷正負</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>num = float(input("題目43 - 請輸入一個數字："))
+if num > 0:
+    print("這是正數")
+elif num < 0:
+    print("這是負數")
+else:
+    print("這是零")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 44：輸入溫度給建議</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>temp = float(input("題目44 - 請輸入當前溫度："))
+if temp > 30:
+    print("天氣炎熱，記得多喝水")
+elif temp > 20:
+    print("天氣舒適")
+else:
+    print("天氣寒冷，注意保暖")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 45：輸入密碼驗證</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>password = input("題目45 - 請輸入密碼：")
+if password == "python123":
+    print("密碼正確，登入成功")
+else:
+    print("密碼錯誤")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 46：購物金額計算折扣</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>amount = float(input("題目46 - 請輸入購物金額："))
+if amount >= 1000:
+    final = amount * 0.9
+    print("享有9折優惠，實付", final, "元")
+else:
+    print("不符合折扣條件，實付", amount, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 47：BMI 計算與建議</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>weight = float(input("題目47 - 請輸入體重（公斤）："))
+height = float(input("請輸入身高（公尺）："))
+bmi = weight / (height ** 2)
+if bmi >= 24:
+    print("BMI =", bmi, "，建議減重")
+elif bmi >= 18.5:
+    print("BMI =", bmi, "，體重正常")
+else:
+    print("BMI =", bmi, "，建議增重")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 48：電影票價計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = int(input("題目48 - 請輸入年齡："))
+if age < 12:
+    price = 100
+elif age >= 65:
+    price = 150
+else:
+    price = 250
+print("票價 =", price, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 49：奇偶數判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>number = int(input("題目49 - 請輸入一個整數："))
+if number % 2 == 0:
+    print(number, "是偶數")
+else:
+    print(number, "是奇數")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 50：成績等級評定</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = int(input("題目50 - 請輸入成績："))
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+elif score >= 70:
+    grade = "C"
+elif score >= 60:
+    grade = "D"
+else:
+    grade = "F"
+print("等級：", grade)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 51：會員登入與折扣</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>is_member = input("題目51 - 你是會員嗎？(yes/no)：")
+amount = float(input("請輸入購物金額："))
+if is_member == "yes":
+    final = amount * 0.85
+    print("會員享85折，實付", final, "元")
+else:
+    print("非會員，實付", amount, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 52：停車費計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>hours = int(input("題目52 - 請輸入停車時數："))
+if hours <= 1:
+    fee = 30
+elif hours <= 3:
+    fee = 30 + (hours - 1) * 40
+else:
+    fee = 30 + 2 * 40 + (hours - 3) * 50
+print("停車費 =", fee, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 53：考試及格與獎勵</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = int(input("題目53 - 請輸入考試分數："))
+if score >= 90:
+    print("優秀！獎勵1000元")
+elif score >= 60:
+    print("及格")
+else:
+    print("不及格，需要補考")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 54：三角形判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>a = float(input("題目54 - 請輸入第一邊長："))
+b = float(input("請輸入第二邊長："))
+c = float(input("請輸入第三邊長："))
+if a + b > c and b + c > a and a + c > b:
+    print("可以構成三角形")
+else:
+    print("無法構成三角形")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 55：閏年判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>year = int(input("題目55 - 請輸入年份："))
+if year % 4 == 0 and year % 100 != 0:
+    print(year, "是閏年")
+elif year % 400 == 0:
+    print(year, "是閏年")
+else:
+    print(year, "不是閏年")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 56：運費計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>weight = float(input("題目56 - 請輸入包裹重量（公斤）："))
+if weight <= 1:
+    shipping = 60
+elif weight <= 5:
+    shipping = 60 + (weight - 1) * 20
+else:
+    shipping = 60 + 4 * 20 + (weight - 5) * 30
+print("運費 =", shipping, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 57：速度罰單判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>speed = int(input("題目57 - 請輸入行駛速度（公里/小時）："))
+limit = 60
+if speed > limit + 40:
+    fine = 3600
+    print("超速", speed - limit, "公里，罰款", fine, "元")
+elif speed > limit + 20:
+    fine = 2400
+    print("超速", speed - limit, "公里，罰款", fine, "元")
+elif speed > limit:
+    fine = 1200
+    print("超速", speed - limit, "公里，罰款", fine, "元")
+else:
+    print("速度正常，無罰款")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 58：水電費階梯計費</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>usage = int(input("題目58 - 請輸入用電度數："))
+if usage <= 120:
+    bill = usage * 2
+elif usage <= 330:
+    bill = 120 * 2 + (usage - 120) * 3
+else:
+    bill = 120 * 2 + 210 * 3 + (usage - 330) * 4
+print("電費 =", bill, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 59：兩數比較</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>num1 = float(input("題目59 - 請輸入第一個數字："))
+num2 = float(input("請輸入第二個數字："))
+if num1 > num2:
+    print(num1, "比較大")
+elif num1 < num2:
+    print(num2, "比較大")
+else:
+    print("兩數相等")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 60：星座月份簡易判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>month = int(input("題目60 - 請輸入出生月份（1-12）："))
+if month >= 3 and month <= 5:
+    print("春季星座")
+elif month >= 6 and month <= 8:
+    print("夏季星座")
+elif month >= 9 and month <= 11:
+    print("秋季星座")
+else:
+    print("冬季星座")</pre></div>
+
+        <h2>🙂 模組四：實務應用與決策邏輯（20題）</h2>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 61：所得稅計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>income = 600000
+if income <= 540000:
+    tax = income * 0.05
+elif income <= 1210000:
+    tax = 540000 * 0.05 + (income - 540000) * 0.12
+else:
+    tax = 540000 * 0.05 + 670000 * 0.12 + (income - 1210000) * 0.2
+print("題目61：年收入", income, "元，應繳稅額 =", tax, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 62：貸款資格審核</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 30
+income = 40000
+credit_score = 750
+if age >= 20 and age <= 65 and income >= 30000 and credit_score >= 700:
+    print("題目62：符合貸款資格")
+else:
+    print("題目62：不符合貸款資格")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 63：學生成績獎懲</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 92
+attendance = 88
+if score >= 90 and attendance >= 90:
+    print("題目63：記大功一次")
+elif score >= 80 and attendance >= 85:
+    print("題目63：記小功一次")
+elif score < 60 or attendance < 70:
+    print("題目63：記警告一次")
+else:
+    print("題目63：無獎懲")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 64：餐廳訂位判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>people = 8
+time_hour = 19
+if people > 10:
+    print("題目64：需要預約包廂")
+elif time_hour >= 18 and time_hour <= 20:
+    print("題目64：尖峰時段，建議提前預約")
+else:
+    print("題目64：可以直接入座")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 65：健康檢查建議</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 45
+blood_pressure = 135
+cholesterol = 220
+if age >= 40 and blood_pressure > 130:
+    print("題目65：建議定期追蹤血壓")
+if cholesterol > 200:
+    print("題目65：建議調整飲食，降低膽固醇")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 66：快遞配送時間</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>distance = 15
+urgent = True
+if urgent and distance <= 10:
+    delivery_time = "2小時內"
+elif urgent:
+    delivery_time = "4小時內"
+elif distance <= 10:
+    delivery_time = "今日內"
+else:
+    delivery_time = "明日內"
+print("題目66：預計", delivery_time, "送達")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 67：信用卡分期利率</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>amount = 25000
+periods = 12
+if periods <= 3:
+    rate = 0
+elif periods <= 6:
+    rate = 0.05
+else:
+    rate = 0.08
+interest = amount * rate
+total = amount + interest
+print("題目67：分", periods, "期，總付款 =", total, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 68：保險費計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 35
+smoker = False
+if age < 30:
+    base_premium = 5000
+elif age < 50:
+    base_premium = 8000
+else:
+    base_premium = 12000
+if smoker:
+    premium = base_premium * 1.5
+else:
+    premium = base_premium
+print("題目68：年保費 =", premium, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 69：租車費用計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>days = 5
+car_type = "sedan"
+if car_type == "sedan":
+    daily_rate = 1500
+elif car_type == "suv":
+    daily_rate = 2500
+else:
+    daily_rate = 2000
+total_cost = days * daily_rate
+if days >= 7:
+    total_cost = total_cost * 0.85
+elif days >= 3:
+    total_cost = total_cost * 0.9
+print("題目69：租車", days, "天，費用 =", total_cost, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 70：員工獎金計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>salary = 45000
+performance = 4.2
+years = 8
+if performance >= 4.5:
+    bonus_rate = 3
+elif performance >= 4.0:
+    bonus_rate = 2
+elif performance >= 3.5:
+    bonus_rate = 1.5
+else:
+    bonus_rate = 1
+if years >= 10:
+    bonus_rate = bonus_rate * 1.2
+elif years >= 5:
+    bonus_rate = bonus_rate * 1.1
+bonus = salary * bonus_rate
+print("題目70：年終獎金 =", bonus, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 71：運動強度建議</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 28
+resting_heart_rate = 65
+max_heart_rate = 220 - age
+target_low = (max_heart_rate - resting_heart_rate) * 0.5 + resting_heart_rate
+target_high = (max_heart_rate - resting_heart_rate) * 0.85 + resting_heart_rate
+print("題目71：建議運動心率範圍：", target_low, "-", target_high, "次/分")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 72：航班行李費用</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>weight = 28
+class_type = "economy"
+if class_type == "first":
+    free_allowance = 40
+elif class_type == "business":
+    free_allowance = 30
+else:
+    free_allowance = 20
+if weight > free_allowance:
+    excess = weight - free_allowance
+    fee = excess * 500
+    print("題目72：超重", excess, "公斤，行李費 =", fee, "元")
+else:
+    print("題目72：行李未超重，無需額外費用")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 73：遊戲等級判定</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>experience = 15000
+level = 1
+if experience >= 50000:
+    level = 10
+elif experience >= 30000:
+    level = 8
+elif experience >= 20000:
+    level = 6
+elif experience >= 10000:
+    level = 4
+elif experience >= 5000:
+    level = 2
+print("題目73：經驗值", experience, "，等級 =", level)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 74：投資風險評估</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>age = 40
+risk_tolerance = "moderate"
+investment_amount = 500000
+if risk_tolerance == "aggressive" and age < 40:
+    stock_ratio = 0.8
+elif risk_tolerance == "moderate":
+    stock_ratio = 0.6
+else:
+    stock_ratio = 0.4
+stock_amount = investment_amount * stock_ratio
+bond_amount = investment_amount - stock_amount
+print("題目74：建議股票投資", stock_amount, "元，債券", bond_amount, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 75：考試補考資格</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>score = 55
+attendance_rate = 0.75
+makeup_exam = False
+if score >= 60:
+    print("題目75：及格，無需補考")
+elif score >= 40 and attendance_rate >= 0.7:
+    print("題目75：可參加補考")
+else:
+    print("題目75：不及格且不得補考，需重修")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 76：手機方案推薦</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>data_usage = 15
+call_minutes = 200
+if data_usage >= 20:
+    plan = "無限方案"
+    price = 999
+elif data_usage >= 10 and call_minutes >= 150:
+    plan = "豪華方案"
+    price = 699
+elif data_usage >= 5:
+    plan = "標準方案"
+    price = 499
+else:
+    plan = "經濟方案"
+    price = 299
+print("題目76：推薦", plan, "，月租", price, "元")</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 77：颱風警報判斷</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>wind_speed = 55
+rainfall = 150
+if wind_speed >= 51 and rainfall >= 200:
+    alert = "海上陸上颱風警報"
+elif wind_speed >= 51:
+    alert = "海上颱風警報"
+elif rainfall >= 200:
+    alert = "豪雨特報"
+else:
+    alert = "無特殊警報"
+print("題目77：", alert)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 78：餐廳評分系統</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>food_score = 4.5
+service_score = 4.0
+environment_score = 3.8
+average_score = (food_score + service_score + environment_score) / 3
+if average_score >= 4.5:
+    rating = "極力推薦"
+elif average_score >= 4.0:
+    rating = "推薦"
+elif average_score >= 3.0:
+    rating = "普通"
+else:
+    rating = "不推薦"
+print("題目78：平均評分", average_score, "，評價：", rating)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 79：空氣品質指標</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>aqi = 85
+if aqi <= 50:
+    level = "良好"
+    suggestion = "適合戶外活動"
+elif aqi <= 100:
+    level = "普通"
+    suggestion = "一般民眾可正常活動"
+elif aqi <= 150:
+    level = "對敏感族群不健康"
+    suggestion = "敏感族群應減少戶外活動"
+else:
+    level = "不健康"
+    suggestion = "所有人應減少戶外活動"
+print("題目79：AQI =", aqi, "，等級：", level)
+print("建議：", suggestion)</pre></div>
+
+        <div class="code-block"><div class="code-top-bar">
+        <div class="code-header">題目 80：網購運費與折扣綜合計算</div><button class="copy-btn" onclick="copyCode(this)">複製</button></div><pre>subtotal = 1200
+is_member = True
+free_shipping_threshold = 1000
+member_discount = 0.95
+if subtotal >= free_shipping_threshold:
+    shipping = 0
+else:
+    shipping = 80
+if is_member:
+    final_total = subtotal * member_discount + shipping
+else:
+    final_total = subtotal + shipping
+print("題目80：小計", subtotal, "元，運費", shipping, "元")
+print("總金額 =", final_total, "元")</pre></div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            // const codeBlock = button.parentElement;
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

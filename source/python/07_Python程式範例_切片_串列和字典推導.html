@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 切片、串列和字典推導教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .nav-links { text-align: center; margin: 30px 0; }
+        .nav-links a { display: inline-block; padding: 12px 30px; margin: 0 10px; background: #667eea; color: white; text-decoration: none; border-radius: 8px; transition: all 0.3s ease; }
+        .nav-links a:hover { background: #764ba2; transform: translateY(-2px); }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python 切片、串列和字典推導教學程式範例（80題）</h1>
+
+        <h2 id="module1">🙂 模組一：串列切片運算子基礎（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 1：基本切片 - 取前幾個元素</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目1：取前 N 個元素")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+first_three = numbers[0:3]
+first_five = numbers[:5]
+print(f"原串列：{numbers}")
+print(f"前3個：{first_three}")
+print(f"前5個：{first_five}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 2：基本切片 - 取後幾個元素</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目2：取後 N 個元素")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+last_three = numbers[-3:]
+last_five = numbers[-5:]
+print(f"原串列：{numbers}")
+print(f"後3個：{last_three}")
+print(f"後5個：{last_five}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 3：取中間範圍</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目3：取中間範圍")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+middle = numbers[3:7]
+print(f"原串列：{numbers}")
+print(f"索引 3-6：{middle}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 4：步長切片 - 取奇數索引</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目4：每隔一個取")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+odds = numbers[1::2]
+evens = numbers[::2]
+print(f"原串列：{numbers}")
+print(f"奇數索引：{odds}")
+print(f"偶數索引：{evens}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 5：反轉串列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目5：反轉串列")
+numbers = [1, 2, 3, 4, 5]
+reversed_list = numbers[::-1]
+print(f"原串列：{numbers}")
+print(f"反轉：{reversed_list}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 6：每隔 N 個取值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目6：每隔 N 個取值")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+every_three = numbers[::3]
+print(f"原串列：{numbers}")
+print(f"每隔3個：{every_three}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 7：負數步長</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目7：倒敘每隔一個取")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+reverse_skip = numbers[::-2]
+print(f"原串列：{numbers}")
+print(f"倒敘每隔一個：{reverse_skip}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 8：複製串列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目8：複製串列")
+original = [1, 2, 3, 4, 5]
+copy = original[:]
+copy[0] = 999
+print(f"原串列：{original}")
+print(f"複製後修改：{copy}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 9：去頭去尾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目9：去頭去尾")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+trimmed = numbers[1:-1]
+print(f"原串列：{numbers}")
+print(f"去頭去尾：{trimmed}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 10：取特定範圍的倒敘</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目10：範圍倒敘")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+reverse_range = numbers[7:2:-1]
+print(f"原串列：{numbers}")
+print(f"索引 7 到 3 倒敘：{reverse_range}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 11：字串切片</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目11：字串切片")
+text = "Python Programming"
+first_word = text[:6]
+last_word = text[7:]
+print(f"原字串：{text}")
+print(f"前6字元：{first_word}")
+print(f"後面部分：{last_word}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 12：分割成多段</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目12：分割成三段")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+part1 = numbers[:3]
+part2 = numbers[3:6]
+part3 = numbers[6:]
+print(f"原串列：{numbers}")
+print(f"第1段：{part1}")
+print(f"第2段：{part2}")
+print(f"第3段：{part3}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 13：取偶數位置</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目13：取偶數位置元素")
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+even_positions = letters[::2]
+print(f"原串列：{letters}")
+print(f"偶數位置：{even_positions}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 14：取奇數位置</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目14：取奇數位置元素")
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+odd_positions = letters[1::2]
+print(f"原串列：{letters}")
+print(f"奇數位置：{odd_positions}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 15：切片負數索引</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目15：負數索引切片")
+numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+slice1 = numbers[-5:-2]
+slice2 = numbers[-8:-3]
+print(f"原串列：{numbers}")
+print(f"倒數5到倒數2：{slice1}")
+print(f"倒數8到倒數3：{slice2}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 16：空切片</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目16：空切片結果")
+numbers = [1, 2, 3, 4, 5]
+empty1 = numbers[5:10]
+empty2 = numbers[10:20]
+print(f"原串列：{numbers}")
+print(f"超出範圍切片：{empty1}")
+print(f"完全超出：{empty2}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 17：取前半部分</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目17：取前半部分")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+mid = len(numbers) // 2
+first_half = numbers[:mid]
+print(f"原串列：{numbers}")
+print(f"前半部分：{first_half}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 18：取後半部分</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目18：取後半部分")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+mid = len(numbers) // 2
+second_half = numbers[mid:]
+print(f"原串列：{numbers}")
+print(f"後半部分：{second_half}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 19：切片並修改</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目19：切片賦值")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+numbers[2:5] = [30, 40, 50]
+print(f"修改後：{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 20：刪除切片</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目20：刪除切片")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+del numbers[2:5]
+print(f"刪除索引 2-4 後：{numbers}")</pre>
+        </div>
+
+        <h2 id="module2">🙂 模組二：串列推導基礎（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 21：基本串列推導 - 平方</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目21：生成平方數列")
+numbers = [1, 2, 3, 4, 5]
+squares = [x ** 2 for x in numbers]
+print(f"原串列：{numbers}")
+print(f"平方：{squares}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 22：生成範圍數列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目22：生成 1-10")
+numbers = [x for x in range(1, 11)]
+print(f"1到10：{numbers}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 23：運算轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目23：每個數乘以 2")
+numbers = [1, 2, 3, 4, 5]
+doubled = [x * 2 for x in numbers]
+print(f"原串列：{numbers}")
+print(f"乘以2：{doubled}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 24：字串轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目24：轉大寫")
+words = ["hello", "world", "python"]
+uppercase = [word.upper() for word in words]
+print(f"原串列：{words}")
+print(f"大寫：{uppercase}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 25：計算長度</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目25：計算每個字串長度")
+words = ["hi", "hello", "python", "programming"]
+lengths = [len(word) for word in words]
+print(f"字串：{words}")
+print(f"長度：{lengths}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 26：條件過濾 - 偶數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目26：過濾偶數")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+evens = [x for x in numbers if x % 2 == 0]
+print(f"原串列：{numbers}")
+print(f"偶數：{evens}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 27：條件過濾 - 奇數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目27：過濾奇數")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+odds = [x for x in numbers if x % 2 == 1]
+print(f"原串列：{numbers}")
+print(f"奇數：{odds}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 28：條件過濾 - 大於某值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目28：大於 5 的數")
+numbers = [1, 3, 5, 7, 9, 2, 4, 6, 8, 10]
+greater_than_five = [x for x in numbers if x > 5]
+print(f"原串列：{numbers}")
+print(f"大於5：{greater_than_five}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 29：條件轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目29：偶數平方")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+even_squares = [x ** 2 for x in numbers if x % 2 == 0]
+print(f"原串列：{numbers}")
+print(f"偶數平方：{even_squares}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 30：字串過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目30：長度大於 3 的字串")
+words = ["hi", "hello", "a", "world", "python", "ok"]
+long_words = [word for word in words if len(word) > 3]
+print(f"原串列：{words}")
+print(f"長度>3：{long_words}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 31：範圍生成與運算</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目31：1-20 的 3 倍數")
+multiples_of_three = [x for x in range(1, 21) if x % 3 == 0]
+print(f"1-20 的 3 倍數：{multiples_of_three}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 32：負數過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目32：過濾正數")
+numbers = [-5, 3, -2, 8, -1, 0, 4, -7]
+positives = [x for x in numbers if x > 0]
+print(f"原串列：{numbers}")
+print(f"正數：{positives}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 33：字元提取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目33：提取字串中的母音")
+text = "hello world"
+vowels = [char for char in text if char in "aeiou"]
+print(f"字串：{text}")
+print(f"母音：{vowels}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 34：巢狀迴圈 - 九九乘法表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目34：九九乘法表（部分）")
+multiplication = [f"{i}×{j}={i*j}" for i in range(2, 4) for j in range(1, 6)]
+print(f"2-3 的乘法：{multiplication}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 35：配對生成</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目35：座標配對")
+coordinates = [(x, y) for x in range(3) for y in range(3)]
+print(f"3×3 座標：{coordinates}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 36：條件表達式</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目36：奇偶標記")
+numbers = [1, 2, 3, 4, 5]
+labels = ["偶數" if x % 2 == 0 else "奇數" for x in numbers]
+print(f"數字：{numbers}")
+print(f"標記：{labels}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 37：數字範圍分類</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目37：分數等級")
+scores = [85, 92, 78, 65, 90, 55, 88]
+grades = ["A" if s >= 90 else "B" if s >= 80 else "C" if s >= 70 else "D" if s >= 60 else "F" for s in scores]
+print(f"分數：{scores}")
+print(f"等級：{grades}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 38：字串處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目38：首字母大寫")
+words = ["apple", "banana", "cherry"]
+capitalized = [word[0].upper() + word[1:] for word in words]
+print(f"原串列：{words}")
+print(f"首字母大寫：{capitalized}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 39：數字轉字串</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目39：數字轉字串")
+numbers = [1, 2, 3, 4, 5]
+strings = [str(x) for x in numbers]
+print(f"數字：{numbers}")
+print(f"字串：{strings}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 40：扁平化二維串列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目40：扁平化")
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+flattened = [num for row in matrix for num in row]
+print(f"矩陣：{matrix}")
+print(f"扁平化：{flattened}")</pre>
+        </div>
+
+        <h2 id="module3">🙂 模組三：字典推導基礎（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 41：基本字典推導</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目41：數字與平方")
+squares_dict = {x: x ** 2 for x in range(1, 6)}
+print(f"數字平方字典：{squares_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 42：串列轉字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目42：索引-值字典")
+fruits = ["apple", "banana", "cherry"]
+fruit_dict = {i: fruit for i, fruit in enumerate(fruits)}
+print(f"索引字典：{fruit_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 43：字串長度字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目43：字串長度映射")
+words = ["hi", "hello", "world", "python"]
+length_dict = {word: len(word) for word in words}
+print(f"長度字典：{length_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 44：反轉鍵值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目44：鍵值互換")
+original = {"a": 1, "b": 2, "c": 3}
+swapped = {value: key for key, value in original.items()}
+print(f"原字典：{original}")
+print(f"鍵值互換：{swapped}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 45：條件過濾字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目45：過濾及格分數")
+scores = {"Alice": 85, "Bob": 55, "Charlie": 78, "David": 45}
+passed = {name: score for name, score in scores.items() if score >= 60}
+print(f"原分數：{scores}")
+print(f"及格：{passed}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 46：值轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目46：分數加 10 分")
+scores = {"Alice": 80, "Bob": 75, "Charlie": 85}
+bonus = {name: score + 10 for name, score in scores.items()}
+print(f"原分數：{scores}")
+print(f"加分後：{bonus}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 47：鍵轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目47：鍵轉大寫")
+data = {"name": "Alice", "age": 20, "city": "Taipei"}
+upper_keys = {key.upper(): value for key, value in data.items()}
+print(f"原字典：{data}")
+print(f"鍵大寫：{upper_keys}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 48：合併條件</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目48：偶數平方字典")
+even_squares = {x: x ** 2 for x in range(1, 11) if x % 2 == 0}
+print(f"偶數平方：{even_squares}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 49：字元計數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目49：字元計數字典")
+text = "hello"
+char_count = {char: text.count(char) for char in text}
+print(f"字串：{text}")
+print(f"字元計數：{char_count}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 50：去重字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目50：串列去重成字典")
+numbers = [1, 2, 3, 2, 4, 1, 5, 3]
+unique_dict = {x: True for x in numbers}
+print(f"原串列：{numbers}")
+print(f"去重字典：{unique_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 51：分組字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目51：奇偶分組")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+parity = {x: "even" if x % 2 == 0 else "odd" for x in numbers}
+print(f"數字分組：{parity}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 52：多條件字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目52：等級字典")
+scores = {"Alice": 85, "Bob": 92, "Charlie": 78}
+grades = {name: "A" if score >= 90 else "B" if score >= 80 else "C" for name, score in scores.items()}
+print(f"成績等級：{grades}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 53：範圍字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目53：1-10 立方字典")
+cubes = {x: x ** 3 for x in range(1, 11)}
+print(f"立方字典：{cubes}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 54：字串分割字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目54：字串轉字典")
+text = "a=1,b=2,c=3"
+pairs = text.split(",")
+result = {pair.split("=")[0]: pair.split("=")[1] for pair in pairs}
+print(f"字串：{text}")
+print(f"字典：{result}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 55：巢狀字典推導</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目55：成績統計字典")
+students = ["Alice", "Bob", "Charlie"]
+scores = [85, 90, 78]
+grade_dict = {students[i]: {"score": scores[i], "grade": "A" if scores[i] >= 90 else "B"} for i in range(len(students))}
+print(f"成績字典：{grade_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 56：合併兩個串列成字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目56：串列配對")
+keys = ["name", "age", "city"]
+values = ["Alice", 20, "Taipei"]
+combined = {keys[i]: values[i] for i in range(len(keys))}
+print(f"鍵：{keys}")
+print(f"值：{values}")
+print(f"字典：{combined}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 57：過濾空值</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目57：過濾空字串")
+data = {"a": "hello", "b": "", "c": "world", "d": ""}
+filtered = {k: v for k, v in data.items() if v != ""}
+print(f"原字典：{data}")
+print(f"過濾後：{filtered}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 58：價格計算字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目58：折扣價格")
+prices = {"apple": 30, "banana": 20, "cherry": 40}
+discount = 0.9
+sale_prices = {item: price * discount for item, price in prices.items()}
+print(f"原價：{prices}")
+print(f"折扣價：{sale_prices}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 59：ASCII 碼字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目59：字元 ASCII 碼")
+text = "ABC"
+ascii_dict = {char: ord(char) for char in text}
+print(f"字串：{text}")
+print(f"ASCII：{ascii_dict}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 60：反向映射</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目60：值轉鍵（多對一）")
+categories = {"apple": "fruit", "carrot": "vegetable", "banana": "fruit"}
+reverse_map = {}
+for key, value in categories.items():
+    if value not in reverse_map:
+        reverse_map[value] = []
+    reverse_map[value].append(key)
+print(f"原分類：{categories}")
+print(f"反向映射：{reverse_map}")</pre>
+        </div>
+
+        <h2 id="module4">🙂 模組四：綜合應用與進階技巧（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 61：切片+推導 - 前半部分平方</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目61：前半部平方")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8]
+mid = len(numbers) // 2
+first_half_squares = [x ** 2 for x in numbers[:mid]]
+print(f"原串列：{numbers}")
+print(f"前半部平方：{first_half_squares}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 62：切片+推導 - 後半部偶數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目62：後半部偶數")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+mid = len(numbers) // 2
+second_half_evens = [x for x in numbers[mid:] if x % 2 == 0]
+print(f"原串列：{numbers}")
+print(f"後半部偶數：{second_half_evens}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 63：反轉+推導</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目63：反轉並平方")
+numbers = [1, 2, 3, 4, 5]
+reversed_squares = [x ** 2 for x in numbers[::-1]]
+print(f"原串列：{numbers}")
+print(f"反轉平方：{reversed_squares}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 64：多重切片處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目64：奇偶索引分別處理")
+numbers = [10, 20, 30, 40, 50, 60, 70, 80]
+odd_index_doubled = [x * 2 for x in numbers[1::2]]
+even_index_half = [x // 2 for x in numbers[::2]]
+print(f"原串列：{numbers}")
+print(f"奇數索引×2：{odd_index_doubled}")
+print(f"偶數索引÷2：{even_index_half}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 65：矩陣操作</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目65：矩陣每行求和")
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+row_sums = [sum(row) for row in matrix]
+print(f"矩陣：{matrix}")
+print(f"每行和：{row_sums}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 66：矩陣列操作</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目66：矩陣每列求和")
+matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+col_sums = [sum(matrix[i][j] for i in range(len(matrix))) for j in range(len(matrix[0]))]
+print(f"矩陣：{matrix}")
+print(f"每列和：{col_sums}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 67：過濾+轉換+字典</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目67：及格分數平方字典")
+scores = {"Alice": 85, "Bob": 55, "Charlie": 92, "David": 45}
+passed_squared = {name: score ** 2 for name, score in scores.items() if score >= 60}
+print(f"原分數：{scores}")
+print(f"及格平方：{passed_squared}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 68：字串處理綜合</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目68：字串長度過濾並大寫")
+words = ["hi", "hello", "world", "a", "python", "ok"]
+long_upper = [word.upper() for word in words if len(word) > 2]
+print(f"原串列：{words}")
+print(f"長度>2且大寫：{long_upper}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 69：數字範圍統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目69：數字範圍計數")
+numbers = [15, 25, 35, 45, 55, 65, 75, 85, 95]
+ranges = {
+    "0-30": len([x for x in numbers if 0 <= x <= 30]),
+    "31-60": len([x for x in numbers if 31 <= x <= 60]),
+    "61-100": len([x for x in numbers if 61 <= x <= 100])
+}
+print(f"數字：{numbers}")
+print(f"範圍計數：{ranges}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 70：購物車處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目70：購物車折扣計算")
+cart = [
+    {"name": "apple", "price": 30, "qty": 3},
+    {"name": "banana", "price": 20, "qty": 5},
+    {"name": "cherry", "price": 40, "qty": 2}
+]
+discounted = []
+for item in cart:
+    new_item = dict(item)
+    new_item["total"] = item["price"] * item["qty"] * 0.9
+    discounted.append(new_item)
+print(f"折扣後：{discounted}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 71：成績排名</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目71：成績排名字典")
+scores = {"Alice": 85, "Bob": 92, "Charlie": 78, "David": 90}
+sorted_scores = sorted(scores.items(), key=lambda x: x[1], reverse=True)
+rankings = {name: rank + 1 for rank, (name, score) in enumerate(sorted_scores)}
+print(f"排名：{rankings}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 72：資料清洗</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目72：清洗並轉換")
+data = ["10", "20", "", "30", "abc", "40"]
+cleaned = [int(x) for x in data if x.isdigit()]
+print(f"原資料：{data}")
+print(f"清洗後：{cleaned}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 73：分組統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目73：按首字母分組")
+words = ["apple", "banana", "avocado", "cherry", "apricot"]
+grouped = {}
+for word in words:
+    first_letter = word[0]
+    if first_letter not in grouped:
+        grouped[first_letter] = []
+    grouped[first_letter].append(word)
+print(f"分組：{grouped}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 74：條件巢式處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目74：多條件轉換")
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+processed = [x * 3 if x % 3 == 0 else x * 2 if x % 2 == 0 else x for x in numbers]
+print(f"原串列：{numbers}")
+print(f"處理後：{processed}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 75：巢狀推導 - 乘法表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目75：乘法表字典")
+multiplication_table = {f"{i}×{j}": i * j for i in range(1, 4) for j in range(1, 4)}
+print(f"乘法表：{multiplication_table}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 76：交集與並集</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目76：集合操作")
+list1 = [1, 2, 3, 4, 5]
+list2 = [4, 5, 6, 7, 8]
+intersection = [x for x in list1 if x in list2]
+union = list(set([x for x in list1] + [x for x in list2]))
+print(f"串列1：{list1}")
+print(f"串列2：{list2}")
+print(f"交集：{intersection}")
+print(f"並集：{union}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 77：差集</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目77：差集運算")
+list1 = [1, 2, 3, 4, 5]
+list2 = [4, 5, 6, 7, 8]
+difference = [x for x in list1 if x not in list2]
+print(f"串列1：{list1}")
+print(f"串列2：{list2}")
+print(f"差集（list1 - list2）：{difference}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 78：資料轉換管道</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目78：資料轉換管道")
+text = "hello world python programming"
+words = text.split()
+# 步驟1：過濾長度 > 5
+filtered = [w for w in words if len(w) > 5]
+# 步驟2：轉大寫
+uppercased = [w.upper() for w in filtered]
+# 步驟3：建立字典
+result = {w: len(w) for w in uppercased}
+print(f"原文：{text}")
+print(f"過濾：{filtered}")
+print(f"大寫：{uppercased}")
+print(f"字典：{result}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 79：學生成績分析系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目79：成績分析系統")
+students = [
+    {"name": "Alice", "scores": [85, 90, 88]},
+    {"name": "Bob", "scores": [78, 82, 80]},
+    {"name": "Charlie", "scores": [92, 95, 93]}
+]
+
+# 計算平均分
+averages = {s["name"]: sum(s["scores"]) / len(s["scores"]) for s in students}
+
+# 及格名單
+passed = [s["name"] for s in students if sum(s["scores"]) / len(s["scores"]) >= 80]
+
+# 最高分
+max_avg = max(averages.values())
+top_student = [name for name, avg in averages.items() if avg == max_avg]
+
+print(f"學生資料：{students}")
+print(f"平均分：{averages}")
+print(f"及格名單：{passed}")
+print(f"最高分學生：{top_student}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 80：綜合電商系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目80：電商訂單處理系統")
+products = {
+    "P001": {"name": "筆記本", "price": 25, "stock": 100},
+    "P002": {"name": "原子筆", "price": 10, "stock": 200},
+    "P003": {"name": "橡皮擦", "price": 5, "stock": 150}
+}
+
+orders = [
+    {"product_id": "P001", "quantity": 3},
+    {"product_id": "P002", "quantity": 5},
+    {"product_id": "P001", "quantity": 2}
+]
+
+# 計算訂單總價
+order_totals = []
+for order in orders:
+    new_order = dict(order)
+    new_order["product_name"] = products[order["product_id"]]["name"]
+    new_order["unit_price"] = products[order["product_id"]]["price"]
+    new_order["subtotal"] = products[order["product_id"]]["price"] * order["quantity"]
+    order_totals.append(new_order)
+
+# 庫存更新（模擬）
+stock_updates = {}
+for order in orders:
+    pid = order["product_id"]
+    if pid in stock_updates:
+        stock_updates[pid] += order["quantity"]
+    else:
+        stock_updates[pid] = order["quantity"]
+
+updated_stock = {
+    pid: products[pid]["stock"] - stock_updates.get(pid, 0)
+    for pid in products
+}
+
+# 總營收
+total_revenue = sum(item["subtotal"] for item in order_totals)
+
+# 熱賣商品（銷量 > 3）
+hot_items = [
+    products[pid]["name"] 
+    for pid, qty in stock_updates.items() 
+    if qty > 3
+]
+
+print("=== 訂單處理 ===")
+print(f"訂單明細：")
+for item in order_totals:
+    print(f"  {item['product_name']} x {item['quantity']} = {item['subtotal']} 元")
+
+print(f"\n總營收：{total_revenue} 元")
+print(f"庫存更新：{updated_stock}")
+print(f"熱賣商品：{hot_items}")</pre>
+        </div>
+
+ </div>
+    <div class="toast" id="toast">程式碼已複製！</div>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // 更改按鈕文字和樣式
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                // 顯示提示訊息
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');                
+                // 3秒後恢復原狀
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>               

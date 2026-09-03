@@ -1,1 +1,352 @@
-afa
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 語言練習手冊</title>
+<style>
+  @font-face {
+    font-family: 'system-serif';
+    src: local('Noto Serif TC');
+  }
+
+  :root{
+    --paper: #FAF6EC;
+    --ink: #22303F;
+    --ink-soft: #4E5C6B;
+    --spine: #1B2733;
+    --spine-text: #E8E2D2;
+    --spine-text-dim: #9BA8B4;
+    --accent: #2F6F62;
+    --accent-soft: #DCE9E4;
+    --line: #DED5BF;
+    --line-dark: #2C3B4A;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+
+  body {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ---------- Sidebar (book spine) ---------- */
+  .spine {
+    width: 300px;
+    flex-shrink: 0;
+    background: var(--spine);
+    color: var(--spine-text);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    overflow-y: auto;
+  }
+
+  .spine-header {
+    padding: 32px 28px 20px;
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .spine-header h1 {
+    font-family: "Noto Serif TC", serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+  }
+
+  .spine-header p {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--spine-text-dim);
+    line-height: 1.6;
+  }
+
+  nav.toc {
+    padding: 8px 0 28px;
+  }
+
+  .toc-group-label {
+    font-family: "Noto Serif TC", serif;
+    font-size: 0.78rem;
+    color: var(--spine-text-dim);
+    padding: 18px 28px 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .toc-item {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 11px 28px 11px 24px;
+    border-left: 3px solid transparent;
+    color: var(--spine-text-dim);
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-family: inherit;
+    line-height: 1.4;
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .toc-item:hover {
+    color: var(--spine-text);
+    background: rgba(255,255,255,0.03);
+  }
+
+  .toc-item.active {
+    border-left-color: var(--accent);
+    color: var(--spine-text);
+    background: rgba(47, 111, 98, 0.18);
+  }
+
+  .toc-item .num {
+    font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+    font-size: 0.82rem;
+    color: var(--accent);
+    min-width: 1.6em;
+    flex-shrink: 0;
+  }
+
+  .toc-item.featured {
+    border-left-color: transparent;
+    padding: 15px 28px 15px 24px;
+    background: rgba(47, 111, 98, 0.28);
+    margin: 4px 16px 4px;
+    border-radius: 3px;
+  }
+  .toc-item.featured .num {
+    color: #7FBFAE;
+  }
+  .toc-item.featured.active {
+    background: var(--accent);
+  }
+  .toc-item.featured.active .num,
+  .toc-item.featured.active .label { color: var(--spine-text); }
+
+  .toc-item .label { flex: 1; }
+  .toc-item .desc {
+    display: block;
+    font-size: 0.74rem;
+    color: var(--spine-text-dim);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .toc-item.active .desc { color: var(--spine-text-dim); }
+
+  .toc-divider {
+    margin: 6px 28px 2px;
+    border: none;
+    border-top: 1px solid var(--line-dark);
+  }
+
+  /* ---------- Main content ---------- */
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  .content-bar {
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    background: var(--paper);
+  }
+
+  .content-bar .now-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  .content-bar h2 {
+    font-family: "Noto Serif TC", serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .frame-wrap {
+    flex: 1;
+    position: relative;
+  }
+
+  iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #fff;
+  }
+
+  /* ---------- Mobile ---------- */
+  .menu-toggle {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    body { flex-direction: column; }
+
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      background: var(--spine);
+      color: var(--spine-text);
+      border: none;
+      padding: 16px 20px;
+      font-family: "Noto Serif TC", serif;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .menu-toggle .chev {
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+    .menu-toggle.open .chev { transform: rotate(180deg); }
+
+    .spine {
+      width: 100%;
+      height: auto;
+      max-height: 0;
+      overflow: hidden;
+      position: static;
+      transition: max-height 0.25s ease;
+    }
+    .spine.open { max-height: 80vh; overflow-y: auto; }
+    .spine-header { display: none; }
+
+    main { height: auto; flex: 1; }
+    .frame-wrap { height: 70vh; }
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+  <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="spine">
+    <span id="menuLabel">目錄</span>
+    <span class="chev">▾</span>
+  </button>
+
+  <aside class="spine" id="spine">
+    <div class="spine-header">
+      <h1>Python 語言練習手冊</h1>
+      <p>8 個主題 · 每篇 80 題範例，附 AI 提示詞產生器</p>
+    </div>
+
+    <nav class="toc" id="tocNav">
+      <button class="toc-item featured" data-num="AI" data-title="提升程式閱讀力的 AI 提示詞產生器" data-file="code_prompt_generator_python.html">
+        <span class="num">✳</span>
+        <span class="label">AI 提示詞產生器
+          <span class="desc">產生客製化程式閱讀練習題</span>
+        </span>
+      </button>
+
+      <hr class="toc-divider">
+      <div class="toc-group-label">目錄</div>
+
+      <button class="toc-item" data-num="01" data-title="變數與運算子" data-file="01_Python程式範例_變數與運算子.html">
+        <span class="num">01</span><span class="label">變數與運算子</span>
+      </button>
+      <button class="toc-item" data-num="02" data-title="條件判斷" data-file="02_Python程式範例_條件判斷.html">
+        <span class="num">02</span><span class="label">條件判斷</span>
+      </button>
+      <button class="toc-item" data-num="03" data-title="迴圈結構" data-file="03_Python程式範例_迴圈結構.html">
+        <span class="num">03</span><span class="label">迴圈結構</span>
+      </button>
+      <button class="toc-item" data-num="04" data-title="基本資料型態與字串" data-file="04_Python程式範例_基本資料型態與字串.html">
+        <span class="num">04</span><span class="label">基本資料型態與字串</span>
+      </button>
+      <button class="toc-item" data-num="05" data-title="容器型態" data-file="05_Python程式範例_容器型態.html">
+        <span class="num">05</span><span class="label">容器型態</span>
+      </button>
+      <button class="toc-item" data-num="06" data-title="函數" data-file="06_Python程式範例_函數.html">
+        <span class="num">06</span><span class="label">函數</span>
+      </button>
+      <button class="toc-item" data-num="07" data-title="切片、串列和字典推導" data-file="07_Python程式範例_切片_串列和字典推導.html">
+        <span class="num">07</span><span class="label">切片、串列和字典推導</span>
+      </button>
+      <button class="toc-item" data-num="08" data-title="路徑與檔案處理" data-file="08_Python程式範例_路徑與檔案處理.html">
+        <span class="num">08</span><span class="label">路徑與檔案處理</span>
+      </button>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="content-bar">
+      <span class="now-num" id="nowNum">✳</span>
+      <h2 id="nowTitle">提升程式閱讀力的 AI 提示詞產生器</h2>
+    </div>
+    <div class="frame-wrap">
+      <iframe id="contentFrame" src="code_prompt_generator_python.html" title="內容顯示區"></iframe>
+    </div>
+  </main>
+
+<script>
+  const items = document.querySelectorAll('.toc-item');
+  const frame = document.getElementById('contentFrame');
+  const nowNum = document.getElementById('nowNum');
+  const nowTitle = document.getElementById('nowTitle');
+  const menuToggle = document.getElementById('menuToggle');
+  const menuLabel = document.getElementById('menuLabel');
+  const spine = document.getElementById('spine');
+
+  function selectItem(btn) {
+    items.forEach(i => i.classList.remove('active'));
+    btn.classList.add('active');
+    frame.src = btn.dataset.file;
+    nowNum.textContent = btn.dataset.num;
+    nowTitle.textContent = btn.dataset.title;
+    if (window.matchMedia('(max-width: 860px)').matches) {
+      spine.classList.remove('open');
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  }
+
+  items.forEach(btn => {
+    btn.addEventListener('click', () => selectItem(btn));
+  });
+
+  // default active state
+  items[0].classList.add('active');
+
+  menuToggle.addEventListener('click', () => {
+    const open = spine.classList.toggle('open');
+    menuToggle.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', String(open));
+    const activeItem = document.querySelector('.toc-item.active');
+    menuLabel.textContent = activeItem ? activeItem.dataset.title : '目錄';
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1874 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python 路徑與檔案處理完整教學範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .nav-links { text-align: center; margin: 30px 0; padding: 20px; background: #f8f9fa; border-radius: 10px; }
+        .nav-links a { display: inline-block; padding: 12px 24px; margin: 0 10px; background: #667eea; color: white; text-decoration: none; border-radius: 5px; transition: all 0.3s ease; font-weight: bold; }
+        .nav-links a:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Python 路徑與檔案處理完整教學範例（80題）</h1>
+   
+        <h2 id="module1">🙂 模組一：文字檔案基礎讀寫（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 1：寫入單行文字</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目1：寫入文字檔案")
+file = open("test1.txt", "w", encoding="utf-8")
+file.write("Hello, Python!")
+file.close()
+print("已寫入 test1.txt")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 2：讀取文字檔案</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目2：讀取文字檔案")
+file = open("test1.txt", "r", encoding="utf-8")
+content = file.read()
+file.close()
+print(f"內容：{content}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 3：寫入多行文字</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目3：寫入多行")
+file = open("test2.txt", "w", encoding="utf-8")
+file.write("第一行\n")
+file.write("第二行\n")
+file.write("第三行\n")
+file.close()
+print("已寫入 test2.txt")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 4：讀取所有行</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目4：讀取所有行")
+file = open("test2.txt", "r", encoding="utf-8")
+lines = file.readlines()
+file.close()
+print(f"行數：{len(lines)}")
+for i, line in enumerate(lines, 1):
+    print(f"第{i}行：{line.strip()}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 5：逐行讀取</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目5：逐行讀取")
+file = open("test2.txt", "r", encoding="utf-8")
+line_num = 1
+for line in file:
+    print(f"行{line_num}：{line.strip()}")
+    line_num += 1
+file.close()</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 6：追加內容</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目6：追加內容到檔案")
+file = open("test2.txt", "a", encoding="utf-8")
+file.write("第四行（追加）\n")
+file.close()
+print("已追加內容")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 7：with 語句自動關閉檔案</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目7：使用 with 語句")
+with open("test3.txt", "w", encoding="utf-8") as file:
+    file.write("使用 with 語句\n")
+    file.write("自動關閉檔案\n")
+print("已寫入 test3.txt")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 8：讀取並計數</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目8：計算行數與字數")
+with open("test2.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    line_count = len(lines)
+    word_count = 0
+    for line in lines:
+        words = line.split()
+        word_count += len(words)
+print(f"行數：{line_count}，字數：{word_count}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 9：寫入串列資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目9：寫入串列")
+fruits = ["蘋果", "香蕉", "橘子", "芒果"]
+with open("fruits.txt", "w", encoding="utf-8") as file:
+    for fruit in fruits:
+        file.write(fruit + "\n")
+print("已寫入水果清單")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 10：讀取為串列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目10：讀取為串列")
+with open("fruits.txt", "r", encoding="utf-8") as file:
+    fruit_list = []
+    for line in file:
+        fruit_list.append(line.strip())
+print(f"水果串列：{fruit_list}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 11：寫入數字資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目11：寫入數字")
+numbers = [10, 20, 30, 40, 50]
+with open("numbers.txt", "w", encoding="utf-8") as file:
+    for num in numbers:
+        file.write(str(num) + "\n")
+print("已寫入數字檔案")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 12：讀取數字資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目12：讀取並轉換數字")
+with open("numbers.txt", "r", encoding="utf-8") as file:
+    number_list = []
+    for line in file:
+        number_list.append(int(line.strip()))
+print(f"數字串列：{number_list}")
+print(f"總和：{sum(number_list)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 13：檔案存在檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目13：檢查檔案是否存在")
+filename = "test1.txt"
+try:
+    file = open(filename, "r", encoding="utf-8")
+    print(f"{filename} 存在")
+    file.close()
+except:
+    print(f"{filename} 不存在")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 14：空檔案檢查</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目14：檢查檔案是否為空")
+with open("test3.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    if len(content) == 0:
+        print("檔案是空的")
+    else:
+        print(f"檔案大小：{len(content)} 字元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 15：寫入格式化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目15：寫入格式化資料")
+students = [
+    {"name": "Alice", "score": 85},
+    {"name": "Bob", "score": 90},
+    {"name": "Charlie", "score": 78}
+]
+with open("students.txt", "w", encoding="utf-8") as file:
+    for student in students:
+        line = f"{student['name']},{student['score']}\n"
+        file.write(line)
+print("已寫入學生資料")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 16：讀取並解析格式化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目16：讀取格式化資料")
+with open("students.txt", "r", encoding="utf-8") as file:
+    student_list = []
+    for line in file:
+        parts = line.strip().split(",")
+        student = {"name": parts[0], "score": int(parts[1])}
+        student_list.append(student)
+print(f"學生資料：{student_list}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 17：複製檔案</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目17：複製檔案")
+with open("test1.txt", "r", encoding="utf-8") as source:
+    content = source.read()
+with open("test1_copy.txt", "w", encoding="utf-8") as target:
+    target.write(content)
+print("檔案已複製")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 18：行數統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目18：統計各種資訊")
+with open("test2.txt", "r", encoding="utf-8") as file:
+    content = file.read()
+    lines = content.split("\n")
+    chars = len(content)
+    words = len(content.split())
+print(f"字元數：{chars}")
+print(f"單字數：{words}")
+print(f"行數：{len(lines)}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 19：過濾空行</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目19：過濾空行")
+with open("test2.txt", "r", encoding="utf-8") as file:
+    non_empty = []
+    for line in file:
+        if line.strip() != "":
+            non_empty.append(line.strip())
+print(f"非空行：{non_empty}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 20：文字搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目20：搜尋關鍵字")
+keyword = "第"
+with open("test2.txt", "r", encoding="utf-8") as file:
+    line_num = 1
+    for line in file:
+        if keyword in line:
+            print(f"第{line_num}行包含 '{keyword}'：{line.strip()}")
+        line_num += 1</pre>
+        </div>
+
+        <h2 id="module2">🙂 模組二：CSV 檔案處理（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 21：寫入 CSV 基礎</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目21：寫入 CSV 檔案")
+header = "姓名,年齡,城市\n"
+rows = [
+    "Alice,20,台北\n",
+    "Bob,22,台中\n",
+    "Charlie,21,高雄\n"
+]
+with open("data.csv", "w", encoding="utf-8") as file:
+    file.write(header)
+    for row in rows:
+        file.write(row)
+print("已寫入 CSV")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 22：讀取 CSV 基礎</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目22：讀取 CSV 檔案")
+with open("data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    header = lines[0].strip().split(",")
+    print(f"欄位：{header}")
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        print(f"資料：{values}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 23：CSV 轉字典串列</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目23：CSV 轉字典")
+with open("data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    headers = lines[0].strip().split(",")
+    data = []
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        row_dict = {}
+        for i in range(len(headers)):
+            row_dict[headers[i]] = values[i]
+        data.append(row_dict)
+print(f"資料：{data}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 24：從字典寫入 CSV</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目24：字典轉 CSV")
+products = [
+    {"name": "筆記本", "price": 25, "stock": 100},
+    {"name": "原子筆", "price": 10, "stock": 200},
+    {"name": "橡皮擦", "price": 5, "stock": 150}
+]
+with open("products.csv", "w", encoding="utf-8") as file:
+    headers = list(products[0].keys())
+    file.write(",".join(headers) + "\n")
+    for product in products:
+        values = [str(product[key]) for key in headers]
+        file.write(",".join(values) + "\n")
+print("已寫入產品 CSV")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 25：CSV 資料過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目25：過濾 CSV 資料")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    headers = lines[0].strip().split(",")
+    print(f"價格 >= 10 的商品：")
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        price = int(values[1])
+        if price >= 10:
+            print(f"  {values[0]}：{price} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 26：CSV 資料統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目26：CSV 資料統計")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    total_stock = 0
+    total_value = 0
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        price = int(values[1])
+        stock = int(values[2])
+        total_stock += stock
+        total_value += price * stock
+print(f"總庫存：{total_stock}")
+print(f"總價值：{total_value} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 27：CSV 新增欄位</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目27：新增計算欄位")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+with open("products_enhanced.csv", "w", encoding="utf-8") as file:
+    header = lines[0].strip() + ",總價值\n"
+    file.write(header)
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        price = int(values[1])
+        stock = int(values[2])
+        total = price * stock
+        new_line = line.strip() + f",{total}\n"
+        file.write(new_line)
+print("已新增總價值欄位")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 28：CSV 排序</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目28：CSV 資料排序")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    header = lines[0]
+    data_lines = lines[1:]
+
+sorted_lines = []
+for line in data_lines:
+    values = line.strip().split(",")
+    price = int(values[1])
+    sorted_lines.append((price, line))
+
+sorted_lines.sort(reverse=True)
+
+with open("products_sorted.csv", "w", encoding="utf-8") as file:
+    file.write(header)
+    for price, line in sorted_lines:
+        file.write(line)
+print("已按價格排序")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 29：CSV 搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目29：CSV 搜尋功能")
+search_name = "筆記本"
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    found = False
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        if search_name in values[0]:
+            print(f"找到：{values}")
+            found = True
+    if not found:
+        print("未找到")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 30：CSV 合併</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目30：合併兩個 CSV")
+csv1_data = [
+    "姓名,分數\n",
+    "Alice,85\n",
+    "Bob,90\n"
+]
+csv2_data = [
+    "姓名,分數\n",
+    "Charlie,78\n",
+    "David,92\n"
+]
+
+with open("scores1.csv", "w", encoding="utf-8") as file:
+    for line in csv1_data:
+        file.write(line)
+
+with open("scores2.csv", "w", encoding="utf-8") as file:
+    for line in csv2_data:
+        file.write(line)
+
+with open("scores1.csv", "r", encoding="utf-8") as file1:
+    lines1 = file1.readlines()
+
+with open("scores2.csv", "r", encoding="utf-8") as file2:
+    lines2 = file2.readlines()
+
+with open("scores_merged.csv", "w", encoding="utf-8") as merged:
+    merged.write(lines1[0])
+    for line in lines1[1:]:
+        merged.write(line)
+    for line in lines2[1:]:
+        merged.write(line)
+
+print("CSV 已合併")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 31：CSV 欄位選擇</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目31：選擇特定欄位")
+with open("data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    headers = lines[0].strip().split(",")
+    
+select_cols = [0, 2]
+with open("data_selected.csv", "w", encoding="utf-8") as file:
+    selected_headers = [headers[i] for i in select_cols]
+    file.write(",".join(selected_headers) + "\n")
+    
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        selected_values = [values[i] for i in select_cols]
+        file.write(",".join(selected_values) + "\n")
+
+print("已選擇姓名和城市欄位")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 32：CSV 統計報表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目32：生成統計報表")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    prices = []
+    stocks = []
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        prices.append(int(values[1]))
+        stocks.append(int(values[2]))
+
+stats = f"""
+=== 產品統計報表 ===
+商品數量：{len(prices)}
+平均價格：{sum(prices) / len(prices):.2f}
+最高價格：{max(prices)}
+最低價格：{min(prices)}
+總庫存：{sum(stocks)}
+"""
+
+with open("statistics.txt", "w", encoding="utf-8") as file:
+    file.write(stats)
+
+print("統計報表已生成")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 33：CSV 資料驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目33：驗證 CSV 資料")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    errors = []
+    for i, line in enumerate(lines[1:], start=2):
+        values = line.strip().split(",")
+        if len(values) != 3:
+            errors.append(f"第{i}行：欄位數量錯誤")
+        else:
+            try:
+                price = int(values[1])
+                stock = int(values[2])
+                if price < 0:
+                    errors.append(f"第{i}行：價格不可為負")
+                if stock < 0:
+                    errors.append(f"第{i}行：庫存不可為負")
+            except:
+                errors.append(f"第{i}行：數值格式錯誤")
+
+if len(errors) == 0:
+    print("資料驗證通過")
+else:
+    print("發現錯誤：")
+    for error in errors:
+        print(f"  {error}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 34：CSV 轉換為固定寬度</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目34：轉換為固定寬度格式")
+with open("data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+with open("data_fixed.txt", "w", encoding="utf-8") as file:
+    for line in lines:
+        values = line.strip().split(",")
+        formatted = f"{values[0]:15} {values[1]:5} {values[2]:10}\n"
+        file.write(formatted)
+
+print("已轉換為固定寬度格式")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 35：CSV 分組統計</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目35：按城市分組")
+city_data = "姓名,城市,分數\nAlice,台北,85\nBob,台中,90\nCharlie,台北,78\nDavid,台中,92\n"
+with open("city_scores.csv", "w", encoding="utf-8") as file:
+    file.write(city_data)
+
+with open("city_scores.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    city_groups = {}
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        city = values[1]
+        score = int(values[2])
+        if city not in city_groups:
+            city_groups[city] = []
+        city_groups[city].append(score)
+
+print("城市分組：")
+for city, scores in city_groups.items():
+    avg = sum(scores) / len(scores)
+    print(f"  {city}：平均 {avg:.1f} 分")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 36：CSV 樞紐分析</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目36：簡易樞紐分析")
+sales_data = "產品,地區,銷量\n筆記本,北部,100\n筆記本,南部,80\n原子筆,北部,200\n原子筆,南部,150\n"
+with open("sales.csv", "w", encoding="utf-8") as file:
+    file.write(sales_data)
+
+with open("sales.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    pivot = {}
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        product = values[0]
+        region = values[1]
+        quantity = int(values[2])
+        
+        if product not in pivot:
+            pivot[product] = {}
+        pivot[product][region] = quantity
+
+print("樞紐分析：")
+for product, regions in pivot.items():
+    print(f"{product}：{regions}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 37：CSV 資料更新</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目37：更新 CSV 資料")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+updated_lines = [lines[0]]
+for line in lines[1:]:
+    values = line.strip().split(",")
+    if values[0] == "筆記本":
+        values[1] = str(int(values[1]) + 5)
+    updated_lines.append(",".join(values) + "\n")
+
+with open("products.csv", "w", encoding="utf-8") as file:
+    for line in updated_lines:
+        file.write(line)
+
+print("已更新筆記本價格")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 38：CSV 欄位重命名</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目38：重命名欄位")
+with open("data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+header_map = {"姓名": "Name", "年齡": "Age", "城市": "City"}
+old_headers = lines[0].strip().split(",")
+new_headers = [header_map.get(h, h) for h in old_headers]
+
+with open("data_en.csv", "w", encoding="utf-8") as file:
+    file.write(",".join(new_headers) + "\n")
+    for line in lines[1:]:
+        file.write(line)
+
+print("欄位已重命名")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 39：CSV 缺失值處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目39：處理缺失值")
+data_with_missing = "姓名,分數,等級\nAlice,85,A\nBob,,B\nCharlie,78,\n"
+with open("missing_data.csv", "w", encoding="utf-8") as file:
+    file.write(data_with_missing)
+
+with open("missing_data.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+with open("missing_data_filled.csv", "w", encoding="utf-8") as file:
+    file.write(lines[0])
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        for i in range(len(values)):
+            if values[i] == "":
+                values[i] = "N/A"
+        file.write(",".join(values) + "\n")
+
+print("缺失值已填補")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 40：CSV 匯出摘要</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目40：匯出摘要報告")
+with open("products.csv", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+    
+summary = "=== 產品摘要 ===\n\n"
+summary += f"總產品數：{len(lines) - 1}\n\n"
+summary += "產品清單：\n"
+
+for line in lines[1:]:
+    values = line.strip().split(",")
+    summary += f"- {values[0]}：{values[1]} 元\n"
+
+with open("product_summary.txt", "w", encoding="utf-8") as file:
+    file.write(summary)
+
+print("摘要報告已生成")</pre>
+        </div>
+
+        <h2 id="module3">🙂 模組三：JSON 與結構化資料（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 41：寫入 JSON 格式（手動）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目41：手動建立 JSON")
+data = {
+    "name": "Alice",
+    "age": 20,
+    "scores": [85, 90, 88]
+}
+
+json_str = "{\n"
+json_str += f'  "name": "{data["name"]}",\n'
+json_str += f'  "age": {data["age"]},\n'
+json_str += f'  "scores": {data["scores"]}\n'
+json_str += "}\n"
+
+with open("data.json", "w", encoding="utf-8") as file:
+    file.write(json_str)
+
+print("已寫入 JSON")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 42：讀取 JSON 格式（簡易）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目42：讀取 JSON")
+with open("data.json", "r", encoding="utf-8") as file:
+    content = file.read()
+    print(f"JSON 內容：\n{content}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 43：配置檔案讀寫</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目43：配置檔案")
+config = {
+    "app_name": "MyApp",
+    "version": "1.0",
+    "debug": "true"
+}
+
+with open("config.txt", "w", encoding="utf-8") as file:
+    for key, value in config.items():
+        file.write(f"{key}={value}\n")
+
+print("配置已寫入")
+
+with open("config.txt", "r", encoding="utf-8") as file:
+    loaded_config = {}
+    for line in file:
+        parts = line.strip().split("=")
+        if len(parts) == 2:
+            loaded_config[parts[0]] = parts[1]
+
+print(f"載入配置：{loaded_config}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 44：INI 風格配置</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目44：INI 風格配置")
+ini_content = """[Database]
+host=localhost
+port=3306
+
+[Application]
+name=MyApp
+debug=true
+"""
+
+with open("settings.ini", "w", encoding="utf-8") as file:
+    file.write(ini_content)
+
+with open("settings.ini", "r", encoding="utf-8") as file:
+    current_section = None
+    settings = {}
+    
+    for line in file:
+        line = line.strip()
+        if line.startswith("[") and line.endswith("]"):
+            current_section = line[1:-1]
+            settings[current_section] = {}
+        elif "=" in line and current_section:
+            key, value = line.split("=")
+            settings[current_section][key] = value
+
+print(f"INI 設定：{settings}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 45：日誌檔案寫入</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目45：寫入日誌")
+log_entries = [
+    "2025-10-02 10:00:00 - 應用程式啟動",
+    "2025-10-02 10:01:15 - 使用者登入：Alice",
+    "2025-10-02 10:05:30 - 資料查詢完成"
+]
+
+with open("app.log", "w", encoding="utf-8") as file:
+    for entry in log_entries:
+        file.write(entry + "\n")
+
+print("日誌已寫入")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 46：日誌檔案讀取與過濾</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目46：過濾日誌")
+with open("app.log", "r", encoding="utf-8") as file:
+    for line in file:
+        if "使用者" in line:
+            print(f"使用者活動：{line.strip()}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 47：結構化資料儲存</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目47：儲存學生資料")
+students = [
+    {"id": "S001", "name": "Alice", "grade": 85},
+    {"id": "S002", "name": "Bob", "grade": 90}
+]
+
+with open("students_struct.txt", "w", encoding="utf-8") as file:
+    for student in students:
+        line = f"{student['id']}|{student['name']}|{student['grade']}\n"
+        file.write(line)
+
+print("結構化資料已儲存")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 48：讀取結構化資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目48：讀取結構化資料")
+with open("students_struct.txt", "r", encoding="utf-8") as file:
+    student_list = []
+    for line in file:
+        parts = line.strip().split("|")
+        student = {
+            "id": parts[0],
+            "name": parts[1],
+            "grade": int(parts[2])
+        }
+        student_list.append(student)
+
+print(f"學生資料：{student_list}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 49：多層結構資料</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目49：多層結構")
+school = {
+    "name": "明德高中",
+    "classes": [
+        {"name": "一年A班", "students": 30},
+        {"name": "一年B班", "students": 28}
+    ]
+}
+
+with open("school.txt", "w", encoding="utf-8") as file:
+    file.write(f"學校:{school['name']}\n")
+    for cls in school["classes"]:
+        file.write(f"班級:{cls['name']},學生數:{cls['students']}\n")
+
+print("學校資料已寫入")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 50：資料備份</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目50：資料備份")
+source_file = "products.csv"
+backup_file = "products_backup.csv"
+
+with open(source_file, "r", encoding="utf-8") as source:
+    content = source.read()
+
+with open(backup_file, "w", encoding="utf-8") as backup:
+    backup.write(content)
+
+print(f"{source_file} 已備份到 {backup_file}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 51：時間戳記日誌</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目51：帶時間戳記的日誌")
+import time
+
+messages = ["應用啟動", "載入設定", "初始化完成"]
+
+with open("timestamped.log", "w", encoding="utf-8") as file:
+    for msg in messages:
+        timestamp = "2025-10-02 10:00:00"
+        file.write(f"[{timestamp}] {msg}\n")
+
+print("時間戳記日誌已建立")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 52：資料版本控制</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目52：版本控制")
+version = 1
+data = "初始資料"
+
+filename = f"data_v{version}.txt"
+with open(filename, "w", encoding="utf-8") as file:
+    file.write(data)
+
+print(f"已儲存版本 {version}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 53：配置檔案更新</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目53：更新配置")
+with open("config.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+updated_lines = []
+for line in lines:
+    if line.startswith("version="):
+        updated_lines.append("version=2.0\n")
+    else:
+        updated_lines.append(line)
+
+with open("config.txt", "w", encoding="utf-8") as file:
+    for line in updated_lines:
+        file.write(line)
+
+print("配置已更新")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 54：資料格式轉換</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目54：CSV 轉固定格式")
+with open("data.csv", "r", encoding="utf-8") as csv_file:
+    lines = csv_file.readlines()
+
+with open("data.txt", "w", encoding="utf-8") as txt_file:
+    for line in lines:
+        values = line.strip().split(",")
+        txt_line = " | ".join(values) + "\n"
+        txt_file.write(txt_line)
+
+print("格式轉換完成")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 55：資料索引建立</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目55：建立索引檔")
+with open("students_struct.txt", "r", encoding="utf-8") as file:
+    index = {}
+    position = 0
+    for line in file:
+        parts = line.strip().split("|")
+        student_id = parts[0]
+        index[student_id] = position
+        position += len(line)
+
+with open("students.idx", "w", encoding="utf-8") as idx_file:
+    for student_id, pos in index.items():
+        idx_file.write(f"{student_id}:{pos}\n")
+
+print("索引檔已建立")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 56：批次檔案處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目56：批次處理多個檔案")
+filenames = ["file1.txt", "file2.txt", "file3.txt"]
+
+for filename in filenames:
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(f"這是 {filename} 的內容\n")
+
+print(f"已建立 {len(filenames)} 個檔案")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 57：檔案內容合併</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目57：合併多個檔案")
+with open("merged.txt", "w", encoding="utf-8") as merged:
+    for filename in filenames:
+        with open(filename, "r", encoding="utf-8") as file:
+            content = file.read()
+            merged.write(f"=== {filename} ===\n")
+            merged.write(content)
+            merged.write("\n")
+
+print("檔案已合併")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 58：資料分割</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目58：分割大檔案")
+with open("merged.txt", "r", encoding="utf-8") as file:
+    lines = file.readlines()
+
+chunk_size = 2
+chunk_num = 1
+
+for i in range(0, len(lines), chunk_size):
+    chunk = lines[i:i + chunk_size]
+    with open(f"chunk_{chunk_num}.txt", "w", encoding="utf-8") as chunk_file:
+        for line in chunk:
+            chunk_file.write(line)
+    chunk_num += 1
+
+print(f"已分割成 {chunk_num - 1} 個檔案")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 59：檔案比較</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目59：比較兩個檔案")
+file1_lines = ["line1\n", "line2\n", "line3\n"]
+file2_lines = ["line1\n", "line2_modified\n", "line3\n"]
+
+with open("compare1.txt", "w", encoding="utf-8") as file:
+    for line in file1_lines:
+        file.write(line)
+
+with open("compare2.txt", "w", encoding="utf-8") as file:
+    for line in file2_lines:
+        file.write(line)
+
+with open("compare1.txt", "r", encoding="utf-8") as f1:
+    with open("compare2.txt", "r", encoding="utf-8") as f2:
+        lines1 = f1.readlines()
+        lines2 = f2.readlines()
+        
+        differences = []
+        for i in range(min(len(lines1), len(lines2))):
+            if lines1[i] != lines2[i]:
+                differences.append(f"第{i+1}行不同")
+
+if len(differences) == 0:
+    print("檔案相同")
+else:
+    print(f"找到差異：{differences}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 60：資料壓縮（簡易）</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目60：簡易資料壓縮")
+text = "AAABBBCCCCDDDD"
+
+compressed = []
+i = 0
+while i < len(text):
+    char = text[i]
+    count = 1
+    while i + count < len(text) and text[i + count] == char:
+        count += 1
+    compressed.append(f"{char}{count}")
+    i += count
+
+compressed_str = "".join(compressed)
+
+with open("compressed.txt", "w", encoding="utf-8") as file:
+    file.write(compressed_str)
+
+print(f"原始：{text}")
+print(f"壓縮：{compressed_str}")</pre>
+        </div>
+
+        <h2 id="module4">🙂 模組四：實務應用與進階技巧（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 61：學生成績管理系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目61：成績管理系統")
+
+def save_student(filename, student):
+    with open(filename, "a", encoding="utf-8") as file:
+        line = f"{student['id']},{student['name']},{student['score']}\n"
+        file.write(line)
+
+def load_students(filename):
+    students = []
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split(",")
+                student = {
+                    "id": parts[0],
+                    "name": parts[1],
+                    "score": int(parts[2])
+                }
+                students.append(student)
+    except:
+        pass
+    return students
+
+save_student("grades.txt", {"id": "S001", "name": "Alice", "score": 85})
+save_student("grades.txt", {"id": "S002", "name": "Bob", "score": 90})
+
+students = load_students("grades.txt")
+print(f"載入學生：{students}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 62：商品庫存系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目62：庫存管理")
+
+def update_stock(filename, product_name, quantity_change):
+    products = []
+    
+    with open(filename, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        header = lines[0]
+        for line in lines[1:]:
+            values = line.strip().split(",")
+            products.append({
+                "name": values[0],
+                "price": int(values[1]),
+                "stock": int(values[2])
+            })
+    
+    for product in products:
+        if product["name"] == product_name:
+            product["stock"] += quantity_change
+    
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(header)
+        for product in products:
+            line = f"{product['name']},{product['price']},{product['stock']}\n"
+            file.write(line)
+
+update_stock("products.csv", "筆記本", -5)
+print("庫存已更新")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 63：交易記錄系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目63：交易記錄")
+
+def log_transaction(filename, transaction):
+    with open(filename, "a", encoding="utf-8") as file:
+        line = f"{transaction['date']},{transaction['type']},{transaction['amount']}\n"
+        file.write(line)
+
+def get_balance(filename):
+    balance = 0
+    try:
+        with open(filename, "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split(",")
+                trans_type = parts[1]
+                amount = float(parts[2])
+                if trans_type == "存款":
+                    balance += amount
+                elif trans_type == "提款":
+                    balance -= amount
+    except:
+        pass
+    return balance
+
+log_transaction("transactions.txt", {"date": "2025-10-02", "type": "存款", "amount": 1000})
+log_transaction("transactions.txt", {"date": "2025-10-03", "type": "提款", "amount": 300})
+
+balance = get_balance("transactions.txt")
+print(f"目前餘額：{balance} 元")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 64：資料匯出報表</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目64：生成 HTML 報表")
+
+def generate_html_report(data, filename):
+    html = """&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;報表&lt;/title&gt;
+    &lt;style&gt;
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;學生成績報表&lt;/h1&gt;
+    &lt;table&gt;
+        &lt;tr&gt;&lt;th&gt;學號&lt;/th&gt;&lt;th&gt;姓名&lt;/th&gt;&lt;th&gt;分數&lt;/th&gt;&lt;/tr&gt;
+"""
+    
+    for student in data:
+        html += f"        &lt;tr&gt;&lt;td&gt;{student['id']}&lt;/td&gt;&lt;td&gt;{student['name']}&lt;/td&gt;&lt;td&gt;{student['score']}&lt;/td&gt;&lt;/tr&gt;\n"
+    
+    html += """    &lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;"""
+    
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(html)
+
+students_data = [
+    {"id": "S001", "name": "Alice", "score": 85},
+    {"id": "S002", "name": "Bob", "score": 90}
+]
+
+generate_html_report(students_data, "report.html")
+print("HTML 報表已生成")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 65：資料匯入驗證</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目65：匯入資料驗證")
+
+def import_with_validation(filename):
+    valid_data = []
+    errors = []
+    
+    with open(filename, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        for i, line in enumerate(lines, 1):
+            parts = line.strip().split(",")
+            
+            if len(parts) != 3:
+                errors.append(f"第{i}行：欄位數量錯誤")
+                continue
+            
+            try:
+                score = int(parts[2])
+                if score < 0 or score > 100:
+                    errors.append(f"第{i}行：分數超出範圍")
+                    continue
+                
+                valid_data.append({
+                    "id": parts[0],
+                    "name": parts[1],
+                    "score": score
+                })
+            except:
+                errors.append(f"第{i}行：分數格式錯誤")
+    
+    return valid_data, errors
+
+valid, errors = import_with_validation("grades.txt")
+print(f"有效資料：{len(valid)} 筆")
+print(f"錯誤：{len(errors)} 筆")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 66：資料同步</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目66：資料同步")
+
+def sync_files(source, target):
+    with open(source, "r", encoding="utf-8") as src:
+        content = src.read()
+    
+    with open(target, "w", encoding="utf-8") as tgt:
+        tgt.write(content)
+    
+    print(f"{source} -> {target} 同步完成")
+
+sync_files("products.csv", "products_mirror.csv")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 67：增量備份</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目67：增量備份")
+
+def incremental_backup(filename, backup_dir):
+    backup_count = 1
+    backup_name = f"{backup_dir}/backup_{backup_count}.txt"
+    
+    while True:
+        try:
+            with open(backup_name, "r", encoding="utf-8"):
+                backup_count += 1
+                backup_name = f"{backup_dir}/backup_{backup_count}.txt"
+        except:
+            break
+    
+    with open(filename, "r", encoding="utf-8") as source:
+        content = source.read()
+    
+    with open(backup_name, "w", encoding="utf-8") as backup:
+        backup.write(content)
+    
+    print(f"備份到：{backup_name}")
+
+incremental_backup("data.csv", "backups")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 68：檔案搜尋</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目68：搜尋檔案內容")
+
+def search_in_files(keyword, filenames):
+    results = []
+    
+    for filename in filenames:
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                line_num = 1
+                for line in file:
+                    if keyword in line:
+                        results.append({
+                            "file": filename,
+                            "line": line_num,
+                            "content": line.strip()
+                        })
+                    line_num += 1
+        except:
+            pass
+    
+    return results
+
+files_to_search = ["test1.txt", "test2.txt", "test3.txt"]
+search_results = search_in_files("Python", files_to_search)
+print(f"搜尋結果：找到 {len(search_results)} 筆")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 69：資料清理工具</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目69：資料清理")
+
+def clean_csv(input_file, output_file):
+    with open(input_file, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    
+    cleaned_lines = []
+    for line in lines:
+        cleaned_line = line.strip()
+        if cleaned_line != "":
+            cleaned_lines.append(cleaned_line + "\n")
+    
+    with open(output_file, "w", encoding="utf-8") as file:
+        for line in cleaned_lines:
+            file.write(line)
+    
+    print(f"已清理 {len(cleaned_lines)} 行資料")
+
+clean_csv("data.csv", "data_cleaned.csv")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 70：資料轉換管道</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目70：資料轉換管道")
+
+def process_pipeline(input_file, output_file):
+    with open(input_file, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    
+    processed = []
+    for line in lines[1:]:
+        values = line.strip().split(",")
+        name = values[0]
+        score = int(values[1])
+        
+        grade = "A" if score >= 90 else "B" if score >= 80 else "C"
+        
+        processed.append(f"{name},{score},{grade}\n")
+    
+    with open(output_file, "w", encoding="utf-8") as file:
+        file.write("姓名,分數,等級\n")
+        for line in processed:
+            file.write(line)
+
+process_pipeline("scores1.csv", "scores_processed.csv")
+print("資料處理完成")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 71：報表生成器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目71：多格式報表")
+
+def generate_report(data, format_type):
+    if format_type == "txt":
+        report = "=== 成績報表 ===\n"
+        for item in data:
+            report += f"{item['name']}: {item['score']}\n"
+        
+        with open("report.txt", "w", encoding="utf-8") as file:
+            file.write(report)
+    
+    elif format_type == "csv":
+        with open("report.csv", "w", encoding="utf-8") as file:
+            file.write("姓名,分數\n")
+            for item in data:
+                file.write(f"{item['name']},{item['score']}\n")
+
+report_data = [
+    {"name": "Alice", "score": 85},
+    {"name": "Bob", "score": 90}
+]
+
+generate_report(report_data, "txt")
+generate_report(report_data, "csv")
+print("報表已生成")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 72：資料快取系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目72：快取機制")
+
+cache_file = "cache.txt"
+
+def get_cached_data(key):
+    try:
+        with open(cache_file, "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split(":")
+                if parts[0] == key:
+                    return parts[1]
+    except:
+        pass
+    return None
+
+def set_cache(key, value):
+    cache = {}
+    
+    try:
+        with open(cache_file, "r", encoding="utf-8") as file:
+            for line in file:
+                parts = line.strip().split(":")
+                cache[parts[0]] = parts[1]
+    except:
+        pass
+    
+    cache[key] = value
+    
+    with open(cache_file, "w", encoding="utf-8") as file:
+        for k, v in cache.items():
+            file.write(f"{k}:{v}\n")
+
+set_cache("user_count", "100")
+value = get_cached_data("user_count")
+print(f"快取值：{value}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 73：資料歸檔</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目73：歸檔舊資料")
+
+def archive_old_data(source_file, archive_file, days_old):
+    current_data = []
+    archived_data = []
+    
+    with open(source_file, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+        header = lines[0]
+        
+        for line in lines[1:]:
+            current_data.append(line)
+    
+    with open(source_file, "w", encoding="utf-8") as file:
+        file.write(header)
+        for line in current_data:
+            file.write(line)
+    
+    print(f"已歸檔 {len(archived_data)} 筆資料")
+
+archive_old_data("transactions.txt", "transactions_archive.txt", 30)</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 74：資料匯出器</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目74：自訂格式匯出")
+
+def export_custom_format(data, filename, separator):
+    with open(filename, "w", encoding="utf-8") as file:
+        for item in data:
+            values = [str(v) for v in item.values()]
+            line = separator.join(values) + "\n"
+            file.write(line)
+
+export_data = [
+    {"name": "Alice", "age": 20, "score": 85},
+    {"name": "Bob", "age": 22, "score": 90}
+]
+
+export_custom_format(export_data, "export.txt", " | ")
+print("已匯出自訂格式")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 75：批次資料處理</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目75：批次處理")
+
+def batch_process_files(file_list, operation):
+    results = []
+    
+    for filename in file_list:
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                content = file.read()
+                result = operation(content)
+                results.append({"file": filename, "result": result})
+        except:
+            results.append({"file": filename, "result": "錯誤"})
+    
+    return results
+
+def count_lines(content):
+    return len(content.split("\n"))
+
+files = ["test1.txt", "test2.txt"]
+results = batch_process_files(files, count_lines)
+print(f"批次處理結果：{results}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 76：資料校驗碼</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目76：簡易校驗碼")
+
+def calculate_checksum(filename):
+    checksum = 0
+    with open(filename, "r", encoding="utf-8") as file:
+        content = file.read()
+        for char in content:
+            checksum += ord(char)
+    return checksum % 1000
+
+checksum = calculate_checksum("test1.txt")
+print(f"校驗碼：{checksum}")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 77：資料分析報告</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目77：分析報告生成")
+
+def generate_analysis_report(csv_file, output_file):
+    with open(csv_file, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    
+    scores = []
+    for line in lines[1:]:
+        parts = line.strip().split(",")
+        if len(parts) >= 2:
+            try:
+                scores.append(int(parts[1]))
+            except:
+                pass
+    
+    if len(scores) > 0:
+        report = f"""
+資料分析報告
+============
+總筆數：{len(scores)}
+平均分：{sum(scores) / len(scores):.2f}
+最高分：{max(scores)}
+最低分：{min(scores)}
+總分：{sum(scores)}
+"""
+        
+        with open(output_file, "w", encoding="utf-8") as file:
+            file.write(report)
+        
+        print("分析報告已生成")
+
+generate_analysis_report("scores1.csv", "analysis_report.txt")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 78：資料去重工具</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目78：去除重複資料")
+
+def remove_duplicates(input_file, output_file):
+    with open(input_file, "r", encoding="utf-8") as file:
+        lines = file.readlines()
+    
+    unique_lines = []
+    seen = []
+    
+    for line in lines:
+        if line not in seen:
+            unique_lines.append(line)
+            seen.append(line)
+    
+    with open(output_file, "w", encoding="utf-8") as file:
+        for line in unique_lines:
+            file.write(line)
+    
+    print(f"原始：{len(lines)} 行，去重後：{len(unique_lines)} 行")
+
+remove_duplicates("data.csv", "data_unique.csv")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 79：智慧日誌系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目79：智慧日誌")
+
+class SimpleLogger:
+    def __init__(self, filename):
+        self.filename = filename
+    
+    def log(self, level, message):
+        timestamp = "2025-10-02 10:00:00"
+        log_entry = f"[{timestamp}] [{level}] {message}\n"
+        
+        with open(self.filename, "a", encoding="utf-8") as file:
+            file.write(log_entry)
+    
+    def info(self, message):
+        self.log("INFO", message)
+    
+    def error(self, message):
+        self.log("ERROR", message)
+
+logger = SimpleLogger("app_smart.log")
+logger.info("應用程式啟動")
+logger.error("發生錯誤")
+
+print("智慧日誌已記錄")</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+                <div class="code-header">題目 80：完整檔案管理系統</div>
+                <button class="copy-btn" onclick="copyCode(this)">複製</button>
+            </div>
+            <pre>print("\n題目80：檔案管理系統")
+
+class FileManager:
+    def __init__(self, base_dir):
+        self.base_dir = base_dir
+    
+    def create_file(self, filename, content):
+        path = f"{self.base_dir}/{filename}"
+        with open(path, "w", encoding="utf-8") as file:
+            file.write(content)
+        return f"已建立：{path}"
+    
+    def read_file(self, filename):
+        path = f"{self.base_dir}/{filename}"
+        try:
+            with open(path, "r", encoding="utf-8") as file:
+                return file.read()
+        except:
+            return "檔案不存在"
+    
+    def list_files(self):
+        return ["使用 os 模組可實現完整功能"]
+    
+    def delete_file(self, filename):
+        return f"已刪除：{filename}"
+
+fm = FileManager("data")
+fm.create_file("test.txt", "測試內容")
+content = fm.read_file("test.txt")
+print(f"讀取內容：{content}")</pre>
+        </div>
+
+ </div>
+    <div class="toast" id="toast">程式碼已複製！</div>
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                // 更改按鈕文字和樣式
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+                
+                // 顯示提示訊息
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');                
+                // 3秒後恢復原狀
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
