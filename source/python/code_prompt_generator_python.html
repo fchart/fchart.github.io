@@ -551,11 +551,28 @@
                 return;
             }
 
-            navigator.clipboard.writeText(output.textContent).then(() => {
-                showToast();
-            }).catch(err => {
-                alert('複製失敗，請手動複製');
-            });
+            function legacyCopy() {
+                try {
+                    const ta = document.createElement('textarea');
+                    ta.value = output.textContent;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast();
+                } catch (e) {
+                    alert('複製失敗，請手動複製');
+                }
+            }
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(output.textContent).then(showToast, legacyCopy);
+            } else {
+                legacyCopy();
+            }
         }
 
         function showToast() {

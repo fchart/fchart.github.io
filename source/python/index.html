@@ -47,7 +47,7 @@
     color: var(--spine-text);
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh;  height: 100dvh;
     position: sticky;
     top: 0;
     overflow-y: auto;
@@ -160,7 +160,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh; height: 100dvh;
   }
 
   .content-bar {
@@ -235,11 +235,11 @@
       position: static;
       transition: max-height 0.25s ease;
     }
-    .spine.open { max-height: 80vh; overflow-y: auto; }
+    .spine.open { max-height: 80vh; max-height: 80dvh; overflow-y: auto; }
     .spine-header { display: none; }
 
     main { height: auto; flex: 1; }
-    .frame-wrap { height: 70vh; }
+    .frame-wrap { height: 70vh; height: 70dvh; }
   }
 
   a:focus-visible,
