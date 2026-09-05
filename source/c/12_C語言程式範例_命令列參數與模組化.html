@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C 語言命令列參數與模組化教學程式範例（80題）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Microsoft JhengHei', 'Arial', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 40px; }
+        h1 { color: #667eea; text-align: center; margin-bottom: 40px; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+        h2 { color: #764ba2; margin: 40px 0 20px 0; padding: 15px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border-left: 5px solid #667eea; border-radius: 5px; font-size: 1.8em; }
+        .code-block { background: #282c34; border-radius: 8px; padding: 20px 20px 20px 20px; margin: 15px 0; position: relative; overflow: hidden; }
+        .code-block::before { display: none; }
+        .code-top-bar { display: flex; justify-content: space-between; align-items: center; background: #21252b; border-bottom: 1px solid #181a1f; padding: 10px 15px; border-top-left-radius: 8px; border-top-right-radius: 8px; margin: -20px -20px 15px -20px; }
+        .code-header { color: #61dafb; font-size: 0.9em; font-weight: bold; margin: 0; padding: 0; }
+        pre { margin: 0; color: #abb2bf; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; }
+        .copy-btn { background: #667eea; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 0.85em; transition: all 0.3s ease; }
+        .copy-btn:hover { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .copy-btn:active { transform: translateY(0); }
+        .copy-btn.copied { background: #48bb78; }
+        .note { background: #fff8e1; border-left: 5px solid #ffb300; padding: 15px 20px; margin: 15px 0 30px 0; border-radius: 5px; color: #6b5300; font-size: 0.95em; }
+        @media (max-width: 768px) { .container { padding: 20px; } h1 { font-size: 1.8em; } h2 { font-size: 1.4em; } pre { font-size: 12px; } }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: #48bb78; color: white; padding: 15px 25px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; z-index: 1000; }
+        .toast.show { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>C 語言命令列參數與模組化教學程式範例（80題）</h1>
+        <div class="note">💡 提示：模組一與模組二的範例使用 argc/argv 讀取命令列參數，請在編譯後嘗試搭配不同參數執行（例如 <code>./a.out 3 5</code>），觀察程式行為的變化。未提供額外參數時，程式也會顯示合理的預設訊息或使用說明。</div>
+
+        <h2>🙂 模組一：命令列參數基礎（argc, argv）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 1：認識 main 函式的兩個參數（argc, argv）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目1：程式共接收到 %d 個命令列參數（含程式名稱本身）\n&quot;, argc);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 2：印出程式名稱 argv[0]</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目2：程式名稱（argv[0]） = %s\n&quot;, argv[0]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 3：印出命令列參數總數 argc</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目3：argc = %d\n&quot;, argc);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 4：使用迴圈列出所有命令列參數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目4：所有命令列參數：\n&quot;);
+    for (int i = 0; i &lt; argc; i++) {
+        printf(&quot;  argv[%d] = %s\n&quot;, i, argv[i]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 5：檢查是否有提供額外參數（argc > 1）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        printf(&quot;題目5：使用者提供了 %d 個額外參數\n&quot;, argc - 1);
+    } else {
+        printf(&quot;題目5：未提供額外參數，僅有程式名稱本身\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 6：讀取第一個命令列參數並轉換為整數（atoi）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        int num = atoi(argv[1]);
+        printf(&quot;題目6：第一個參數轉為整數 = %d\n&quot;, num);
+    } else {
+        printf(&quot;題目6：未提供參數，示範預設值 = 0\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 7：讀取第一個命令列參數並轉換為浮點數（atof）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        double num = atof(argv[1]);
+        printf(&quot;題目7：第一個參數轉為浮點數 = %.2f\n&quot;, num);
+    } else {
+        printf(&quot;題目7：未提供參數，示範預設值 = 0.00\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 8：命令列參數不足時顯示使用說明（usage message）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &lt; 2) {
+        printf(&quot;題目8：使用方式：%s &lt;參數&gt;\n&quot;, argv[0]);
+    } else {
+        printf(&quot;題目8：收到參數：%s\n&quot;, argv[1]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 9：命令列參數個數超過上限的檢查</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define MAX_ARGS 3
+
+int main(int argc, char *argv[]) {
+    if (argc - 1 &gt; MAX_ARGS) {
+        printf(&quot;題目9：參數數量超過上限（上限 %d 個）\n&quot;, MAX_ARGS);
+    } else {
+        printf(&quot;題目9：參數數量在允許範圍內，共 %d 個\n&quot;, argc - 1);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 10：命令列參數轉換為字串長度計算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        printf(&quot;題目10：第一個參數『%s』的長度 = %zu\n&quot;, argv[1], strlen(argv[1]));
+    } else {
+        printf(&quot;題目10：未提供參數可供計算長度\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 11：使用命令列參數作為兩數相加的輸入</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt;= 3) {
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf(&quot;題目11：%d + %d = %d\n&quot;, a, b, a + b);
+    } else {
+        printf(&quot;題目11：請提供兩個數字參數，範例：%s 3 5\n&quot;, argv[0]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 12：使用命令列參數決定要執行的運算</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt;= 4) {
+        int a = atoi(argv[1]);
+        char op = argv[2][0];
+        int b = atoi(argv[3]);
+        int result = 0;
+        switch (op) {
+            case &#x27;+&#x27;: result = a + b; break;
+            case &#x27;-&#x27;: result = a - b; break;
+            case &#x27;*&#x27;: result = a * b; break;
+            case &#x27;/&#x27;: result = b != 0 ? a / b : 0; break;
+        }
+        printf(&quot;題目12：%d %c %d = %d\n&quot;, a, op, b, result);
+    } else {
+        printf(&quot;題目12：使用方式：%s &lt;數字1&gt; &lt;運算子&gt; &lt;數字2&gt;\n&quot;, argv[0]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 13：命令列參數搭配 for 迴圈計算總和</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int sum = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        sum += atoi(argv[i]);
+    }
+    printf(&quot;題目13：所有數字參數的總和 = %d\n&quot;, sum);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 14：命令列參數的大小寫轉換示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        char buffer[100];
+        int i;
+        for (i = 0; argv[1][i] != &#x27;\0&#x27;; i++) {
+            char c = argv[1][i];
+            buffer[i] = (c &gt;= &#x27;a&#x27; &amp;&amp; c &lt;= &#x27;z&#x27;) ? c - &#x27;a&#x27; + &#x27;A&#x27; : c;
+        }
+        buffer[i] = &#x27;\0&#x27;;
+        printf(&quot;題目14：轉為大寫後 = %s\n&quot;, buffer);
+    } else {
+        printf(&quot;題目14：未提供參數可供轉換\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 15：命令列參數反轉輸出</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        char buffer[100];
+        strcpy(buffer, argv[1]);
+        int len = strlen(buffer);
+        for (int i = 0; i &lt; len / 2; i++) {
+            char temp = buffer[i];
+            buffer[i] = buffer[len - 1 - i];
+            buffer[len - 1 - i] = temp;
+        }
+        printf(&quot;題目15：反轉後 = %s\n&quot;, buffer);
+    } else {
+        printf(&quot;題目15：未提供參數可供反轉\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 16：命令列參數依序輸出並加上索引編號</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目16：\n&quot;);
+    for (int i = 1; i &lt; argc; i++) {
+        printf(&quot;  第%d個參數：%s\n&quot;, i, argv[i]);
+    }
+    if (argc == 1) {
+        printf(&quot;  （未提供額外參數）\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 17：檢查命令列參數是否為純數字（isdigit判斷）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;ctype.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        int isNumeric = 1;
+        for (int i = 0; argv[1][i] != &#x27;\0&#x27;; i++) {
+            if (!isdigit((unsigned char)argv[1][i])) {
+                isNumeric = 0;
+                break;
+            }
+        }
+        printf(&quot;題目17：『%s』是否為純數字 = %d\n&quot;, argv[1], isNumeric);
+    } else {
+        printf(&quot;題目17：未提供參數可供檢查\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 18：命令列參數搭配陣列儲存以便後續處理</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int numbers[10];
+    int count = 0;
+    for (int i = 1; i &lt; argc &amp;&amp; count &lt; 10; i++) {
+        numbers[count++] = atoi(argv[i]);
+    }
+    printf(&quot;題目18：共儲存 %d 個數字參數\n&quot;, count);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 19：命令列參數複製到本地緩衝區（strcpy）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    char buffer[50];
+    if (argc &gt; 1) {
+        strcpy(buffer, argv[1]);
+        printf(&quot;題目19：複製到本地緩衝區後 = %s\n&quot;, buffer);
+    } else {
+        printf(&quot;題目19：未提供參數可供複製\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 20：綜合練習：模擬簡易的檔案名稱參數接收程式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &gt; 1) {
+        const char *filename = argv[1];
+        const char *dot = strrchr(filename, &#x27;.&#x27;);
+        printf(&quot;題目20：檔案名稱 = %s，副檔名 = %s\n&quot;, filename, dot != NULL ? dot + 1 : &quot;（無副檔名）&quot;);
+    } else {
+        printf(&quot;題目20：使用方式：%s &lt;檔案名稱&gt;\n&quot;, argv[0]);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組二：命令列參數進階應用（旗標解析、選項處理）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 21：判斷是否包含特定旗標（例如 -v）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int verbose = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) {
+            verbose = 1;
+        }
+    }
+    printf(&quot;題目21：是否啟用verbose模式 = %d\n&quot;, verbose);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 22：解析 -h 說明旗標並印出幫助訊息</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-h&quot;) == 0) {
+            printf(&quot;題目22：使用說明：%s [-h] [其他選項]\n&quot;, argv[0]);
+            return 0;
+        }
+    }
+    printf(&quot;題目22：未指定 -h，略過說明訊息\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 23：解析多個布林旗標（-v, -d, -h）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int verbose = 0, debug = 0, help = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) verbose = 1;
+        else if (strcmp(argv[i], &quot;-d&quot;) == 0) debug = 1;
+        else if (strcmp(argv[i], &quot;-h&quot;) == 0) help = 1;
+    }
+    printf(&quot;題目23：verbose=%d, debug=%d, help=%d\n&quot;, verbose, debug, help);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 24：解析帶數值的選項（例如 -n 5）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int n = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-n&quot;) == 0 &amp;&amp; i + 1 &lt; argc) {
+            n = atoi(argv[i + 1]);
+        }
+    }
+    printf(&quot;題目24：解析到的 -n 數值 = %d\n&quot;, n);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 25：使用迴圈搭配 strcmp 解析所有選項</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) {
+            printf(&quot;題目25：解析到選項：verbose\n&quot;);
+        } else if (strcmp(argv[i], &quot;-q&quot;) == 0) {
+            printf(&quot;題目25：解析到選項：quiet\n&quot;);
+        } else {
+            printf(&quot;題目25：一般參數：%s\n&quot;, argv[i]);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 26：解析 --key=value 形式的參數</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    for (int i = 1; i &lt; argc; i++) {
+        char *eq = strchr(argv[i], &#x27;=&#x27;);
+        if (eq != NULL) {
+            *eq = &#x27;\0&#x27;;
+            printf(&quot;題目26：鍵 = %s，值 = %s\n&quot;, argv[i], eq + 1);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 27：統計非選項參數（一般位置參數）的數量</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    int positionalCount = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (argv[i][0] != &#x27;-&#x27;) {
+            positionalCount++;
+        }
+    }
+    printf(&quot;題目27：一般位置參數數量 = %d\n&quot;, positionalCount);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 28：選項與位置參數混合解析（-v file.txt）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int verbose = 0;
+    const char *filename = NULL;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) {
+            verbose = 1;
+        } else {
+            filename = argv[i];
+        }
+    }
+    printf(&quot;題目28：verbose = %d，檔案名稱 = %s\n&quot;, verbose, filename != NULL ? filename : &quot;（無）&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 29：處理未知選項的錯誤訊息</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    for (int i = 1; i &lt; argc; i++) {
+        if (argv[i][0] == &#x27;-&#x27; &amp;&amp; strcmp(argv[i], &quot;-v&quot;) != 0 &amp;&amp; strcmp(argv[i], &quot;-h&quot;) != 0) {
+            printf(&quot;題目29：未知選項：%s\n&quot;, argv[i]);
+        }
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 30：解析長短選項並存入結構</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+struct Options {
+    int verbose;
+    int help;
+};
+
+int main(int argc, char *argv[]) {
+    struct Options opts = {0, 0};
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0 || strcmp(argv[i], &quot;--verbose&quot;) == 0) {
+            opts.verbose = 1;
+        } else if (strcmp(argv[i], &quot;-h&quot;) == 0 || strcmp(argv[i], &quot;--help&quot;) == 0) {
+            opts.help = 1;
+        }
+    }
+    printf(&quot;題目30：Options結構 verbose=%d, help=%d\n&quot;, opts.verbose, opts.help);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 31：使用旗標控制程式輸出的詳細程度（verbose mode）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int verbose = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) verbose = 1;
+    }
+    if (verbose) {
+        printf(&quot;題目31：[詳細模式] 正在處理任務...\n題目31：[詳細模式] 任務完成\n&quot;);
+    } else {
+        printf(&quot;題目31：任務完成\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 32：使用旗標切換輸出格式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int jsonMode = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;--json&quot;) == 0) jsonMode = 1;
+    }
+    if (jsonMode) {
+        printf(&quot;題目32：{\&quot;status\&quot;: \&quot;ok\&quot;}\n&quot;);
+    } else {
+        printf(&quot;題目32：狀態：ok\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 33：解析多個檔案名稱參數並逐一處理</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) {
+    printf(&quot;題目33：\n&quot;);
+    for (int i = 1; i &lt; argc; i++) {
+        printf(&quot;  處理檔案：%s\n&quot;, argv[i]);
+    }
+    if (argc == 1) {
+        printf(&quot;  （未提供檔案名稱）\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 34：使用旗標啟用/停用某個功能（--enable-log）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int logEnabled = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;--enable-log&quot;) == 0) logEnabled = 1;
+    }
+    printf(&quot;題目34：日誌功能是否啟用 = %d\n&quot;, logEnabled);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 35：選項預設值設計（若未提供則使用預設值）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int level = 1;  // 預設值
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;--level&quot;) == 0 &amp;&amp; i + 1 &lt; argc) {
+            level = atoi(argv[i + 1]);
+        }
+    }
+    printf(&quot;題目35：等級設定 = %d\n&quot;, level);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 36：選項互斥檢查（例如 -a 與 -b 不可同時使用）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    int hasA = 0, hasB = 0;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-a&quot;) == 0) hasA = 1;
+        if (strcmp(argv[i], &quot;-b&quot;) == 0) hasB = 1;
+    }
+    if (hasA &amp;&amp; hasB) {
+        printf(&quot;題目36：錯誤：-a 與 -b 不可同時使用\n&quot;);
+    } else {
+        printf(&quot;題目36：選項檢查通過\n&quot;);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 37：必要參數缺漏時的錯誤處理與結束程式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    if (argc &lt; 2) {
+        printf(&quot;題目37：錯誤：缺少必要參數，程式結束\n&quot;);
+        return 1;
+    }
+    printf(&quot;題目37：收到必要參數：%s\n&quot;, argv[1]);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 38：使用命令列參數模擬設定檔覆寫（override config）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int timeout = 30;  // 設定檔預設值
+    for (int i = 1; i &lt; argc; i++) {
+        char *eq = strchr(argv[i], &#x27;=&#x27;);
+        if (eq != NULL) {
+            *eq = &#x27;\0&#x27;;
+            if (strcmp(argv[i], &quot;timeout&quot;) == 0) {
+                timeout = atoi(eq + 1);
+            }
+        }
+    }
+    printf(&quot;題目38：最終 timeout 設定 = %d\n&quot;, timeout);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 39：解析版本查詢選項 --version</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+int main(int argc, char *argv[]) {
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;--version&quot;) == 0) {
+            printf(&quot;題目39：程式版本 v1.0.0\n&quot;);
+            return 0;
+        }
+    }
+    printf(&quot;題目39：未查詢版本資訊\n&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 40：綜合應用：簡易命令列工具的完整參數解析</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) {
+    int verbose = 0;
+    int count = 1;
+    const char *target = NULL;
+    for (int i = 1; i &lt; argc; i++) {
+        if (strcmp(argv[i], &quot;-v&quot;) == 0) {
+            verbose = 1;
+        } else if (strcmp(argv[i], &quot;-n&quot;) == 0 &amp;&amp; i + 1 &lt; argc) {
+            count = atoi(argv[++i]);
+        } else {
+            target = argv[i];
+        }
+    }
+    printf(&quot;題目40：verbose=%d, count=%d, target=%s\n&quot;, verbose, count, target != NULL ? target : &quot;（無）&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組三：模組化設計基礎（函式原型、標頭防衛、多檔案概念）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 41：函式原型宣告（Function Prototype）基礎</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int add(int a, int b);  // 函式原型（宣告）
+
+int main() {
+    printf(&quot;題目41：透過函式原型呼叫 add(3, 4) = %d\n&quot;, add(3, 4));
+    return 0;
+}
+
+int add(int a, int b) {  // 函式定義
+    return a + b;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 42：函式定義與宣告分離的概念示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int multiply(int a, int b);
+
+int main() {
+    int result = multiply(6, 7);
+    printf(&quot;題目42：函式先宣告後定義，呼叫結果 = %d\n&quot;, result);
+    return 0;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 43：標頭防衛（include guard）基本寫法</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#ifndef CONFIG_H
+#define CONFIG_H
+    #define APP_VERSION &quot;1.0.0&quot;
+#endif
+
+int main() {
+    printf(&quot;題目43：標頭防衛保護的常數 APP_VERSION = %s\n&quot;, APP_VERSION);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 44：模擬標頭檔內容（結構定義集中管理）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- 模擬 point.h 內容 ----
+struct Point {
+    int x;
+    int y;
+};
+// ---- 模擬 point.h 內容結束 ----
+
+int main() {
+    struct Point p1 = {3, 5};
+    printf(&quot;題目44：來自模擬標頭檔的結構 Point (%d, %d)\n&quot;, p1.x, p1.y);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 45：將相關函式依功能分組（模組化命名慣例）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- math_module ----
+int math_add(int a, int b) { return a + b; }
+int math_multiply(int a, int b) { return a * b; }
+// ---- math_module 結束 ----
+
+int main() {
+    printf(&quot;題目45：math_add(2,3)=%d，math_multiply(2,3)=%d\n&quot;, math_add(2, 3), math_multiply(2, 3));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 46：使用函式原型讓函式可以互相呼叫（前向宣告）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int isEven(int n);
+int isOdd(int n);
+
+int isEven(int n) {
+    if (n == 0) return 1;
+    return isOdd(n - 1);
+}
+
+int isOdd(int n) {
+    if (n == 0) return 0;
+    return isEven(n - 1);
+}
+
+int main() {
+    printf(&quot;題目46：7 是否為奇數 = %d（透過互相呼叫的函式判斷）\n&quot;, isOdd(7));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 47：模組化設計：將計算邏輯與輸出邏輯分離</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 計算邏輯模組
+int calculateArea(int width, int height) {
+    return width * height;
+}
+
+// 輸出邏輯模組
+void printArea(int area) {
+    printf(&quot;題目47：面積 = %d\n&quot;, area);
+}
+
+int main() {
+    int area = calculateArea(6, 8);
+    printArea(area);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 48：模組化設計：資料驗證函式獨立出來</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 驗證模組
+int isValidScore(int score) {
+    return score &gt;= 0 &amp;&amp; score &lt;= 100;
+}
+
+int main() {
+    int score = 85;
+    if (isValidScore(score)) {
+        printf(&quot;題目48：成績 %d 為有效分數\n&quot;, score);
+    } else {
+        printf(&quot;題目48：成績 %d 為無效分數\n&quot;, score);
+    }
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 49：模組化設計：常數集中管理（設定模組）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- config_module ----
+#define CONFIG_MAX_USERS 100
+#define CONFIG_TIMEOUT 30
+#define CONFIG_APP_NAME &quot;MySystem&quot;
+// ---- config_module 結束 ----
+
+int main() {
+    printf(&quot;題目49：系統設定 - 名稱:%s 最大使用者:%d 逾時:%d秒\n&quot;, CONFIG_APP_NAME, CONFIG_MAX_USERS, CONFIG_TIMEOUT);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 50：模組化設計：字串處理工具函式集合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+// ---- string_utils_module ----
+int strUtilsCountChar(const char *str, char target) {
+    int count = 0;
+    for (int i = 0; str[i] != &#x27;\0&#x27;; i++) {
+        if (str[i] == target) count++;
+    }
+    return count;
+}
+// ---- string_utils_module 結束 ----
+
+int main() {
+    printf(&quot;題目50：&#x27;programming&#x27; 中 &#x27;m&#x27; 出現次數 = %d\n&quot;, strUtilsCountChar(&quot;programming&quot;, &#x27;m&#x27;));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 51：模組化設計：數學運算工具函式集合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- math_utils_module ----
+int mathUtilsMax(int a, int b) { return a &gt; b ? a : b; }
+int mathUtilsMin(int a, int b) { return a &lt; b ? a : b; }
+int mathUtilsGcd(int a, int b) { return b == 0 ? a : mathUtilsGcd(b, a % b); }
+// ---- math_utils_module 結束 ----
+
+int main() {
+    printf(&quot;題目51：最大公因數 GCD(24, 18) = %d\n&quot;, mathUtilsGcd(24, 18));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 52：模組化設計：陣列處理工具函式集合</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- array_utils_module ----
+int arrayUtilsSum(int arr[], int n) {
+    int sum = 0;
+    for (int i = 0; i &lt; n; i++) sum += arr[i];
+    return sum;
+}
+
+double arrayUtilsAverage(int arr[], int n) {
+    return (double)arrayUtilsSum(arr, n) / n;
+}
+// ---- array_utils_module 結束 ----
+
+int main() {
+    int nums[5] = {10, 20, 30, 40, 50};
+    printf(&quot;題目52：陣列平均值 = %.1f\n&quot;, arrayUtilsAverage(nums, 5));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 53：使用函式原型建立簡易的API介面說明</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ==== API介面（函式原型集合） ====
+int api_login(const char *username);
+int api_logout(void);
+// ==== API介面結束 ====
+
+int api_login(const char *username) {
+    printf(&quot;題目53：使用者 %s 已登入\n&quot;, username);
+    return 1;
+}
+
+int api_logout(void) {
+    printf(&quot;題目53：使用者已登出\n&quot;);
+    return 1;
+}
+
+int main() {
+    api_login(&quot;Amy&quot;);
+    api_logout();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 54：多檔案專案的編譯概念說明（.c與.h分離）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+/*
+ * 在真實多檔案專案中：
+ * - math_module.h 會宣告函式原型
+ * - math_module.c 會實作函式內容
+ * - main.c 只需 #include &quot;math_module.h&quot; 即可使用
+ * 本範例將三者合併於單一檔案中示範觀念
+ */
+
+int addTwoNumbers(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    printf(&quot;題目54：模擬多檔案專案呼叫結果 = %d\n&quot;, addTwoNumbers(15, 20));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 55：模組化設計：I/O函式與商業邏輯函式分離</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// 商業邏輯模組
+int calculateDiscount(int price, int percent) {
+    return price - (price * percent / 100);
+}
+
+// I/O模組
+void displayResult(int finalPrice) {
+    printf(&quot;題目55：折扣後價格 = %d 元\n&quot;, finalPrice);
+}
+
+int main() {
+    int finalPrice = calculateDiscount(1000, 20);
+    displayResult(finalPrice);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 56：使用函式指標建立模組間的低耦合接口</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef int (*Validator)(int);
+
+int isPositive(int x) {
+    return x &gt; 0;
+}
+
+int validateInput(int value, Validator validate) {
+    return validate(value);
+}
+
+int main() {
+    int result = validateInput(-5, isPositive);
+    printf(&quot;題目56：透過函式指標接口驗證結果 = %d\n&quot;, result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 57：模組化設計：錯誤處理模組獨立設計</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- error_module ----
+typedef enum { ERR_NONE, ERR_INVALID_INPUT, ERR_OUT_OF_RANGE } ErrorCode;
+
+void reportError(ErrorCode code) {
+    switch (code) {
+        case ERR_NONE: printf(&quot;題目57：無錯誤\n&quot;); break;
+        case ERR_INVALID_INPUT: printf(&quot;題目57：錯誤：輸入無效\n&quot;); break;
+        case ERR_OUT_OF_RANGE: printf(&quot;題目57：錯誤：數值超出範圍\n&quot;); break;
+    }
+}
+// ---- error_module 結束 ----
+
+int main() {
+    reportError(ERR_OUT_OF_RANGE);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 58：模組化設計：把主程式流程拆成多個小函式（main精簡化）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+void initSystem() { printf(&quot;題目58：系統初始化完成\n&quot;); }
+void processData() { printf(&quot;題目58：資料處理完成\n&quot;); }
+void shutdownSystem() { printf(&quot;題目58：系統關閉完成\n&quot;); }
+
+int main() {
+    initSystem();
+    processData();
+    shutdownSystem();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 59：模組化設計：使用結構封裝相關資料與函式</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Counter {
+    int value;
+};
+
+void counterIncrement(struct Counter *c) {
+    c-&gt;value++;
+}
+
+int main() {
+    struct Counter counter = {0};
+    counterIncrement(&amp;counter);
+    counterIncrement(&amp;counter);
+    counterIncrement(&amp;counter);
+    printf(&quot;題目59：計數器最終值 = %d\n&quot;, counter.value);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 60：模組化設計綜合練習：簡易溫度轉換工具模組化</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+// ---- temperature_module ----
+double celsiusToFahrenheit(double c) {
+    return c * 9.0 / 5.0 + 32;
+}
+
+double fahrenheitToCelsius(double f) {
+    return (f - 32) * 5.0 / 9.0;
+}
+// ---- temperature_module 結束 ----
+
+int main() {
+    printf(&quot;題目60：攝氏25度 = 華氏%.1f度\n&quot;, celsiusToFahrenheit(25));
+    return 0;
+}</pre>
+        </div>
+
+        <h2>🙂 模組四：模組化進階應用（static封裝、extern共用、模組化架構範例）（20題）</h2>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 61：使用 static 函式限制檔案內部使用（模組私有函式）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int internalHelper(int x) {  // static函式：僅限本檔案內使用
+    return x * x;
+}
+
+int main() {
+    printf(&quot;題目61：呼叫static內部函式結果 = %d\n&quot;, internalHelper(6));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 62：使用 static 全域變數限制檔案內部存取（模組私有狀態）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int moduleCounter = 0;  // static全域變數：僅限本檔案存取
+
+void incrementCounter() {
+    moduleCounter++;
+}
+
+int main() {
+    incrementCounter();
+    incrementCounter();
+    printf(&quot;題目62：模組內部計數器 = %d\n&quot;, moduleCounter);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 63：static 變數保留函式呼叫之間的狀態（計數器示範）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int getNextId() {
+    static int id = 0;  // static區域變數：保留上次呼叫後的值
+    id++;
+    return id;
+}
+
+int main() {
+    printf(&quot;題目63：第一次呼叫 = %d\n&quot;, getNextId());
+    printf(&quot;題目63：第二次呼叫 = %d\n&quot;, getNextId());
+    printf(&quot;題目63：第三次呼叫 = %d\n&quot;, getNextId());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 64：extern 宣告：跨檔案共用全域變數的概念示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int sharedValue = 100;  // 在真實多檔案專案中，其他.c檔案可用extern宣告來存取此變數
+
+extern int sharedValue;  // 本範例在同一檔案內示範extern宣告語法
+
+int main() {
+    printf(&quot;題目64：透過extern宣告存取的共用變數 = %d\n&quot;, sharedValue);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 65：extern 函式宣告：跨檔案呼叫函式的概念示範</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+extern int computeSum(int a, int b);  // 宣告：實作可能位於另一個.c檔案
+
+int computeSum(int a, int b) {  // 本範例在同一檔案內提供實作
+    return a + b;
+}
+
+int main() {
+    printf(&quot;題目65：透過extern宣告呼叫函式 = %d\n&quot;, computeSum(9, 8));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 66：區分內部連結（internal linkage）與外部連結（external linkage）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int internalVar = 10;  // 內部連結：僅限本檔案
+int externalVar = 20;          // 外部連結：可被其他檔案存取（透過extern）
+
+int main() {
+    printf(&quot;題目66：內部連結變數 = %d，外部連結變數 = %d\n&quot;, internalVar, externalVar);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 67：使用 static 封裝模組的內部實作細節（資訊隱藏）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int computeInternal(int x) {  // 內部實作細節，外部不需知道
+    return x * 2 + 1;
+}
+
+int publicApi(int x) {  // 對外公開的介面
+    return computeInternal(x);
+}
+
+int main() {
+    printf(&quot;題目67：透過公開介面呼叫結果 = %d\n&quot;, publicApi(5));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 68：模組化：公開介面（public API）與私有實作（private impl）分離</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static double privateCalculateTax(double price) {  // 私有實作
+    return price * 0.05;
+}
+
+double publicGetFinalPrice(double price) {  // 公開介面
+    return price + privateCalculateTax(price);
+}
+
+int main() {
+    printf(&quot;題目68：含稅最終價格 = %.2f\n&quot;, publicGetFinalPrice(1000.0));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 69：使用 static 建立簡易的單例模式（Singleton-like）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct Config {
+    int maxUsers;
+};
+
+struct Config* getConfigInstance() {
+    static struct Config instance = {100};  // 只會初始化一次，之後回傳同一個實例
+    return &amp;instance;
+}
+
+int main() {
+    struct Config *c1 = getConfigInstance();
+    struct Config *c2 = getConfigInstance();
+    printf(&quot;題目69：兩次取得的實例是否相同 = %d（1表示是同一個單例）\n&quot;, c1 == c2);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 70：模組初始化函式設計（init function pattern）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int initialized = 0;
+
+void moduleInit() {
+    if (!initialized) {
+        printf(&quot;題目70：模組初始化中...\n&quot;);
+        initialized = 1;
+    } else {
+        printf(&quot;題目70：模組已初始化，略過\n&quot;);
+    }
+}
+
+int main() {
+    moduleInit();
+    moduleInit();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 71：模組化：使用結構模擬物件導向的模組實例</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+struct BankAccount {
+    double balance;
+};
+
+void accountDeposit(struct BankAccount *acc, double amount) {
+    acc-&gt;balance += amount;
+}
+
+int main() {
+    struct BankAccount myAccount = {0.0};
+    accountDeposit(&amp;myAccount, 500.0);
+    accountDeposit(&amp;myAccount, 300.0);
+    printf(&quot;題目71：帳戶餘額 = %.2f\n&quot;, myAccount.balance);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 72：模組化：計數器模組（封裝內部計數，只提供操作函式）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int counterValue = 0;
+
+void counterReset() { counterValue = 0; }
+void counterAdd() { counterValue++; }
+int counterGet() { return counterValue; }
+
+int main() {
+    counterAdd();
+    counterAdd();
+    counterAdd();
+    printf(&quot;題目72：計數器模組目前值 = %d\n&quot;, counterGet());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 73：模組化：堆疊模組封裝</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define STACK_CAPACITY 10
+
+static int stackData[STACK_CAPACITY];
+static int stackTop = -1;
+
+void stackPush(int value) {
+    if (stackTop &lt; STACK_CAPACITY - 1) {
+        stackData[++stackTop] = value;
+    }
+}
+
+int stackPop() {
+    return stackData[stackTop--];
+}
+
+int main() {
+    stackPush(10);
+    stackPush(20);
+    stackPush(30);
+    printf(&quot;題目73：堆疊模組彈出的值 = %d\n&quot;, stackPop());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 74：模組化：佇列模組封裝</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define QUEUE_CAPACITY 10
+
+static int queueData[QUEUE_CAPACITY];
+static int queueFront = 0, queueRear = 0;
+
+void queueEnqueue(int value) {
+    queueData[queueRear++] = value;
+}
+
+int queueDequeue() {
+    return queueData[queueFront++];
+}
+
+int main() {
+    queueEnqueue(100);
+    queueEnqueue(200);
+    printf(&quot;題目74：佇列模組取出的值 = %d\n&quot;, queueDequeue());
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 75：模組化：簡易記錄檔模組（Logger module）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int logCount = 0;
+
+void logMessage(const char *msg) {
+    logCount++;
+    printf(&quot;[LOG #%d] %s\n&quot;, logCount, msg);
+}
+
+int main() {
+    printf(&quot;題目75：\n&quot;);
+    logMessage(&quot;系統啟動&quot;);
+    logMessage(&quot;使用者登入&quot;);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 76：模組化：簡易設定管理模組（Config module）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+static int configTimeout = 30;
+static char configAppName[20] = &quot;DefaultApp&quot;;
+
+void configSetTimeout(int timeout) {
+    configTimeout = timeout;
+}
+
+int configGetTimeout() {
+    return configTimeout;
+}
+
+int main() {
+    configSetTimeout(60);
+    printf(&quot;題目76：設定模組的timeout值 = %d，應用名稱 = %s\n&quot;, configGetTimeout(), configAppName);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 77：模組化：使用函式指標實作模組的可替換行為（策略介面）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+typedef int (*CompressStrategy)(int size);
+
+int fastCompress(int size) { return size / 2; }
+int strongCompress(int size) { return size / 4; }
+
+int main() {
+    CompressStrategy strategy = strongCompress;
+    printf(&quot;題目77：壓縮後大小 = %d\n&quot;, strategy(1000));
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 78：模組化：模擬多個模組協作（輸入模組→處理模組→輸出模組）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+int inputModule() {
+    return 42;  // 模擬輸入模組取得資料
+}
+
+int processModule(int data) {
+    return data * 2;  // 處理模組進行運算
+}
+
+void outputModule(int result) {
+    printf(&quot;題目78：模組協作最終輸出結果 = %d\n&quot;, result);
+}
+
+int main() {
+    int data = inputModule();
+    int result = processModule(data);
+    outputModule(result);
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 79：模組化：版本資訊模組（version module）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+
+#define VERSION_MAJOR 2
+#define VERSION_MINOR 3
+#define VERSION_PATCH 1
+
+void printVersion() {
+    printf(&quot;題目79：版本資訊 v%d.%d.%d\n&quot;, VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH);
+}
+
+int main() {
+    printVersion();
+    return 0;
+}</pre>
+        </div>
+
+        <div class="code-block">
+            <div class="code-top-bar">
+        <div class="code-header">題目 80：綜合應用：簡易命令列工具架構（命令解析 + 業務邏輯 + 輸出模組協作）</div>
+            <button class="copy-btn" onclick="copyCode(this)">複製</button></div>
+            <pre>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+// ---- 命令解析模組 ----
+typedef struct {
+    char command[20];
+    int value;
+} ParsedCommand;
+
+ParsedCommand parseArgs(int argc, char *argv[]) {
+    ParsedCommand cmd = {&quot;none&quot;, 0};
+    if (argc &gt; 2) {
+        strcpy(cmd.command, argv[1]);
+        cmd.value = atoi(argv[2]);
+    }
+    return cmd;
+}
+
+// ---- 業務邏輯模組 ----
+int executeCommand(ParsedCommand cmd) {
+    if (strcmp(cmd.command, &quot;double&quot;) == 0) {
+        return cmd.value * 2;
+    } else if (strcmp(cmd.command, &quot;square&quot;) == 0) {
+        return cmd.value * cmd.value;
+    }
+    return 0;
+}
+
+// ---- 輸出模組 ----
+void printResult(int result) {
+    printf(&quot;題目80：命令列工具執行結果 = %d\n&quot;, result);
+}
+
+int main(int argc, char *argv[]) {
+    ParsedCommand cmd = parseArgs(argc, argv);
+    int result = executeCommand(cmd);
+    printResult(result);
+    return 0;
+}</pre>
+        </div>
+
+    </div>
+
+    <div class="toast" id="toast">程式碼已複製！</div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-block');
+            const pre = codeBlock.querySelector('pre');
+            const code = pre.textContent;
+
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = '已複製!';
+                button.classList.add('copied');
+
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    button.textContent = '複製';
+                    button.classList.remove('copied');
+                    toast.classList.remove('show');
+                }, 3000);
+            }).catch(err => {
+                console.error('複製失敗:', err);
+                button.textContent = '複製失敗';
+                setTimeout(() => {
+                    button.textContent = '複製';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

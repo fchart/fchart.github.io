@@ -47,7 +47,7 @@
     color: var(--spine-text);
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh; height: 100dvh;
     position: sticky;
     top: 0;
     overflow-y: auto;
@@ -160,7 +160,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh; height: 100dvh;
   }
 
   .content-bar {
@@ -235,11 +235,11 @@
       position: static;
       transition: max-height 0.25s ease;
     }
-    .spine.open { max-height: 80vh; overflow-y: auto; }
+    .spine.open { max-height: 80vh; max-height: 80dvh; overflow-y: auto; }
     .spine-header { display: none; }
 
     main { height: auto; flex: 1; }
-    .frame-wrap { height: 70vh; }
+    .frame-wrap { height: 70vh; height: 70dvh; }
   }
 
   a:focus-visible,
@@ -306,7 +306,7 @@
       <button class="toc-item" data-num="11" data-title="指標進階應用與函數指標" data-file="11_C語言程式範例_指標進階應用與函數指標.html">
         <span class="num">11</span><span class="label">指標進階應用與函數指標</span>
       </button>
-      <button class="toc-item" data-num="12" data-title="命令列參數與模組化" data-file="12_C語言程式範例_命令列參數與與模組化.html">
+      <button class="toc-item" data-num="12" data-title="命令列參數與模組化" data-file="12_C語言程式範例_命令列參數與模組化.html">
         <span class="num">12</span><span class="label">命令列參數與模組化</span>
       </button>
     </nav>
