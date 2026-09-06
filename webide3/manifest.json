@@ -1,7 +1,7 @@
 {
-  "name": "離線 Web-IDE",
-  "short_name": "Web-IDE",
-  "description": "C / Python 離線程式編輯與執行環境",
+  "name": "離線 Web-IDE-TCC",
+  "short_name": "Web-IDE-TCC",
+  "description": "C / Python 離線程式編輯與執行環境 (TCC-Wasm 實驗版)",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

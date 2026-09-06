@@ -6,10 +6,10 @@
 <meta name="theme-color" content="#4f46e5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Web-IDE">
+<meta name="apple-mobile-web-app-title" content="Web-IDE-TCC">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<title>離線 Web-IDE</title>
+<title>離線 Web-IDE-TCC</title>
 <style>
 /* BASICS */
 
@@ -803,7 +803,7 @@ input[type=file]{display:none;}
 <body>
 <div id="app">
   <div id="topbar">
-    <span class="brand">🖥️ 離線 Web-IDE</span>
+    <span class="brand">🖥️ 離線 Web-IDE-TCC</span>
     <button class="tabbtn active" id="tabC">C</button>
     <button class="tabbtn" id="tabPy">Python</button>
     <span class="menuWrap">
@@ -14439,6 +14439,70 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       ]}
     ]
   };
+  /* ====TCC_REALDEVICE_TESTS==== */
+
+  /* ---- 真機複驗測試程式(僅 _TCC 單檔版注入;點擊即整份載入) ---- */
+  (function () {
+    var _items = [
+      {
+        label: "① 安裝 → Hello 開機確認(任一引擎)",
+        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("Hello, 離線版!\\n");\n    printf("▾ 執行選單內: JSCPP(互動) 與 TCC-Wasm(批次) 並存\\n");\n    return 0;\n}\n' }
+      },
+      {
+        label: "② [TCC] struct + scanf(&arr[i]) 批次輸入",
+        code: { _tccReplace: '#include <stdio.h>\nstruct Point { int x; int y; };\nint main() {\n    int arr[3];\n    struct Point p;\n    printf("請輸入 3 個整數(空格分隔), 接著 x y:\\n");\n    scanf("%d %d %d", &arr[0], &arr[1], &arr[2]);\n    scanf("%d %d", &p.x, &p.y);\n    printf("arr[0..2] = %d %d %d\\n", arr[0], arr[1], arr[2]);\n    printf("Point = (%d, %d)\\n", p.x, p.y);\n    return 0;\n}\n' }
+      },
+      {
+        label: "③ [TCC] 中文 printf(UTF-8 直通)",
+        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("你好,世界!\\n");\n    printf("中文直通測試: 離線程式語言練習 123\\n");\n    return 0;\n}\n' }
+      },
+      {
+        label: "④ [TCC] 編譯錯誤真實行號 → input.c:5",
+        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    int x = 100;\n    printf("錯誤在下一行...\\n");\n    x = y + 1;   /* y 未宣告 */\n    printf("x = %d\\n", x);\n    return 0;\n}\n' }
+      },
+      {
+        label: "⑤ [TCC] 無窮迴圈 → 15秒看門狗 / ⏹中斷",
+        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("無窮迴圈開始... 請按「⏹ 中斷執行」或等 15 秒看門狗\\n");\n    for (;;) { }\n    printf("本行不應輸出(程式已被中斷)\\n");\n    return 0;\n}\n' }
+      },
+      {
+        label: "⑥ [JSCPP] 互動輸入(逐行暫停)",
+        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    int n;\n    printf("JSCPP 互動輸入: 請輸入一個整數 n = ?\\n");\n    scanf("%d", &n);\n    printf("你輸入的是 %d\\n", n);\n    return 0;\n}\n' }
+      }
+    ];
+    try {
+      var _patched = false;
+      if (typeof insertSnippet === "function") {
+        var _origInsert = insertSnippet;
+        insertSnippet = function (arg) {
+          if (arg && typeof arg === "object" && arg._tccReplace) {
+            var cm = activeLang === "c" ? cmC : cmPy;
+            cm.setValue(arg._tccReplace);
+            cm.focus();
+            try { setStatus("已載入「真機複驗」測試程式", "ok"); } catch (se) {}
+            return;
+          }
+          return _origInsert.apply(this, arguments);
+        };
+        _patched = true;
+      }
+      if (SNIPPETS && SNIPPETS.c) {
+        SNIPPETS.c.push({ cat: "真機複驗 (TCC-Wasm) S", items: _items });
+      }
+      window.__tccTestsReady = function () {
+        var last = SNIPPETS.c[SNIPPETS.c.length - 1];
+        return { cats: SNIPPETS.c.length, cat: last.cat, items: last.items.length, k: _patched };
+      };
+      window.__tccTestsLoad = function (idx) {
+        var it = SNIPPETS.c[SNIPPETS.c.length - 1].items[idx];
+        insertSnippet(it.code);
+        return cmC.getValue();
+      };
+      window.__tccTestInjected = true;
+      window.__tccTestErr = null;
+    } catch (e) {
+      window.__tccTestErr = String((e && e.stack) || e);
+    }
+  })();
 
   function buildSnippetMenu() {
     snippetMenu.innerHTML = "";
