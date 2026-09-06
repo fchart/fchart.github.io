@@ -14439,9 +14439,10 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       ]}
     ]
   };
-  /* ====TCC_REALDEVICE_TESTS==== */
+      /* ====TCC_REALDEVICE_TESTS==== */
 
   /* ---- 真機複驗測試程式(僅 _TCC 單檔版注入;點擊即整份載入) ---- */
+  /* __tccTestSetRev:2026-09-malloc7b */
   (function () {
     var _items = [
       {
@@ -14467,6 +14468,10 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       {
         label: "⑥ [JSCPP] 互動輸入(逐行暫停)",
         code: { _tccReplace: '#include <stdio.h>\nint main() {\n    int n;\n    printf("JSCPP 互動輸入: 請輸入一個整數 n = ?\\n");\n    scanf("%d", &n);\n    printf("你輸入的是 %d\\n", n);\n    return 0;\n}\n' }
+      },
+      {
+        label: "⑦ [TCC] 記憶體: 指標 + malloc/free 反覆配置",
+        code: { _tccReplace: '#include <stdio.h>\n#include <stdlib.h>\nint main() {\n    int *ptr[100];\n    int round, i;\n    printf("記憶體測試開始 (TCC-Wasm): 3 輪 x 100 次 malloc/free\\n");\n    for (round = 0; round < 3; round++) {\n        for (i = 0; i < 100; i++) {\n            ptr[i] = (int*)malloc((i + 2) * sizeof(int));\n            if (!ptr[i]) { printf("第 %d 次 malloc 失敗!\\n", i + 1); return 1; }\n            ptr[i][0] = i;\n            ptr[i][i + 1] = 1000 + i;\n        }\n        for (i = 0; i < 100; i++) {\n            if (ptr[i][0] != i || ptr[i][i + 1] != 1000 + i) { printf("內容損壞 at %d\\n", i); return 2; }\n            free(ptr[i]);\n        }\n    }\n    printf("通過: 100 個指標 x 3 輪 malloc/free 正常, 無 overflow、無洩漏\\n");\n    return 0;\n}\n' }
       }
     ];
     try {
