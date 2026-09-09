@@ -617,6 +617,7 @@ span.CodeMirror-selectedtext { background: none; }
   --accent:#5ec2a8;
   --accent-dark:#3f9c85;
   --danger:#e0645a;
+  --warning:#e0a94f;
   --tab-active:#33363a;
 }
 body.light{
@@ -629,6 +630,7 @@ body.light{
   --accent:#0e7a66;
   --accent-dark:#0c6b59;
   --danger:#c2372c;
+  --warning:#a16207;
   --tab-active:#e3e6ea;
   --run-text:#ffffff;
 }
@@ -726,6 +728,7 @@ input[type=file]{display:none;}
 }
 #status.err{color:var(--danger);}
 #status.ok{color:var(--accent);}
+#status.warn{color:var(--warning);}
 
 /* ---- Mobile / tablet portrait ---- */
 @media (max-width: 900px){
@@ -830,7 +833,7 @@ input[type=file]{display:none;}
         <div style="padding:6px 10px;">
           <select id="engineSel" style="width:100%;padding:5px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);">
             <option value="jscpp">JSCPP(預設・互動輸入)</option>
-            <option value="tcc">TCC-Wasm(實驗・批次輸入)</option>
+            <option value="tcc">TCC-Wasm(C99・批次輸入)</option>
           </select>
         </div>
       </div>
@@ -13722,6 +13725,130 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
     return { code: result, map: map };
   }
 
+  /* ---------------------------------------------------------------
+   * JSCPP behind-the-scenes deadlock fix.
+   *
+   * The JSCPP debugger desk-checks on infinite loops whose body has
+   * NO executable statement (empty {}, lone ';', comments only) - e.g.
+   *   for(;;){}      (this is iPad_test05.c)
+   *   while(1);      (busy-wait spin)
+   *   do{}while(1);
+   * While stepping such a loop, a single dbg.next() never returns, which
+   * freezes the whole page (the 15s watchdog shares the same thread and
+   * can never fire). A loop whose body actually does something runs fine
+   * and simply hits the normal time-limit warning.
+   *
+   * Fix: before handing the source to JSCPP, rewrite every loop whose
+   * body is empty into one with a harmless counter body, e.g.
+   *   for(;;){}  ->  for(;;){ int __webide_nop0 = 0; __webide_nop0++; }
+   * ASCII-only, never adds or removes a line (so JSCPP's error line
+   * numbers and the CJK encoder stay unaffected), and skips comments /
+   * string / char literals so loop-looking text inside them is untouched.
+   * ------------------------------------------------------------- */
+  function patchEmptyLoopBodies(src) {
+    var TK = [];
+    var ti = 0, tn = src.length;
+    while (ti < tn) {
+      var c = src[ti];
+      if (c === "/" && src[ti + 1] === "/") { var j = src.indexOf("\n", ti); if (j < 0) j = tn; TK.push({ k: "ws", s: ti, e: j }); ti = j; continue; }
+      if (c === "/" && src[ti + 1] === "*") { var j = src.indexOf("*/", ti + 2); if (j < 0) j = tn - 2; TK.push({ k: "ws", s: ti, e: j + 2 }); ti = j + 2; continue; }
+      if (c === '"' || c === "'") { var q = c, j = ti + 1; while (j < tn) { if (src[j] === "\\") { j += 2; continue; } if (src[j] === q) { j++; break; } j++; } TK.push({ k: "lit", s: ti, e: j }); ti = j; continue; }
+      if (/\s/.test(c)) { var j = ti; while (j < tn && /\s/.test(src[j])) j++; TK.push({ k: "ws", s: ti, e: j }); ti = j; continue; }
+      if (/[A-Za-z_]/.test(c)) { var j = ti; while (j < tn && /[A-Za-z0-9_]/.test(src[j])) j++; TK.push({ k: /^(for|while|do)$/.test(src.slice(ti, j)) ? "kw" : "id", s: ti, e: j }); ti = j; continue; }
+      if (/[0-9]/.test(c)) { var j = ti; while (j < tn && /[0-9A-Za-z._]/.test(src[j])) j++; TK.push({ k: "num", s: ti, e: j }); ti = j; continue; }
+      TK.push({ k: "p", s: ti, e: ti + 1 }); ti++;
+    }
+    function matchParen(openIdx) {
+      var d = 0;
+      for (var g = openIdx; g < TK.length; g++) {
+        if (TK[g].k !== "p") continue;
+        var ch = src[TK[g].s];
+        if (ch === "(") d++;
+        else if (ch === ")") { d--; if (d === 0) return g; }
+      }
+      return -1;
+    }
+    function matchBrace(openIdx) {
+      var d = 0;
+      for (var g = openIdx; g < TK.length; g++) {
+        if (TK[g].k !== "p") continue;
+        var ch = src[TK[g].s];
+        if (ch === "{") d++;
+        else if (ch === "}") { d--; if (d === 0) return g; }
+      }
+      return -1;
+    }
+    function bodyEmptyBlock(openIdx, closeIdx) {
+      for (var g = openIdx + 1; g < closeIdx; g++) {
+        if (TK[g].k === "ws") continue;
+        if (TK[g].k === "p" && src[TK[g].s] === ";") continue;
+        return false;
+      }
+      return true;
+    }
+    var consumed = {};
+    function markDoTrailer(afterIdx) {
+      var g = afterIdx;
+      while (g < TK.length && TK[g].k === "ws") g++;
+      if (g >= TK.length || TK[g].k !== "kw" || src.slice(TK[g].s, TK[g].e) !== "while") return;
+      consumed[g] = true;
+    }
+    var fixes = [];
+    for (var t = 0; t < TK.length; t++) {
+      if (TK[t].k !== "kw" || consumed[t]) continue;
+      var kw = src.slice(TK[t].s, TK[t].e);
+      var m = t + 1;
+      while (m < TK.length && TK[m].k === "ws") m++;
+      if (kw === "for" || kw === "while") {
+        if (m >= TK.length || TK[m].k !== "p" || src[TK[m].s] !== "(") continue;
+        var closeP = matchParen(m);
+        if (closeP < 0) continue;
+        var b = closeP + 1;
+        while (b < TK.length && TK[b].k === "ws") b++;
+        if (b >= TK.length) continue;
+        if (src[TK[b].s] === "{") {
+          var cB = matchBrace(b);
+          if (cB < 0) continue;
+          if (bodyEmptyBlock(b, cB)) fixes.push({ kind: "block-inject", at: TK[b].e });
+        } else if (src[TK[b].s] === ";") {
+          fixes.push({ kind: "replace", s: TK[b].s, e: TK[b].e });
+        }
+      } else if (kw === "do") {
+        if (m >= TK.length) continue;
+        if (src[TK[m].s] === "{") {
+          var cB2 = matchBrace(m);
+          if (cB2 < 0) continue;
+          markDoTrailer(cB2 + 1);
+          if (bodyEmptyBlock(m, cB2)) fixes.push({ kind: "block-inject", at: TK[m].e });
+        } else if (src[TK[m].s] === ";") {
+          markDoTrailer(m + 1);
+          fixes.push({ kind: "replace", s: TK[m].s, e: TK[m].e });
+        }
+      }
+    }
+    if (!fixes.length) return src;
+    fixes.sort(function (a, b) { return (b.at !== undefined ? b.at : b.s) - (a.at !== undefined ? a.at : a.s); });
+    var seq = 0;
+    var usedNames = {};
+    function nextName() {
+      var nm;
+      do { nm = "__webide_nop" + (seq++); } while (src.indexOf(nm) >= 0 || usedNames[nm]);
+      usedNames[nm] = true;
+      return nm;
+    }
+    for (var f = 0; f < fixes.length; f++) {
+      var fx = fixes[f];
+      var nm2 = nextName();
+      var stmt = "{ int " + nm2 + " = 0; " + nm2 + "++; }";
+      if (fx.kind === "block-inject") {
+        src = src.slice(0, fx.at) + " " + stmt.slice(1, -1) + " " + src.slice(fx.at);
+      } else {
+        src = src.slice(0, fx.s) + stmt + src.slice(fx.e);
+      }
+    }
+    return src;
+  }
+
   function restoreCJKPlaceholders(output, map) {
     return output.replace(/\u0001(\d+)\u0001/g, function (m, id) {
       var token = "\u0001" + id + "\u0001";
@@ -13757,7 +13884,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       return 1;   /* no #include found -> no offset */
     })(rawCode);
 
-    var transformed = encodeCJKLiteralsForJSCPP(rawCode);
+    var transformed = encodeCJKLiteralsForJSCPP(patchEmptyLoopBodies(rawCode));
     var cjkMap = transformed.map;
     var heldOut = "";   // partial CJK placeholder token held back between writes
 
@@ -13939,6 +14066,10 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
   }
 
   function openTccInput() {
+    if (!/\b(?:scanf_s|fscanf_s|sscanf_s|scanf|fscanf|sscanf|vscanf|vfscanf|vsscanf|gets_s|gets|fgets|getchar|getc|fgetc|getline|getw|getch|getche|_getch|_getche)\s*\(/i.test(cmC.getValue())) {
+      runCTcc(false);
+      return;
+    }
     var saved = null;
     try { saved = localStorage.getItem(TCC_STDIN_KEY); } catch (e) {}
     if (saved !== null) tccStdinEl.value = saved;
@@ -14006,10 +14137,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
 
     tccTimer = setTimeout(function () {
       tccTimer = null;
-      if (tccWorker) { try { tccWorker.terminate(); } catch (e) {} tccWorker = null; }
-      term.writeln("\r\n\u001b[31m錯誤: 程式執行超過時間限制(可能存在無窮迴圈)\u001b[0m");
-      setStatus("執行超過時間限制(可能存在無窮迴圈)", "err");
-      setRunEnabled(true);
+      setStatus("已執行超過 15 秒,可能是無窮迴圈——如果沒反應,可按「停止」中斷", "warn");
     }, 15000);
 
     worker.postMessage({ cmd: "run", source: source, stdin: stdin });
@@ -14116,7 +14244,11 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
   document.addEventListener("keydown", function (e) {
     if ((e.ctrlKey || e.metaKey) && (e.key === "Enter" || e.key === "NumpadEnter")) {
       e.preventDefault();
-      runCode();
+      if (tccInputModal && tccInputModal.classList.contains("open")) {
+        runCTcc(true);
+      } else {
+        runCode();
+      }
     }
   });
 
@@ -14439,75 +14571,6 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       ]}
     ]
   };
-      /* ====TCC_REALDEVICE_TESTS==== */
-
-  /* ---- 真機複驗測試程式(僅 _TCC 單檔版注入;點擊即整份載入) ---- */
-  /* __tccTestSetRev:2026-09-malloc7b */
-  (function () {
-    var _items = [
-      {
-        label: "① 安裝 → Hello 開機確認(任一引擎)",
-        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("Hello, 離線版!\\n");\n    printf("▾ 執行選單內: JSCPP(互動) 與 TCC-Wasm(批次) 並存\\n");\n    return 0;\n}\n' }
-      },
-      {
-        label: "② [TCC] struct + scanf(&arr[i]) 批次輸入",
-        code: { _tccReplace: '#include <stdio.h>\nstruct Point { int x; int y; };\nint main() {\n    int arr[3];\n    struct Point p;\n    printf("請輸入 3 個整數(空格分隔), 接著 x y:\\n");\n    scanf("%d %d %d", &arr[0], &arr[1], &arr[2]);\n    scanf("%d %d", &p.x, &p.y);\n    printf("arr[0..2] = %d %d %d\\n", arr[0], arr[1], arr[2]);\n    printf("Point = (%d, %d)\\n", p.x, p.y);\n    return 0;\n}\n' }
-      },
-      {
-        label: "③ [TCC] 中文 printf(UTF-8 直通)",
-        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("你好,世界!\\n");\n    printf("中文直通測試: 離線程式語言練習 123\\n");\n    return 0;\n}\n' }
-      },
-      {
-        label: "④ [TCC] 編譯錯誤真實行號 → input.c:5",
-        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    int x = 100;\n    printf("錯誤在下一行...\\n");\n    x = y + 1;   /* y 未宣告 */\n    printf("x = %d\\n", x);\n    return 0;\n}\n' }
-      },
-      {
-        label: "⑤ [TCC] 無窮迴圈 → 15秒看門狗 / ⏹中斷",
-        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    printf("無窮迴圈開始... 請按「⏹ 中斷執行」或等 15 秒看門狗\\n");\n    for (;;) { }\n    printf("本行不應輸出(程式已被中斷)\\n");\n    return 0;\n}\n' }
-      },
-      {
-        label: "⑥ [JSCPP] 互動輸入(逐行暫停)",
-        code: { _tccReplace: '#include <stdio.h>\nint main() {\n    int n;\n    printf("JSCPP 互動輸入: 請輸入一個整數 n = ?\\n");\n    scanf("%d", &n);\n    printf("你輸入的是 %d\\n", n);\n    return 0;\n}\n' }
-      },
-      {
-        label: "⑦ [TCC] 記憶體: 指標 + malloc/free 反覆配置",
-        code: { _tccReplace: '#include <stdio.h>\n#include <stdlib.h>\nint main() {\n    int *ptr[100];\n    int round, i;\n    printf("記憶體測試開始 (TCC-Wasm): 3 輪 x 100 次 malloc/free\\n");\n    for (round = 0; round < 3; round++) {\n        for (i = 0; i < 100; i++) {\n            ptr[i] = (int*)malloc((i + 2) * sizeof(int));\n            if (!ptr[i]) { printf("第 %d 次 malloc 失敗!\\n", i + 1); return 1; }\n            ptr[i][0] = i;\n            ptr[i][i + 1] = 1000 + i;\n        }\n        for (i = 0; i < 100; i++) {\n            if (ptr[i][0] != i || ptr[i][i + 1] != 1000 + i) { printf("內容損壞 at %d\\n", i); return 2; }\n            free(ptr[i]);\n        }\n    }\n    printf("通過: 100 個指標 x 3 輪 malloc/free 正常, 無 overflow、無洩漏\\n");\n    return 0;\n}\n' }
-      }
-    ];
-    try {
-      var _patched = false;
-      if (typeof insertSnippet === "function") {
-        var _origInsert = insertSnippet;
-        insertSnippet = function (arg) {
-          if (arg && typeof arg === "object" && arg._tccReplace) {
-            var cm = activeLang === "c" ? cmC : cmPy;
-            cm.setValue(arg._tccReplace);
-            cm.focus();
-            try { setStatus("已載入「真機複驗」測試程式", "ok"); } catch (se) {}
-            return;
-          }
-          return _origInsert.apply(this, arguments);
-        };
-        _patched = true;
-      }
-      if (SNIPPETS && SNIPPETS.c) {
-        SNIPPETS.c.push({ cat: "真機複驗 (TCC-Wasm) S", items: _items });
-      }
-      window.__tccTestsReady = function () {
-        var last = SNIPPETS.c[SNIPPETS.c.length - 1];
-        return { cats: SNIPPETS.c.length, cat: last.cat, items: last.items.length, k: _patched };
-      };
-      window.__tccTestsLoad = function (idx) {
-        var it = SNIPPETS.c[SNIPPETS.c.length - 1].items[idx];
-        insertSnippet(it.code);
-        return cmC.getValue();
-      };
-      window.__tccTestInjected = true;
-      window.__tccTestErr = null;
-    } catch (e) {
-      window.__tccTestErr = String((e && e.stack) || e);
-    }
-  })();
 
   function buildSnippetMenu() {
     snippetMenu.innerHTML = "";
