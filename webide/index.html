@@ -13628,6 +13628,115 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
   }
 
   /* ---------------------------------------------------------------
+   * Patch empty loop bodies so JSCPP's debugger never hangs on
+   * infinite loops whose body contains no executable statements.
+   * Injects a trivial counter variable into empty `for(;;){}`, etc.
+   * ------------------------------------------------------------- */
+  function patchEmptyLoopBodies(src) {
+    var TK = [];
+    var ti = 0, tn = src.length;
+    while (ti < tn) {
+      var c = src[ti];
+      if (c === "/" && src[ti + 1] === "/") { var j = src.indexOf("\n", ti); if (j < 0) j = tn; TK.push({ k: "ws", s: ti, e: j }); ti = j; continue; }
+      if (c === "/" && src[ti + 1] === "*") { var j = src.indexOf("*/", ti + 2); if (j < 0) j = tn - 2; TK.push({ k: "ws", s: ti, e: j + 2 }); ti = j + 2; continue; }
+      if (c === '"' || c === "'") { var q = c, j = ti + 1; while (j < tn) { if (src[j] === "\\") { j += 2; continue; } if (src[j] === q) { j++; break; } j++; } TK.push({ k: "lit", s: ti, e: j }); ti = j; continue; }
+      if (/\s/.test(c)) { var j = ti; while (j < tn && /\s/.test(src[j])) j++; TK.push({ k: "ws", s: ti, e: j }); ti = j; continue; }
+      if (/[A-Za-z_]/.test(c)) { var j = ti; while (j < tn && /[A-Za-z0-9_]/.test(src[j])) j++; TK.push({ k: /^(for|while|do)$/.test(src.slice(ti, j)) ? "kw" : "id", s: ti, e: j }); ti = j; continue; }
+      if (/[0-9]/.test(c)) { var j = ti; while (j < tn && /[0-9A-Za-z._]/.test(src[j])) j++; TK.push({ k: "num", s: ti, e: j }); ti = j; continue; }
+      TK.push({ k: "p", s: ti, e: ti + 1 }); ti++;
+    }
+    function matchParen(openIdx) {
+      var d = 0;
+      for (var g = openIdx; g < TK.length; g++) {
+        if (TK[g].k !== "p") continue;
+        var ch = src[TK[g].s];
+        if (ch === "(") d++;
+        else if (ch === ")") { d--; if (d === 0) return g; }
+      }
+      return -1;
+    }
+    function matchBrace(openIdx) {
+      var d = 0;
+      for (var g = openIdx; g < TK.length; g++) {
+        if (TK[g].k !== "p") continue;
+        var ch = src[TK[g].s];
+        if (ch === "{") d++;
+        else if (ch === "}") { d--; if (d === 0) return g; }
+      }
+      return -1;
+    }
+    function bodyEmptyBlock(openIdx, closeIdx) {
+      for (var g = openIdx + 1; g < closeIdx; g++) {
+        if (TK[g].k === "ws") continue;
+        if (TK[g].k === "p" && src[TK[g].s] === ";") continue;
+        return false;
+      }
+      return true;
+    }
+    var consumed = {};
+    function markDoTrailer(afterIdx) {
+      var g = afterIdx;
+      while (g < TK.length && TK[g].k === "ws") g++;
+      if (g >= TK.length || TK[g].k !== "kw" || src.slice(TK[g].s, TK[g].e) !== "while") return;
+      consumed[g] = true;
+    }
+    var fixes = [];
+    for (var t = 0; t < TK.length; t++) {
+      if (TK[t].k !== "kw" || consumed[t]) continue;
+      var kw = src.slice(TK[t].s, TK[t].e);
+      var m = t + 1;
+      while (m < TK.length && TK[m].k === "ws") m++;
+      if (kw === "for" || kw === "while") {
+        if (m >= TK.length || TK[m].k !== "p" || src[TK[m].s] !== "(") continue;
+        var closeP = matchParen(m);
+        if (closeP < 0) continue;
+        var b = closeP + 1;
+        while (b < TK.length && TK[b].k === "ws") b++;
+        if (b >= TK.length) continue;
+        if (src[TK[b].s] === "{") {
+          var cB = matchBrace(b);
+          if (cB < 0) continue;
+          if (bodyEmptyBlock(b, cB)) fixes.push({ kind: "block-inject", at: TK[b].e });
+        } else if (src[TK[b].s] === ";") {
+          fixes.push({ kind: "replace", s: TK[b].s, e: TK[b].e });
+        }
+      } else if (kw === "do") {
+        if (m >= TK.length) continue;
+        if (src[TK[m].s] === "{") {
+          var cB2 = matchBrace(m);
+          if (cB2 < 0) continue;
+          markDoTrailer(cB2 + 1);
+          if (bodyEmptyBlock(m, cB2)) fixes.push({ kind: "block-inject", at: TK[m].e });
+        } else if (src[TK[m].s] === ";") {
+          markDoTrailer(m + 1);
+          fixes.push({ kind: "replace", s: TK[m].s, e: TK[m].e });
+        }
+      }
+    }
+    if (!fixes.length) return src;
+    fixes.sort(function (a, b) { return (b.at !== undefined ? b.at : b.s) - (a.at !== undefined ? a.at : a.s); });
+    var seq = 0;
+    var usedNames = {};
+    function nextName() {
+      var nm;
+      do { nm = "__webide_nop" + (seq++); } while (src.indexOf(nm) >= 0 || usedNames[nm]);
+      usedNames[nm] = true;
+      return nm;
+    }
+    for (var f = 0; f < fixes.length; f++) {
+      var fx = fixes[f];
+      var nm2 = nextName();
+      var stmt = "{ int " + nm2 + " = 0; " + nm2 + "++; }";
+      if (fx.kind === "block-inject") {
+        src = src.slice(0, fx.at) + " " + stmt.slice(1, -1) + " " + src.slice(fx.at);
+      } else {
+        src = src.slice(0, fx.s) + stmt + src.slice(fx.e);
+      }
+    }
+    return src;
+  }
+
+  /* ---------------------------------------------------------------
    * JSCPP's `char` type cannot hold any value above 127 - not even a
    * raw UTF-8 byte - so Chinese (or any non-ASCII) text can never be
    * stored byte-by-byte inside a JSCPP char/string at the engine level.
@@ -13730,7 +13839,7 @@ Sk.builtinFiles={"files":{"src/builtin/sys.js":"var $builtinmodule=function(){va
       return 1;   /* no #include found -> no offset */
     })(rawCode);
 
-    var transformed = encodeCJKLiteralsForJSCPP(rawCode);
+    var transformed = encodeCJKLiteralsForJSCPP(patchEmptyLoopBodies(rawCode));
     var cjkMap = transformed.map;
     var heldOut = "";   // partial CJK placeholder token held back between writes
 
