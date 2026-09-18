@@ -1,1 +1,1982 @@
-afgaa
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>fChart Web 流程圖直譯器</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0d14;--bg-grid:#0d1119;--panel:#111623;--panel-alt:#161c2c;--border:#242c40;--border-soft:#1c2334;
+  --text:#e7eaf3;--dim:#8b93ab;--accent:#5b8cff;--accent-soft:rgba(91,140,255,.14);--accent-2:#3ddbc4;
+  --green:#4ade80;--red:#f87171;--orange:#fb923c;--purple:#b98af6;--yellow:#fbbf24;--blue:#60a5fa;
+  --hover:rgba(255,255,255,.06);--sb-hover:#3a4560;
+  --shadow-1:0 1px 2px rgba(0,0,0,.35);--shadow-2:0 8px 24px rgba(0,0,0,.35);
+  --shape-start:#3b6ef2;--shape-start-text:#ffffff;
+  --shape-process:#182742;--shape-process-border:#4c7cf0;--shape-process-text:#a9c6ff;
+  --shape-io:#182a12;--shape-io-border:#79b62f;--shape-io-text:#b7e876;--shape-io-text2:#cdf29a;
+  --shape-decision:#2c1a08;--shape-decision-border:#e8823f;--shape-decision-text:#ffc999;
+  --shape-fn:#241436;--shape-fn-border:#c86bf0;--shape-fn-text:#eaceff;
+  --conn-stroke:#3d465e;--yes:#4ade80;--no:#f87171;--node-default:#111623;--node-start:#0f3d2c;--node-stop:#3d1420;
+}
+/* 淺色主題（投影機用）：Node 形狀以淡色系 + 深色文字呈現 */
+body[data-theme="light"]{
+  --bg:#f1f4f9;--bg-grid:#eaeef5;--panel:#ffffff;--panel-alt:#f7f9fc;--border:#d8dfea;--border-soft:#e6eaf2;
+  --text:#1b2333;--dim:#5f6b82;--accent:#2f5fe0;--accent-soft:rgba(47,95,224,.1);--accent-2:#0f9d8c;
+  --green:#15803d;--red:#dc2626;--orange:#c2410c;--purple:#6d28d9;--yellow:#a16207;--blue:#1d4ed8;
+  --hover:rgba(15,23,42,.05);--sb-hover:#c3ccdb;
+  --shadow-1:0 1px 2px rgba(15,23,42,.06);--shadow-2:0 10px 28px rgba(15,23,42,.1);
+  --shape-start:#bae6fd;--shape-start-text:#075985;
+  --shape-process:#dbeafe;--shape-process-border:#60a5fa;--shape-process-text:#1d4ed8;
+  --shape-io:#ecfccb;--shape-io-border:#84cc16;--shape-io-text:#3f6212;--shape-io-text2:#4d7c0f;
+  --shape-decision:#ffedd5;--shape-decision-border:#fb923c;--shape-decision-text:#9a3412;
+  --shape-fn:#f3e8ff;--shape-fn-border:#c084fc;--shape-fn-text:#6b21a8;
+  --conn-stroke:#8b97ac;--yes:#16a34a;--no:#dc2626;--node-default:#e2e8f0;--node-start:#bbf7d0;--node-stop:#fecaca;
+}
+/* 淺色高對比主題（投影機 / 白色黑板） */
+body[data-theme="hc"]{
+  --bg:#ffffff;--bg-grid:#ffffff;--panel:#ffffff;--panel-alt:#f4f6f8;--border:#455a64;--border-soft:#c7d1d8;
+  --text:#102027;--dim:#37474f;--accent:#00376b;--accent-soft:rgba(0,55,107,.1);--accent-2:#0b5d4f;
+  --green:#0b5d1e;--red:#b71c1c;--orange:#a74a00;--purple:#4a148c;--yellow:#8a6d00;--blue:#0d47a1;
+  --hover:rgba(0,0,0,.06);--sb-hover:#90a4ae;
+  --shadow-1:0 1px 2px rgba(0,0,0,.12);--shadow-2:0 10px 24px rgba(0,0,0,.16);
+  --shape-start:#7dd3fc;--shape-start-text:#063150;
+  --shape-process:#bfdbfe;--shape-process-border:#1565c0;--shape-process-text:#0b3d91;
+  --shape-io:#d3f5b1;--shape-io-border:#558b1f;--shape-io-text:#1b4d0a;--shape-io-text2:#2f660f;
+  --shape-decision:#ffd0a3;--shape-decision-border:#d84315;--shape-decision-text:#7a2e00;
+  --shape-fn:#d9c8ff;--shape-fn-border:#7b1fa2;--shape-fn-text:#3a0ca3;
+  --conn-stroke:#546e7a;--yes:#0f5132;--no:#b71c1c;--node-default:#eceff1;--node-start:#a5d6a7;--node-stop:#ef9a9a;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang TC','Microsoft JhengHei','Noto Sans TC',sans-serif;
+  background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column;
+  -webkit-font-smoothing:antialiased}
+button,select,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+#header{background:var(--panel-alt);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;box-shadow:var(--shadow-1)}
+#header h1{font-size:15px;font-weight:600;white-space:nowrap;color:var(--text);letter-spacing:.1px;display:flex;align-items:center;gap:8px}
+#header h1 .logo-mark{flex-shrink:0;display:block}
+#header h1 .logo-mark rect{fill:none;stroke:var(--accent);stroke-width:9}
+#header h1 .logo-mark path{fill:none;stroke:var(--accent-2);stroke-width:9;stroke-linecap:round}
+.btn{background:var(--panel);color:var(--text);border:1px solid var(--border);padding:6px 14px;border-radius:7px;cursor:pointer;font-size:13px;font-weight:500;transition:background .15s,border-color .15s,transform .1s}
+.btn:hover{background:var(--hover);border-color:var(--sb-hover)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 85%,#000);border-color:color-mix(in srgb,var(--accent) 85%,#000)}
+.btn.danger{background:transparent;border-color:var(--red);color:var(--red)}
+.btn.danger:hover{background:var(--red);color:#fff}
+.btn:disabled{opacity:.38;cursor:not-allowed;transform:none}
+#theme-select{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:7px;padding:6px 10px;font-size:13px;cursor:pointer}
+#main{display:flex;flex:1;overflow:hidden;position:relative}
+#sidebar{width:var(--sidebar-w,260px);background:var(--panel);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;flex-shrink:0;transition:width .2s ease,min-width .2s ease;
+  min-width:0;overflow:hidden}
+body.sidebar-hidden #sidebar{display:none}
+#canvas-area{flex:1;display:flex;flex-direction:column;min-width:0}
+#sidebar-header{padding:11px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--dim);letter-spacing:.2px}
+#file-list{flex:1;overflow-y:auto;padding:6px}
+.file-item{position:relative;padding:8px 12px 8px 16px;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background .12s,color .12s;color:var(--dim)}
+.file-item::before{content:'';position:absolute;left:4px;top:8px;bottom:8px;width:2px;border-radius:2px;background:transparent;transition:background .12s}
+.file-item:hover{background:var(--hover);color:var(--text)}
+.file-item.active{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.file-item.active::before{background:var(--accent)}
+#canvas-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#controls{background:var(--panel-alt);border-bottom:1px solid var(--border);padding:9px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0;flex-wrap:wrap}
+#controls label{font-size:12px;color:var(--dim);display:flex;align-items:center;gap:8px}
+#speed-slider{width:100px;accent-color:var(--accent)}
+#canvas-container{flex:1;overflow:auto;position:relative;
+  background-color:var(--bg);
+  background-image:radial-gradient(var(--border-soft) 1px,transparent 1px);
+  background-size:22px 22px}
+#canvas-container svg{display:block}
+#right-panel{width:280px;background:var(--panel);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:relative}
+.panel-section{display:flex;flex-direction:column;flex:1;min-height:0}
+.panel-section+.panel-section{border-top:1px solid var(--border)}
+.panel-title{padding:10px 14px;font-size:12px;font-weight:600;color:var(--dim);border-bottom:1px solid var(--border);flex-shrink:0;letter-spacing:.2px}
+.panel-content{flex:1;overflow-y:auto;padding:8px}
+#output-panel{overflow-x:auto}
+.var-item{display:flex;justify-content:space-between;gap:10px;padding:5px 9px;font-size:13px;border-radius:5px;margin-bottom:2px}
+.var-item:nth-child(odd){background:var(--hover)}
+.var-name{color:var(--accent);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.var-value{color:var(--green);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+#output-console{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12.5px;line-height:1.7}
+.output-line{padding:2px 9px;border-radius:4px;white-space:pre}
+.output-line:nth-child(odd){background:var(--hover)}
+.output-line.system{color:var(--dim);font-style:italic}
+.output-line.result{color:var(--green)}
+.output-line.error{color:var(--red)}
+#input-modal{display:none;position:fixed;inset:0;background:rgba(4,6,12,.55);backdrop-filter:blur(2px);z-index:1000;align-items:center;justify-content:center}
+#input-modal.show{display:flex}
+#input-dialog{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:26px;min-width:360px;max-width:90vw;box-shadow:var(--shadow-2)}
+#input-dialog h3{font-size:15px;margin-bottom:14px;color:var(--text);font-weight:600}
+#input-dialog .prompt{font-size:14px;margin-bottom:12px;color:var(--dim)}
+#input-dialog input{width:100%;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;outline:none;margin-bottom:18px;transition:border-color .15s}
+#input-dialog input:focus{border-color:var(--accent)}
+#input-dialog .modal-btns{display:flex;gap:8px;justify-content:flex-end}
+.node-group{cursor:pointer}
+.node-shape{transition:all .2s}
+.node-shape.highlight{filter:drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 14px var(--accent))}
+.node-shape.visited{opacity:.55}
+.node-text{pointer-events:none;user-select:none}
+.conn-path{fill:none;stroke:var(--conn-stroke);stroke-width:1.5;transition:stroke .2s}
+.conn-path.active{stroke:var(--accent);stroke-width:2.5}
+.conn-label{font-size:10px;font-weight:600}
+.empty-state{display:flex;align-items:center;justify-content:center;height:100%;color:var(--dim);font-size:14px;flex-direction:column;gap:14px}
+#status-bar{background:var(--panel-alt);border-top:1px solid var(--border);padding:5px 18px 5px 14px;font-size:12px;color:var(--dim);flex-shrink:0;display:flex;align-items:center;gap:8px}
+#status-bar::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-2);flex-shrink:0}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:5px;border:2px solid transparent;background-clip:padding-box}
+::-webkit-scrollbar-thumb:hover{background:var(--sb-hover);background-clip:padding-box}
+
+/* ============ 右方「演算法步驟」抽屜（Node-RED 風格：整區 overlay ＋ 可拖曳調寬） ============ */
+#steps-drawer{position:absolute;top:0;bottom:0;right:0;z-index:55;display:flex;flex-direction:column;
+  width:var(--steps-w,min(640px,88vw));max-width:96vw;background:var(--panel);border-left:1px solid var(--border);
+  transform:translateX(102%);transition:transform .25s ease;box-shadow:var(--shadow-2)}
+#steps-drawer.open{transform:translateX(0)}
+#steps-resizer{position:absolute;left:-3px;top:0;bottom:0;width:6px;z-index:62;cursor:col-resize;
+  touch-action:none;border-left:2px solid transparent}
+#steps-resizer:hover,#steps-resizer.dragging{border-left-color:var(--accent);background:var(--accent-soft)}
+#drawer-handle{position:absolute;top:50%;right:0;transform:translateY(-50%);z-index:60;
+  padding:11px 6px;font-size:16px;line-height:1;background:var(--panel);
+  border:1px solid var(--border);border-right:none;border-radius:9px 0 0 9px;
+  box-shadow:var(--shadow-2);cursor:pointer;color:var(--dim);transition:color .15s,border-color .15s}
+#drawer-handle:hover{border-color:var(--accent);color:var(--accent)}
+.drawer-head{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid var(--border);flex-wrap:wrap;flex-shrink:0;background:var(--panel-alt)}
+.drawer-title{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap}
+.drawer-spacer{flex:1}
+.drawer-head button{padding:4px 10px;font-size:12px;border-radius:7px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--border);color:var(--dim);transition:border-color .15s,color .15s}
+.drawer-head button:hover{border-color:var(--accent);color:var(--text)}
+.drawer-head button.view-btn.active{color:var(--accent);border-color:var(--accent);font-weight:600;background:var(--accent-soft)}
+#steps-body{flex:1;overflow-y:auto;padding:10px 12px;font-size:13px;line-height:1.65}
+.step-line{padding:3px 5px;border-radius:5px}
+.step-line.loop-note .step-desc{color:var(--accent);font-weight:600;font-size:12px}
+.step-num{color:var(--accent);font-weight:700;margin-right:7px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.step-desc{color:var(--text)}
+#steps-body pre.steps-prompt{white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;padding:10px;margin:0;color:var(--text);background:var(--panel-alt);border-radius:8px}
+#right-panel .panel-section{min-height:0}
+#arrow path{fill:var(--conn-stroke)}
+#arrow-active path{fill:var(--accent)}
+
+
+/* === functional tail (fChartViewer features not present in adapter style) === */
+</style>
+
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#0a0d14">
+  <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+<div id="header">
+  <h1><svg class="logo-mark" width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="35" y="6" width="30" height="18" rx="4"></rect><path d="M50 24 V38"></path><path d="M50 38 L32 52 L50 66 L68 52 Z" style="stroke:var(--accent)"></path><path d="M50 66 V80"></path><rect x="35" y="80" width="30" height="14" rx="4"></rect></svg>fChart Web 流程圖直譯器</h1>
+  <label class="btn primary" for="folder-input">載入資料夾</label>
+  <label class="btn" for="file-input">載入檔案</label>
+  <input type="file" id="folder-input" webkitdirectory multiple accept=".fpp" style="display:none">
+  <input type="file" id="file-input" accept=".fpp" multiple style="display:none">
+  <button class="btn" id="btn-sidebar-toggle" title="顯示 / 隱藏左側檔案清單">&#128193; 檔案列表</button>
+  <button class="btn" id="btn-drawer-toggle" title="打開 / 關閉演算法步驟抽屜">&#128202; 演算法框格</button>
+  <select id="theme-select" title="配色主題（投影用淡色系）">
+    <option value="dark">深色</option>
+    <option value="light">淺色（投影）</option>
+    <option value="hc">淺色高對比</option>
+  </select>
+  <div style="flex:1"></div>
+  <span id="file-info" style="font-size:12px;color:var(--dim)"></span>
+</div>
+<div id="main">
+  <div id="sidebar">
+    <div id="sidebar-header">檔案列表</div>
+    <div id="file-list"></div>
+  </div>
+  <div id="canvas-area">
+    <div id="controls">
+      <button class="btn primary" id="btn-run" disabled>&#9654; 執行</button>
+      <button class="btn" id="btn-step" disabled>&#9654;| 單步</button>
+      <button class="btn danger" id="btn-reset" disabled>&#8634; 重設</button>
+      <button class="btn" id="btn-stop" disabled style="display:none">&#9632; 停止</button>
+      <label>速度 <input type="range" id="speed-slider" min="50" max="2000" value="500" step="50"> <span id="speed-val">500ms</span></label>
+    </div>
+    <div id="canvas-container">
+      <div class="empty-state" id="empty-hint">
+        <div style="font-size:48px;opacity:.3">&#9635;</div>
+        <div>請從左側載入 .fpp 檔案</div>
+        <div style="font-size:12px;opacity:.5">支援拖放 .fpp 檔案至此處</div>
+      </div>
+    </div>
+  </div>
+  <div id="right-panel">
+    <div class="panel-section">
+      <div class="panel-title">變數</div>
+      <div class="panel-content" id="var-panel"></div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-title">輸出</div>
+      <div class="panel-content" id="output-panel"></div>
+    </div>
+    <button id="drawer-handle" title="演算法步驟抽屜">&#128202;</button>
+    <div id="steps-drawer">
+        <div id="steps-resizer" title="拽曳調整步驟面板寬度（Node-RED）"></div>
+      <div class="drawer-head">
+        <span class="drawer-title">&#128202; 演算法步驟</span>
+        <span class="drawer-spacer"></span>
+        <button class="view-btn active" id="btn-view-full" title="顯示執行完整軌跡">完整</button>
+        <button class="view-btn" id="btn-view-summary" title="顯示迴圈壓縮摘要">摘要</button>
+        <button class="view-btn" id="btn-view-prompt" title="顯示給 AI 的提示詞（結構化演算法）">AI 提示詞</button>
+        <button id="btn-drawer-min" title="最小化收合（Node-RED）">-</button>
+        <button id="btn-drawer-close" title="關閉抽屜（Node-RED）">&#10005;</button>
+        <button id="btn-copy-steps" title="複製目前檢視的內容">&#128203; 複製</button>
+      </div>
+      <div id="steps-body"><div class="empty-state" style="padding:20px;font-size:13px">執行流程圖時，演算法步驟會即時產生。</div></div>
+    </div>
+  </div>
+</div>
+<div id="status-bar">就緒</div>
+<div id="input-modal">
+  <div id="input-dialog">
+    <h3>輸入資料</h3>
+    <div class="prompt" id="input-prompt"></div>
+    <input type="text" id="input-field" autocomplete="off">
+    <div class="modal-btns">
+      <button class="btn" id="input-cancel">取消</button>
+      <button class="btn primary" id="input-ok">確定</button>
+    </div>
+  </div>
+</div>
+<script>
+"use strict";
+
+const SVG_NS="http://www.w3.org/2000/svg";
+
+function svgEl(tag,attrs){
+  const el=document.createElementNS(SVG_NS,tag);
+  if(attrs)for(const[k,v]of Object.entries(attrs))el.setAttribute(k,v);
+  return el;
+}
+
+/* ============ PARSER ============ */
+function decodeFppBuffer(buffer){
+  const encodings=['big5','big5-hkscs','utf-8','latin1'];
+  for(const enc of encodings){
+    try{
+      const t=new TextDecoder(enc,{fatal:true}).decode(buffer);
+      if(t.includes('<--SHAPES'))return t;
+    }catch(e){}
+  }
+  return new TextDecoder('latin1').decode(buffer);
+}
+
+const COND_SYM={IF_LESS:'<',IF_GREATER:'>',IF_GREATER_EQUAL:'>=',IF_LESS_EQUAL:'<=',IF_EQUAL:'==',IF_NOT_EQUAL:'!=',IF_NOTEQUAL:'!='};
+
+function formatCondExpr(a,type,b){
+  const op=COND_SYM[type]||'?';
+  return String(a)+' '+op+' '+String(b);
+}
+
+function formatSimpleCondition(subType,ops){
+  if(subType==='IF_AND'||subType==='IF_OR'){
+    const parts=ops.map(c=>{
+      const p=String(c).split('|');
+      return p.length===3?formatCondExpr(p[0],p[1],p[2]):c;
+    });
+    return parts.join(subType==='IF_AND'?' AND ':' OR ');
+  }
+  return formatCondExpr(ops[0],subType,ops[1]);
+}
+
+function parseFpp(text){
+  const lines=text.split(/\r?\n/);
+  const shapesIdx=lines.findIndex(l=>l.includes('<--SHAPES'));
+  const linesIdx=lines.findIndex(l=>l.includes('---- LINES ----'));
+  if(shapesIdx<0||linesIdx<0)throw new Error('無法辨識的 fpp 格式');
+
+  const connections=[];
+  let i=linesIdx+1;
+  while(i<lines.length){
+    const ln=lines[i].trim();
+    if(!ln||ln==='---- LINES ---- from,to ----'){i++;continue;}
+    const m=ln.match(/^id(\d+),id(\d+)$/);
+    if(m){
+      // 連線區每條線的格式：from,to / sLineType / 標題(YES/NO)
+      // sLineType：0、1=90度折線；2=直線；其餘數值=U型線(值為偏移距離)
+      const conn={from:'id'+m[1],to:'id'+m[2],label:'',lineType:'0'};
+      i++;
+      if(i<lines.length){
+        const t=lines[i].trim();
+        if(/^-?\d+$/.test(t)){conn.lineType=t;i++;}
+        else if(/^reserved\s*\d*$/.test(t)){i++;}
+      }
+      if(i<lines.length){
+        const nxt=lines[i].trim();
+        if(nxt==='YES'||nxt==='NO'){
+          conn.label=nxt;i++;
+        }
+      }
+      connections.push(conn);
+      continue;
+    }
+    i++;
+  }
+
+  const nodeLines=[];
+  {
+    let firstId=-1;
+    for(let k=shapesIdx+1;k<linesIdx;k++){
+      if(/^id\d+$/.test(lines[k].trim())){firstId=k;break;}
+    }
+    if(firstId<0)throw new Error('找不到節點資料');
+    let endIdx=linesIdx-1;
+    while(endIdx>firstId&&lines[endIdx].trim()===''){endIdx--;}
+    endIdx++;
+
+    const blocks=[];
+    let blockStart=firstId;
+    for(let k=firstId+1;k<endIdx;k++){
+      const ln=lines[k].trim();
+      if(/^id\d+$/.test(ln)){
+        blocks.push(lines.slice(blockStart,k));
+        blockStart=k;
+      }
+    }
+    blocks.push(lines.slice(blockStart,endIdx));
+
+    for(const block of blocks){
+      const node={id:'',type:0,left:0,top:0,width:0,height:0,dataLines:[]};
+      let bi=0;
+      while(bi<block.length&&block[bi].trim()===''){bi++;}
+      if(bi>=block.length)continue;
+      node.id=block[bi].trim();bi++;
+      while(bi<block.length&&block[bi].trim()===''){bi++;}
+      if(bi>=block.length){nodeLines.push(node);continue;}
+
+      const parseNum=()=>{
+        while(bi<block.length&&block[bi].trim()===''){bi++;}
+        if(bi>=block.length)return 0;
+        const v=parseInt(block[bi].trim(),10);bi++;
+        return isNaN(v)?0:v;
+      };
+      const parseLine=()=>{
+        while(bi<block.length&&block[bi].trim()===''){bi++;}
+        if(bi>=block.length)return '';
+        const v=block[bi].trim();bi++;
+        return v;
+      };
+
+      node.type=parseNum();
+      node.left=parseNum();
+      node.top=parseNum();
+      node.width=parseNum();
+      node.height=parseNum();
+      node.backColor=parseNum();
+      node.borderColor=parseNum();
+      parseNum();
+      parseLine();
+      parseLine();
+
+      while(bi<block.length){
+        const raw=block[bi];
+        const dl=raw.trim();
+        if(dl!=='-reserved 1-'&&dl!=='-reserved 2-'){
+          node.dataLines.push(dl===''?'':raw);
+        }
+        bi++;
+      }
+      nodeLines.push(node);
+    }
+  }
+
+  const parsedNodes=nodeLines.map(n=>{
+    const node={...n,label:'',subType:'',operands:[],promptText:'',varName:'',conditions:[]};
+    const dl=n.dataLines;
+    if(n.type===2){
+      node.label=dl[0]||'';
+    }else if(n.type===0){
+      node.subType=dl[0]||'';
+      node.operands=dl.slice(1);
+      node.label=node.subType;
+      if(node.subType==='DEFINITION'){
+        node.label=dl[1]+' = '+dl[2];
+      }else if(['SUBTRACT','ADD','MULTIPLY','DIVIDE','MOD','EXP'].includes(node.subType)){
+        const ops={SUBTRACT:'-',ADD:'+',MULTIPLY:'*',DIVIDE:'/',MOD:'%',EXP:'^'};
+        node.label=dl[3]+' = '+dl[1]+' '+ops[node.subType]+' '+dl[2];
+      }
+    }else if(n.type===91){
+      node.subType=dl[0]||'';
+      node.promptText=dl[1]||'';
+      node.varName=dl[2]||'';
+      if(node.subType==='INPUT'){
+        node.label='INPUT\n'+(node.promptText||'');
+        if(node.varName)node.label+='\n'+node.varName;
+      }else{
+        node.noNewLine=node.promptText.endsWith('{-}');
+        const shown=node.noNewLine?node.promptText.slice(0,-3):node.promptText;
+        node.label='OUTPUT\n'+(shown||'');
+        if(node.varName)node.label+='\n'+node.varName;
+      }
+    }else if(n.type===92){
+      node.subType=dl[0]||'';
+      if(node.subType==='IF_AND'||node.subType==='IF_OR'){
+        node.conditions=dl.slice(1).filter(Boolean);
+        node.label=formatSimpleCondition(node.subType,node.conditions);
+      }else{
+        node.operands=[dl[1]||'',dl[2]||''];
+        node.label=formatSimpleCondition(node.subType,node.operands);
+      }
+    }else if(n.type===93){
+      node.subType=dl[0]||'';
+      node.funcName=dl[1]||'';
+      node.params=dl[2]||'';
+      node.resultVar=dl[3]||'';
+      node.label=(node.resultVar?node.resultVar+' = ':'')+node.funcName+'('+(node.params||'')+')';
+    }
+    return node;
+  });
+
+  return{nodes:parsedNodes,connections};
+}
+
+/* ============ RENDERER ============ */
+class FlowchartRenderer{
+  constructor(container){
+    this.container=container;
+    this.svg=null;
+    this.nodeEls={};
+    this.connEls={};
+    this.zoom=1;
+    this.init();
+  }
+  init(){
+    this.container.innerHTML='';
+    this.svg=svgEl('svg',{width:'100%',height:'100%'});
+    this.container.appendChild(this.svg);
+    const defs=svgEl('defs');
+    const marker=svgEl('marker',{id:'arrow',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'6',markerHeight:'6',orient:'auto-start-reverse'});
+    marker.appendChild(svgEl('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'var(--conn-stroke)'}));
+    defs.appendChild(marker);
+    const markerActive=svgEl('marker',{id:'arrow-active',viewBox:'0 0 10 10',refX:'9',refY:'5',markerWidth:'6',markerHeight:'6',orient:'auto-start-reverse'});
+    markerActive.appendChild(svgEl('path',{d:'M 0 0 L 10 5 L 0 10 z',fill:'var(--accent)'}));
+    defs.appendChild(markerActive);
+    this.svg.appendChild(defs);
+    this.connGroup=svgEl('g',{id:'connections'});
+    this.nodeGroup=svgEl('g',{id:'nodes'});
+    this.svg.appendChild(this.connGroup);
+    this.svg.appendChild(this.nodeGroup);
+  }
+  render(parsed){
+    this.init();
+    this.nodeEls={};
+    this.connEls={};
+    if(!parsed)return;
+    this.parsed=parsed;
+    // 記錄每條連線的最終端點，供「重複出口」判斷使用（對應 VB6 checkDuplicateLine）
+    this.lineEndpts={};
+
+    let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    for(const n of parsed.nodes){
+      minX=Math.min(minX,n.left);
+      minY=Math.min(minY,n.top);
+      maxX=Math.max(maxX,n.left+n.width);
+      maxY=Math.max(maxY,n.top+n.height);
+    }
+    // U 型/折線路徑可能超出節點範圍（如 03/04、03/05、03/07 的 NO 線），
+    // 計算時把「所有連線路徑的座標」也納入，避免垂直段被 viewBox 裁掉。
+    this.lineMinX=Infinity;this.lineMinY=Infinity;this.lineMaxX=-Infinity;this.lineMaxY=-Infinity;
+
+    const nodeMap={};
+    for(const n of parsed.nodes){
+      nodeMap[n.id]=n;
+      this.renderNode(n);
+    }
+    for(const c of parsed.connections){
+      const s=nodeMap[c.from],t=nodeMap[c.to];
+      if(s&&t)this.renderConnection(s,t,c);
+    }
+
+    const bx0=Math.min(minX,this.lineMinX);
+    const by0=Math.min(minY,this.lineMinY);
+    const bx1=Math.max(maxX,this.lineMaxX);
+    const by1=Math.max(maxY,this.lineMaxY);
+    const pad=60;
+    const w=bx1-bx0+pad*2;
+    const h=by1-by0+pad*2;
+    this.svg.setAttribute('viewBox',`${bx0-pad} ${by0-pad} ${w} ${h}`);
+    this.svg.setAttribute('width',w*this.zoom);
+    this.svg.setAttribute('height',h*this.zoom);
+  }
+
+  renderNode(n){
+    const g=svgEl('g',{class:'node-group','data-id':n.id});
+    const cx=n.left+n.width/2;
+    const cy=n.top+n.height/2;
+    let shape;
+
+    const bc=n.backColor;
+    const bgVar=(bc&&bc!==16777215)?'#'+bc.toString(16).padStart(6,'0'):'var(--node-default)';
+    const strokeVar=(n.borderColor&&n.borderColor!==0)?'#'+n.borderColor.toString(16).padStart(6,'0'):'var(--conn-stroke)';
+
+    if(n.type===2){
+      const fillL=n.label==='START'?'var(--node-start)':'var(--node-stop)';
+      shape=svgEl('rect',{x:n.left,y:n.top,width:n.width,height:n.height,rx:15,ry:15,style:'fill:'+fillL+';stroke:'+strokeVar},2);
+      g.appendChild(shape);
+      this.addText(g,cx,cy,n.label==='START'?'開始':'結束',12,'var(--shape-start-text)',true);
+    }else if(n.type===0){
+      shape=svgEl('rect',{x:n.left,y:n.top,width:n.width,height:n.height,rx:4,ry:4,style:'fill:var(--shape-process);stroke:var(--shape-process-border)'});
+      g.appendChild(shape);
+      const lines=n.label.split('\n');
+      if(lines.length<=2){
+        this.addText(g,cx,cy-(lines.length-1)*7,lines[0],10,'var(--shape-process-text)');
+        if(lines[1])this.addText(g,cx,cy+7,lines[1],10,'var(--shape-process-text)');
+      }else{
+        lines.forEach((l,i)=>{
+          const yy=n.top+14+i*13;
+          this.addText(g,cx,yy,l,9,'var(--shape-process-text)');
+        });
+      }
+    }else if(n.type===91){
+      const sk=14;
+      const pts=`${n.left+sk},${n.top} ${n.left+n.width},${n.top} ${n.left+n.width-sk},${n.top+n.height} ${n.left},${n.top+n.height}`;
+      shape=svgEl('polygon',{points:pts,style:'fill:var(--shape-io);stroke:var(--shape-io-border)'});
+      g.appendChild(shape);
+      const lines=n.label.split('\n');
+      this.addText(g,cx,cy-8,lines[0],11,'var(--shape-io-text)',false,n.noNewLine);
+      if(lines.length>1)this.addText(g,cx,cy+7,lines.slice(1).join(' '),10,'var(--shape-io-text2)');
+    }else if(n.type===92){
+      const pts=`${cx},${n.top} ${n.left+n.width},${cy} ${cx},${n.top+n.height} ${n.left},${cy}`;
+      shape=svgEl('polygon',{points:pts,style:'fill:var(--shape-decision);stroke:var(--shape-decision-border)'});
+      g.appendChild(shape);
+      this.addText(g,cx,cy,n.label,10,'var(--shape-decision-text)',true);
+    }else if(n.type===3){
+      shape=svgEl('circle',{cx,cy,r:5,style:'fill:var(--conn-stroke);stroke:none'});
+      g.appendChild(shape);
+    }else if(n.type===93){
+      const inset=10;
+      const pts=`${n.left},${cy} ${n.left+inset},${n.top} ${n.left+n.width-inset},${n.top} ${n.left+n.width},${cy} ${n.left+n.width-inset},${n.top+n.height} ${n.left+inset},${n.top+n.height}`;
+      shape=svgEl('polygon',{points:pts,style:'fill:var(--shape-fn);stroke:var(--shape-fn-border)'});
+      g.appendChild(shape);
+      this.addText(g,cx,cy,n.label,9,'var(--shape-fn-text)');
+    }
+
+    // 有自訂 backColor 時沿用原色
+    if(shape&&bc&&bc!==16777215)shape.style.fill=bgVar;
+    if(shape&&n.borderColor&&n.borderColor!==0)shape.style.stroke=strokeVar;
+
+    if(shape)this.nodeEls[n.id]={g,shape,n};
+    this.nodeGroup.appendChild(g);
+  }
+
+  addText(parent,x,y,text,size,color,bold,underline){
+    const t=svgEl('text',{x,y,'text-anchor':'middle','dominant-baseline':'central','font-size':size,'font-family':"'Segoe UI',system-ui,sans-serif"});
+    if(bold)t.setAttribute('font-weight','600');
+    if(underline)t.setAttribute('text-decoration','underline');
+    t.style.fill=color;
+    t.textContent=text;
+    parent.appendChild(t);
+    return t;
+  }
+
+  renderConnection(src,tgt,conn){
+    this._curConn=conn;
+    const path=this.routeLine(src,tgt,conn);
+    const pathEl=svgEl('path',{d:path.d,style:'fill:none;stroke:var(--conn-stroke)','stroke-width':1.5,'marker-end':'url(#arrow)','data-from':conn.from,'data-to':conn.to});
+    this.connEls[conn.from+'->'+conn.to]=pathEl;
+    this.connGroup.appendChild(pathEl);
+
+    if(conn.label){
+      const labelColor=conn.label==='YES'?'var(--yes)':'var(--no)';
+      const t=svgEl('text',{x:path.labelX,y:path.labelY,'text-anchor':'middle','dominant-baseline':'middle','font-size':10,'font-weight':700,'font-family':'monospace'});
+      t.style.fill=labelColor;
+      t.textContent=conn.label;
+      this.connGroup.appendChild(t);
+    }
+  }
+
+  cornerPath(pts,r){
+    if(pts.length<2)return '';
+    let d=`M${pts[0][0]},${pts[0][1]}`;
+    for(let i=1;i<pts.length;i++){
+      const p0=pts[i-1],p1=pts[i];
+      let prev=pts[i-1];
+      // if there is a corner, round it
+      if(i<pts.length-1){
+        const p2=pts[i+1];
+        const ax=p1[0]-p0[0],ay=p1[1]-p0[1];
+        const bx=p2[0]-p1[0],by=p2[1]-p1[1];
+        const len1=Math.hypot(ax,ay),len2=Math.hypot(bx,by);
+        if(len1>0&&len2>0){
+          const cr=Math.min(r,len1/2,len2/2);
+          const ux=ax/len1,uy=ay/len1;
+          const vx=bx/len2,vy=by/len2;
+          const qx=p1[0]-ux*cr,qy=p1[1]-uy*cr;
+          const rx=p1[0]+vx*cr,ry=p1[1]+vy*cr;
+          prev=[qx,qy];
+          d+=` L${prev[0]},${prev[1]}`;
+          d+=` Q${p1[0]},${p1[1]} ${rx},${ry}`;
+          continue;
+        }
+      }
+      d+=` L${p1[0]},${p1[1]}`;
+    }
+    return d;
+  }
+
+  rectOfNode(n){
+    return{left:n.left,top:n.top,right:n.left+n.width,bottom:n.top+n.height,cx:n.left+n.width/2,cy:n.top+n.height/2,width:n.width,height:n.height};
+  }
+
+  // ------------------------------------------------------------------
+  // 連接線路由：直接移植 VB6 版 fChart 的 cLine.updateLine() 邏輯。
+  // .fpp 檔為每一條線記錄「線型」(sLineType)：
+  //   0、1 → 90 度折線（兩種方向）；
+  //   2   → 直線；
+  //   其他數值 → U 型線（值為偏移距離，正負決定繞行的哪一側）。
+  // 網頁版只支援「執行」（不提供編輯/拖曳），因此每次都可直接依照
+  // 檔案中已存好的線型、並配合符號彼此的相對位置求出固定路徑，
+  // 與原版 VB6 工具所見完全相同。
+  // ------------------------------------------------------------------
+
+  // 依來源/目標的相對位置，算出「最近邊」的起點與終點（原版第一步）。
+  nearestEdge(S,G){
+    let x1,y1,x2,y2;
+    // 起點（從來源離開）
+    if(G.left>S.right){x1=S.right;y1=S.cy;}
+    else if(G.top>S.bottom){x1=S.cx;y1=S.bottom;}
+    else if(G.right<S.left){x1=S.left;y1=S.cy;}
+    else{x1=S.cx;y1=S.top;}
+    // 終點（進入目標）
+    if(S.left>G.right){x2=G.right;y2=G.cy;}
+    else if(S.top>G.bottom){x2=G.cx;y2=G.bottom;}
+    else if(S.right<G.left){x2=G.left;y2=G.cy;}
+    else{x2=G.cx;y2=G.top;}
+    return{x1,y1,x2,y2};
+  }
+
+  // 對應 VB6 theLineCollection.checkDuplicateLine()：
+  // 檢查「從同一來源出去」的其他線是否已用過相同的起點(終點)。
+  checkDuplicate(x,y){
+    const cur=this._curConn;
+    for(const c of this.parsed.connections){
+      if(c.from===cur.from&&c.to===cur.to)continue;
+      const ep=this.lineEndpts[c.from+'->'+c.to];
+      if(!ep)continue;
+      if((c.from===cur.from&&ep.x1===x&&ep.y1===y)||
+         (c.to===cur.from&&ep.x2===x&&ep.y2===y))return true;
+    }
+    return false;
+  }
+
+  routeLine(src,tgt,conn){
+    const S=this.rectOfNode(src), G=this.rectOfNode(tgt);
+    const near=this.nearestEdge(S,G);
+    const x1=near.x1,y1=near.y1,x2=near.x2,y2=near.y2;
+    let pts=[[x1,y1],[x2,y2]];                  // 預設：最近邊直線
+    const lt=conn.lineType==null?'0':String(conn.lineType);
+
+    if(lt==='0'||lt==='1'){
+      const fold=this.foldLine(S,G,lt);
+      if(fold)pts=fold;
+    }else if(lt==='2'){
+      // 直線：維持最近邊直線段。
+    }else{
+      const off=parseInt(lt,10);
+      if(!isNaN(off)){
+        const u=this.uLine(S,G,x1,y1,x2,y2,off);
+        if(u)pts=u;
+      }
+    }
+
+    // 記錄最終端點，供後續 checkDuplicate() 判斷使用。
+    this.lineEndpts[conn.from+'->'+conn.to]={x1:pts[0][0],y1:pts[0][1],x2:pts[pts.length-1][0],y2:pts[pts.length-1][1]};
+
+    // 累計路徑範圍，供 viewBox 計算（避免超出節點範圍的 U 型垂直段被裁掉）。
+    for(const p of pts){
+      this.lineMinX=Math.min(this.lineMinX,p[0]);
+      this.lineMinY=Math.min(this.lineMinY,p[1]);
+      this.lineMaxX=Math.max(this.lineMaxX,p[0]);
+      this.lineMaxY=Math.max(this.lineMaxY,p[1]);
+    }
+
+    const d=this.cornerPath(pts,6);
+    const labelP=this.labelPoint(pts,conn.label);
+    return{d,labelX:labelP[0],labelY:labelP[1]};
+  }
+
+  // 90 度折線：僅在來源/目標呈「斜角」四區（右下、右上、左下、左上）
+  // 時折線，其餘情況退回最近邊直線（與原版完全相同）。
+  foldLine(S,G,lt){
+    const HG=10,VG=10;
+    const right=G.left-S.right>=HG, left=S.left-G.right>=HG;
+    const below=G.top-S.bottom>=VG, above=S.top-G.bottom>=VG;
+
+    if(right&&below){                          // 目標在來源右下方
+      if(lt==='0'){
+        if(!this.checkDuplicate(S.right,S.cy))return[[S.right,S.cy],[G.cx,S.cy],[G.cx,G.top]];
+        return[[S.cx,S.bottom],[S.cx,G.cy],[G.left,G.cy]];
+      }
+      return[[S.cx,S.bottom],[S.cx,G.cy],[G.left,G.cy]];
+    }
+    if(right&&above){                          // 目標在來源右上方
+      if(lt==='0'){
+        if(!this.checkDuplicate(S.cx,S.top))return[[S.cx,S.top],[S.cx,G.cy],[G.left,G.cy]];
+        return[[S.right,S.cy],[G.cx,S.cy],[G.cx,G.bottom]];
+      }
+      return[[S.right,S.cy],[G.cx,S.cy],[G.cx,G.bottom]];
+    }
+    if(left&&below){                           // 目標在來源左下方
+      if(lt==='0'){
+        if(!this.checkDuplicate(S.cx,S.bottom))return[[S.cx,S.bottom],[S.cx,G.cy],[G.right,G.cy]];
+        return[[S.left,S.cy],[G.cx,S.cy],[G.cx,G.top]];
+      }
+      return[[S.left,S.cy],[G.cx,S.cy],[G.cx,G.top]];
+    }
+    if(left&&above){                           // 目標在來源左上方
+      if(lt==='0'){
+        if(!this.checkDuplicate(S.cx,S.top))return[[S.cx,S.top],[S.cx,G.cy],[G.right,G.cy]];
+        return[[S.left,S.cy],[G.cx,S.cy],[G.cx,G.bottom]];
+      }
+      return[[S.left,S.cy],[G.cx,S.cy],[G.cx,G.bottom]];
+    }
+    return null;
+  }
+
+  // U 型線：先以最近邊直線方向判斷目標在來源的哪一側，
+  // 再依檔案記錄的偏移距離(off)決定起點/終點所在的邊與繞行方向
+  // （對應原版：每一分支都會重算 x1,y1,x2,y2，而非沿用 nearestEdge）。
+  uLine(S,G,nx1,ny1,nx2,ny2,off){
+    const dx=Math.abs(nx2-nx1), dy=Math.abs(ny2-ny1);
+    if(dy>dx&&ny2<ny1){                          // 目標在來源上方
+      if(off>0)return[[S.right,S.cy],[S.right+off,S.cy],[S.right+off,G.cy],[G.right,G.cy]];
+      return[[S.left,S.cy],[S.left+off,S.cy],[S.left+off,G.cy],[G.left,G.cy]];
+    }
+    if(dy>dx&&ny2>ny1){                          // 目標在來源下方
+      if(off>0)return[[S.left,S.cy],[S.left-off,S.cy],[S.left-off,G.cy],[G.left,G.cy]];
+      return[[S.right,S.cy],[S.right-off,S.cy],[S.right-off,G.cy],[G.right,G.cy]];
+    }
+    if(dx>dy&&nx2<nx1){                          // 目標在來源左方
+      if(off>0)return[[S.cx,S.top],[S.cx,S.top-off],[G.cx,S.top-off],[G.cx,G.top]];
+      return[[S.cx,S.bottom],[S.cx,S.bottom-off],[G.cx,S.bottom-off],[G.cx,G.bottom]];
+    }
+    if(dx>dy&&nx2>nx1){                          // 目標在來源右方
+      if(off>0)return[[S.cx,S.bottom],[S.cx,S.bottom+off],[G.cx,S.bottom+off],[G.cx,G.bottom]];
+      return[[S.cx,S.top],[S.cx,S.top+off],[G.cx,S.top+off],[G.cx,G.top]];
+    }
+    return null;
+  }
+
+  // 標題位置：對應原版——直線取線段中點；折線/U型線取「第一段」中點。
+  labelPoint(pts,label){
+    if(pts.length===2){
+      const A=pts[0],B=pts[1];
+      return[(A[0]+B[0])/2,(A[1]+B[1])/2];
+    }
+    if(pts.length>=3){
+      const A=pts[0],B=pts[1];
+      return[(A[0]+B[0])/2,(A[1]+B[1])/2];
+    }
+    return[0,0];
+  }
+
+  highlightNode(nodeId){
+    this.clearHighlight();
+    const en=this.nodeEls[nodeId];
+    if(en&&en.shape)en.shape.classList.add('highlight');
+  }
+
+  markVisited(nodeId){
+    const en=this.nodeEls[nodeId];
+    if(en&&en.shape)en.shape.classList.add('visited');
+  }
+
+  highlightConnection(fromId,toId){
+    const key=fromId+'->'+toId;
+    if(this.connEls[key]){
+      this.connEls[key].setAttribute('stroke','var(--accent)');
+      this.connEls[key].setAttribute('stroke-width','2.5');
+      this.connEls[key].setAttribute('marker-end','url(#arrow-active)');
+    }
+  }
+
+  clearHighlight(){
+    for(const k of Object.keys(this.connEls)){
+      this.connEls[k].setAttribute('stroke','var(--conn-stroke)');
+      this.connEls[k].setAttribute('stroke-width','1.5');
+      this.connEls[k].setAttribute('marker-end','url(#arrow)');
+    }
+    for(const k of Object.keys(this.nodeEls)){
+      const en=this.nodeEls[k];
+      if(en&&en.shape)en.shape.classList.remove('highlight');
+    }
+  }
+
+  setZoom(z){
+    this.zoom=z;
+    const vb=this.svg.getAttribute('viewBox');
+    if(vb){
+      const parts=vb.split(/[\s,]+/).map(Number);
+      this.svg.setAttribute('width',parts[2]*z);
+      this.svg.setAttribute('height',parts[3]*z);
+    }
+  }
+}
+
+function nodeColor(label){
+  if(label==='START')return '#166534';
+  if(label==='STOP')return '#991b1b';
+  return '#1e293b';
+}
+
+// 階乘函數（fChart 數學函數 factorial，供 evalExpr 的 Function 呼叫）
+Math.fchartFactorial=function(n){
+  n=Math.trunc(Number(n));
+  if(!isFinite(n)||n<0)return'ERROR';
+  let r=1;
+  for(let i=2;i<=n;i++)r*=i;
+  return r;
+};
+
+/* ============ EXECUTOR ============ */
+class FlowchartExecutor{
+  constructor(parsed,files=[]){
+    this.parsed=parsed;
+    this.files=files;
+    this.variables={};
+    this.outputLog=[];
+    this.currentNodeId=null;
+    this.visited=new Set();
+    this.isFinished=false;
+    this.pendingInput=null;
+    this.frames=[];
+    this._skipAdvance=false;
+    this._trace=[];
+    this.onTraceChange=null;
+  }
+
+  getStartId(){
+    for(const n of this.parsed.nodes){
+      if(n.type===2&&n.label==='START')return n.id;
+    }
+    return this.parsed.nodes[0]?.id||null;
+  }
+
+  reset(){
+    this.variables={};
+    this.outputLog=[];
+    this.currentNodeId=this.getStartId();
+    this.visited.clear();
+    this.isFinished=false;
+    this.pendingInput=null;
+    this.frames=[];
+    this._skipAdvance=false;
+    this._trace=[];
+  }
+
+  getNode(id){return this.parsed.nodes.find(n=>n.id===id)||null;}
+
+  getOutConnections(id){return this.parsed.connections.filter(c=>c.from===id);}
+
+  /* ============ 執行軌跡 / 演算法步驟 / AI 提示詞（移植自 flowchartjs 獨立版） ============ */
+
+  _recordTrace(entry){
+    this._trace.push(entry);
+    if(typeof this.onTraceChange==='function')this.onTraceChange(entry);
+  }
+
+  getTrace(){return this._trace.slice();}
+
+  // 完整演算法步驟（純文字）
+  buildAlgorithmStepsText(){
+    return this.getTrace().map(s=>s.step+'. '+s.description).join('\n');
+  }
+
+  // 摘要（迴圈壓縮、重新依序編號）
+  buildAlgorithmSummaryText(){
+    const items=this._summarize(this.getTrace());
+    const lines=[];
+    items.forEach(it=>{
+      if(it.step!==null)lines.push(it.step+'. '+it.text);
+      else lines.push(it.text);
+    });
+    return lines.join('\n');
+  }
+
+  getSummaryLines(){return this._summarize(this.getTrace());}
+
+  // 找出步驟中的迴圈：[start, period, count]；無迴圈回 null
+  _findLoop(steps){
+    const n=steps.length;
+    if(n<6)return null;
+    const ids=steps.map(s=>s.nodeId);
+    let best=null;
+    for(let i=1;i<n-4;i++){
+      for(let p=2;p<=Math.floor((n-i)/2);p++){
+        let count=1;
+        while(true){
+          const next=i+count*p;
+          if(next+p>n)break;
+          let eq=true;
+          for(let t=0;t<p;t++){if(ids[i+t]!==ids[next+t]){eq=false;break;}}
+          if(!eq)break;
+          count++;
+        }
+        if(count<2)continue;
+        if(!best||i<best.start||(i===best.start&&count>best.count)){
+          best={start:i,period:p,count};
+        }
+      }
+    }
+    return best;
+  }
+
+  // 壓縮迴圈後產生步驟清單 [{ step, text }]
+  _summarize(steps,counter){
+    if(!counter)counter={n:0};
+    if(!steps||steps.length===0)return[];
+    const loop=this._findLoop(steps);
+    if(!loop){return steps.map(s=>({step:++counter.n,text:s.description}));}
+    const result=[];
+    const{start,period,count}=loop;
+    for(let i=0;i<start;i++){result.push({step:++counter.n,text:steps[i].description});}
+    const block=steps.slice(start,start+period);
+    const firstNum=counter.n+1;
+    const inner=this._summarize(block,counter);
+    inner.forEach(it=>result.push(it));
+    const lastNum=counter.n;
+    const countText=count>99?'多次':String(count);
+    const repeatTxt=count>99?'重複執行多次':('重複執行 '+countText+' 次');
+    result.push({step:null,count,text:'↻ 第 '+firstNum+' 步到第 '+lastNum+' 步 '+repeatTxt+'，直到條件不成立才跳出迴圈'});
+    const remainderStart=start+count*period;
+    const remainder=this._summarize(steps.slice(remainderStart),counter);
+    remainder.forEach(it=>result.push(it));
+    return result;
+  }
+
+  // 產生給 AI 的提示詞（結構化演算法、涵蓋所有分支與迴圈）
+  buildAIPrompt(parsed){
+    const stepsText=this.buildStructureAlgorithmText(parsed);
+    if(!stepsText.trim())return '';
+    return '以下為本流程圖的「結構化演算法」，已涵蓋所有分支與迴圈路徑，請根據這些步驟撰寫一份可執行的程式碼。\n\n'+
+      '演算法步驟：\n'+stepsText+'\n\n'+
+      '請以結構化設計方式輸出程式碼，並加上簡短註解說明每個步驟的運作邏輯。';
+  }
+
+  buildStructureAlgorithm(parsed){
+    return this._structureWalk(parsed||this.parsed);
+  }
+
+  // 結構化演算法（摘要版、保留迴圈）
+  buildStructureAlgorithmText(parsed){
+    const items=this._structureWalk(parsed||this.parsed);
+    const lines=[];
+    items.forEach(it=>{
+      const pad='  '.repeat(it.indent);
+      if(it.num!==null)lines.push(it.num+'. '+pad+it.text);
+      else lines.push(pad+it.text);
+    });
+    return lines.join('\n');
+  }
+
+  // 結構化演算法走訪（依程式結構重新列出、涵蓋所有分支與迴圈）
+  _structureWalk(parsed){
+    if(!parsed||!parsed.nodes||parsed.nodes.length===0)return[];
+    const nodes=new Map(parsed.nodes.map(n=>[n.id,n]));
+    const startId=(parsed.nodes.find(n=>n.type===2&&n.label==='START')||parsed.nodes[0])?.id||null;
+    if(!startId)return[];
+    const order=new Map();
+    const emitted=new Set();
+    const lines=[];
+    let counter=0;
+    const self=this;
+
+    const outs=(id)=>parsed.connections.filter(c=>c.from===id);
+    const succList=(nd)=>{const s=outs(nd.id).map(c=>c.to);return[...new Set(s)];};
+    const picks=(nd)=>{
+      if(nd.type===92){
+        const o=outs(nd.id);
+        const yes=o.find(c=>c.label==='YES');
+        const no=o.find(c=>c.label==='NO');
+        return{yes:yes?yes.to:null,no:no?no.to:null};
+      }
+      const o=outs(nd.id).find(c=>!c.label||c.label==='');
+      return{yes:null,no:null,next:o?o.to:null};
+    };
+
+    const emit=(id,indent,text)=>{
+      if(!emitted.has(id)){emitted.add(id);order.set(id,++counter);}
+      lines.push({num:order.get(id),indent,text});
+    };
+
+    // 從 from 出發，在「已走訪路徑(path)」以外能到達 target（迴圈返回偵測）
+    const canReach=(from,target,path)=>{
+      if(!from)return false;
+      const seen=new Set([from]);
+      const stack=[from];
+      while(stack.length){
+        const cur=stack.pop();
+        if(cur===target)return true;
+        const nd=nodes.get(cur);
+        if(!nd)continue;
+        if(path.has(cur))continue;
+        for(const s of succList(nd)){
+          if(!s||seen.has(s))continue;
+          seen.add(s);stack.push(s);
+        }
+      }
+      return false;
+    };
+
+    // 沿單一 next 前進的線性鏈（避開 start/end/condition/已輸出）
+    const linearChain=(from)=>{
+      const arr=[];
+      const seen=new Set();
+      let cur=from;
+      while(cur&&!seen.has(cur)){
+        if(emitted.has(cur))break;
+        seen.add(cur);
+        const nd=nodes.get(cur);
+        if(!nd)break;
+        if(nd.type===3){cur=(outs(cur).find(c=>!c.label||c.label==='')||{}).to||null;continue;}
+        arr.push(cur);
+        if(nd.type!==3&&(nd.type===2||nd.type===92))break;
+        cur=(outs(cur).find(c=>!c.label||c.label==='')||{}).to||null;
+      }
+      return arr;
+    };
+
+    // 二分叉的共同後續節點（分支合流點）
+    const sharedContinuation=(yes,no)=>{
+      if(!yes||!no)return null;
+      const c1=linearChain(yes);
+      const c2=linearChain(no);
+      for(const a of c1){
+        if(!emitted.has(a)&&c2.indexOf(a)>=0)return a;
+      }
+      return null;
+    };
+
+    const walk=(id,indent,path,skipId)=>{
+      let cur=id;
+      while(cur){
+        if(skipId&&cur===skipId)return;
+        if(emitted.has(cur)){
+          const target=order.get(cur);
+          lines.push({num:null,indent,text:path.has(cur)?'（重複步驟 '+target+'）':'（接續步驟 '+target+'）'});
+          return;
+        }
+        const node=nodes.get(cur);
+        if(!node)return;
+        if(node.type===3){cur=(outs(cur).find(c=>!c.label||c.label==='')||{}).to||null;continue;}
+        if(node.type===2){cur=(outs(cur).find(c=>!c.label||c.label==='')||{}).to||null;continue;}
+
+        if(node.type===92){
+          const p=picks(node);
+          const yes=p.yes,no=p.no;
+          const newPath=new Set(path);newPath.add(cur);
+          const yesLoop=yes?canReach(yes,cur,newPath):false;
+          const noLoop=no?canReach(no,cur,newPath):false;
+          if(yesLoop&&!noLoop){
+            emit(cur,indent,'重複 '+node.label+'（迴圈）');
+            walk(yes,indent+1,newPath,null);
+            cur=no;if(!cur)return;continue;
+          }
+          if(noLoop&&!yesLoop){
+            const noChain=linearChain(no);
+            if(noChain.length===0){
+              lines.push({num:null,indent,text:'（跳過：接續步驟 '+order.get(no)+'，直到 '+node.label+' 條件成立才跳出迴圈）'});
+              cur=yes;if(!cur)return;continue;
+            }
+            emit(cur,indent,'重複檢查 ');
+            walk(no,indent+1,newPath,null);
+            lines.push({num:null,indent,text:'直到 '+node.label+' 條件不成立才跳出迴圈'});
+            cur=yes;if(!cur)return;continue;
+          }
+          emit(cur,indent,'如果 '+node.label+'：');
+          const merge=sharedContinuation(yes,no);
+          walk(yes,indent+1,newPath,merge);
+          if(no&&no!==yes){
+            lines.push({num:null,indent,text:'否則：'});
+            walk(no,indent+1,newPath,merge);
+          }
+          cur=merge;if(!cur)return;continue;
+        }
+
+        emit(cur,indent,self._structureDesc(node));
+        cur=(outs(cur).find(c=>!c.label||c.label==='')||{}).to||null;
+      }
+    };
+
+    walk(startId,0,new Set(),null);
+    return lines;
+  }
+
+  // 結構化描述（單一節點文字，不含執行期數值）
+  _structureDesc(node){
+    if(node.type===2)return null;
+    if(node.type===93)return '呼叫程式 '+(node.funcName||'');
+    if(node.type===0){
+      const sub=node.subType;
+      const a=node.operands||[];
+      const opsym={ADD:'+',SUBTRACT:'-',MULTIPLY:'*',DIVIDE:'/',MOD:'%',EXP:'^'};
+      const op=opsym[sub];
+      let target,rhs;
+      if(sub==='DEFINITION'||sub==='ASSIGNMENT'){target=a[0];rhs=a[1];}
+      else if(op){target=a[2];rhs=a[0]+' '+op+' '+a[1];}
+      if(target!==undefined&&rhs!==undefined){
+        return (sub==='DEFINITION'||sub==='ASSIGNMENT'?'設定 ':'計算 ')+target+' = '+rhs;
+      }
+      return '執行 '+node.label;
+    }
+    if(node.type===91){
+      const body=node.subType==='INPUT'?'輸入 ':'輸出 ';
+      return body+(node.varName||node.promptText||'');
+    }
+    return node.label||node.id||'';
+  }
+
+  // 描述單一「處理」節點（含變數前後變化）
+  _describeProcess(node,preVars){
+    const sub=node.subType;
+    const a=node.operands||[];
+    const opsym={ADD:'+',SUBTRACT:'-',MULTIPLY:'*',DIVIDE:'/',MOD:'%',EXP:'^'};
+    let target,rhs;
+    if(sub==='DEFINITION'||sub==='ASSIGNMENT'){target=a[0];rhs=a[1];}
+    else if(opsym[sub]){target=a[2];rhs=a[0]+' '+opsym[sub]+' '+a[1];}
+    else{return '執行 '+node.label;}
+    const key=target?this.normalizeArrayTarget(String(target)):'';
+    const nv=key!==''&&this.variables[key]!==undefined?this.variables[key]:undefined;
+    const ov=key!==''&&preVars&&preVars[key]!==undefined?preVars[key]:undefined;
+    const verb=(sub==='DEFINITION'||sub==='ASSIGNMENT')?'設定':'計算';
+    let line=verb+' '+key+' = '+(rhs||'');
+    if(ov!==undefined&&nv!==undefined&&String(ov)!==String(nv))line+='  ('+ov+' → '+nv+')';
+    else if(nv!==undefined)line+='  = '+nv;
+    return line;
+  }
+
+  // 為已執行節點記錄軌跡描述（無輸入時回 null，INPUT 在 submitInput 記錄）
+  _recordNodeTrace(node,result,preVars){
+    if(!node)return;
+    if(result.action==='input')return;
+    let description='';
+    let branch=null;
+    if(result.action==='output')description='輸出 '+(result.output||'');
+    else if(result.action==='decision'){
+      description='判斷 '+node.label+' → '+(result.conditionResult?'成立':'不成立');
+      branch=result.conditionResult?'YES':'NO';
+    }else if(result.action==='process')description=this._describeProcess(node,preVars);
+    else if(result.action==='function'||result.action==='function-call'){
+      description='呼叫程式 '+(node.funcName||'');
+      if(result.functionError)description+='（錯誤：'+result.functionError+'）';
+    }else if(result.action==='start'){
+      description=this.frames.length?('進入函數 '+(this.frames[this.frames.length-1]?.funcName||'')):'程式開始';
+    }else if(result.action==='return')description=result.functionName?('← '+result.functionName+' 回傳'):'程式結束';
+    else if(result.action==='stop')description='程式結束';
+    else return;
+    this._recordTrace({
+      step:this._trace.length+1,
+      nodeId:node.id,
+      nodeType:String(node.type),
+      description,
+      branch,
+      vars:{...this.variables},
+    });
+  }
+
+  evalExpr(expr){
+    if(expr===undefined||expr===null)return expr;
+    let s=String(expr).trim();
+    // 讀取陣列元素（Data[i+1] / Data[0][1]）：計算索引並以已定義的陣列鍵取回。
+    // 索引判斷式內不可含 [ ]，是故 \b 比對失效（] 非字母數字）而改用 lookahead/lookbehind。
+    s=this.resolveArrayReads(s);
+    const vars=Object.keys(this.variables).sort((a,b)=>b.length-a.length);
+    for(const name of vars){
+      const val=this.variables[name];
+      let literal=String(val);
+      // 主張④⑤：若變數值是「非數值字串」，必須以字串字面值（加引號＋逃生）代入，
+      // 否則 DEF/ASSIGN 塞字串（未加引號）會外溢成運算式碎片，或造成 ADD 字串→NaN。
+      if(typeof val==='string'&&!/^\s*[+-]?(\d+(\.\d+)?|\.\d+)\s*$/.test(val)){
+        literal=JSON.stringify(val);
+      }
+      s=s.replace(new RegExp('(?<![A-Za-z0-9_])'+name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![A-Za-z0-9_])','g'),literal);
+    }
+    s=this.translateMathExpr(s);
+    // VB6 預設行為：未定義變數自動為 0。
+    // 先把 Math.xxx 保留起來，再把剩餘識別字全部換成 0，最後還原 Math.xxx。
+    const mathExprs=[];
+    s=s.replace(/Math\.\w+/g,m=>{mathExprs.push(m);return'§'+(mathExprs.length-1)+'§';});
+    s=s.replace(/\b[A-Za-z_]\w*\b/g,'0');
+    s=s.replace(/§(\d+)§/g,(_,i)=>mathExprs[+i]);
+    try{return Function('"use strict";return('+s+')')();}
+    catch(e){return s;}
+  }
+
+  // 把運算式中的陣列讀取（base[索引]）求值並以已定義的鍵取回值。
+  // 未儲存的元素依 VB 預設為 0（避免被算成 0[0] 而 NaN）。索引本身含未定義變數時亦比照 VB 預設為 0。
+  resolveArrayReads(s){
+    const self=this;
+    const re=/([A-Za-z_]\w*)((?:\[[^\][]*\])+)/g;
+    return String(s).replace(re,(whole,base,chain)=>{
+      const inners=chain.slice(1,-1).split('][');
+      const idxs=inners.map(ix=>self.evalExpr(ix));
+      const candidate=base+'['+idxs.join('][')+']';
+      if(self.variables[candidate]!==undefined)return String(self.variables[candidate]);
+      if(self.variables[whole]!==undefined)return String(self.variables[whole]);
+      if(idxs.every(ix=>/^\d+(\.\d+)?$/.test(String(ix))))return '0';
+      return whole;
+    });
+  }
+
+  // 把「寫入目標」正規化：base[索引運算式] → base[結果值]，例如 grades[index] → grades[3]。
+  // 供 executeProcess / INPUT（submitInput）/ 函數回傳（STOP）寫入共用，避免誤存成含變數名的鍵（如 sum[i]）。
+  normalizeArrayTarget(s){
+    const self=this;
+    const re=/([A-Za-z_]\w*)((?:\[[^\][]*\])+)/g;
+    return String(s).replace(re,(whole,base,chain)=>{
+      const inners=chain.slice(1,-1).split('][');
+      const idxs=inners.map(ix=>self.evalExpr(ix));
+      return base+'['+idxs.join('][')+']';
+    });
+  }
+
+  // 把 fChart 的數學函數與 ^ 指數運算子轉成 JavaScript（VB 語意）。
+  //   abs、int(floor)、fix(trunc 向零捨去)、sin/cos/tan/atn(徑度)、sqr(開平方)、factorial(階乘)。
+  translateMathExpr(s){
+    const fnMap={
+      abs:'Math.abs',
+      int:'Math.floor',
+      fix:'Math.trunc',
+      sin:'Math.sin',
+      cos:'Math.cos',
+      tan:'Math.tan',
+      atn:'Math.atan',
+      sqr:'Math.sqrt',
+      factorial:'Math.fchartFactorial'
+    };
+    for(const[name,target]of Object.entries(fnMap)){
+      s=s.replace(new RegExp('\\b'+name+'(?=\\()','gi'),target);
+    }
+    // ^ 指數（VB 中高於 * /、右結合）→ JS **
+    s=s.replace(/\^/g,'**');
+    return s;
+  }
+
+  evalCondition(type,op1,op2){
+    const v1=this.evalExpr(op1);
+    const v2=this.evalExpr(op2);
+    const n1=Number(v1),n2=Number(v2);
+    const a=isNaN(n1)?v1:n1, b=isNaN(n2)?v2:n2;
+    switch(type){
+      case'IF_LESS':return a<b;
+      case'IF_GREATER':return a>b;
+      case'IF_GREATER_EQUAL':return a>=b;
+      case'IF_LESS_EQUAL':return a<=b;
+      case'IF_EQUAL':return a==b;
+      case'IF_NOT_EQUAL':return a!=b;
+      case'IF_NOTEQUAL':return a!=b;
+      default:return false;
+    }
+  }
+
+  evalDecision(node){
+    if(node.subType==='IF_AND'||node.subType==='IF_OR'){
+      const results=node.conditions.map(c=>{
+        const parts=c.split('|');
+        if(parts.length===3)return this.evalCondition(parts[1],parts[0],parts[2]);
+        return false;
+      });
+      return node.subType==='IF_AND'?results.every(Boolean):results.some(Boolean);
+    }
+    return this.evalCondition(node.subType,node.operands[0],node.operands[1]);
+  }
+
+  executeProcess(node){
+    const op=node.subType;
+    const a=node.operands;
+    switch(op){
+      case'DEFINITION':
+        this.variables[this.normalizeArrayTarget(a[0])]=this.evalExpr(a[1]);
+        break;
+      case'ADD':{
+        const p0=this.evalExpr(a[0]),p1=this.evalExpr(a[1]);
+        const n0=Number(p0),n1=Number(p1);
+        // VB6 + 語意：兩運算元皆非數值時（兩字串）→ 串接；否則數值相加。
+        this.variables[this.normalizeArrayTarget(a[2])]=(isNaN(n0)&&isNaN(n1))?String(p0)+String(p1):n0+n1;
+        break;
+      }
+      case'SUBTRACT':
+        this.variables[this.normalizeArrayTarget(a[2])]=Number(this.evalExpr(a[0]))-Number(this.evalExpr(a[1]));
+        break;
+      case'MULTIPLY':
+        this.variables[this.normalizeArrayTarget(a[2])]=Number(this.evalExpr(a[0]))*Number(this.evalExpr(a[1]));
+        break;
+      case'DIVIDE':
+        const divisor=Number(this.evalExpr(a[1]));
+        this.variables[this.normalizeArrayTarget(a[2])]=divisor===0?'ERROR':Number(this.evalExpr(a[0]))/divisor;
+        break;
+      case'MOD':
+        const modDivisor=Number(this.evalExpr(a[1]));
+        this.variables[this.normalizeArrayTarget(a[2])]=modDivisor===0?'ERROR':Number(this.evalExpr(a[0]))%modDivisor;
+        break;
+      case'EXP':
+        this.variables[this.normalizeArrayTarget(a[2])]=Math.pow(Number(this.evalExpr(a[0])),Number(this.evalExpr(a[1])));
+        break;
+      case'ASSIGNMENT':
+        this.variables[this.normalizeArrayTarget(a[0])]=this.evalExpr(a[1]);
+        break;
+    }
+  }
+
+  formatOutput(node){
+    let text=node.promptText||'';
+    const noNewLine=text.endsWith('{-}');
+    if(noNewLine)text=text.slice(0,-3);
+    if(!node.varName){
+      return{text,noNewLine};
+    }
+    const v=String(this.evalExpr(node.varName));
+    if(text==='')return{text:v,noNewLine};
+    if(text.includes('{0}'))return{text:text.split('{0}').join(v),noNewLine};
+    return{text:text+' '+v,noNewLine};
+  }
+
+  // 對應 VB6 frmVars.ifVarGetValue()：已定義變數回傳值，否則原樣回傳字面值。
+  // 陣列存取（Data[0] / Data[i]）不在此字典內，改以 evalExpr 求值（含索引計算）。
+  varValue(s){
+    const t=String(s).trim();
+    if(this.variables[t]!==undefined)return this.variables[t];
+    if(/[A-Za-z_]\w*\[[^\][]*\]/.test(t))return this.evalExpr(t);
+    return t;
+  }
+
+  // 對應 VB6 removeQuotes()：移除前後成對的引號。
+  stripQuotes(s){
+    s=String(s);
+    if(s.length>=2&&((s.startsWith('"')&&s.endsWith('"'))||(s.startsWith("'")&&s.endsWith("'"))))return s.slice(1,-1);
+    return s;
+  }
+
+  // 內建函數（對應 VB6 otherModule.bas:executeInternalFunction）：
+  //   Rnd(n)     → Int(Rnd()*n)+1，整數 1..n
+  //   Rnd(m|n)   → Int(Rnd()*(n-m))+m，整數 m..n-1（fChart 原式）
+  //   Fix(x)     → Fix(Val(x))，向零無條件捨去小數
+  // 其餘為外部 .fpp 函數呼叫，由 callFunction 處理。
+  executeBuiltin(node){
+    const fn=(node.funcName||'').toUpperCase();
+    const params=(node.params||'').split('|').map(p=>this.stripQuotes(String(this.varValue(p))));
+    let value=null;
+    if(fn==='RND'){
+      const a=Number(params[0]);
+      const b=params.length>1&&params[1]!==''?Number(params[1]):NaN;
+      if(isNaN(a))return false;
+      value=isNaN(b)?Math.floor(Math.random()*a)+1:Math.floor(Math.random()*(b-a))+a;
+    }else if(fn==='FIX'){
+      value=Math.trunc(Number(params[0]));
+    }else{
+      return false;
+    }
+    if(node.resultVar)this.variables[this.normalizeArrayTarget(node.resultVar)]=value;
+    return true;
+  }
+
+  // 外部 .fpp 函數呼叫（fChart 八角符號，對應 VB6 §4 FUNCTION case @3130）：
+  //   FUNCTION 節點：funcName = 函數檔名（<funcName>.fpp）、params = 呼叫端變數（'var1|var2'）、resultVar = 接收 RETURN 的變數。
+  //   進入函數時把呼叫端流程圖／回傳節點（IP）／結果變數（CS→resultVar）／目前 PARAM/PARAM1 推入 this.frames，
+  //   再載入函數流程圖、從其 START 繼續；函數 STOP 時（§4 @3221）POP frame 還原並把 RETURN 寫回 resultVar。
+  //   深度上限 200（對應 VB6 堆疊 overflow，§4 @108-110）。
+  callFunction(node){
+    const funcName=node.funcName;
+    const funcFile=this.files.find(f=>f.name===funcName+'.fpp');
+    if(!funcFile){
+      return{error:`找不到函數檔 ${funcName}.fpp`};
+    }
+    if(this.frames.length>=200)return{error:'函數遞迴過深（超過 200 層）'};
+
+    const paramParts=(node.params||'').split('|');
+    const p0=(paramParts[0]||'').trim();
+    const p1=(paramParts.length>1?(paramParts[1]||''):'').trim();
+
+    const savedParams={};
+    if(this.variables['PARAM']!==undefined)savedParams.PARAM=this.variables['PARAM'];
+    if(this.variables['PARAM1']!==undefined)savedParams.PARAM1=this.variables['PARAM1'];
+
+    const frame={
+      parsed:this.parsed,                      // 呼叫端流程圖（CS，回傳時 load_FILE 用）
+      returnNodeId:this.getNextId(node),       // 回傳節點 TagID（IP）
+      fileName:funcFile.name,
+      funcName:funcName,
+      resultVar:node.resultVar,                // zParam3
+      savedParams:savedParams,                 // 呼叫端 PARAM/PARAM1（STEP 3 還原）
+      localVars:null                           // 函數 START 時填（push_LOCAL_vars）
+    };
+    this.frames.push(frame);
+
+    this.parsed=parseFpp(funcFile.text);
+    this.currentNodeId=this.getStartId();
+    // 新參數（zParam2 Split "|"）：PARAM、PARAM1（至多兩個）
+    this.variables['PARAM']=p0!==''?this.varValue(p0):'';
+    this.variables['PARAM1']=p1!==''?this.varValue(p1):'';
+    return{ok:true};
+  }
+
+  getNextId(node,condResult){
+    const outs=this.getOutConnections(node.id);
+    if(node.type===92){
+      const label=condResult?'YES':'NO';
+      const c=outs.find(o=>o.label===label);
+      if(c)return c.to;
+      return outs.length?outs[0].to:null;
+    }
+    const c=outs.find(o=>!o.label||o.label==='');
+    if(c)return c.to;
+    return outs.length?outs[0].to:null;
+  }
+
+  step(){
+    if(this.isFinished||!this.currentNodeId)return{done:true};
+
+    const node=this.getNode(this.currentNodeId);
+    if(!node){this.isFinished=true;return{done:true};}
+
+    const result={nodeId:node.id,action:null,output:null,inputPending:null};
+    const preVars={...this.variables};
+
+    if(node.type===2){
+      if(node.label==='START'){
+        // 對應 VB6 §4 START case @2724：函數 START 把 zParam1（逗號分隔區域變數名）逐一保存目前值，
+        // STOP 時反序還原（push_LOCAL_vars / pop_LOCAL_vars）。
+        if(this.frames.length){
+          const frame=this.frames[this.frames.length-1];
+          if(!frame.localVars){
+            frame.localVars=[];
+            const names=String(node.dataLines[1]||'').split(',').map(s=>s.trim()).filter(Boolean);
+            for(const name of names){
+              frame.localVars.push({name:name,has:this.variables[name]!==undefined,value:this.variables[name]});
+            }
+          }
+        }
+        result.action='start';
+      }else{ // STOP（§4 @3221）
+        if(this.frames.length){
+          const frame=this.frames.pop();
+          // 1. pop_LOCAL_vars（還原函數區域變數）
+          if(frame.localVars){
+            for(const lv of frame.localVars){
+              if(lv.has)this.variables[lv.name]=lv.value;
+              else delete this.variables[lv.name];
+            }
+          }
+          // 4. 函式回傳值：FUNCTION 有 zParam3 時 setVar sStoreResult, getVar("RETURN")（@3236）
+          if(frame.resultVar&&this.variables['RETURN']!==undefined){
+            this.variables[this.normalizeArrayTarget(frame.resultVar)]=this.variables['RETURN'];
+          }
+          // 3. 還原上一層函式的 PARAM/PARAM1（@3265-3276）
+          if('PARAM' in frame.savedParams)this.variables['PARAM']=frame.savedParams.PARAM;
+          else delete this.variables['PARAM'];
+          if('PARAM1' in frame.savedParams)this.variables['PARAM1']=frame.savedParams.PARAM1;
+          else delete this.variables['PARAM1'];
+          // 2. load_FILE(呼叫端流程圖) + 由 TagID 取回傳節點（IP）
+          this.parsed=frame.parsed;
+          this.currentNodeId=frame.returnNodeId;
+          this._skipAdvance=true;
+          if(!frame.returnNodeId)this.isFinished=true;
+          result.action='return';
+          result.functionName=frame.funcName;
+        }else{
+          // 主程式结束（CS == "CS-OS" → TerminateExecution）
+          this.isFinished=true;
+          result.action='stop';
+        }
+      }
+    }else if(node.type===0){
+      this.executeProcess(node);
+      result.action='process';
+    }else if(node.type===91){
+      if(node.subType==='INPUT'){
+        result.action='input';
+        result.inputPending={prompt:node.promptText,variable:node.varName};
+        this.pendingInput={nodeId:node.id,variable:node.varName};
+      }else{
+        const out=this.formatOutput(node);
+        this.outputLog.push(out);
+        result.action='output';
+        result.output=out.text;
+        result.noNewLine=out.noNewLine;
+      }
+    }else if(node.type===92){
+      const condResult=this.evalDecision(node);
+      result.action='decision';
+      result.conditionResult=condResult;
+      result.nextLabel=condResult?'YES':'NO';
+    }else if(node.type===93){
+      if(this.executeBuiltin(node)){
+        result.action='function';
+      }else{
+        const fr=this.callFunction(node);
+        result.action='function-call';
+        if(fr.ok){
+          result.functionName=node.funcName;
+          this._skipAdvance=true;
+        }else{
+          result.functionError=fr.error;
+        }
+      }
+    }
+
+    this.visited.add(node.id);
+    this._recordNodeTrace(node,result,preVars);
+
+    if(!this.pendingInput){
+      if(this._skipAdvance){
+        this._skipAdvance=false;
+      }else{
+        const nextId=this.getNextId(node,result.conditionResult);
+        this.currentNodeId=nextId;
+        if(!nextId)this.isFinished=true;
+      }
+    }
+
+    result.variables={...this.variables};
+    return result;
+  }
+
+  submitInput(value){
+    if(!this.pendingInput)return false;
+    const num=Number(value);
+    this.variables[this.normalizeArrayTarget(this.pendingInput.variable)]=isNaN(num)?value:num;
+    const node=this.getNode(this.pendingInput.nodeId);
+    this._recordTrace({
+      step:this._trace.length+1,
+      nodeId:node?node.id:'',
+      nodeType:'91',
+      description:'輸入 '+this.pendingInput.variable+' = '+value,
+    });
+    const nextId=this.getNextId(node,undefined);
+    this.currentNodeId=nextId;
+    if(!nextId)this.isFinished=true;
+    this.pendingInput=null;
+    return true;
+  }
+}
+
+/* ============ UI ============ */
+class App{
+  constructor(){
+    this.renderer=new FlowchartRenderer(document.getElementById('canvas-container'));
+    this.executor=null;
+    this.parsed=null;
+    this.files=[];
+    this.running=false;
+    this.runTimer=null;
+    this.stepCount=0;
+    this.resumeAfterInput=false;
+    this._renderedParsed=null;
+    this.stepsMode='full';
+    this.drawerOpen=false;
+      this.sidebarHidden=false;
+      this.stepsW=640;
+      this.initDrawerState();
+    this.applyTheme();
+    this.bindEvents();
+  }
+
+  // executor 切換流程圖（進入/離開外部函數）時，重新繪製目前正在執行的流程圖。
+  // 對應 VB6 load_FILE(函數檔) 載入新表單顯示函數流程圖。
+  _syncRenderedFlow(){
+    if(this.executor&&this.executor.parsed!==this._renderedParsed){
+      this._renderedParsed=this.executor.parsed;
+      this.renderer.render(this.executor.parsed);
+      this.updateVarPanel(this.executor.variables);
+    }
+  }
+
+  applyTheme(name){
+    if(!name){try{name=localStorage.getItem('fv-theme')||'dark';}catch(e){name='dark';}}
+    if(!['dark','light','hc'].includes(name))name='dark';
+    try{localStorage.setItem('fv-theme',name);}catch(e){}
+    const sel=document.getElementById('theme-select');
+    if(sel)sel.value=name;
+    document.body.dataset.theme=name;
+  }
+
+    initDrawerState(){
+    this.sidebarHidden=this._readStateBool('fchart-sidebar-hidden');
+    const w=this._readStateNum('fchart-steps-w',640);
+    this.stepsW=this._clampStepsW(w);
+    document.documentElement.style.setProperty('--steps-w',this.stepsW+'px');
+    this.applySidebarHidden();
+  }
+  _readStateBool(k){try{return localStorage.getItem(k)==='1';}catch(e){return false;}}
+  _readStateNum(k,d){try{const v=+localStorage.getItem(k);if(Number.isFinite(v)&&v>0)return v;}catch(e){}return d;}
+  _writeState(k,v){try{localStorage.setItem(k,String(v));}catch(e){}}
+  _clampStepsW(w){return Math.min(Math.max(Math.round(w),320),Math.round((window.innerWidth||1600)*0.94));}
+  applySidebarHidden(){
+    document.body.classList.toggle('sidebar-hidden',!!this.sidebarHidden);
+    const b=document.getElementById('btn-sidebar-toggle');
+    if(b){b.classList.toggle('active',!!this.sidebarHidden);}
+  }
+  toggleSidebar(){
+    this.sidebarHidden=!this.sidebarHidden;
+    this._writeState('fchart-sidebar-hidden',this.sidebarHidden?1:0);
+    this.applySidebarHidden();
+  }
+  startStepsResize(e){
+    e.preventDefault();
+    const startX=e.clientX,startW=this.stepsW;
+    const src=document.getElementById('steps-resizer');
+    const move=(ev)=>{let w=this._clampStepsW(startW-(ev.clientX-startX));this.stepsW=w;document.documentElement.style.setProperty('--steps-w',w+'px');};
+    const up=()=>{document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up);if(src)src.classList.remove('dragging');this._writeState('fchart-steps-w',this.stepsW);};
+    document.addEventListener('pointermove',move);
+    document.addEventListener('pointerup',up);
+    document.addEventListener('pointerup',()=>{document.documentElement.style.cursor='';},{once:true});
+    if(src){src.classList.add('dragging');}
+  }
+  _onTraceChange(){this.renderSteps();}
+
+  toggleDrawer(force){
+    this.drawerOpen=(typeof force==='boolean')?force:!this.drawerOpen;this._writeState('fchart-drawer',this.drawerOpen?1:0);
+    const drawer=document.getElementById('steps-drawer');
+    if(this.drawerOpen){drawer.classList.add('open');this.renderSteps();}
+    else drawer.classList.remove('open');
+  }
+
+  setStepsView(mode){
+    this.stepsMode=mode;
+    document.getElementById('btn-view-full').classList.toggle('active',mode==='full');
+    document.getElementById('btn-view-summary').classList.toggle('active',mode==='summary');
+    document.getElementById('btn-view-prompt').classList.toggle('active',mode==='prompt');
+    this.renderSteps();
+  }
+
+  formatStepLine(step,text){
+    return `<div class="step-line"><span class="step-num">${step}.</span><span class="step-text">${escH(text)}</span></div>`;
+  }
+
+  renderSteps(){
+    if(!this.drawerOpen)return;
+    const body=document.getElementById('steps-body');
+    const ex=this.executor;
+    if(!ex){body.innerHTML='<div class="empty-state">尚未載入流程圖</div>';return;}
+    if(this.stepsMode==='full'){
+      const tr=ex.getTrace();
+      body.innerHTML=tr.length?tr.map(s=>this.formatStepLine(s.step,s.description)).join(''):'<div class="empty-state">尚未執行任何步驟。</div>';
+    }else if(this.stepsMode==='summary'){
+      const lines=ex.getSummaryLines();
+      body.innerHTML=lines.length?lines.map(it=>it.step!==null?this.formatStepLine(it.step,it.text):`<div class="step-line step-repeat"><span class="step-text">${escH(it.text)}</span></div>`).join(''):'<div class="empty-state">尚無摘要。</div>';
+    }else{
+      const prompt=ex.buildAIPrompt(ex.parsed);
+      body.innerHTML=prompt?`<pre class="steps-prompt">${escH(prompt)}</pre>`:'<div class="empty-state">目前無提示詞。</div>';
+    }
+    body.scrollTop=body.scrollHeight;
+  }
+
+  copySteps(){
+    const ex=this.executor;if(!ex)return;
+    let text='';
+    if(this.stepsMode==='full')text=ex.buildAlgorithmStepsText();
+    else if(this.stepsMode==='summary')text=ex.buildAlgorithmSummaryText();
+    else text=ex.buildAIPrompt(ex.parsed);
+    const ta=document.createElement('textarea');
+    ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);
+  }
+
+  bindEvents(){
+    document.getElementById('folder-input').addEventListener('change',e=>this.loadFiles(e.target.files));
+    document.getElementById('file-input').addEventListener('change',e=>this.loadFiles(e.target.files));
+    document.getElementById('btn-run').onclick=()=>this.toggleRun();
+    document.getElementById('btn-step').onclick=()=>this.doStep();
+    document.getElementById('btn-reset').onclick=()=>this.doReset();
+    document.getElementById('btn-stop').onclick=()=>this.stopRun();
+    document.getElementById('speed-slider').oninput=e=>{
+      document.getElementById('speed-val').textContent=e.target.value+'ms';
+    };
+    document.getElementById('input-ok').onclick=()=>this.submitInput();
+    document.getElementById('input-cancel').onclick=()=>this.cancelInput();
+    document.getElementById('input-field').onkeydown=e=>{
+      if(e.key==='Enter')this.submitInput();
+      if(e.key==='Escape')this.cancelInput();
+    };
+
+    const cc=document.getElementById('canvas-container');
+    cc.addEventListener('dragover',e=>{e.preventDefault();e.dataTransfer.dropEffect='copy';});
+    cc.addEventListener('drop',e=>{
+      e.preventDefault();
+      this.loadFiles(e.dataTransfer.files);
+    });
+
+    document.getElementById('theme-select').addEventListener('change',e=>this.applyTheme(e.target.value));
+    document.getElementById('drawer-handle').addEventListener('click',()=>this.toggleDrawer());
+const g=(i)=>{return document.getElementById(i);};
+if(g('btn-sidebar-toggle')){g('btn-sidebar-toggle').addEventListener('click',()=>this.toggleSidebar());}
+if(g('btn-drawer-toggle')){g('btn-drawer-toggle').addEventListener('click',()=>this.toggleDrawer());}
+if(g('steps-resizer')){g('steps-resizer').addEventListener('pointerdown',(ev)=>this.startStepsResize(ev));}
+if(g('btn-drawer-min')){g('btn-drawer-min').addEventListener('click',()=>this.toggleDrawer(false));}
+if(g('btn-drawer-close')){g('btn-drawer-close').addEventListener('click',()=>this.toggleDrawer(false));}
+    document.getElementById('btn-view-full').onclick=()=>this.setStepsView('full');
+    document.getElementById('btn-view-summary').onclick=()=>this.setStepsView('summary');
+    document.getElementById('btn-view-prompt').onclick=()=>this.setStepsView('prompt');
+    document.getElementById('btn-copy-steps').onclick=()=>this.copySteps();
+  }
+
+  async loadFiles(fileList){
+    const newFiles=[];
+    for(const f of fileList){
+      if(f.name.endsWith('.fpp')){
+        const buf=await f.arrayBuffer();
+        const text=decodeFppBuffer(buf);
+        newFiles.push({name:f.name,text});
+      }
+    }
+    if(!newFiles.length)return;
+    const exist=new Set(this.files.map(f=>f.name));
+    for(const f of newFiles){
+      if(!exist.has(f.name))this.files.push(f);
+    }
+    this.renderFileList();
+    if(!this.parsed&&this.files.length){
+      this.selectFile(this.files[this.files.length-1].name);
+    }
+  }
+
+  renderFileList(){
+    const el=document.getElementById('file-list');
+    el.innerHTML='';
+    for(const f of this.files){
+      const div=document.createElement('div');
+      div.className='file-item'+(this.currentFile===f.name?' active':'');
+      div.textContent=f.name;
+      div.onclick=()=>this.selectFile(f.name);
+      el.appendChild(div);
+    }
+  }
+
+  selectFile(name){
+    this.stopRun();
+    this.currentFile=name;
+    const file=this.files.find(f=>f.name===name);
+    if(!file)return;
+    this.renderFileList();
+
+    try{
+      this.parsed=parseFpp(file.text);
+      this.renderer.render(this.parsed);
+      this._renderedParsed=this.parsed;
+      this.executor=new FlowchartExecutor(this.parsed,this.files);
+      this.executor.onTraceChange=()=>this._onTraceChange();
+      this.executor.reset();
+      this.stepCount=0;
+      this.updateVarPanel({});
+      this.clearOutput();
+      this.logOutput('已載入: '+name,'system');
+      this.logOutput(`節點: ${this.parsed.nodes.length}  連接: ${this.parsed.connections.length}`,'system');
+
+      document.getElementById('btn-run').disabled=false;
+      document.getElementById('btn-step').disabled=false;
+      document.getElementById('btn-reset').disabled=false;
+      document.getElementById('status-bar').textContent=`已載入 ${name} — ${this.parsed.nodes.length} 個節點`;
+      document.getElementById('file-info').textContent=`${this.parsed.nodes.length} 節點, ${this.parsed.connections.length} 連接`;
+      document.getElementById('empty-hint')?.remove();
+
+      this.renderer.highlightNode(this.executor.currentNodeId);
+      this.setStepsView(this.stepsMode);
+    }catch(err){
+      this.logOutput('解析錯誤: '+err.message,'error');
+      document.getElementById('status-bar').textContent='解析錯誤';
+    }
+  }
+
+  toggleRun(){
+    if(this.running){this.stopRun();return;}
+    if(!this.executor)return;
+    if(this.executor.isFinished)this.doReset();
+    this.running=true;
+    document.getElementById('btn-run').innerHTML='&#10074;&#10074; 暫停';
+    document.getElementById('btn-stop').style.display='';
+    this.runStep();
+  }
+
+  runStep(){
+    if(!this.running)return;
+    if(this.executor.isFinished||this.executor.pendingInput){
+      this.stopRun();
+      if(this.executor.isFinished)this.logOutput('--- 執行結束 ---','system');
+      return;
+    }
+    this.doStep();
+    const speed=parseInt(document.getElementById('speed-slider').value,10);
+    this.runTimer=setTimeout(()=>this.runStep(),speed);
+  }
+
+  stopRun(){
+    this.running=false;
+    clearTimeout(this.runTimer);
+    document.getElementById('btn-run').innerHTML='&#9654; 執行';
+    document.getElementById('btn-stop').style.display='none';
+  }
+
+  doStep(){
+    if(!this.executor||this.executor.isFinished)return;
+
+    if(this.executor.pendingInput){
+      this.showInputModal(this.executor.pendingInput.prompt,this.executor.pendingInput.variable);
+      return;
+    }
+
+    this.stepCount++;
+    const result=this.executor.step();
+    if(result.done){
+      this.logOutput('--- 執行結束 ---','system');
+      this.stopRun();
+      return;
+    }
+
+    this._syncRenderedFlow();
+
+    if(this.executor.currentNodeId){
+      this.renderer.highlightNode(this.executor.currentNodeId);
+      for(const v of this.executor.visited){
+        if(v!==this.executor.currentNodeId)this.renderer.markVisited(v);
+      }
+    }
+
+    const node=this.executor.getNode(result.nodeId);
+    if(node&&this.executor.currentNodeId){
+      this.renderer.highlightConnection(result.nodeId,this.executor.currentNodeId);
+    }
+
+    this.updateVarPanel(result.variables);
+
+    if(result.action==='output'){
+      this.logOutput(result.output,'result',result.noNewLine);
+    }else if(result.action==='input'){
+      this.showInputModal(result.inputPending.prompt,result.inputPending.variable);
+    }else if(result.action==='function-call'){
+      if(result.functionError)this.logOutput('錯誤: '+result.functionError,'error');
+      else this.logOutput('→ 進入函數 '+result.functionName,'system');
+    }else if(result.action==='return'){
+      if(result.functionName)this.logOutput('← 函數 '+result.functionName+' 回傳','system');
+    }else if(result.action==='stop'){
+      this.logOutput('--- STOP ---','system');
+    }
+
+    document.getElementById('status-bar').textContent=`步驟 #${this.stepCount} | 當前: ${result.nodeId} (${result.action})`;
+  }
+
+  showInputModal(prompt,varName){
+    this.resumeAfterInput=this.running;
+    this.stopRun();
+    const modal=document.getElementById('input-modal');
+    modal.classList.add('show');
+    document.getElementById('input-prompt').textContent=(prompt||'請輸入')+(varName?' ('+varName+')':'');
+    const field=document.getElementById('input-field');
+    field.value='';
+    field.focus();
+  }
+
+  submitInput(){
+    const val=document.getElementById('input-field').value;
+    document.getElementById('input-modal').classList.remove('show');
+    if(this.executor&&this.executor.pendingInput){
+      this.logInput(this.executor.pendingInput.prompt,val);
+      this.executor.submitInput(val);
+      this.updateVarPanel(this.executor.variables);
+      if(!this.executor.isFinished&&this.executor.currentNodeId){
+        this.renderer.highlightNode(this.executor.currentNodeId);
+      }
+      const resume=this.resumeAfterInput;
+      this.resumeAfterInput=false;
+      if(resume&&!this.executor.isFinished&&this.executor.currentNodeId){
+        this.running=true;
+        document.getElementById('btn-run').innerHTML='&#10074;&#10074; 暫停';
+        document.getElementById('btn-stop').style.display='';
+        this.runStep();
+      }
+    }
+  }
+
+  cancelInput(){
+    document.getElementById('input-modal').classList.remove('show');
+    this.resumeAfterInput=false;
+    this.stopRun();
+    this.logOutput('輸入已取消','error');
+  }
+
+  doReset(){
+    this.stopRun();
+    if(!this.executor)return;
+    // 若正在執行外部函數流程圖，先回到所選主程式（清除呼叫堆疊）
+    this.executor.parsed=this.parsed;
+    this.executor.frames=[];
+    this.executor._skipAdvance=false;
+    this.executor.reset();
+    this.stepCount=0;
+    this.renderer.render(this.parsed);
+    this._renderedParsed=this.parsed;
+    this.updateVarPanel({});
+    this.clearOutput();
+    this.logOutput('已重設','system');
+    this.renderer.highlightNode(this.executor.currentNodeId);
+    document.getElementById('status-bar').textContent='已重設';
+    this.renderSteps();
+  }
+
+  updateVarPanel(vars){
+    const el=document.getElementById('var-panel');
+    el.innerHTML='';
+    const entries=Object.entries(vars||{});
+    if(!entries.length){
+      el.innerHTML='<div style="color:var(--dim);font-size:12px;padding:8px">尚無變數</div>';
+      return;
+    }
+    for(const[k,v]of entries){
+      const div=document.createElement('div');
+      div.className='var-item';
+      div.innerHTML=`<span class="var-name">${escH(k)}</span><span class="var-value">${escH(String(v))}</span>`;
+      el.appendChild(div);
+    }
+  }
+
+  clearOutput(){
+    document.getElementById('output-panel').innerHTML='';
+    this._curOutLine=null;
+  }
+
+  logOutput(text,cls,noNewLine){
+    const el=document.getElementById('output-panel');
+    if(cls==='result'){
+      if(!this._curOutLine){
+        this._curOutLine=document.createElement('div');
+        this._curOutLine.className='output-line result';
+        el.appendChild(this._curOutLine);
+      }
+      this._curOutLine.textContent+=text;
+      if(!noNewLine)this._curOutLine=null;
+    }else{
+      const line=document.createElement('div');
+      line.className='output-line '+(cls||'');
+      line.textContent=text;
+      el.appendChild(line);
+      this._curOutLine=null;
+    }
+    el.scrollTop=el.scrollHeight;
+  }
+
+  logInput(prompt,val){
+    this.logOutput((prompt||'輸入')+' '+val,'log-input');
+  }
+}
+
+function escH(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+window.addEventListener('DOMContentLoaded',()=>{window.app=new App();});
+</script>
+
+<script id="pwa-sw">
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('./sw.js').catch(function(err){
+      console.warn('SW register failed',err);
+    });
+  });
+}
+</script>
+</body>
+</html>
